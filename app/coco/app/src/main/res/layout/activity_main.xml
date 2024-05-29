@@ -28,4 +28,17 @@
 
 
 
+
+    <com.cyyaw.tabbar.CustomTitleBar
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="#ccc"
+        tools:ignore="MissingConstraints" />
+
+
+
+
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

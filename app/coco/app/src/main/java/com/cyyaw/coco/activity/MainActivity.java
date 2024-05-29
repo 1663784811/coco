@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.common.BaseAppCompatActivity;
+import com.cyyaw.tabbar.CustomTitleBar;
 
 public class MainActivity extends BaseAppCompatActivity {
 
@@ -19,7 +20,14 @@ public class MainActivity extends BaseAppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
+
     }
+
+
+
 
 
 }
