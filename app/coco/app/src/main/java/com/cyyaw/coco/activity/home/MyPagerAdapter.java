@@ -1,12 +1,15 @@
-package com.cyyaw.coco.activity;
+package com.cyyaw.coco.activity.home;
 
 import android.content.Context;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.viewpager.widget.PagerAdapter;
+
+import com.cyyaw.coco.R;
 
 import java.util.List;
 
@@ -32,7 +35,9 @@ public class MyPagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        View view = viewList.get(position);
+        //加载布局
+        View view = LayoutInflater.from(context).inflate(R.layout.activity_main_home, null);
+        //获取控件
         container.addView(view);
         return view;
     }
