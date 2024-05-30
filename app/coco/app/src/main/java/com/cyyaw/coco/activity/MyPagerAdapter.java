@@ -8,19 +8,21 @@ import android.widget.TextView;
 
 import androidx.viewpager.widget.PagerAdapter;
 
+import java.util.List;
+
 public class MyPagerAdapter extends PagerAdapter {
 
     private Context context;
-    private String[] data;
+    private List<View> viewList;
 
-    public MyPagerAdapter(Context context, String[] data) {
+    public MyPagerAdapter(Context context, List<View> viewList) {
         this.context = context;
-        this.data = data;
+        this.viewList = viewList;
     }
 
     @Override
     public int getCount() {
-        return data.length;
+        return viewList.size();
     }
 
     @Override
@@ -30,12 +32,9 @@ public class MyPagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        TextView textView = new TextView(context);
-        textView.setText(data[position]);
-        textView.setTextSize(20);
-        textView.setGravity(Gravity.CENTER);
-        container.addView(textView);
-        return textView;
+        View view = viewList.get(position);
+        container.addView(view);
+        return view;
     }
 
     @Override
