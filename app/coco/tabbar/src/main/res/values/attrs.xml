@@ -3,11 +3,6 @@
 
 
 
-    <declare-styleable name="CusTitleBar">
-        <attr name="bg_color" format="color"></attr>
-        <attr name="text_color" format="color"></attr>
-        <attr name="title_text" format="string"></attr>
-    </declare-styleable>
 
 
 
