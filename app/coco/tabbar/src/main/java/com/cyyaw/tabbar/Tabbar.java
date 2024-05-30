@@ -3,6 +3,7 @@ package com.cyyaw.tabbar;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
@@ -31,14 +32,9 @@ public class Tabbar extends LinearLayout {
         initView(context);
     }
 
-
-
     public void initView(Context context) {
         LayoutInflater.from(context).inflate(R.layout.tx_layout_tabbar, this, true);
     }
-
-
-
 
 
 
