@@ -10,24 +10,29 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.cyyaw.coco.R;
 
-public class MyView  extends ConstraintLayout {
-    public MyView(Context context) {
+public class ChatListView  extends ConstraintLayout {
+    public ChatListView(Context context) {
         super(context);
         initView(context, null);
     }
 
-    public MyView(Context context, @Nullable AttributeSet attrs) {
+    public ChatListView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         initView(context, null);
     }
 
-    public MyView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public ChatListView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initView(context, null);
     }
 
+
+
     private void initView(Context context, AttributeSet attrs) {
         //加载布局
-        View inflate = LayoutInflater.from(context).inflate(R.layout.activity_main_my, this, true);
+        View inflate = LayoutInflater.from(context).inflate(R.layout.activity_main_chatlist, this, true);
     }
+
+
+
 }
