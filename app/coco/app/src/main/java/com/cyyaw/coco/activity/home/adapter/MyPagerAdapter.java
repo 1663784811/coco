@@ -1,4 +1,4 @@
-package com.cyyaw.coco.activity.home;
+package com.cyyaw.coco.activity.home.adapter;
 
 import android.content.Context;
 import android.view.Gravity;

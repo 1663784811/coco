@@ -4,20 +4,18 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.activity.home.ChatListView;
 import com.cyyaw.coco.activity.home.HomeView;
-import com.cyyaw.coco.activity.home.MyPagerAdapter;
+import com.cyyaw.coco.activity.home.adapter.MyPagerAdapter;
 import com.cyyaw.coco.activity.home.MyView;
 import com.cyyaw.coco.common.BaseAppCompatActivity;
 import com.cyyaw.tabbar.CommonTabLayout;
 import com.cyyaw.tabbar.listener.CustomTabEntity;
 import com.cyyaw.tabbar.listener.OnTabSelectListener;
 import com.cyyaw.tabbar.listener.TabBarItemEntity;
-import com.cyyaw.tabbar.widget.MsgView;
 
 import java.util.ArrayList;
 import java.util.List;
