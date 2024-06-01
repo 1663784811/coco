@@ -3,5 +3,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <!--  主题色  -->
-    <color name="themes">#002B4E</color>
+    <color name="themes">#0D77CC</color>
+
+    <color name="gradientEnd">#4AABF8</color>
+
+
 </resources>
