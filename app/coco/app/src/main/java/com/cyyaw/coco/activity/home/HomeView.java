@@ -46,20 +46,14 @@ public class HomeView extends LinearLayout {
         }
 
 
-
-
-
         // =============== 加载布局
         View viewHome = LayoutInflater.from(context).inflate(R.layout.activity_main_home, this, true);
         // =============== 设置适配器
         RecyclerView recyclerView = viewHome.findViewById(R.id.equipmentList);
         LinearLayoutManager layoutManager = new LinearLayoutManagerNonScrollable(context);
         recyclerView.setLayoutManager(layoutManager);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(datas);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(context, datas);
         recyclerView.setAdapter(adapter);
-
-
-
 
     }
 

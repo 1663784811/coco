@@ -3,6 +3,7 @@ package com.cyyaw.coco.common.permission;
 
 import android.Manifest;
 import android.accessibilityservice.AccessibilityServiceInfo;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -20,47 +21,51 @@ import androidx.core.content.ContextCompat;
 public enum PermissionsCode {
 
     READ_CONTACTS(Manifest.permission.READ_CONTACTS, 111, "读取联系人信息", null, false)
-    ,SYSTEM_ALERT_WINDOW(Manifest.permission.SYSTEM_ALERT_WINDOW, 222,"开启浮窗", Settings.ACTION_MANAGE_OVERLAY_PERMISSION, false)
-
-    ,BIND_ACCESSIBILITY_SERVICE(Manifest.permission.BIND_ACCESSIBILITY_SERVICE, 333,"无障碍服务AccessibilityService", Settings.ACTION_ACCESSIBILITY_SETTINGS, false)
-
-    ,CAMERA(Manifest.permission.CAMERA, 444,"摄像头", null, false)
-    ,READ_MEDIA_AUDIO(Manifest.permission.READ_MEDIA_AUDIO, 555,"音频", null, false)
-    ,READ_MEDIA_IMAGES(Manifest.permission.READ_MEDIA_IMAGES, 666,"图片", null, false)
-    ,READ_MEDIA_VIDEO(Manifest.permission.READ_MEDIA_VIDEO, 777,"视频", null, false)
-
-
-    ,READ_EXTERNAL_STORAGE(Manifest.permission.READ_EXTERNAL_STORAGE, 888,"读文件", Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION, true)
-    ,WRITE_EXTERNAL_STORAGE(Manifest.permission.WRITE_EXTERNAL_STORAGE, 999,"文件写入", Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION, true)
-
-
-    ,ACCESS_FINE_LOCATION(Manifest.permission.ACCESS_FINE_LOCATION, 1000,"精确定位GPS", null, false)
-    ,ACCESS_COARSE_LOCATION(Manifest.permission.ACCESS_COARSE_LOCATION, 1100,"粗略定位CellID或WiFi", null, false)
-    ,ACCESS_BACKGROUND_LOCATION(Manifest.permission.ACCESS_BACKGROUND_LOCATION, 1200,"后台定位权限", null, false)
-
-    ,BLUETOOTH_CONNECT(Manifest.permission.BLUETOOTH_CONNECT, 1300,"蓝牙连接", null, false)
-
-
-    ;
+    //
+    , SYSTEM_ALERT_WINDOW(Manifest.permission.SYSTEM_ALERT_WINDOW, 222, "开启浮窗", Settings.ACTION_MANAGE_OVERLAY_PERMISSION, false)
+    //
+    , BIND_ACCESSIBILITY_SERVICE(Manifest.permission.BIND_ACCESSIBILITY_SERVICE, 333, "无障碍服务AccessibilityService", Settings.ACTION_ACCESSIBILITY_SETTINGS, false)
+    //
+    , CAMERA(Manifest.permission.CAMERA, 444, "摄像头", null, false)
+    //
+    , READ_MEDIA_AUDIO(Manifest.permission.READ_MEDIA_AUDIO, 555, "音频", null, false)
+    //
+    , READ_MEDIA_IMAGES(Manifest.permission.READ_MEDIA_IMAGES, 666, "图片", null, false)
+    //
+    , READ_MEDIA_VIDEO(Manifest.permission.READ_MEDIA_VIDEO, 777, "视频", null, false)
+    //
+    , READ_EXTERNAL_STORAGE(Manifest.permission.READ_EXTERNAL_STORAGE, 888, "读文件", Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION, true)
+    //
+    , WRITE_EXTERNAL_STORAGE(Manifest.permission.WRITE_EXTERNAL_STORAGE, 999, "文件写入", Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION, true)
+    //
+    , ACCESS_FINE_LOCATION(Manifest.permission.ACCESS_FINE_LOCATION, 1000, "精确定位GPS", null, false)
+    //
+    , ACCESS_COARSE_LOCATION(Manifest.permission.ACCESS_COARSE_LOCATION, 1100, "粗略定位CellID或WiFi", null, false)
+    //
+    , ACCESS_BACKGROUND_LOCATION(Manifest.permission.ACCESS_BACKGROUND_LOCATION, 1200, "后台定位权限", null, false)
+    //
+    , BLUETOOTH_REQUEST_ENABLE(BluetoothAdapter.ACTION_REQUEST_ENABLE, 1300, "打开蓝牙", null, false)
+    //
+    , BLUETOOTH_CONNECT(Manifest.permission.BLUETOOTH_CONNECT, 1400, "蓝牙连接", null, false);
 
     /**
      * 系统权限
      */
-    private String permissions;
+    private final String permissions;
     /**
      * 自定议受权码
      */
-    private int code;
+    private final int code;
 
     /**
      * 说明
      */
-    private String note;
+    private final String note;
 
     /**
      * 是否需要打开系统Activity 不需要为则NULL
      */
-    private String sysActivity;
+    private final String sysActivity;
 
     /**
      * 是否需要包名
@@ -178,6 +183,10 @@ public enum PermissionsCode {
             } else {
                 return false;
             }
+        } else if (permissions.equals(PermissionsCode.BLUETOOTH_REQUEST_ENABLE.permissions)) {
+            //
+            BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+            return bluetoothAdapter.isEnabled();
         } else {
             return ContextCompat.checkSelfPermission(context, permissions) == PackageManager.PERMISSION_GRANTED;
         }
@@ -187,7 +196,7 @@ public enum PermissionsCode {
      * 判断是否有无障碍权限
      */
     private static boolean isAccessibilityServiceEnabled(Context context) {
-        AccessibilityManager accessibilityManager = (AccessibilityManager)context.getSystemService(Context.ACCESSIBILITY_SERVICE);
+        AccessibilityManager accessibilityManager = (AccessibilityManager) context.getSystemService(Context.ACCESSIBILITY_SERVICE);
         if (accessibilityManager != null) {
             for (AccessibilityServiceInfo serviceInfo : accessibilityManager.getEnabledAccessibilityServiceList(AccessibilityServiceInfo.FEEDBACK_ALL_MASK)) {
                 String id = serviceInfo.getId();

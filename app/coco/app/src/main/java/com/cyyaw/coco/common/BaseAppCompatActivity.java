@@ -1,13 +1,16 @@
 package com.cyyaw.coco.common;
 
 import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -17,6 +20,7 @@ import com.cyyaw.coco.common.permission.PermissionsCode;
 /**
  * 处理权限受权问题
  */
+@RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
 public abstract class BaseAppCompatActivity extends AppCompatActivity {
 
     /**
@@ -32,6 +36,7 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
         // 申请权限
         if (null != otherPermissions) {
             PermissionsCode permissionsCode = PermissionsCode.getPermissionsCode(otherPermissions);
+            otherPermissions = null;
             if (permissionsCode != null) {
                 ActivityCompat.requestPermissions(getActivity(), new String[]{permissionsCode.getPermissions()}, permissionsCode.getCode());
             }
@@ -82,9 +87,16 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
                 permissionsCode.setSuccessCallback(successCallback);
                 permissionsCode.setErrorCallback(errorCallback);
                 Intent intent = new Intent(sysActivity);
-                if(permissionsCode.getNeedPackage()){
+                if (permissionsCode.getNeedPackage()) {
                     intent.setData(Uri.parse("package:" + this.getPackageName()));
                 }
+                activityResult.launch(intent);
+            } else if (permissionsCode.getPermissions().equals(PermissionsCode.BLUETOOTH_REQUEST_ENABLE.getPermissions())) {
+                // 蓝牙
+                otherPermissions = permissionsCode.getPermissions();
+                permissionsCode.setSuccessCallback(successCallback);
+                permissionsCode.setErrorCallback(errorCallback);
+                Intent intent = new Intent(otherPermissions);
                 activityResult.launch(intent);
             } else {
                 permissionsCode.setSuccessCallback(successCallback);

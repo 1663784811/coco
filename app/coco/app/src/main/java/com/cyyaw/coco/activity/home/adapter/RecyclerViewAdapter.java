@@ -1,28 +1,37 @@
 package com.cyyaw.coco.activity.home.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cyyaw.coco.R;
+import com.cyyaw.coco.activity.AddEquipmentActivity;
 
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
     private List<String> dataList;
 
-    public RecyclerViewAdapter(List<String> dataList) {
+    private Context context;
+
+    public RecyclerViewAdapter(Context context,List<String> dataList) {
         this.dataList = dataList;
+        this.context = context;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.equipment_item, parent, false);
+        Button btn = view.findViewById(R.id.goPrintButton);
+        btn.setOnClickListener(this::goPrintButton);
         return new ViewHolder(view);
     }
 
@@ -36,6 +45,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return dataList.size();
     }
 
+
+    private void goPrintButton(View v) {
+        Intent intent = new Intent(context, AddEquipmentActivity.class);
+        context.startActivity(intent);
+    }
+
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView textView;
 
@@ -44,4 +60,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             textView = itemView.findViewById(R.id.item_text);
         }
     }
+
+
+
+
+
 }
