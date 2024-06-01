@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.cyyaw.coco.R;
@@ -25,8 +26,6 @@ public class MainActivity extends BaseAppCompatActivity {
 
     private final String TAG = Class.class.getName();
 
-    private ViewPager viewPager;
-    private MyPagerAdapter pagerAdapter;
 
     // =====================================   tabbar
     private final List<CustomTabEntity> tabBarData = new ArrayList<>();

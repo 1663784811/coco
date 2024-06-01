@@ -1,18 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/aaaaddd"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-        android:text="HOME"
-
+        android:text="我的设备"
         tools:ignore="MissingConstraints" />
 
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+<!--    添加-删除-列表 连接 - 状态:在线、离线     -->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/equipmentList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        android:background="#EEEEEE"
+        />
+
+
+
+</LinearLayout>
