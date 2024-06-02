@@ -1,9 +1,11 @@
 package com.cyyaw.coco.activity;
 
 import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.annotation.RequiresApi;
 import androidx.viewpager.widget.ViewPager;
 
 import com.cyyaw.coco.R;
@@ -20,9 +22,10 @@ import com.cyyaw.tabbar.listener.TabBarItemEntity;
 import java.util.ArrayList;
 import java.util.List;
 
+@RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
 public class MainActivity extends BaseAppCompatActivity {
 
-    private final String TAG = Class.class.getName();
+    private final String TAG = MainActivity.class.getName();
 
 
     // =====================================   tabbar
