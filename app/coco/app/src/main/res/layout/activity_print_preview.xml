@@ -7,6 +7,34 @@
     tools:context=".activity.PrintPreviewActivity">
 
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/bluetoothList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+    <Button
+        android:id="@+id/searchBluetoothBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:text="搜索蓝牙"
+        app:layout_constraintBottom_toTopOf="@+id/connectBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/connectBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="连接"
+        app:layout_constraintBottom_toTopOf="@+id/nowPrintBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
     <Button
         android:id="@+id/nowPrintBtn"
         android:layout_width="match_parent"
@@ -16,5 +44,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp" />
+
+
+
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout >

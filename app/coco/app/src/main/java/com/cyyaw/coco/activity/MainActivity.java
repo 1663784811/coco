@@ -66,6 +66,7 @@ public class MainActivity extends BaseAppCompatActivity {
             public void onTabSelect(int position) {
                 appTabBarViewPager.setCurrentItem(position);
             }
+
             @Override
             public void onTabReselect(int position) {
             }
@@ -74,6 +75,7 @@ public class MainActivity extends BaseAppCompatActivity {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             }
+
             @Override
             public void onPageSelected(int position) {
                 tabBar.setCurrentTab(position);
@@ -84,6 +86,9 @@ public class MainActivity extends BaseAppCompatActivity {
             }
         });
         // =====================================
+
+
+//        startService(new Intent(this, BlueToothService.class));
 
     }
 
