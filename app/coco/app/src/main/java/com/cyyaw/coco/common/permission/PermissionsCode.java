@@ -17,9 +17,7 @@ import androidx.core.content.ContextCompat;
 /**
  * 受权码
  */
-@RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
 public enum PermissionsCode {
-
     READ_CONTACTS(Manifest.permission.READ_CONTACTS, 111, "读取联系人信息", null, false)
     //
     , SYSTEM_ALERT_WINDOW(Manifest.permission.SYSTEM_ALERT_WINDOW, 222, "开启浮窗", Settings.ACTION_MANAGE_OVERLAY_PERMISSION, false)
@@ -46,8 +44,9 @@ public enum PermissionsCode {
     //
     , BLUETOOTH_REQUEST_ENABLE(BluetoothAdapter.ACTION_REQUEST_ENABLE, 1300, "打开蓝牙", null, false)
     //
-    , BLUETOOTH_CONNECT(Manifest.permission.BLUETOOTH_CONNECT, 1400, "蓝牙连接", null, false);
-
+    , BLUETOOTH_CONNECT(Manifest.permission.BLUETOOTH_CONNECT, 1400, "蓝牙连接", null, false)
+    //
+    , BLUETOOTH_SCAN(Manifest.permission.BLUETOOTH_SCAN, 1400, "蓝牙扫描", null, false);
     /**
      * 系统权限
      */

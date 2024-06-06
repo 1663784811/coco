@@ -20,14 +20,12 @@ import com.cyyaw.coco.common.permission.PermissionsCode;
 /**
  * 处理权限受权问题
  */
-@RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
 public abstract class BaseAppCompatActivity extends AppCompatActivity {
 
     /**
      * 特殊受权
      */
     private String otherPermissions;
-
 
     /**
      * 需要跳转其它Active才能受权的

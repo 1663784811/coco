@@ -1,6 +1,6 @@
 package com.cyyaw.coco.service;
 
-import android.annotation.SuppressLint;
+import android.Manifest;
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -11,11 +11,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Build;
+import android.content.pm.PackageManager;
 import android.os.IBinder;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.cyyaw.coco.common.BroadcastData;
@@ -25,8 +25,6 @@ import com.cyyaw.coco.entity.BluetoothEntity;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-@SuppressLint("MissingPermission")
-@RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
 public abstract class BlueToothAbstract extends Service implements BlueTooth {
 
     private static final String TAG = BlueToothAbstract.class.getName();
@@ -59,6 +57,27 @@ public abstract class BlueToothAbstract extends Service implements BlueTooth {
                     connectBlueTooth(bluetooth);
                 }
             }
+        }
+    };
+
+    protected ScanCallback scanCallback = new ScanCallback() {
+        @Override
+        public void onScanResult(int callbackType, ScanResult result) {
+            super.onScanResult(callbackType, result);
+            BluetoothDevice device = result.getDevice();
+            blueToothList.put(device.getAddress(), device);
+            BluetoothEntity bluetoothEntity = new BluetoothEntity();
+            bluetoothEntity.setName(device.getName());
+            bluetoothEntity.setAddress(device.getAddress());
+            bluetoothEntity.setType(device.getType());
+            bluetoothEntity.setRssi(result.getRssi());
+            Intent inx = new Intent();
+            inx.setAction(BroadcastEnum.ACTIVITY_BLUETOOTH);
+            BroadcastData<BluetoothEntity> broadcastData = new BroadcastData();
+            broadcastData.setCode(BroadcastEnum.BLUETOOTH_SEARCH.getCode());
+            broadcastData.setData(bluetoothEntity);
+            inx.putExtra("data", broadcastData);
+            sendBroadcast(inx);
         }
     };
 
@@ -106,34 +125,20 @@ public abstract class BlueToothAbstract extends Service implements BlueTooth {
         // 搜索蓝牙
         if (bluetoothAdapter.isEnabled()) {
             BluetoothLeScanner bluetoothLeScanner = bluetoothAdapter.getBluetoothLeScanner();
-            bluetoothLeScanner.startScan(new ScanCallback() {
-                @Override
-                public void onScanResult(int callbackType, ScanResult result) {
-                    super.onScanResult(callbackType, result);
-                    BluetoothDevice device = result.getDevice();
-                    blueToothList.put(device.getAddress(), device);
-                    BluetoothEntity bluetoothEntity = new BluetoothEntity();
-                    bluetoothEntity.setName(device.getName());
-                    bluetoothEntity.setAddress(device.getAddress());
-                    bluetoothEntity.setType(device.getType());
-                    bluetoothEntity.setRssi(result.getRssi());
-                    Intent inx = new Intent();
-                    inx.setAction(BroadcastEnum.ACTIVITY_BLUETOOTH);
-                    BroadcastData<BluetoothEntity> broadcastData = new BroadcastData();
-                    broadcastData.setCode(BroadcastEnum.BLUETOOTH_SEARCH.getCode());
-                    broadcastData.setData(bluetoothEntity);
-                    inx.putExtra("data", broadcastData);
-                    sendBroadcast(inx);
-                }
-            });
-//            bluetoothLeScanner.stopScan(new ScanCallback() {
-//                @Override
-//                public void onScanResult(int callbackType, ScanResult result) {
-//                    super.onScanResult(callbackType, result);
-//
-//                }
-//            });
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
+            bluetoothLeScanner.startScan(scanCallback);
         }
+    }
+
+    @Override
+    public void connectBlueTooth(BluetoothEntity bluetooth) {
+        BluetoothLeScanner bluetoothLeScanner = bluetoothAdapter.getBluetoothLeScanner();
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        bluetoothLeScanner.stopScan(scanCallback);
     }
 
 
