@@ -199,14 +199,13 @@ public class BluetoothBleService extends Service implements BlueTooth {
      * 连接蓝牙
      */
     @SuppressLint("MissingPermission")
-    public boolean connectBlueTooth(final String address) {
+    public void connectBlueTooth(final String address) {
         try {
             BluetoothDevice remoteDevice = bluetoothAdapter.getRemoteDevice(address);
             bluetoothGatt = remoteDevice.connectGatt(this, true, bluetoothGattCallback);
         } catch (IllegalArgumentException exception) {
-            return false;
+
         }
-        return true;
     }
 
     @Override

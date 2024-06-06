@@ -16,8 +16,7 @@ public interface BlueTooth {
     /**
      * 连接蓝牙
      */
-    boolean connectBlueTooth(final String address);
-
+    void connectBlueTooth(final String address);
 
     /**
      * 查找已配对设备

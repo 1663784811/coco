@@ -30,7 +30,10 @@ import android.view.View;
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.activity.adapter.BluetoothListAdapter;
 import com.cyyaw.coco.common.BaseAppCompatActivity;
+import com.cyyaw.coco.common.BroadcastData;
+import com.cyyaw.coco.common.BroadcastEnum;
 import com.cyyaw.coco.common.permission.PermissionsCode;
+import com.cyyaw.coco.entity.BluetoothEntity;
 import com.cyyaw.coco.service.BluetoothBleService;
 
 import java.util.ArrayList;
@@ -45,101 +48,6 @@ public class PrintPreviewActivity extends BaseAppCompatActivity {
 
     private BluetoothGatt bluetoothGatt;
 
-//
-//    private final BluetoothGattCallback bluetoothGattCallback = new BluetoothGattCallback() {
-//        @Override
-//        public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
-//            if (newState == BluetoothProfile.STATE_CONNECTED) {
-//                // successfully connected to the GATT Server
-//                connectionState = STATE_CONNECTED;
-//                broadcastUpdate(ACTION_GATT_CONNECTED);
-//                // Attempts to discover services after successful connection.
-//                bluetoothGatt.discoverServices();
-//            } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
-//                // disconnected from the GATT Server
-//                connectionState = STATE_DISCONNECTED;
-//                broadcastUpdate(ACTION_GATT_DISCONNECTED);
-//            }
-//        }
-//
-//        @Override
-//        public void onServicesDiscovered(BluetoothGatt gatt, int status) {
-//            if (status == BluetoothGatt.GATT_SUCCESS) {
-//                broadcastUpdate(ACTION_GATT_SERVICES_DISCOVERED);
-//            } else {
-//                Log.w(TAG, "onServicesDiscovered received: " + status);
-//            }
-//        }
-//        @Override
-//        public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
-//            if (status == BluetoothGatt.GATT_SUCCESS) {
-//                broadcastUpdate(ACTION_DATA_AVAILABLE, characteristic);
-//            }
-//        }
-//
-//        /**
-//         * 特征启用通知后，如果远程设备上的特征发生变化，则会触发
-//         */
-//        @Override
-//        public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
-//            super.onCharacteristicChanged(gatt, characteristic);
-//            broadcastUpdate(ACTION_DATA_AVAILABLE, characteristic);
-//        }
-//    };
-//
-//
-//    /**
-//     * 广播更新
-//     */
-//    private void broadcastUpdate(final String action, final BluetoothGattCharacteristic characteristic) {
-//        final Intent intent = new Intent(action);
-//        if (UUID_HEART_RATE_MEASUREMENT.equals(characteristic.getUuid())) {
-//            int flag = characteristic.getProperties();
-//            int format = -1;
-//            if ((flag & 0x01) != 0) {
-//                format = BluetoothGattCharacteristic.FORMAT_UINT16;
-//                Log.d(TAG, "Heart rate format UINT16.");
-//            } else {
-//                format = BluetoothGattCharacteristic.FORMAT_UINT8;
-//                Log.d(TAG, "Heart rate format UINT8.");
-//            }
-//            final int heartRate = characteristic.getIntValue(format, 1);
-//            Log.d(TAG, String.format("Received heart rate: %d", heartRate));
-//            intent.putExtra(EXTRA_DATA, String.valueOf(heartRate));
-//        } else {
-//            // For all other profiles, writes the data formatted in HEX.
-//            final byte[] data = characteristic.getValue();
-//            if (data != null && data.length > 0) {
-//                final StringBuilder stringBuilder = new StringBuilder(data.length);
-//                for(byte byteChar : data) stringBuilder.append(String.format("%02X ", byteChar));
-//                intent.putExtra(EXTRA_DATA, new String(data) + "\n" + stringBuilder.toString());
-//            }
-//        }
-//        sendBroadcast(intent);
-//    }
-//
-//    public List<BluetoothGattService> getSupportedGattServices() {
-//        if (bluetoothGatt == null) return null;
-//        return bluetoothGatt.getServices();
-//    }
-//
-//    /**
-//     * 接收 GATT 通知
-//     */
-//    public void setCharacteristicNotification(BluetoothGattCharacteristic characteristic,boolean enabled) {
-//        if (bluetoothGatt == null) {
-//            Log.w(TAG, "BluetoothGatt not initialized");
-//            Return;
-//        }
-//        bluetoothGatt.setCharacteristicNotification(characteristic, enabled);
-//        // This is specific to Heart Rate Measurement.
-//        if (UUID_HEART_RATE_MEASUREMENT.equals(characteristic.getUuid())) {
-//            BluetoothGattDescriptor descriptor = characteristic.getDescriptor(UUID.fromString(SampleGattAttributes.CLIENT_CHARACTERISTIC_CONFIG));
-//            descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
-//            bluetoothGatt.writeDescriptor(descriptor);
-//        }
-//    }
-//
 
 
     /**
@@ -186,6 +94,17 @@ public class PrintPreviewActivity extends BaseAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_print_preview);
         // ========================
+        // 接收数据
+        Intent inx = getIntent();
+        BroadcastData bluetooth = inx.getSerializableExtra("data", BroadcastData.class);
+        bluetooth.setCode(BroadcastEnum.BLUETOOTH_CLASSIC_CONNECT.getCode());
+        // 连接蓝牙
+        Intent intent = new Intent();
+        intent.setAction(BroadcastEnum.BLUETOOTH_BR);
+        intent.putExtra("data", bluetooth);
+        sendBroadcast(intent);
+
+        // ========================
         View nowPrintBtn = findViewById(R.id.nowPrintBtn);
         View connectBtn = findViewById(R.id.connectBtn);
         View searchBluetoothBtn = findViewById(R.id.searchBluetoothBtn);
@@ -227,25 +146,7 @@ public class PrintPreviewActivity extends BaseAppCompatActivity {
 
 
         });
-
-        // ========================
-        Intent intent = getIntent();
-        String ssss = intent.getStringExtra("ssss");
-//        connectBlueTooth(ssss);
-
-
     }
-
-//    @SuppressLint("MissingPermission")
-//    public boolean connectBlueTooth(final String address) {
-//        try {
-//            BluetoothDevice remoteDevice = bluetoothAdapter.getRemoteDevice(address);
-//            bluetoothGatt = remoteDevice.connectGatt(this, true, bluetoothGattCallback);
-//        } catch (IllegalArgumentException exception) {
-//            return false;
-//        }
-//        return true;
-//    }
 
 
     @Override
