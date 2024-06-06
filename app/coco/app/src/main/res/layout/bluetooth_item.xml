@@ -23,9 +23,9 @@
                 android:text="设备名:"
                 android:textSize="18sp" />
             <TextView
+                android:id="@+id/equipmentName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="设备名"
                 android:textSize="18sp" />
         </LinearLayout>
 
@@ -38,12 +38,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="设备名:"
+                android:text="类型:"
                 android:textSize="18sp" />
             <TextView
+                android:id="@+id/equipmentType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="设备名"
                 android:textSize="18sp" />
         </LinearLayout>
 
@@ -55,12 +55,29 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="设备名:"
+                android:text="地址:"
                 android:textSize="18sp" />
+            <TextView
+                android:id="@+id/equipmentAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="设备名"
+                android:text="信号强度:"
+                android:textSize="18sp" />
+            <TextView
+                android:id="@+id/equipmentSignal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:textSize="18sp" />
         </LinearLayout>
 

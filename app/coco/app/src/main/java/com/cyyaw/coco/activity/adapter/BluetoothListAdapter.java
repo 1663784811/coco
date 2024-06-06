@@ -1,5 +1,11 @@
 package com.cyyaw.coco.activity.adapter;
 
+import android.bluetooth.le.ScanResult;
+import android.content.BroadcastReceiver;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Build;
+
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
@@ -7,86 +13,96 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cyyaw.coco.R;
+import com.cyyaw.coco.service.BlueTooth;
+import com.cyyaw.coco.service.BluetoothBleService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @SuppressLint("MissingPermission")
-public class BluetoothListAdapter extends RecyclerView.Adapter<BluetoothListAdapter.ViewHolder> {
+@RequiresApi(api = Build.VERSION_CODES.R)
+public class BluetoothListAdapter extends RecyclerView.Adapter<BluetoothListAdapterView> {
 
 
     private final Context context;
+    private List<ScanResult> scanResultList = new ArrayList<>();
 
-    private List<BluetoothDevice> blueToothList = new ArrayList<>();
+    private BlueTooth blueTooth;
+
+    /**
+     * 广播接收器
+     */
+    private final BroadcastReceiver gattUpdateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+//            final String action = intent.getAction();
+//            if (BluetoothLeService.ACTION_GATT_CONNECTED.equals(action)) {
+//                // connected = true;
+//            } else if (BluetoothLeService.ACTION_GATT_DISCONNECTED.equals(action)) {
+//                // connected = false;
+//            }
+        }
+    };
 
 
-    public BluetoothListAdapter(Context context) {
+    public BluetoothListAdapter(Context context, BlueTooth blueTooth) {
         this.context = context;
+        this.blueTooth = blueTooth;
+        // ==================== 注册广播接收器
+        final IntentFilter intentFilter = new IntentFilter();
+//        intentFilter.addAction(BluetoothBleService.ACTION_GATT_CONNECTED);
+//        intentFilter.addAction(BluetoothBleService.ACTION_GATT_DISCONNECTED);
+//         注册广播
+//        context.registerReceiver(gattUpdateReceiver, intentFilter, Context.RECEIVER_NOT_EXPORTED);
+
+
     }
 
 
     @NonNull
     @Override
-    public BluetoothListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bluetooth_item, parent, false);
-        Button btn = view.findViewById(R.id.connectBtn);
-        btn.setOnClickListener(this::connectBtn);
-        return new ViewHolder(view);
+    public BluetoothListAdapterView onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new BluetoothListAdapterView(LayoutInflater.from(parent.getContext()).inflate(R.layout.bluetooth_item, parent, false), blueTooth);
     }
 
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.setDAta(blueToothList.get(position));
+    public void onBindViewHolder(@NonNull BluetoothListAdapterView holder, int position) {
+        holder.setDAta(scanResultList.get(position));
     }
 
 
     @Override
     public int getItemCount() {
-        return blueToothList.size();
+        return scanResultList.size();
     }
 
 
-    public void setBlueTooth(BluetoothDevice device) {
+    @SuppressLint("NotifyDataSetChanged")
+    public void setBlueTooth(ScanResult result) {
+        BluetoothDevice device = result.getDevice();
         String name = device.getName();
         String address = device.getAddress();
         boolean h = false;
-        for (int i = 0; i < blueToothList.size(); i++) {
-            BluetoothDevice bluetoothDevice = blueToothList.get(i);
+        for (int i = 0; i < scanResultList.size(); i++) {
+            BluetoothDevice bluetoothDevice = scanResultList.get(i).getDevice();
             String ad = bluetoothDevice.getAddress();
             if (ad.equals(address)) {
                 h = true;
-                blueToothList.set(i, device);
+                scanResultList.set(i, result);
+                notifyDataSetChanged();
             }
         }
         if (!h) {
-            blueToothList.add(device);
-        }
-        System.out.println("蓝牙名" + name);
-    }
-
-    /**
-     * 连接蓝牙
-     */
-    private void connectBtn(View view) {
-    }
-
-    static class ViewHolder extends RecyclerView.ViewHolder {
-
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-        }
-
-
-        public void setDAta(BluetoothDevice bluetoothDevice) {
-
-
+            scanResultList.add(result);
+            notifyItemRangeInserted(scanResultList.size() - 1, 1);
         }
     }
 

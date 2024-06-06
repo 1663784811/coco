@@ -11,8 +11,8 @@ import androidx.viewpager.widget.ViewPager;
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.activity.home.ChatListView;
 import com.cyyaw.coco.activity.home.HomeView;
-import com.cyyaw.coco.activity.home.adapter.MyPagerAdapter;
 import com.cyyaw.coco.activity.home.MyView;
+import com.cyyaw.coco.activity.home.adapter.MyPagerAdapter;
 import com.cyyaw.coco.common.BaseAppCompatActivity;
 import com.cyyaw.tabbar.CommonTabLayout;
 import com.cyyaw.tabbar.listener.CustomTabEntity;
@@ -42,7 +42,6 @@ public class MainActivity extends BaseAppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         // =====================================   tabbar
         tabBarData.add(new TabBarItemEntity("首页", R.mipmap.tab_home_unselect, R.mipmap.tab_home_select));
         tabBarData.add(new TabBarItemEntity("消息", R.mipmap.tab_speech_unselect, R.mipmap.tab_speech_select));
@@ -86,10 +85,6 @@ public class MainActivity extends BaseAppCompatActivity {
             }
         });
         // =====================================
-
-
-//        startService(new Intent(this, BlueToothService.class));
-
     }
 
 

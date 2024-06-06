@@ -44,7 +44,7 @@
     <!--Android12 的蓝牙权限 如果您的应用使当前设备可被其他蓝牙设备检测到-->
     <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE"/>
     <uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED" tools:ignore="ProtectedPermissions" />
-
+    <uses-feature android:name="android.software.companion_device_setup"/>
 
     <application
         android:allowBackup="true"
@@ -75,7 +75,11 @@
 
 
         <service
-            android:name=".service.BlueToothService"
+            android:name=".service.BluetoothBleService"
+            android:enabled="true"
+            android:exported="false" />
+        <service
+            android:name=".service.BluetoothClassicService"
             android:enabled="true"
             android:exported="false" />
 

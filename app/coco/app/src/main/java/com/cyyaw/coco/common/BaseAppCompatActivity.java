@@ -69,12 +69,12 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
     /**
      * 受权处理
      */
-    protected void requestPermissionsFn(PermissionsCode permissionsCode, PermissionsCode.PermissionsSuccessCallback successCallback) {
+    public void requestPermissionsFn(PermissionsCode permissionsCode, PermissionsCode.PermissionsSuccessCallback successCallback) {
         requestPermissionsFn(permissionsCode, successCallback, () -> {
         });
     }
 
-    protected void requestPermissionsFn(PermissionsCode permissionsCode, PermissionsCode.PermissionsSuccessCallback successCallback, PermissionsCode.PermissionsErrorCallback errorCallback) {
+    public void requestPermissionsFn(PermissionsCode permissionsCode, PermissionsCode.PermissionsSuccessCallback successCallback, PermissionsCode.PermissionsErrorCallback errorCallback) {
         otherPermissions = null;
         // 检查是否已经有这个权限了
         if (PermissionsCode.alreadyPermissions(getActivity(), permissionsCode)) {
