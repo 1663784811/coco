@@ -31,4 +31,9 @@ public interface BlueTooth {
      */
     void writeData(byte data[]);
 
+    /**
+     * 断开连接
+     */
+    void closeConnectBlueTooth();
+
 }

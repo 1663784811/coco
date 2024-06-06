@@ -1,32 +1,18 @@
 package com.cyyaw.coco.activity;
 
-import androidx.annotation.RequiresApi;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothGatt;
-import android.bluetooth.BluetoothGattCallback;
-import android.bluetooth.BluetoothGattCharacteristic;
-import android.bluetooth.BluetoothGattDescriptor;
-import android.bluetooth.BluetoothGattService;
-import android.bluetooth.BluetoothProfile;
 import android.bluetooth.le.BluetoothLeScanner;
 import android.bluetooth.le.ScanCallback;
 import android.bluetooth.le.ScanResult;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.IBinder;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.activity.adapter.BluetoothListAdapter;
@@ -34,15 +20,7 @@ import com.cyyaw.coco.common.BaseAppCompatActivity;
 import com.cyyaw.coco.common.BroadcastData;
 import com.cyyaw.coco.common.BroadcastEnum;
 import com.cyyaw.coco.common.permission.PermissionsCode;
-import com.cyyaw.coco.entity.BluetoothEntity;
-import com.cyyaw.coco.service.BluetoothBleService;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
-
-@RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
 public class PrintPreviewActivity extends BaseAppCompatActivity {
     private final String TAG = PrintPreviewActivity.class.getName();
 

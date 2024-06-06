@@ -1,12 +1,7 @@
 package com.cyyaw.coco.common;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
 import java.io.Serializable;
 
-@RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
 public class BroadcastData<T> implements Serializable {
 
     private String code;

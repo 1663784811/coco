@@ -4,11 +4,17 @@ import android.app.Application;
 import android.os.Handler;
 import android.widget.Toast;
 
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+
 public class MyApplication extends Application {
 
     private static final Handler sHandler = new Handler();
     // 单例Toast,避免重复创建，显示时间过长
     private static Toast sToast;
+
+    // 线程池
+    private static final Executor ThreadPool = Executors.newCachedThreadPool();
 
     @Override
     public void onCreate() {
@@ -28,11 +34,13 @@ public class MyApplication extends Application {
         sToast.show();
     }
 
-    public static void runUi(Runnable runnable) {
+    public static void run(Runnable runnable) {
         sHandler.post(runnable);
     }
 
-
+    public static void post(Runnable runnable) {
+        ThreadPool.execute(runnable);
+    }
 
 }
 

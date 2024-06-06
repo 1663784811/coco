@@ -30,7 +30,6 @@ import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
-@RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
 public class HomeView extends LinearLayout {
 
     private static final String TAG = HomeView.class.getName();

@@ -22,7 +22,6 @@ import com.cyyaw.coco.entity.BluetoothEntity;
 import java.util.ArrayList;
 import java.util.List;
 
-@RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
 public class HomeBluetoothListAdapter extends RecyclerView.Adapter<HomeBluetoothListAdapter.ViewHolder> {
     private List<BluetoothEntity> dataList = new ArrayList<>();
 

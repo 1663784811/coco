@@ -215,5 +215,10 @@ public class BluetoothBleService extends Service implements BlueTooth {
 
     }
 
+    @Override
+    public void closeConnectBlueTooth() {
+
+    }
+
 
 }

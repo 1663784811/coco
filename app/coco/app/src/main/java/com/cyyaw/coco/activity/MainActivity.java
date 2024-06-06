@@ -22,7 +22,6 @@ import com.cyyaw.tabbar.listener.TabBarItemEntity;
 import java.util.ArrayList;
 import java.util.List;
 
-@RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
 public class MainActivity extends BaseAppCompatActivity {
 
     private final String TAG = MainActivity.class.getName();

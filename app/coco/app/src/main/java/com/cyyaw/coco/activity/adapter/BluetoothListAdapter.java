@@ -26,8 +26,6 @@ import com.cyyaw.coco.service.BluetoothBleService;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressLint("MissingPermission")
-@RequiresApi(api = Build.VERSION_CODES.R)
 public class BluetoothListAdapter extends RecyclerView.Adapter<BluetoothListAdapterView> {
 
 
@@ -85,7 +83,6 @@ public class BluetoothListAdapter extends RecyclerView.Adapter<BluetoothListAdap
     }
 
 
-    @SuppressLint("NotifyDataSetChanged")
     public void setBlueTooth(ScanResult result) {
         BluetoothDevice device = result.getDevice();
         String name = device.getName();
