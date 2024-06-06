@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -80,6 +81,13 @@ public class HomeBluetoothListAdapter extends RecyclerView.Adapter<HomeBluetooth
 
         public void setData(BluetoothEntity bluetoothEntity) {
             Button btn = view.findViewById(R.id.goPrintButton);
+            TextView blueToothName = view.findViewById(R.id.blueToothName);
+            blueToothName.setText(bluetoothEntity.getName());
+            TextView blueToothAddress = view.findViewById(R.id.blueToothAddress);
+            blueToothAddress.setText(bluetoothEntity.getAddress());
+            TextView blueToothRssi = view.findViewById(R.id.blueToothRssi);
+            blueToothRssi.setText(bluetoothEntity.getRssi()+"");
+
             btn.setOnClickListener((View v) -> {
                 Intent intent = new Intent(context, PrintPreviewActivity.class);
                 intent.putExtra("data", BroadcastData.getInstance(BroadcastEnum.BLUETOOTH_OBJ, bluetoothEntity));

@@ -26,6 +26,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.activity.adapter.BluetoothListAdapter;
@@ -44,48 +45,6 @@ import java.util.UUID;
 @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
 public class PrintPreviewActivity extends BaseAppCompatActivity {
     private final String TAG = PrintPreviewActivity.class.getName();
-    private final BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
-    private BluetoothGatt bluetoothGatt;
-
-
-
-    /**
-     * 读写特性
-     */
-    private void displayGattServices(List<BluetoothGattService> gattServices) {
-        if (gattServices == null) return;
-//        String uuid = null;
-//        String unknownServiceString = getResources().getString(R.string.unknown_service);
-//        String unknownCharaString = getResources().getString(R.string.unknown_characteristic);
-//        ArrayList<HashMap<String, String>> gattServiceData = new ArrayList<HashMap<String, String>>();
-//        ArrayList<ArrayList<HashMap<String, String>>> gattCharacteristicData = new ArrayList<ArrayList<HashMap<String, String>>>();
-//        mGattCharacteristics = new ArrayList<ArrayList<BluetoothGattCharacteristic>>();
-//
-//        // Loops through available GATT Services.
-//        for (BluetoothGattService gattService : gattServices) {
-//
-//            HashMap<String, String> currentServiceData = new HashMap<String, String>();
-//            uuid = gattService.getUuid().toString();
-//            currentServiceData.put(LIST_NAME, SampleGattAttributes.lookup(uuid, unknownServiceString));
-//            currentServiceData.put(LIST_UUID, uuid);
-//            gattServiceData.add(currentServiceData);
-//            ArrayList<HashMap<String, String>> gattCharacteristicGroupData = new ArrayList<HashMap<String, String>>();
-//            List<BluetoothGattCharacteristic> gattCharacteristics = gattService.getCharacteristics();
-//            ArrayList<BluetoothGattCharacteristic> charas = new ArrayList<BluetoothGattCharacteristic>();
-//            // Loops through available Characteristics.
-//            for (BluetoothGattCharacteristic gattCharacteristic : gattCharacteristics) {
-//                charas.add(gattCharacteristic);
-//                HashMap<String, String> currentCharaData = new HashMap<String, String>();
-//                uuid = gattCharacteristic.getUuid().toString();
-//                currentCharaData.put(LIST_NAME, SampleGattAttributes.lookup(uuid, unknownCharaString));
-//                currentCharaData.put(LIST_UUID, uuid);
-//                gattCharacteristicGroupData.add(currentCharaData);
-//            }
-//            mGattCharacteristics.add(charas);
-//            gattCharacteristicData.add(gattCharacteristicGroupData);
-//        }
-    }
 
 
     @SuppressLint("MissingPermission")
@@ -99,10 +58,14 @@ public class PrintPreviewActivity extends BaseAppCompatActivity {
         BroadcastData bluetooth = inx.getSerializableExtra("data", BroadcastData.class);
         bluetooth.setCode(BroadcastEnum.BLUETOOTH_CLASSIC_CONNECT.getCode());
         // 连接蓝牙
-        Intent intent = new Intent();
-        intent.setAction(BroadcastEnum.BLUETOOTH_BR);
-        intent.putExtra("data", bluetooth);
-        sendBroadcast(intent);
+        requestPermissionsFn(PermissionsCode.BLUETOOTH_CONNECT, () -> {
+            Toast.makeText(PrintPreviewActivity.this, "有连接权限", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent();
+            intent.setAction(BroadcastEnum.BLUETOOTH_BR);
+            intent.putExtra("data", bluetooth);
+            sendBroadcast(intent);
+        });
+
 
         // ========================
         View nowPrintBtn = findViewById(R.id.nowPrintBtn);

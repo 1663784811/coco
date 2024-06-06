@@ -22,6 +22,9 @@ import com.cyyaw.coco.common.BroadcastData;
 import com.cyyaw.coco.common.BroadcastEnum;
 import com.cyyaw.coco.entity.BluetoothEntity;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 @SuppressLint("MissingPermission")
 @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
 public abstract class BlueToothAbstract extends Service implements BlueTooth {
@@ -29,6 +32,8 @@ public abstract class BlueToothAbstract extends Service implements BlueTooth {
     private static final String TAG = BlueToothAbstract.class.getName();
 
     protected final BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+    protected Map<String, BluetoothDevice> blueToothList = new ConcurrentHashMap();
 
 
     private BroadcastReceiver br = new BroadcastReceiver() {
@@ -50,9 +55,8 @@ public abstract class BlueToothAbstract extends Service implements BlueTooth {
                     searchBlueTooth();
                 } else if (BroadcastEnum.BLUETOOTH_CLASSIC_CONNECT.getCode().equals(data.getCode())) {
                     // 连接蓝牙
-//                    Object data1 = data.getData();
-                    String address = "";
-                    connectBlueTooth(address);
+                    BluetoothEntity bluetooth = (BluetoothEntity) data.getData();
+                    connectBlueTooth(bluetooth);
                 }
             }
         }
@@ -107,6 +111,7 @@ public abstract class BlueToothAbstract extends Service implements BlueTooth {
                 public void onScanResult(int callbackType, ScanResult result) {
                     super.onScanResult(callbackType, result);
                     BluetoothDevice device = result.getDevice();
+                    blueToothList.put(device.getAddress(), device);
                     BluetoothEntity bluetoothEntity = new BluetoothEntity();
                     bluetoothEntity.setName(device.getName());
                     bluetoothEntity.setAddress(device.getAddress());

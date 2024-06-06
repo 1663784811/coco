@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.le.ScanCallback;
 
+import com.cyyaw.coco.entity.BluetoothEntity;
+
 import java.util.List;
 
 public interface BlueTooth {
@@ -16,7 +18,7 @@ public interface BlueTooth {
     /**
      * 连接蓝牙
      */
-    void connectBlueTooth(final String address);
+    void connectBlueTooth(BluetoothEntity bluetooth);
 
     /**
      * 查找已配对设备

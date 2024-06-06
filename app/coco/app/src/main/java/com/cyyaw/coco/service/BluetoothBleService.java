@@ -25,6 +25,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.common.BroadcastEnum;
+import com.cyyaw.coco.entity.BluetoothEntity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -199,8 +200,9 @@ public class BluetoothBleService extends Service implements BlueTooth {
      * 连接蓝牙
      */
     @SuppressLint("MissingPermission")
-    public void connectBlueTooth(final String address) {
+    public void connectBlueTooth(BluetoothEntity bluetooth) {
         try {
+            String address = bluetooth.getAddress();
             BluetoothDevice remoteDevice = bluetoothAdapter.getRemoteDevice(address);
             bluetoothGatt = remoteDevice.connectGatt(this, true, bluetoothGattCallback);
         } catch (IllegalArgumentException exception) {
