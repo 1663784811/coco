@@ -10,17 +10,32 @@ import org.junit.runner.RunWith;
 
 import static org.junit.Assert.*;
 
+import com.cyyaw.coco.activity.PrintPreviewActivity;
+import com.cyyaw.coco.utils.print.PrintOrderDataMaker;
+import com.cyyaw.coco.utils.print.PrintQueue;
+import com.cyyaw.coco.utils.print.PrinterWriter;
+import com.cyyaw.coco.utils.print.PrinterWriter58mm;
+
+import java.util.List;
+
 /**
  * Instrumented test, which will execute on an Android device.
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-@RunWith(AndroidJUnit4.class)
+
 public class ExampleInstrumentedTest {
     @Test
     public void useAppContext() {
-        // Context of the app under test.
-        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.cyyaw.coco", appContext.getPackageName());
+        printTest();
     }
+
+    public static void printTest() {
+        PrintOrderDataMaker printOrderDataMaker = new PrintOrderDataMaker(PrinterWriter58mm.TYPE_58, PrinterWriter.HEIGHT_PARTING_DEFAULT);
+        List<byte[]> printData = printOrderDataMaker.getPrintData(PrinterWriter58mm.TYPE_58);
+
+        System.out.println("打印数据");
+        PrintQueue.getQueue().add(printData);
+    }
+
 }

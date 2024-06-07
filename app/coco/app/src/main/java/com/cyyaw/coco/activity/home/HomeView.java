@@ -26,6 +26,7 @@ import com.cyyaw.coco.common.BroadcastEnum;
 import com.cyyaw.coco.common.permission.PermissionsCode;
 import com.cyyaw.coco.entity.BluetoothEntity;
 import com.cyyaw.coco.service.BluetoothClassicService;
+import com.cyyaw.coco.utils.BluetoothUtils;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
@@ -41,11 +42,11 @@ public class HomeView extends LinearLayout {
     private BroadcastReceiver br = new BroadcastReceiver() {
 
         @Override
-        public void onReceive(Context context, Intent intent) {
+        public void onReceive(Context ct, Intent intent) {
             // 接收广播: 搜索蓝牙、 连接蓝牙
             BroadcastData data = intent.getSerializableExtra("data", BroadcastData.class);
             if (BroadcastEnum.STATUS_SERVICE_INIT.equals(data.getCode())) {
-                openBlueTooth();
+                BluetoothUtils.search(context);
             } else if (BroadcastEnum.BLUETOOTH_SEARCH.getCode().equals(data.getCode())) {
                 BluetoothEntity bluetoothEntity = (BluetoothEntity) data.getData();
                 // 更新列表数据
@@ -53,7 +54,7 @@ public class HomeView extends LinearLayout {
             }
 
 
-            Log.i(TAG, "onReceive: 接收到广播:" + new Gson().toJson(data.getData()) );
+            Log.i(TAG, "onReceive: 接收到广播:" + new Gson().toJson(data.getData()));
         }
     };
 
@@ -95,21 +96,6 @@ public class HomeView extends LinearLayout {
         ft.addAction(BroadcastEnum.ACTIVITY_HOME);
         ft.addAction(BroadcastEnum.ACTIVITY_BLUETOOTH);
         ContextCompat.registerReceiver(context, br, ft, ContextCompat.RECEIVER_EXPORTED);
-    }
-
-    private void openBlueTooth() {
-        context.requestPermissionsFn(PermissionsCode.BLUETOOTH_CONNECT, () -> {
-            context.requestPermissionsFn(PermissionsCode.BLUETOOTH_REQUEST_ENABLE, () -> {
-                // 搜索蓝牙
-                Intent intent = new Intent();
-                intent.setAction(BroadcastEnum.BLUETOOTH_CLASSIC);
-                BroadcastData<String> broadcastData = new BroadcastData();
-                broadcastData.setCode(BroadcastEnum.BLUETOOTH_SEARCH.getCode());
-                broadcastData.setData(BroadcastEnum.BLUETOOTH_SEARCH.getNote());
-                intent.putExtra("data", broadcastData);
-                context.sendBroadcast(intent);
-            });
-        });
     }
 
 }

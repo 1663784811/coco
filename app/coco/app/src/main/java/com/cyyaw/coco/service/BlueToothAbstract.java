@@ -51,10 +51,13 @@ public abstract class BlueToothAbstract extends Service implements BlueTooth {
                 if (BroadcastEnum.BLUETOOTH_SEARCH.getCode().equals(data.getCode())) {
                     // 开始搜索蓝牙
                     searchBlueTooth();
-                } else if (BroadcastEnum.BLUETOOTH_CLASSIC_CONNECT.getCode().equals(data.getCode())) {
+                } else if (BroadcastEnum.BLUETOOTH_CONNECT.getCode().equals(data.getCode())) {
                     // 连接蓝牙
                     BluetoothEntity bluetooth = (BluetoothEntity) data.getData();
                     connectBlueTooth(bluetooth);
+                } else if (BroadcastEnum.BLUETOOTH_UN_CONNECT.getCode().equals(data.getCode())) {
+                    // 断开蓝牙连接
+                    closeConnectBlueTooth();
                 }
             }
         }

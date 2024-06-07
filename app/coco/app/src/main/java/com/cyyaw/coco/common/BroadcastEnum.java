@@ -4,8 +4,8 @@ public enum BroadcastEnum {
 
     BLUETOOTH_SEARCH("search","搜索蓝牙")
     ,BLUETOOTH_OBJ("BLUETOOTH_OBJ","蓝牙对象")
-    ,BLUETOOTH_BLE_CONNECT("BLUETOOTH_BLE_CONNECT","连接低功耗蓝牙")
-    ,BLUETOOTH_CLASSIC_CONNECT("BLUETOOTH_CLASSIC_CONNECT","连接经典蓝牙")
+    ,BLUETOOTH_UN_CONNECT("BLUETOOTH_UN_CONNECT","断开蓝牙连接")
+    ,BLUETOOTH_CONNECT("BLUETOOTH_CONNECT","连接蓝牙")
     ;
 
     public static final String BLUETOOTH_BR = "com.cyyaw.coco.service.BlueToothAbstract";

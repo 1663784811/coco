@@ -8,8 +8,8 @@ import android.bluetooth.le.ScanCallback;
 import android.bluetooth.le.ScanResult;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,11 +18,17 @@ import com.cyyaw.coco.R;
 import com.cyyaw.coco.activity.adapter.BluetoothListAdapter;
 import com.cyyaw.coco.common.BaseAppCompatActivity;
 import com.cyyaw.coco.common.BroadcastData;
-import com.cyyaw.coco.common.BroadcastEnum;
 import com.cyyaw.coco.common.permission.PermissionsCode;
+import com.cyyaw.coco.entity.BluetoothEntity;
+import com.cyyaw.coco.utils.BluetoothUtils;
 
 public class PrintPreviewActivity extends BaseAppCompatActivity {
     private final String TAG = PrintPreviewActivity.class.getName();
+
+    /**
+     * 选择的蓝牙
+     */
+    private BluetoothEntity bluetooth;
 
 
     @SuppressLint("MissingPermission")
@@ -33,17 +39,8 @@ public class PrintPreviewActivity extends BaseAppCompatActivity {
         // ========================
         // 接收数据
         Intent inx = getIntent();
-        BroadcastData bluetooth = inx.getSerializableExtra("data", BroadcastData.class);
-        bluetooth.setCode(BroadcastEnum.BLUETOOTH_CLASSIC_CONNECT.getCode());
-        // 连接蓝牙
-        requestPermissionsFn(PermissionsCode.BLUETOOTH_CONNECT, () -> {
-            Toast.makeText(PrintPreviewActivity.this, "有连接权限", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent();
-            intent.setAction(BroadcastEnum.BLUETOOTH_BR);
-            intent.putExtra("data", bluetooth);
-            sendBroadcast(intent);
-        });
-
+        BroadcastData broadcastData = inx.getSerializableExtra("data", BroadcastData.class);
+        bluetooth = (BluetoothEntity) broadcastData.getData();
 
         // ========================
         View nowPrintBtn = findViewById(R.id.nowPrintBtn);
@@ -66,26 +63,14 @@ public class PrintPreviewActivity extends BaseAppCompatActivity {
          * 搜索蓝牙
          */
         searchBluetoothBtn.setOnClickListener((View v) -> {
-            requestPermissionsFn(PermissionsCode.BLUETOOTH_REQUEST_ENABLE, () -> {
-                // 搜索蓝牙
-                BluetoothAdapter defaultAdapter = BluetoothAdapter.getDefaultAdapter();
-                BluetoothLeScanner bluetoothLeScanner = defaultAdapter.getBluetoothLeScanner();
-                bluetoothLeScanner.startScan(new ScanCallback() {
-                    @Override
-                    public void onScanResult(int callbackType, ScanResult result) {
-                        super.onScanResult(callbackType, result);
-                        bluetoothListAdapter.setBlueTooth(result);
-                    }
-                });
-            });
+
         });
 
         /**
          * 点击连接
          */
         connectBtn.setOnClickListener((View v) -> {
-
-
+            BluetoothUtils.link(this, bluetooth);
         });
     }
 
@@ -95,5 +80,11 @@ public class PrintPreviewActivity extends BaseAppCompatActivity {
         return this;
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        BluetoothUtils.unLink(this);
+        Log.d(TAG, "onDestroy: ==========================================ssss");
+    }
 }
 
