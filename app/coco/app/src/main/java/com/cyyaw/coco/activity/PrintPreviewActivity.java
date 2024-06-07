@@ -53,7 +53,7 @@ public class PrintPreviewActivity extends BaseAppCompatActivity {
             // 第二步: 发送数据
 //            bluetoothGatt
 
-
+            BluetoothUtils.sendData(PrintPreviewActivity.this, new byte[10]);
         });
 
         /**

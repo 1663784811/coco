@@ -60,12 +60,12 @@ public class BluetoothUtils {
     /**
      * 发送数据
      */
-    public static void sendData(BaseAppCompatActivity context) {
+    public static void sendData(BaseAppCompatActivity context, byte data[]) {
         BroadcastData broadcastData = new BroadcastData();
         Intent intent = new Intent();
         intent.setAction(BroadcastEnum.BLUETOOTH_BR);
         broadcastData.setCode(BroadcastEnum.BLUETOOTH_SEND_DATA.getCode());
-        broadcastData.setData(new Byte[10]);
+        broadcastData.setData(data);
         intent.putExtra("data", broadcastData);
         context.sendBroadcast(intent);
     }
