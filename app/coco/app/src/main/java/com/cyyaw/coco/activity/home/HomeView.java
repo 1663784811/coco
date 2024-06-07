@@ -52,9 +52,6 @@ public class HomeView extends LinearLayout {
                 // 更新列表数据
                 homeBluetoothListAdapter.updateData(bluetoothEntity);
             }
-
-
-            Log.i(TAG, "onReceive: 接收到广播:" + new Gson().toJson(data.getData()));
         }
     };
 

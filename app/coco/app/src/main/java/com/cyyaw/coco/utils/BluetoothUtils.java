@@ -1,5 +1,6 @@
 package com.cyyaw.coco.utils;
 
+import android.content.Context;
 import android.content.Intent;
 
 import com.cyyaw.coco.common.BaseAppCompatActivity;
@@ -68,5 +69,19 @@ public class BluetoothUtils {
         broadcastData.setData(data);
         intent.putExtra("data", broadcastData);
         context.sendBroadcast(intent);
+    }
+
+
+    /**
+     * 发现蓝牙设备
+     */
+    public static void findDevice(Context context, BluetoothEntity bluetooth){
+        Intent inx = new Intent();
+        inx.setAction(BroadcastEnum.ACTIVITY_BLUETOOTH);
+        BroadcastData<BluetoothEntity> broadcastData = new BroadcastData();
+        broadcastData.setCode(BroadcastEnum.BLUETOOTH_SEARCH.getCode());
+        broadcastData.setData(bluetooth);
+        inx.putExtra("data", broadcastData);
+        context.sendBroadcast(inx);
     }
 }
