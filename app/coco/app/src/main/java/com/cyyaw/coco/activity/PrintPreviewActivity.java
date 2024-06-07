@@ -2,10 +2,6 @@ package com.cyyaw.coco.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.le.BluetoothLeScanner;
-import android.bluetooth.le.ScanCallback;
-import android.bluetooth.le.ScanResult;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,7 +14,6 @@ import com.cyyaw.coco.R;
 import com.cyyaw.coco.activity.adapter.BluetoothListAdapter;
 import com.cyyaw.coco.common.BaseAppCompatActivity;
 import com.cyyaw.coco.common.BroadcastData;
-import com.cyyaw.coco.common.permission.PermissionsCode;
 import com.cyyaw.coco.entity.BluetoothEntity;
 import com.cyyaw.coco.utils.BluetoothUtils;
 
@@ -57,6 +52,8 @@ public class PrintPreviewActivity extends BaseAppCompatActivity {
 
             // 第二步: 发送数据
 //            bluetoothGatt
+
+
         });
 
         /**
@@ -84,7 +81,6 @@ public class PrintPreviewActivity extends BaseAppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         BluetoothUtils.unLink(this);
-        Log.d(TAG, "onDestroy: ==========================================ssss");
     }
 }
 

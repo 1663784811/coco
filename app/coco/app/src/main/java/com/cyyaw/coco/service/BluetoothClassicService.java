@@ -15,6 +15,7 @@ import com.cyyaw.coco.entity.BluetoothEntity;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.UUID;
 
 /**
@@ -26,6 +27,9 @@ public class BluetoothClassicService extends BlueToothAbstract {
     static final UUID BLUETOOTH_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     private volatile BluetoothSocket mmSocket;
     private volatile BluetoothDevice mmDevice;
+
+    private volatile InputStream mmInStream;
+    private volatile OutputStream mmOutputStream;
 
     // ========================================================
 
@@ -49,7 +53,8 @@ public class BluetoothClassicService extends BlueToothAbstract {
                     // 连接
                     mmSocket.connect();
                     // 连接成功
-                    InputStream mmInStream = mmSocket.getInputStream();
+                    mmInStream = mmSocket.getInputStream();
+                    mmOutputStream = mmSocket.getOutputStream();
                     // 缓冲区大小
                     byte[] mmBuffer = new byte[1024];
                     // 读取几个字节
@@ -77,7 +82,8 @@ public class BluetoothClassicService extends BlueToothAbstract {
     @Override
     public void writeData(byte[] bytes) {
         try {
-            mmSocket.getOutputStream().write(bytes);
+            mmOutputStream.write(bytes);
+            mmOutputStream.flush();
         } catch (IOException e) {
             MyApplication.toast("向蓝牙写数据失败");
         }
@@ -86,6 +92,18 @@ public class BluetoothClassicService extends BlueToothAbstract {
     @Override
     public void closeConnectBlueTooth() {
         if (mmSocket != null) {
+            if (null != mmOutputStream) {
+                try {
+                    mmOutputStream.close();
+                } catch (IOException e) {
+                }
+            }
+            if (null != mmInStream) {
+                try {
+                    mmInStream.close();
+                } catch (IOException e) {
+                }
+            }
             try {
                 mmSocket.close();
             } catch (IOException ex) {

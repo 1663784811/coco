@@ -55,4 +55,18 @@ public class BluetoothUtils {
         intent.putExtra("data", broadcastData);
         context.sendBroadcast(intent);
     }
+
+
+    /**
+     * 发送数据
+     */
+    public static void sendData(BaseAppCompatActivity context) {
+        BroadcastData broadcastData = new BroadcastData();
+        Intent intent = new Intent();
+        intent.setAction(BroadcastEnum.BLUETOOTH_BR);
+        broadcastData.setCode(BroadcastEnum.BLUETOOTH_SEND_DATA.getCode());
+        broadcastData.setData(new Byte[10]);
+        intent.putExtra("data", broadcastData);
+        context.sendBroadcast(intent);
+    }
 }
