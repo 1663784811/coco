@@ -96,11 +96,12 @@ public class PrintPreviewActivity extends BaseAppCompatActivity {
             // 第一步: 获取打印像素数据
             List<byte[]> printImageData = printPager.getPrintImageData();
             // 第二步: 发送数据
-//            bluetoothGatt
-
-
             MyApplication.toast(printImageData.size() + "行数据");
-            //BluetoothUtils.sendData(PrintPreviewActivity.this, new byte[10]);
+            int size = printImageData.size();
+            for (int i = 0; i < size; i++) {
+                BluetoothUtils.sendData(PrintPreviewActivity.this, printImageData.get(i));
+            }
+
         });
 
         /**

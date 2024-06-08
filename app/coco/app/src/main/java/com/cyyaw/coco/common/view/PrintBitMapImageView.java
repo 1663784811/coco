@@ -172,8 +172,8 @@ public class PrintBitMapImageView extends View {
         for (int i = 0; i < printDataList.size(); i++) {
             PrintData printData = printDataList.get(i);
             Bitmap bitmap = printData.getBitmapData();
+            int dataType = printData.getDataType();
             if (null == bitmap) {
-                int dataType = printData.getDataType();
                 String source = printData.getSource();
                 if (dataType == 1) {
                     bitmap = drawWord(source);
@@ -184,6 +184,10 @@ public class PrintBitMapImageView extends View {
             if (null != bitmap) {
                 canvas.drawBitmap(bitmap, showPrintX, h, null);
                 h += bitmap.getHeight();
+                if (dataType == -1) {
+                    printData.setDataType(0);
+                    changeData = true;
+                }
             }
         }
         if (changeData) {
@@ -199,6 +203,18 @@ public class PrintBitMapImageView extends View {
         PrintData printData = new PrintData();
         printData.setDataType(1);
         printData.setSource(word);
+        printDataList.add(printData);
+        invalidate(); // 请求重新绘制
+    }
+
+    /**
+     * 画Bitmap
+     */
+    public void setBitmapData(Bitmap bitmap) {
+        PrintData printData = new PrintData();
+        printData.setDataType(-1);
+        printData.setSource("");
+        printData.setBitmapData(bitmap);
         printDataList.add(printData);
         invalidate(); // 请求重新绘制
     }
@@ -233,7 +249,8 @@ public class PrintBitMapImageView extends View {
 
     public List<byte[]> getPrintImageData() {
         List<byte[]> rest = new ArrayList<>();
-        for (int i = 0; i < printDataList.size(); i++) {
+        int size = printDataList.size();
+        for (int i = 0; i < size; i++) {
             PrintData printData = printDataList.get(i);
             Bitmap bm = printData.getBitmapData();
             List<byte[]> bitmapArr = decodeBitmapToDataList(bm);
@@ -271,7 +288,9 @@ public class PrintBitMapImageView extends View {
         }
         int targetHeight = Math.round(bmp.getHeight() * scale);
         // 返回缩放后的位图
-        return Bitmap.createScaledBitmap(bmp, maxWidth, targetHeight, true);
+        Bitmap rest = Bitmap.createScaledBitmap(bmp, maxWidth, targetHeight, true);
+        bmp.recycle();
+        return rest;
     }
 
 
@@ -286,18 +305,35 @@ public class PrintBitMapImageView extends View {
             for (int x = 0; x < width; x++) {
                 int pixel = originalBitmap.getPixel(x, y);
                 // 计算灰度值
-                int red = Color.red(pixel);
-                int green = Color.green(pixel);
-                int blue = Color.blue(pixel);
-                int gray = (red + green + blue) / 3;
-                // 将灰度值与阈值比较，决定是否将像素设置为黑或白
-                if (gray > 128) {
+                int red, green, blue;
+                if (originalBitmap.hasAlpha()) {
+                    //得到alpha通道的值
+                    int alpha = Color.alpha(pixel);
+                    //得到图像的像素RGB的值
+                    red = Color.red(pixel);
+                    green = Color.green(pixel);
+                    blue = Color.blue(pixel);
+                    final float offset = alpha / 255.0f;
+                    // 根据透明度将白色与原色叠加
+                    red = 0xFF + (int) Math.ceil((red - 0xFF) * offset);
+                    green = 0xFF + (int) Math.ceil((green - 0xFF) * offset);
+                    blue = 0xFF + (int) Math.ceil((blue - 0xFF) * offset);
+                } else {
+                    //得到图像的像素RGB的值
+                    red = Color.red(pixel);
+                    green = Color.green(pixel);
+                    blue = Color.blue(pixel);
+                }
+                // 接近白色改为白色。其余黑色
+                if (red > 160 && green > 160 && blue > 160) {
                     binarizedBitmap.setPixel(x, y, Color.WHITE);
+//                    binarizedBitmap.setPixel(x, y, Color.BLACK);
                 } else {
                     binarizedBitmap.setPixel(x, y, Color.BLACK);
                 }
             }
         }
+        originalBitmap.recycle();
         return binarizedBitmap;
     }
 
@@ -312,16 +348,20 @@ public class PrintBitMapImageView extends View {
         List<byte[]> rest = new ArrayList<>();
         for (int y = 0; y < height; y++) {
             byte[] rowByte = new byte[byteSize];
-            int x = 0;
+            int x = -1;
             for (int i = 0; i < byteSize; i++) {
                 byte b = rowByte[i];
                 for (int j = 7; j > 0; j--) {
-                    if (x > width) {
+                    x++;
+                    if (x < width) {
                         int pixel = bitmap.getPixel(x, y);
                         int value = (pixel == Color.BLACK ? 0 : 1);
-                        b = (byte) (b | (value << j));
+                        if(value>0){
+                            b = (byte) (b | (value << j));
+                        }
                     }
                 }
+                rowByte[i] = b;
             }
             rest.add(rowByte);
         }
