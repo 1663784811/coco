@@ -345,7 +345,7 @@ public class PrintBitMapImageView extends View {
         final int height = bitmap.getHeight();
         // 需要用 byteSize 个字节保存一行数据
         int byteSize = new BigDecimal(width).divide(new BigDecimal(8)).intValue();
-        List<byte[]> rest = new ArrayList<>();
+        List<byte[]> rest = new ArrayList<>(height);
         for (int y = 0; y < height; y++) {
             byte[] rowByte = new byte[byteSize];
             int x = -1;
