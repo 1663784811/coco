@@ -48,8 +48,6 @@ public class PrintBitMapImageView extends View {
 
 
     // ==============================
-    // 宽度比
-    private BigDecimal printWidthRatio;
     // 显示的宽度
     private int showPrintWidth;
     private int showPrintX;
@@ -106,7 +104,6 @@ public class PrintBitMapImageView extends View {
             printWidth = printW;
         }
         // ===========================================================
-        // 初始化画笔
         // 白色背景
         // setBackgroundColor(Color.WHITE);
         // 绘制带圆角的矩形背景
@@ -126,7 +123,7 @@ public class PrintBitMapImageView extends View {
             height = 300;
         }
         // 计算有效打印宽度比
-        printWidthRatio = new BigDecimal(printWidth).divide(new BigDecimal(paperWidth), 18, RoundingMode.HALF_UP);
+        BigDecimal printWidthRatio = new BigDecimal(printWidth).divide(new BigDecimal(paperWidth), 18, RoundingMode.HALF_UP);
         showPrintWidth = printWidthRatio.multiply(new BigDecimal(width)).intValue();
         showPrintX = new BigDecimal(width - showPrintWidth).divide(new BigDecimal(2), 18, RoundingMode.HALF_UP).intValue();
         setMeasuredDimension(width, height);
@@ -232,6 +229,103 @@ public class PrintBitMapImageView extends View {
         staticLayout.draw(canvas);
         canvas.restore();
         return wordBitmap;
+    }
+
+    public List<byte[]> getPrintImageData() {
+        List<byte[]> rest = new ArrayList<>();
+        for (int i = 0; i < printDataList.size(); i++) {
+            PrintData printData = printDataList.get(i);
+            Bitmap bm = printData.getBitmapData();
+            List<byte[]> bitmapArr = decodeBitmapToDataList(bm);
+            rest.addAll(bitmapArr);
+        }
+        return rest;
+    }
+
+
+    /**
+     * 解码图片
+     *
+     * @param image 图片
+     * @return 数据流
+     */
+    @SuppressWarnings("unused")
+    public List<byte[]> decodeBitmapToDataList(final Bitmap image) {
+        // 缩放
+        Bitmap tempBitmap = scaleBitmapProportionally(image, printWidth * 8);
+        // 二值化
+        tempBitmap = binarizeBitmap(tempBitmap);
+        // 转为数组
+        return bitmapToByteArray(tempBitmap);
+    }
+
+    /**
+     * 等比例缩放: 当宽度大于maxWidth等比例缩放, 返回一个maxWidth宽度的位图
+     */
+    private Bitmap scaleBitmapProportionally(Bitmap bmp, int maxWidth) {
+        int width = bmp.getWidth();
+        float scale = 1;
+        if (maxWidth < width) {
+            // 缩放
+            scale = (float) maxWidth / width;
+        }
+        int targetHeight = Math.round(bmp.getHeight() * scale);
+        // 返回缩放后的位图
+        return Bitmap.createScaledBitmap(bmp, maxWidth, targetHeight, true);
+    }
+
+
+    /**
+     * 像素二值化
+     */
+    private Bitmap binarizeBitmap(Bitmap originalBitmap) {
+        int width = originalBitmap.getWidth();
+        int height = originalBitmap.getHeight();
+        Bitmap binarizedBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int pixel = originalBitmap.getPixel(x, y);
+                // 计算灰度值
+                int red = Color.red(pixel);
+                int green = Color.green(pixel);
+                int blue = Color.blue(pixel);
+                int gray = (red + green + blue) / 3;
+                // 将灰度值与阈值比较，决定是否将像素设置为黑或白
+                if (gray > 128) {
+                    binarizedBitmap.setPixel(x, y, Color.WHITE);
+                } else {
+                    binarizedBitmap.setPixel(x, y, Color.BLACK);
+                }
+            }
+        }
+        return binarizedBitmap;
+    }
+
+    /**
+     * 转为byte数组
+     */
+    private List<byte[]> bitmapToByteArray(Bitmap bitmap) {
+        final int width = bitmap.getWidth();
+        final int height = bitmap.getHeight();
+        // 需要用 byteSize 个字节保存一行数据
+        int byteSize = new BigDecimal(width).divide(new BigDecimal(8)).intValue();
+        List<byte[]> rest = new ArrayList<>();
+        for (int y = 0; y < height; y++) {
+            byte[] rowByte = new byte[byteSize];
+            int x = 0;
+            for (int i = 0; i < byteSize; i++) {
+                byte b = rowByte[i];
+                for (int j = 7; j > 0; j--) {
+                    if (x > width) {
+                        int pixel = bitmap.getPixel(x, y);
+                        int value = (pixel == Color.BLACK ? 0 : 1);
+                        b = (byte) (b | (value << j));
+                    }
+                }
+            }
+            rest.add(rowByte);
+        }
+        return rest;
     }
 
 

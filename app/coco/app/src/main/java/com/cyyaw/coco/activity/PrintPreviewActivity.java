@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
+import com.cyyaw.coco.MyApplication;
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.common.BaseAppCompatActivity;
 import com.cyyaw.coco.common.BroadcastData;
@@ -20,6 +21,8 @@ import com.cyyaw.coco.common.BroadcastEnum;
 import com.cyyaw.coco.common.view.PrintBitMapImageView;
 import com.cyyaw.coco.entity.BluetoothEntity;
 import com.cyyaw.coco.utils.BluetoothUtils;
+
+import java.util.List;
 
 public class PrintPreviewActivity extends BaseAppCompatActivity {
     private final String TAG = PrintPreviewActivity.class.getName();
@@ -91,11 +94,13 @@ public class PrintPreviewActivity extends BaseAppCompatActivity {
 
         nowPrintBtn.setOnClickListener((View v) -> {
             // 第一步: 获取打印像素数据
-
+            List<byte[]> printImageData = printPager.getPrintImageData();
             // 第二步: 发送数据
 //            bluetoothGatt
 
-            BluetoothUtils.sendData(PrintPreviewActivity.this, new byte[10]);
+
+            MyApplication.toast(printImageData.size() + "行数据");
+            //BluetoothUtils.sendData(PrintPreviewActivity.this, new byte[10]);
         });
 
         /**
