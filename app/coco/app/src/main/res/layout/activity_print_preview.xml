@@ -4,14 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#EAEAEA"
     tools:context=".activity.PrintPreviewActivity">
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/bluetoothList"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:orientation="vertical">
+
+            <com.cyyaw.coco.common.view.PrintBitMapImageView
+                android:id="@+id/printPager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff" />
+
+            <TextView
+                android:id="@+id/blueToothName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:text="蓝牙" />
+            <TextView
+                android:id="@+id/blueToothStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="未连接" />
+        </LinearLayout>
+
+
+    </ScrollView>
+
 
     <Button
         android:id="@+id/searchBluetoothBtn"
@@ -44,11 +72,4 @@
         app:layout_constraintBottom_toBottomOf="parent"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp" />
-
-
-
-
-
-
-
-</androidx.constraintlayout.widget.ConstraintLayout >
+</androidx.constraintlayout.widget.ConstraintLayout>

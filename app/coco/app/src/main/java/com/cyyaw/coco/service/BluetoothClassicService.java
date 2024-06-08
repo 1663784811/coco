@@ -12,6 +12,7 @@ import androidx.core.app.ActivityCompat;
 
 import com.cyyaw.coco.MyApplication;
 import com.cyyaw.coco.entity.BluetoothEntity;
+import com.cyyaw.coco.utils.BluetoothUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -52,6 +53,7 @@ public class BluetoothClassicService extends BlueToothAbstract {
                 try {
                     // 连接
                     mmSocket.connect();
+                    BluetoothUtils.connectSuccess(BluetoothClassicService.this, bluetooth);
                     // 连接成功
                     mmInStream = mmSocket.getInputStream();
                     mmOutputStream = mmSocket.getOutputStream();
@@ -61,20 +63,17 @@ public class BluetoothClassicService extends BlueToothAbstract {
                     int numBytes = 0;
                     // 读取数据
                     while (true) {
-                        try {
-                            numBytes = mmInStream.read(mmBuffer);
-                            MyApplication.toast("数据：" + numBytes);
-                            // 处理读取的数据
-                        } catch (IOException e) {
-                            Log.d(TAG, "Input stream was disconnected", e);
-                            break;
-                        }
+                        numBytes = mmInStream.read(mmBuffer);
+                        MyApplication.toast("数据：" + numBytes);
+                        // 处理读取的数据
                     }
                 } catch (IOException e) {
+                    BluetoothUtils.connectFail(BluetoothClassicService.this, bluetooth);
                     closeConnectBlueTooth();
                 }
             });
         } catch (Exception e) {
+            BluetoothUtils.connectFail(BluetoothClassicService.this, bluetooth);
             MyApplication.toast("连接蓝牙失败");
         }
     }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PrintBitMapImageView">
+        <!--    纸宽度    -->
+        <attr name="paperWidth" format="integer" />
+        <!--  有效打印宽度      -->
+        <attr name="printWidth" format="integer"/>
+    </declare-styleable>
+</resources>
+

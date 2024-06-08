@@ -31,7 +31,7 @@ public class BluetoothUtils {
     }
 
     /**
-     * 断开连接
+     * 申请连接
      */
     public static void link(BaseAppCompatActivity context, BluetoothEntity bluetooth) {
         context.requestPermissionsFn(PermissionsCode.BLUETOOTH_CONNECT, () -> {
@@ -43,6 +43,32 @@ public class BluetoothUtils {
             intent.putExtra("data", broadcastData);
             context.sendBroadcast(intent);
         });
+    }
+
+    /**
+     * 连接成功
+     */
+    public static void connectSuccess(Context context, BluetoothEntity bluetooth) {
+        BroadcastData broadcastData = new BroadcastData();
+        Intent intent = new Intent();
+        intent.setAction(BroadcastEnum.ACTIVITY_BLUETOOTH);
+        broadcastData.setCode(BroadcastEnum.BLUETOOTH_CONNECT_SUCCESS.getCode());
+        broadcastData.setData(bluetooth);
+        intent.putExtra("data", broadcastData);
+        context.sendBroadcast(intent);
+    }
+
+    /**
+     * 连接失败
+     */
+    public static void connectFail(Context context, BluetoothEntity bluetooth) {
+        BroadcastData broadcastData = new BroadcastData();
+        Intent intent = new Intent();
+        intent.setAction(BroadcastEnum.ACTIVITY_BLUETOOTH);
+        broadcastData.setCode(BroadcastEnum.BLUETOOTH_CONNECT_FAIL.getCode());
+        broadcastData.setData(bluetooth);
+        intent.putExtra("data", broadcastData);
+        context.sendBroadcast(intent);
     }
 
     /**

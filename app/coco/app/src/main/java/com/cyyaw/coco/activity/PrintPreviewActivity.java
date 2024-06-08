@@ -2,28 +2,61 @@ package com.cyyaw.coco.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.core.content.ContextCompat;
 
 import com.cyyaw.coco.R;
-import com.cyyaw.coco.activity.adapter.BluetoothListAdapter;
 import com.cyyaw.coco.common.BaseAppCompatActivity;
 import com.cyyaw.coco.common.BroadcastData;
+import com.cyyaw.coco.common.BroadcastEnum;
+import com.cyyaw.coco.common.view.PrintBitMapImageView;
 import com.cyyaw.coco.entity.BluetoothEntity;
 import com.cyyaw.coco.utils.BluetoothUtils;
 
 public class PrintPreviewActivity extends BaseAppCompatActivity {
     private final String TAG = PrintPreviewActivity.class.getName();
 
+    private View nowPrintBtn;
+    private View connectBtn;
+    private View searchBluetoothBtn;
+    private PrintBitMapImageView printPager;
+    private TextView blueToothName;
+    private TextView blueToothStatus;
+    // ========================
+
+
     /**
      * 选择的蓝牙
      */
     private BluetoothEntity bluetooth;
+
+    private BroadcastReceiver br = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+                // 通知页面
+            } else {
+                // 接收广播:  连接蓝牙
+                BroadcastData data = intent.getSerializableExtra("data", BroadcastData.class);
+                if (null != data) {
+                    if (BroadcastEnum.BLUETOOTH_CONNECT_SUCCESS.getCode().equals(data.getCode())) {
+                        blueToothStatus.setText("蓝牙连接成功");
+                    } else if (BroadcastEnum.BLUETOOTH_CONNECT_FAIL.getCode().equals(data.getCode())) {
+                        blueToothStatus.setText("蓝牙连接失败");
+                    }
+                }
+            }
+        }
+    };
 
 
     @SuppressLint("MissingPermission")
@@ -31,6 +64,9 @@ public class PrintPreviewActivity extends BaseAppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_print_preview);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(BroadcastEnum.ACTIVITY_BLUETOOTH);
+        ContextCompat.registerReceiver(this, br, intentFilter, ContextCompat.RECEIVER_EXPORTED);
         // ========================
         // 接收数据
         Intent inx = getIntent();
@@ -38,14 +74,20 @@ public class PrintPreviewActivity extends BaseAppCompatActivity {
         bluetooth = (BluetoothEntity) broadcastData.getData();
 
         // ========================
-        View nowPrintBtn = findViewById(R.id.nowPrintBtn);
-        View connectBtn = findViewById(R.id.connectBtn);
-        View searchBluetoothBtn = findViewById(R.id.searchBluetoothBtn);
+        nowPrintBtn = findViewById(R.id.nowPrintBtn);
+        connectBtn = findViewById(R.id.connectBtn);
+        searchBluetoothBtn = findViewById(R.id.searchBluetoothBtn);
+        printPager = findViewById(R.id.printPager);
+        blueToothName = findViewById(R.id.blueToothName);
+        blueToothStatus = findViewById(R.id.blueToothStatus);
+        blueToothName.setText("蓝牙: " + bluetooth.getName());
 
-        RecyclerView bluetoothList = findViewById(R.id.bluetoothList);
-        BluetoothListAdapter bluetoothListAdapter = new BluetoothListAdapter(this, null);
-        bluetoothList.setLayoutManager(new LinearLayoutManager(this));
-        bluetoothList.setAdapter(bluetoothListAdapter);
+        printPager.setWordData("点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接");
+
+//        RecyclerView bluetoothList = findViewById(R.id.bluetoothList);
+//        BluetoothListAdapter bluetoothListAdapter = new BluetoothListAdapter(this, null);
+//        bluetoothList.setLayoutManager(new LinearLayoutManager(this));
+//        bluetoothList.setAdapter(bluetoothListAdapter);
 
         nowPrintBtn.setOnClickListener((View v) -> {
             // 第一步: 获取打印像素数据
@@ -67,8 +109,11 @@ public class PrintPreviewActivity extends BaseAppCompatActivity {
          * 点击连接
          */
         connectBtn.setOnClickListener((View v) -> {
+            blueToothStatus.setText("正在连接...");
             BluetoothUtils.link(this, bluetooth);
         });
+
+
     }
 
 

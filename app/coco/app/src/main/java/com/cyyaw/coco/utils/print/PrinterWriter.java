@@ -342,8 +342,9 @@ public abstract class PrinterWriter {
     public List<byte[]> getImageByte(Resources res, int id) {
         int maxWidth = getDrawableMaxWidth();
         Bitmap image = scalingBitmap(res, id, maxWidth);
-        if (image == null)
+        if (image == null){
             return null;
+        }
         List<byte[]> data = PrinterUtils.decodeBitmapToDataList(image, heightParting);
         image.recycle();
         return data;
@@ -365,8 +366,9 @@ public abstract class PrinterWriter {
      * @return 缩放后的图片
      */
     private Bitmap scalingBitmap(Resources res, int id, int maxWidth) {
-        if (res == null)
+        if (res == null){
             return null;
+        }
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;// 设置只量取宽高
         BitmapFactory.decodeResource(res, id, options);// 量取宽高
