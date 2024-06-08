@@ -98,9 +98,9 @@ public class PrintPreviewActivity extends BaseAppCompatActivity {
             // 第二步: 发送数据
             MyApplication.toast(printImageData.size() + "行数据");
             int size = printImageData.size();
-            for (int i = 0; i < size; i++) {
-                BluetoothUtils.sendData(PrintPreviewActivity.this, printImageData.get(i));
-            }
+
+
+
 
         });
 

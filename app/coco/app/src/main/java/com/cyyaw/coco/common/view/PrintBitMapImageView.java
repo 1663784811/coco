@@ -327,7 +327,6 @@ public class PrintBitMapImageView extends View {
                 // 接近白色改为白色。其余黑色
                 if (red > 160 && green > 160 && blue > 160) {
                     binarizedBitmap.setPixel(x, y, Color.WHITE);
-//                    binarizedBitmap.setPixel(x, y, Color.BLACK);
                 } else {
                     binarizedBitmap.setPixel(x, y, Color.BLACK);
                 }
@@ -355,9 +354,9 @@ public class PrintBitMapImageView extends View {
                     x++;
                     if (x < width) {
                         int pixel = bitmap.getPixel(x, y);
-                        int value = (pixel == Color.BLACK ? 0 : 1);
-                        if(value>0){
-                            b = (byte) (b | (value << j));
+                        int value = (pixel == Color.BLACK ? 1 : 0);
+                        if (value > 0) {
+                            b = (byte) (b | (1 << j));
                         }
                     }
                 }
