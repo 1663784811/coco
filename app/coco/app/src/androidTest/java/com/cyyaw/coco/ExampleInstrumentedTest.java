@@ -23,7 +23,7 @@ import java.util.List;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-
+@RunWith(AndroidJUnit4.class)
 public class ExampleInstrumentedTest {
     @Test
     public void useAppContext() {
@@ -31,11 +31,8 @@ public class ExampleInstrumentedTest {
     }
 
     public static void printTest() {
-        PrintOrderDataMaker printOrderDataMaker = new PrintOrderDataMaker(PrinterWriter58mm.TYPE_58, PrinterWriter.HEIGHT_PARTING_DEFAULT);
-        List<byte[]> printData = printOrderDataMaker.getPrintData(PrinterWriter58mm.TYPE_58);
 
         System.out.println("打印数据");
-        PrintQueue.getQueue().add(printData);
     }
 
 }

@@ -19,14 +19,16 @@ public class BluetoothUtils {
      */
     public static void search(BaseAppCompatActivity context) {
         context.requestPermissionsFn(PermissionsCode.BLUETOOTH_SCAN, () -> {
-            // 搜索蓝牙
-            Intent intent = new Intent();
-            intent.setAction(BroadcastEnum.BLUETOOTH_BR);
-            BroadcastData<String> broadcastData = new BroadcastData();
-            broadcastData.setCode(BroadcastEnum.BLUETOOTH_SEARCH.getCode());
-            broadcastData.setData(BroadcastEnum.BLUETOOTH_SEARCH.getNote());
-            intent.putExtra("data", broadcastData);
-            context.sendBroadcast(intent);
+            context.requestPermissionsFn(PermissionsCode.BLUETOOTH_CONNECT, () -> {
+                // 搜索蓝牙
+                Intent intent = new Intent();
+                intent.setAction(BroadcastEnum.BLUETOOTH_BR);
+                BroadcastData<String> broadcastData = new BroadcastData();
+                broadcastData.setCode(BroadcastEnum.BLUETOOTH_SEARCH.getCode());
+                broadcastData.setData(BroadcastEnum.BLUETOOTH_SEARCH.getNote());
+                intent.putExtra("data", broadcastData);
+                context.sendBroadcast(intent);
+            });
         });
     }
 
@@ -101,7 +103,7 @@ public class BluetoothUtils {
     /**
      * 发现蓝牙设备
      */
-    public static void findDevice(Context context, BluetoothEntity bluetooth){
+    public static void findDevice(Context context, BluetoothEntity bluetooth) {
         Intent inx = new Intent();
         inx.setAction(BroadcastEnum.ACTIVITY_BLUETOOTH);
         BroadcastData<BluetoothEntity> broadcastData = new BroadcastData();

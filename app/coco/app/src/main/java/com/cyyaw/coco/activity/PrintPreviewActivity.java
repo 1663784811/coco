@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -44,20 +45,20 @@ public class PrintPreviewActivity extends BaseAppCompatActivity {
     private BroadcastReceiver br = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-                // 通知页面
-            } else {
-                // 接收广播:  连接蓝牙
-                BroadcastData data = intent.getSerializableExtra("data", BroadcastData.class);
-                if (null != data) {
-                    if (BroadcastEnum.BLUETOOTH_CONNECT_SUCCESS.getCode().equals(data.getCode())) {
-                        blueToothStatus.setText("蓝牙连接成功");
-                    } else if (BroadcastEnum.BLUETOOTH_CONNECT_FAIL.getCode().equals(data.getCode())) {
-                        blueToothStatus.setText("蓝牙连接失败");
-                    }
-                }
-            }
+//            String action = intent.getAction();
+//            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+//                // 通知页面
+//            } else {
+//                // 接收广播:  连接蓝牙
+//                BroadcastData data = intent.getSerializableExtra("data", BroadcastData.class);
+//                if (null != data) {
+//                    if (BroadcastEnum.BLUETOOTH_CONNECT_SUCCESS.getCode().equals(data.getCode())) {
+//                        blueToothStatus.setText("蓝牙连接成功");
+//                    } else if (BroadcastEnum.BLUETOOTH_CONNECT_FAIL.getCode().equals(data.getCode())) {
+//                        blueToothStatus.setText("蓝牙连接失败");
+//                    }
+//                }
+//            }
         }
     };
 
@@ -87,10 +88,7 @@ public class PrintPreviewActivity extends BaseAppCompatActivity {
 
         printPager.setWordData("点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接点击连接");
 
-//        RecyclerView bluetoothList = findViewById(R.id.bluetoothList);
-//        BluetoothListAdapter bluetoothListAdapter = new BluetoothListAdapter(this, null);
-//        bluetoothList.setLayoutManager(new LinearLayoutManager(this));
-//        bluetoothList.setAdapter(bluetoothListAdapter);
+
 
         nowPrintBtn.setOnClickListener((View v) -> {
             // 第一步: 获取打印像素数据
@@ -99,8 +97,13 @@ public class PrintPreviewActivity extends BaseAppCompatActivity {
             MyApplication.toast(printImageData.size() + "行数据");
             int size = printImageData.size();
 
-
-
+            for (int i = 0; i < size; i++) {
+                byte[] bytes = printImageData.get(i);
+                for (int j = 0; j < bytes.length; j++) {
+                    Log.d(TAG, "" + (int)bytes[j]);
+                }
+                Log.d(TAG, "===========" );
+            }
 
         });
 

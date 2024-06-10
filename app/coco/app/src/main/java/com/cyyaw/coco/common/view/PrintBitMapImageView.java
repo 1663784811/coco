@@ -289,7 +289,6 @@ public class PrintBitMapImageView extends View {
         int targetHeight = Math.round(bmp.getHeight() * scale);
         // 返回缩放后的位图
         Bitmap rest = Bitmap.createScaledBitmap(bmp, maxWidth, targetHeight, true);
-        bmp.recycle();
         return rest;
     }
 
@@ -332,7 +331,6 @@ public class PrintBitMapImageView extends View {
                 }
             }
         }
-        originalBitmap.recycle();
         return binarizedBitmap;
     }
 
