@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EAEAEA"
-    tools:context=".activity.PrintPreviewActivity">
+    tools:context=".activity.bluetooth.PrintPreviewActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -34,34 +34,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="未连接" />
+                android:text="离线" />
         </LinearLayout>
 
 
     </ScrollView>
-
-
-    <Button
-        android:id="@+id/searchBluetoothBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:text="搜索蓝牙"
-        app:layout_constraintBottom_toTopOf="@+id/connectBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints" />
-
-    <Button
-        android:id="@+id/connectBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="连接"
-        app:layout_constraintBottom_toTopOf="@+id/nowPrintBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/nowPrintBtn"

@@ -49,7 +49,7 @@ public class BluetoothClassicService extends BlueToothAbstract {
             //mmSocket = mmDevice.createRfcommSocketToServiceRecord(BLUETOOTH_UUID);
             //明文传输(不安全)，无需配对
             mmSocket = mmDevice.createInsecureRfcommSocketToServiceRecord(BLUETOOTH_UUID);
-            MyApplication.post(() -> {
+            MyApplication.run(() -> {
                 try {
                     // 连接
                     mmSocket.connect();

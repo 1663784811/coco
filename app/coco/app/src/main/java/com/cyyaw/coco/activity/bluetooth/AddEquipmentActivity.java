@@ -1,4 +1,4 @@
-package com.cyyaw.coco.activity;
+package com.cyyaw.coco.activity.bluetooth;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -22,7 +22,6 @@ import java.util.Set;
 /**
  * 添加设备
  */
-@RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
 public class AddEquipmentActivity extends BaseAppCompatActivity {
 
 

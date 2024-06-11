@@ -34,11 +34,11 @@ public class MyApplication extends Application {
         sToast.show();
     }
 
-    public static void run(Runnable runnable) {
+    public static void post(Runnable runnable) {
         sHandler.post(runnable);
     }
 
-    public static void post(Runnable runnable) {
+    public static void run(Runnable runnable) {
         ThreadPool.execute(runnable);
     }
 

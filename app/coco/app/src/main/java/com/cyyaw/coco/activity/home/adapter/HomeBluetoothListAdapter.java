@@ -2,7 +2,6 @@ package com.cyyaw.coco.activity.home.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,14 +9,14 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cyyaw.coco.R;
-import com.cyyaw.coco.activity.PrintPreviewActivity;
+import com.cyyaw.coco.activity.bluetooth.PrintPreviewActivity;
 import com.cyyaw.coco.common.BroadcastData;
 import com.cyyaw.coco.common.BroadcastEnum;
 import com.cyyaw.coco.entity.BluetoothEntity;
+import com.cyyaw.coco.utils.ActivityUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,12 +84,10 @@ public class HomeBluetoothListAdapter extends RecyclerView.Adapter<HomeBluetooth
             TextView blueToothAddress = view.findViewById(R.id.blueToothAddress);
             blueToothAddress.setText(bluetoothEntity.getAddress());
             TextView blueToothRssi = view.findViewById(R.id.blueToothRssi);
-            blueToothRssi.setText(bluetoothEntity.getRssi()+"");
+            blueToothRssi.setText(bluetoothEntity.getRssi() + "");
 
             btn.setOnClickListener((View v) -> {
-                Intent intent = new Intent(context, PrintPreviewActivity.class);
-                intent.putExtra("data", BroadcastData.getInstance(BroadcastEnum.BLUETOOTH_OBJ, bluetoothEntity));
-                context.startActivity(intent);
+                ActivityUtils.startActivity(context, PrintPreviewActivity.class, bluetoothEntity);
             });
         }
     }
