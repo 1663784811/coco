@@ -30,7 +30,7 @@ public class ChatListView  extends ConstraintLayout {
 
     private void initView(Context context, AttributeSet attrs) {
         //加载布局
-        View inflate = LayoutInflater.from(context).inflate(R.layout.activity_main_chatlist, this, true);
+        View inflate = LayoutInflater.from(context).inflate(R.layout.activity_main_chat, this, true);
     }
 
 
