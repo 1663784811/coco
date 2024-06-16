@@ -78,8 +78,7 @@ public class BtBase {
                         while ((r = in.read(b)) != -1) {
                             out.write(b, 0, r);
                             len += r;
-                            if (len >= fileLen)
-                                break;
+                            if (len >= fileLen) break;
                         }
                         notifyUI(Listener.MSG, "文件接收完成(存放在:" + FILE_PATH + ")");
                         break;
@@ -93,18 +92,17 @@ public class BtBase {
     /**
      * 发送短消息
      */
-    public void sendMsg(String msg) {
-        if (checkSend()) return;
-        isSending = true;
-        try {
-            mOut.writeInt(FLAG_MSG); //消息标记
-            mOut.writeUTF(msg);
-            mOut.flush();
-            notifyUI(Listener.MSG, "发送短消息：" + msg);
-        } catch (Throwable e) {
-            close();
+    public void sendMsg(byte[] data) {
+        if (!checkSend()){
+            isSending = true;
+            try {
+                mOut.write(data);
+                mOut.flush();
+            } catch (Throwable e) {
+                close();
+            }
+            isSending = false;
         }
-        isSending = false;
     }
 
     /**
@@ -125,8 +123,7 @@ public class BtBase {
                     int r;
                     byte[] b = new byte[4 * 1024];
                     notifyUI(Listener.MSG, "正在发送文件(" + filePath + "),请稍后...");
-                    while ((r = in.read(b)) != -1)
-                        mOut.write(b, 0, r);
+                    while ((r = in.read(b)) != -1) mOut.write(b, 0, r);
                     mOut.flush();
                     notifyUI(Listener.MSG, "文件发送完成.");
                 } catch (Throwable e) {

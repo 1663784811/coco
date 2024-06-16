@@ -54,7 +54,7 @@ public class BlueToothReceiver extends BroadcastReceiver {
             case BluetoothDevice.ACTION_FOUND:
                 short rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI, Short.MAX_VALUE);
                 Log.i(TAG, "EXTRA_RSSI:" + rssi);
-                mListener.foundDev(dev);
+                mListener.foundDev(dev, rssi);
                 break;
             case BluetoothDevice.ACTION_PAIRING_REQUEST: //在系统弹出配对框之前，实现自动配对，取消系统配对框
                 /*try {
@@ -86,7 +86,7 @@ public class BlueToothReceiver extends BroadcastReceiver {
 
     public interface BlueToothListener {
         // 发现蓝牙
-        default void foundDev(BluetoothDevice dev) {
+        default void foundDev(BluetoothDevice dev, short rssi) {
         }
     }
 }

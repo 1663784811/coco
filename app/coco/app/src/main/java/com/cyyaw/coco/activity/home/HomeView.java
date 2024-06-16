@@ -1,9 +1,13 @@
 package com.cyyaw.coco.activity.home;
 
+import android.Manifest;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -13,25 +17,30 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cyyaw.coco.MyApplication;
 import com.cyyaw.coco.R;
+import com.cyyaw.coco.activity.bluetooth.bt.BtBase;
 import com.cyyaw.coco.activity.home.adapter.HomeBluetoothListAdapter;
 import com.cyyaw.coco.activity.home.adapter.LinearLayoutManagerNonScrollable;
+import com.cyyaw.coco.broadcast.BlueToothReceiver;
 import com.cyyaw.coco.common.BaseAppCompatActivity;
 import com.cyyaw.coco.common.BroadcastData;
 import com.cyyaw.coco.common.BroadcastEnum;
 import com.cyyaw.coco.common.permission.PermissionsCode;
 import com.cyyaw.coco.entity.BluetoothEntity;
 import com.cyyaw.coco.service.BluetoothClassicService;
+import com.cyyaw.coco.utils.ActivityUtils;
 import com.cyyaw.coco.utils.BluetoothUtils;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
-public class HomeView extends LinearLayout {
+public class HomeView extends LinearLayout implements BlueToothReceiver.BlueToothListener {
 
     private static final String TAG = HomeView.class.getName();
 
@@ -39,21 +48,7 @@ public class HomeView extends LinearLayout {
 
     private HomeBluetoothListAdapter homeBluetoothListAdapter;
 
-    private BroadcastReceiver br = new BroadcastReceiver() {
-
-        @Override
-        public void onReceive(Context ct, Intent intent) {
-            // 接收广播: 搜索蓝牙、 连接蓝牙
-            BroadcastData data = intent.getSerializableExtra("data", BroadcastData.class);
-            if (BroadcastEnum.STATUS_SERVICE_INIT.equals(data.getCode())) {
-                BluetoothUtils.search(context);
-            } else if (BroadcastEnum.BLUETOOTH_SEARCH.getCode().equals(data.getCode())) {
-                BluetoothEntity bluetoothEntity = (BluetoothEntity) data.getData();
-                // 更新列表数据
-                homeBluetoothListAdapter.updateData(bluetoothEntity);
-            }
-        }
-    };
+    BlueToothReceiver br;
 
 
     public HomeView(BaseAppCompatActivity context) {
@@ -89,10 +84,26 @@ public class HomeView extends LinearLayout {
         intent.putExtra("clazz", BroadcastEnum.ACTIVITY_HOME);
         context.startService(intent);
         // 注册广播
-        IntentFilter ft = new IntentFilter();
-        ft.addAction(BroadcastEnum.ACTIVITY_HOME);
-        ft.addAction(BroadcastEnum.ACTIVITY_BLUETOOTH);
-        ContextCompat.registerReceiver(context, br, ft, ContextCompat.RECEIVER_EXPORTED);
+        br = new BlueToothReceiver(context, this);
+
+        ActivityUtils.blueToothPermissions(context, () -> {
+            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
+            BluetoothAdapter.getDefaultAdapter().startDiscovery();
+        });
+    }
+
+
+    @Override
+    public void foundDev(BluetoothDevice dev, short rssi) {
+        BluetoothEntity bluetooth = new BluetoothEntity();
+        bluetooth.setName(dev.getName());
+        bluetooth.setAddress(dev.getAddress());
+        bluetooth.setType(dev.getType());
+        bluetooth.setRssi(rssi);
+        homeBluetoothListAdapter.updateData(bluetooth);
+        MyApplication.blueTooth.put(dev.getAddress(), dev);
     }
 
 }

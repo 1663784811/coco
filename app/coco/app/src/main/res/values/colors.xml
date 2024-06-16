@@ -6,6 +6,7 @@
     <color name="themes">#0D77CC</color>
 
     <color name="gradientEnd">#4AABF8</color>
+    <color name="defaultBackground">#FAFAFA</color>
 
 
 </resources>
