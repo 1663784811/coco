@@ -4,6 +4,8 @@
 
     <!--  网络:   -->
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <!-- 悬浮窗口:  用于允许应用创建悬浮窗口，即显示在其他应用之上的窗口 运行时向用户请求此权限  -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <!--  广播:  设备启动完成后接收到 BOOT_COMPLETED 广播  -->
@@ -58,12 +60,6 @@
         android:theme="@style/Theme.Coco"
         tools:targetApi="31">
         <activity
-            android:name=".activity.bluetooth.PrintPreviewActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.bluetooth.AddEquipmentActivity"
-            android:exported="false" />
-        <activity
             android:name=".activity.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait">
@@ -75,15 +71,24 @@
         </activity>
 
 
-        <service
-            android:name=".service.BluetoothBleService"
-            android:enabled="true"
+        <activity
+            android:name=".activity.bluetooth.PrintPreviewActivity"
             android:exported="false" />
-        <service
-            android:name=".service.BluetoothClassicService"
-            android:enabled="true"
+        <activity
+            android:name=".activity.bluetooth.AddEquipmentActivity"
             android:exported="false" />
 
+        <service android:name=".service.BluetoothBleService" android:enabled="true" android:exported="false" />
+        <service android:name=".service.BluetoothClassicService" android:enabled="true" android:exported="false" />
+
+        <service android:name="org.eclipse.paho.android.service.MqttService" />
+
+        <!-- 声明 MQTT PingSender 接收器 -->
+        <receiver android:name="org.eclipse.paho.android.service.MqttService$PingSender" android:exported="true" tools:ignore="MissingClass">
+            <intent-filter>
+                <action android:name="org.eclipse.paho.android.service.Ping" />
+            </intent-filter>
+        </receiver>
 
     </application>
 

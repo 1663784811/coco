@@ -41,8 +41,8 @@ public class ChatListView extends ConstraintLayout {
         View chatView = LayoutInflater.from(context).inflate(R.layout.activity_main_chat, this, true);
         ViewPager vp = chatView.findViewById(R.id.char_ViewPager);
         List<View> pageData = new ArrayList<>();
-        pageData.add(new ChatListMsgView(context));
         pageData.add(new ChatListFriendsView(context));
+        pageData.add(new ChatListMsgView(context));
         MyPagerAdapter myPagerAdapter = new MyPagerAdapter(context, pageData);
         vp.setAdapter(myPagerAdapter);
         vp.setCurrentItem(0);
