@@ -17,16 +17,19 @@ import java.util.List;
 public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.ViewHolder> {
     private List<FriendsEntity> dataList = new ArrayList<>();
 
+    private ListenerFriends listenerFriends;
+
     private Context context;
 
-    public FriendsListAdapter(Context context) {
+    public FriendsListAdapter(Context context, ListenerFriends listener) {
         this.context = context;
+        this.listenerFriends = listener;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_friends_item, parent, false));
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_friends_item, parent, false), listenerFriends);
     }
 
     @Override
@@ -68,17 +71,29 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        View view;
+        private View view;
+        private ListenerFriends listenerFriends;
 
-        public ViewHolder(View view) {
+        public ViewHolder(View view, ListenerFriends listenerFriends) {
             super(view);
             this.view = view;
+            this.listenerFriends = listenerFriends;
         }
 
         public void setData(FriendsEntity friendsEntity) {
+            View friendsItem = view.findViewById(R.id.friendsItem);
 
+            friendsItem.setOnClickListener((View v) -> {
+                listenerFriends.click(v, friendsEntity);
+            });
         }
     }
 
+
+    public interface ListenerFriends {
+
+        void click(View v, FriendsEntity friendsEntity);
+
+    }
 
 }

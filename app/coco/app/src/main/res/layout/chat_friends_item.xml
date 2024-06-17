@@ -7,6 +7,7 @@
     android:background="#fff"
     android:layout_margin="1dp"
     android:padding="3dp"
+    android:id="@+id/friendsItem"
     >
 
 

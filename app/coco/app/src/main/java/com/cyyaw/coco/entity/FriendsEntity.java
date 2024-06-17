@@ -1,14 +1,12 @@
 package com.cyyaw.coco.entity;
 
-public class FriendsEntity {
+import java.io.Serializable;
+
+public class FriendsEntity implements Serializable {
 
     private Integer id;
 
     private String name;
-
-
-
-
 
 
     public String getName() {

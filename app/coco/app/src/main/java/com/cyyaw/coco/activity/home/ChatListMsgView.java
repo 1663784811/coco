@@ -19,7 +19,7 @@ import com.cyyaw.coco.entity.FriendsEntity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatListMsgView extends ConstraintLayout {
+public class ChatListMsgView extends ConstraintLayout implements FriendsListAdapter.ListenerFriends {
     public ChatListMsgView(Context context) {
         super(context);
         initView(context, null);
@@ -36,7 +36,6 @@ public class ChatListMsgView extends ConstraintLayout {
     }
 
 
-
     private void initView(Context context, AttributeSet attrs) {
         //加载布局
         View chatView = LayoutInflater.from(context).inflate(R.layout.chat_list, this, true);
@@ -44,7 +43,7 @@ public class ChatListMsgView extends ConstraintLayout {
         RecyclerView recyclerView = chatView.findViewById(R.id.chatList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
-        FriendsListAdapter friendsListAdapter = new FriendsListAdapter(context);
+        FriendsListAdapter friendsListAdapter = new FriendsListAdapter(context, this);
         recyclerView.setAdapter(friendsListAdapter);
         // 请求网络
 
@@ -57,5 +56,9 @@ public class ChatListMsgView extends ConstraintLayout {
     }
 
 
+    @Override
+    public void click(View v, FriendsEntity friendsEntity) {
 
+
+    }
 }
