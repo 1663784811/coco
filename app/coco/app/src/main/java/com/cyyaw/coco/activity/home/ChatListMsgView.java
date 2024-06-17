@@ -12,14 +12,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.cyyaw.coco.R;
+import com.cyyaw.coco.activity.MessageActivity;
+import com.cyyaw.coco.activity.PersonCenterActivity;
 import com.cyyaw.coco.activity.home.adapter.FriendsListAdapter;
 import com.cyyaw.coco.dao.FriendsDao;
 import com.cyyaw.coco.entity.FriendsEntity;
+import com.cyyaw.coco.utils.ActivityUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ChatListMsgView extends ConstraintLayout implements FriendsListAdapter.ListenerFriends {
+
+    private Context context;
+
     public ChatListMsgView(Context context) {
         super(context);
         initView(context, null);
@@ -37,6 +43,7 @@ public class ChatListMsgView extends ConstraintLayout implements FriendsListAdap
 
 
     private void initView(Context context, AttributeSet attrs) {
+        this.context = context;
         //加载布局
         View chatView = LayoutInflater.from(context).inflate(R.layout.chat_list, this, true);
         //加载布局
@@ -58,7 +65,6 @@ public class ChatListMsgView extends ConstraintLayout implements FriendsListAdap
 
     @Override
     public void click(View v, FriendsEntity friendsEntity) {
-
-
+        ActivityUtils.startActivity(context, MessageActivity.class, friendsEntity);
     }
 }
