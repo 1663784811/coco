@@ -1,19 +1,19 @@
 package com.cyyaw.coco.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import com.cyyaw.coco.R;
+import com.cyyaw.coco.common.BaseAppCompatActivity;
 import com.cyyaw.coco.utils.ActivityUtils;
 
 
 /**
  * 个人主页
  */
-public class PersonCenterActivity extends AppCompatActivity {
+public class PersonCenterActivity extends BaseAppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,5 +26,10 @@ public class PersonCenterActivity extends AppCompatActivity {
         privateMessageBtn.setOnClickListener((View v) -> {
             ActivityUtils.startActivity(PersonCenterActivity.this, MessageActivity.class, null);
         });
+    }
+
+    @Override
+    public Activity getActivity() {
+        return this;
     }
 }
