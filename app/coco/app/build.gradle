@@ -49,6 +49,7 @@ dependencies {
 
     // 引自定义 lib
     implementation project(':tabbar')
+    implementation project(':webrtc')
 
 
     testImplementation 'junit:junit:4.13.2'
