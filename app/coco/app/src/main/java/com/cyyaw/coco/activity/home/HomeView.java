@@ -4,6 +4,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
@@ -12,10 +13,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cyyaw.coco.R;
+import com.cyyaw.coco.activity.MessageActivity;
 import com.cyyaw.coco.activity.home.adapter.ContentListAdapter;
 import com.cyyaw.coco.broadcast.BlueToothReceiver;
 import com.cyyaw.coco.common.BaseAppCompatActivity;
 import com.cyyaw.coco.entity.ContentEntity;
+import com.cyyaw.coco.utils.ActivityUtils;
+import com.cyyaw.webrtc.WaitingForVideoActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,6 +87,12 @@ public class HomeView extends LinearLayout {
             dataList.add(contentEntity);
         }
         contentListAdapter.setDataList(dataList);
+
+        Button gitMeACallBtn = viewHome.findViewById(R.id.gitMeACallBtn);
+        gitMeACallBtn.setOnClickListener((View v) -> {
+            // 打开面
+            ActivityUtils.startActivity(context, WaitingForVideoActivity.class, null);
+        });
     }
 
 
