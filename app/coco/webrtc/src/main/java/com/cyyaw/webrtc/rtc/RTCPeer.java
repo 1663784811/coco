@@ -67,6 +67,11 @@ public class RTCPeer implements SdpObserver, PeerConnection.Observer {
         isInitiator = false;
     }
 
+    /**
+     * PeerConnection
+     * 是 WebRTC (Web Real-Time Communication) API 的核心组件之一，用于实现点对点 (P2P) 音视频通信和数据传输。
+     * 它管理着媒体连接和网络状态，处理信令过程中的会话描述协议 (SDP) 和交互式连接建立 (ICE) 候选者。
+     */
     public PeerConnection createPeerConnection() {
         return mFactory.createPeerConnection(new ArrayList<>(), this);
     }

@@ -80,33 +80,32 @@ public interface AppRTCClient {
      */
     interface SignalingEvents {
         /**
-         * Callback fired once the room's signaling parameters
-         * SignalingParameters are extracted.
+         * 一旦房间的信号参数响起，回调就会响起提取SignalingParameters。
          */
         void onConnectedToRoom(final SignalingParameters params);
 
         /**
-         * Callback fired once remote SDP is received.
+         * 一旦接收到远程SDP，就会触发回调。
          */
         void onRemoteDescription(final SessionDescription sdp);
 
         /**
-         * Callback fired once remote Ice candidate is received.
+         * 一旦接收到远程Ice候选者，就触发回调。
          */
         void onRemoteIceCandidate(final IceCandidate candidate);
 
         /**
-         * Callback fired once remote Ice candidate removals are received.
+         * 一旦接收到远程Ice候选删除，就触发回调。
          */
         void onRemoteIceCandidatesRemoved(final IceCandidate[] candidates);
 
         /**
-         * Callback fired once channel is closed.
+         * 通道关闭后触发回调。
          */
         void onChannelClose();
 
         /**
-         * Callback fired once channel error happened.
+         * 一旦发生通道错误，就会触发回调。
          */
         void onChannelError(final String description);
     }
