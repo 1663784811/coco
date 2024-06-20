@@ -4,6 +4,10 @@ import android.opengl.GLES20;
 
 import jp.co.cyberagent.android.gpuimage.filter.GPUImageFilter;
 
+
+/**
+ * Gpu图片美颜
+ */
 public class GPUImageBeautyFilter extends GPUImageFilter {
     public static final String BILATERAL_FRAGMENT_SHADER = "" +
             "   varying highp vec2 textureCoordinate;\n" +

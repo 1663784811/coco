@@ -75,10 +75,8 @@ public class RTCEngine {
     private static final String AUDIO_HIGH_PASS_FILTER_CONSTRAINT = "googHighpassFilter";
     private static final String AUDIO_NOISE_SUPPRESSION_CONSTRAINT = "googNoiseSuppression";
 
-    private static final String VIDEO_FLEXFEC_FIELDTRIAL =
-            "WebRTC-FlexFEC-03-Advertised/Enabled/WebRTC-FlexFEC-03/Enabled/";
-    private static final String DISABLE_WEBRTC_AGC_FIELDTRIAL =
-            "WebRTC-Audio-MinimizeResamplingOnMobile/Enabled/";
+    private static final String VIDEO_FLEXFEC_FIELDTRIAL = "WebRTC-FlexFEC-03-Advertised/Enabled/WebRTC-FlexFEC-03/Enabled/";
+    private static final String DISABLE_WEBRTC_AGC_FIELDTRIAL = "WebRTC-Audio-MinimizeResamplingOnMobile/Enabled/";
 
     private static final int BPS_IN_KBPS = 1000;
 
@@ -106,21 +104,17 @@ public class RTCEngine {
         builder.setFieldTrials(fieldTrials);
         PeerConnectionFactory.InitializationOptions initializationOptions = builder.createInitializationOptions();
         PeerConnectionFactory.initialize(initializationOptions);
-
         // 2. video encode decode method  视频编解码方法
+        // 编码
         final VideoEncoderFactory encoderFactory = new DefaultVideoEncoderFactory(mRootEglBase.getEglBaseContext(), true, true);
+        // 解码
         final VideoDecoderFactory decoderFactory = new DefaultVideoDecoderFactory(mRootEglBase.getEglBaseContext());
-
         // 3. audio deal 音频交易
         AudioDeviceModule audioDeviceModule = JavaAudioDeviceModule.builder(context).createAudioDeviceModule();
-
         // 4. create connectFactory
         PeerConnectionFactory.Options options = new PeerConnectionFactory.Options();
         PeerConnectionFactory.Builder builder1 = PeerConnectionFactory.builder();
-        builder1.setOptions(options)
-                .setAudioDeviceModule(audioDeviceModule)
-                .setVideoEncoderFactory(encoderFactory)
-                .setVideoDecoderFactory(decoderFactory);
+        builder1.setOptions(options).setAudioDeviceModule(audioDeviceModule).setVideoEncoderFactory(encoderFactory).setVideoDecoderFactory(decoderFactory);
         PeerConnectionFactory peerConnectionFactory = builder1.createPeerConnectionFactory();
         audioDeviceModule.release();
         return peerConnectionFactory;
@@ -144,7 +138,6 @@ public class RTCEngine {
      * ===================================  创建视频轨道
      */
     private VideoTrack createVideoTrack(Context context, VideoSink localSink) {
-
         // 1. create video source  创建视频源
         mVideoSource = mConnectionFactory.createVideoSource(false);
         // 2. create video capture 创建视频捕获
@@ -153,6 +146,7 @@ public class RTCEngine {
         mSurfaceTextureHelper = SurfaceTextureHelper.create("CaptureThread", mRootEglBase.getEglBaseContext());
         // 初始化
         mVideoCapturer.initialize(mSurfaceTextureHelper, context, mVideoSource.getCapturerObserver());
+        // 设置摄像头 宽高，帧数
         mVideoCapturer.startCapture(VIDEO_RESOLUTION_WIDTH, VIDEO_RESOLUTION_HEIGHT, FPS);
         // 4. create videoTrack 创建videoTrack
         VideoTrack videoTrack = mConnectionFactory.createVideoTrack(VIDEO_TRACK_ID, mVideoSource);
@@ -168,14 +162,19 @@ public class RTCEngine {
         return videoTrack;
     }
 
+    /**
+     * 获取摄像头
+     */
     private VideoCapturer createVideoCapture(Context context) {
         VideoCapturer videoCapturer = createCameraCapture(new Camera1Enumerator(false));
         Log.d(TAG, "createVideoCapture: " + videoCapturer);
-        // You can implement various captures here, such as screen recording and file recording
         // 您可以在这里实现各种捕获，例如屏幕录制和文件录制
         return videoCapturer;
     }
 
+    /**
+     * 优先找前摄像头
+     */
     private VideoCapturer createCameraCapture(CameraEnumerator enumerator) {
         final String[] deviceNames = enumerator.getDeviceNames();
         // First, try to find front facing camera
@@ -211,14 +210,10 @@ public class RTCEngine {
 
     private MediaConstraints createAudioConstraints() {
         MediaConstraints audioConstraints = new MediaConstraints();
-        audioConstraints.mandatory.add(
-                new MediaConstraints.KeyValuePair(AUDIO_ECHO_CANCELLATION_CONSTRAINT, "true"));
-        audioConstraints.mandatory.add(
-                new MediaConstraints.KeyValuePair(AUDIO_AUTO_GAIN_CONTROL_CONSTRAINT, "true"));
-        audioConstraints.mandatory.add(
-                new MediaConstraints.KeyValuePair(AUDIO_HIGH_PASS_FILTER_CONSTRAINT, "true"));
-        audioConstraints.mandatory.add(
-                new MediaConstraints.KeyValuePair(AUDIO_NOISE_SUPPRESSION_CONSTRAINT, "true"));
+        audioConstraints.mandatory.add(new MediaConstraints.KeyValuePair(AUDIO_ECHO_CANCELLATION_CONSTRAINT, "true"));
+        audioConstraints.mandatory.add(new MediaConstraints.KeyValuePair(AUDIO_AUTO_GAIN_CONTROL_CONSTRAINT, "true"));
+        audioConstraints.mandatory.add(new MediaConstraints.KeyValuePair(AUDIO_HIGH_PASS_FILTER_CONSTRAINT, "true"));
+        audioConstraints.mandatory.add(new MediaConstraints.KeyValuePair(AUDIO_NOISE_SUPPRESSION_CONSTRAINT, "true"));
         return audioConstraints;
     }
 

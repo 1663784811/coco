@@ -5,8 +5,7 @@ import org.webrtc.VideoFrame;
 import org.webrtc.VideoSink;
 
 /**
- *
- *
+ * 代理画板
  */
 public class ProxyVideoSink implements VideoSink {
     private static final String TAG = "ProxyVideoSink";
