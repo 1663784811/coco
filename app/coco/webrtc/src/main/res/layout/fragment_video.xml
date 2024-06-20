@@ -12,13 +12,22 @@
         android:layout_height="match_parent"
         android:layout_gravity="center" />
 
-    <FrameLayout
-        android:id="@+id/pip_video_view"
+<!--    <FrameLayout-->
+<!--        android:id="@+id/pip_video_view"-->
+<!--        android:layout_width="100dp"-->
+<!--        android:layout_height="140dp"-->
+<!--        android:layout_gravity="top|end"-->
+<!--        android:layout_marginHorizontal="10dp"-->
+<!--        android:layout_marginTop="10dp" />-->
+
+    <org.webrtc.SurfaceViewRenderer
+        android:id="@+id/pip_surface_render"
         android:layout_width="100dp"
         android:layout_height="140dp"
         android:layout_gravity="top|end"
         android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        />
 
     <RelativeLayout
         android:id="@+id/lytParent"
