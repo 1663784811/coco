@@ -19,7 +19,7 @@ import com.cyyaw.coco.broadcast.BlueToothReceiver;
 import com.cyyaw.coco.common.BaseAppCompatActivity;
 import com.cyyaw.coco.entity.ContentEntity;
 import com.cyyaw.coco.utils.ActivityUtils;
-import com.cyyaw.webrtc.WaitingForVideoActivity;
+import com.cyyaw.webrtc.VideoActivity;
 import com.cyyaw.webrtc.permission.Permissions;
 
 import java.util.ArrayList;
@@ -96,7 +96,7 @@ public class HomeView extends LinearLayout {
             Permissions.request(context, per, integer -> {
                 Log.d(TAG, "Permissions.request integer = " + integer);
                 if (integer != 0) {
-                    ActivityUtils.startActivity(context, WaitingForVideoActivity.class, null);
+                    ActivityUtils.startActivity(context, VideoActivity.class, null);
                 }
             });
         });

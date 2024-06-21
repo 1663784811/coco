@@ -5,6 +5,8 @@ import android.bluetooth.BluetoothDevice;
 import android.os.Handler;
 import android.widget.Toast;
 
+import com.cyyaw.webrtc.VideoConfig;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executor;
@@ -27,6 +29,15 @@ public class MyApplication extends Application {
         sToast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
         // 注册Activity生命周期回调
         // registerActivityLifecycleCallbacks(new MyActivityLifecycleCallbacks());
+
+
+        // 语音通话配置
+        VideoConfig.getInstance(this);
+
+
+
+
+
     }
 
     public static void toast(String txt) {

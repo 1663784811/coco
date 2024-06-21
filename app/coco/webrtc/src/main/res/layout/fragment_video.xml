@@ -6,47 +6,19 @@
     android:background="@android:color/black"
     tools:ignore="MergeRootFrame">
 
-<!--    <FrameLayout-->
-<!--        android:id="@+id/fullscreen_video_view"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_gravity="center" />-->
-<!--    <FrameLayout-->
-<!--        android:id="@+id/pip_video_view"-->
-<!--        android:layout_width="100dp"-->
-<!--        android:layout_height="140dp"-->
-<!--        android:layout_gravity="top|end"-->
-<!--        android:layout_marginHorizontal="10dp"-->
-<!--        android:layout_marginTop="10dp" />-->
-    <!--  大屏  -->
-    <org.webrtc.SurfaceViewRenderer
-        android:id="@+id/full_surface_render"
+    <FrameLayout
+        android:id="@+id/fullscreen_video_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center" />
 
-    <!--  信息框  -->
-    <TextView
-        android:id="@+id/callStats"
-        android:layout_width="160dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginBottom="80dp"
-        android:visibility="visible"
-        android:alpha="0.6"
-        android:background="#33343B"
-        android:textColor="@android:color/holo_green_light"
-        android:textSize="12sp" />
-
-    <org.webrtc.SurfaceViewRenderer
-        android:id="@+id/pip_surface_render"
+    <FrameLayout
+        android:id="@+id/pip_video_view"
         android:layout_width="100dp"
         android:layout_height="140dp"
         android:layout_gravity="top|end"
         android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="10dp"
-        />
+        android:layout_marginTop="10dp" />
 
     <RelativeLayout
         android:id="@+id/lytParent"
