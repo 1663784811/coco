@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -45,18 +44,15 @@
     </LinearLayout>
 
     <!--拨出按钮显示-->
-
-    <!--接听按钮显示-->
-
     <include
         android:id="@+id/outgoingActionContainer"
         layout="@layout/av_p2p_audio_outgoing"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="-1dp"
         android:visibility="visible" />
 
+    <!--接听按钮显示-->
     <include
         android:id="@+id/incomingActionContainer"
         layout="@layout/av_p2p_audio_incoming"

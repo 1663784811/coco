@@ -3,8 +3,6 @@ package com.cyyaw.webrtc;
 import java.util.List;
 
 /**
- * Created by dds on 2020/5/4.
- * ddssingsong@163.com
  */
 public class StringUtil {
 

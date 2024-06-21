@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.cyyaw.webrtc.StringUtil;
+import com.cyyaw.webrtc.VideoConfig;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
@@ -26,7 +27,11 @@ import javax.net.ssl.X509TrustManager;
 public class MyWebSocket extends WebSocketClient {
     private final static String TAG = MyWebSocket.class.getName();
     private final IEvent iEvent;
-    private boolean connectFlag = false;
+    // 连接
+    private volatile boolean connectFlag = false;
+
+    // 重连
+    private volatile boolean reConnectFlag = false;
 
 
     public MyWebSocket(URI serverUri, IEvent event) {
@@ -36,21 +41,28 @@ public class MyWebSocket extends WebSocketClient {
 
     /**
      * 关闭连接
+     * 1.3秒内重连
      */
     @Override
     public void onClose(int code, String reason, boolean remote) {
         Log.e("dds_error", "onClose:" + reason + "remote:" + remote);
         if (connectFlag) {
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            if (!reConnectFlag) {
+                Log.e(TAG, "3秒后,重新连接....");
+                reConnectFlag = true;
+                VideoConfig.executor.submit(() -> {
+                    try {
+                        Thread.sleep(3000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    this.iEvent.reConnect();
+                    reConnectFlag = false;
+                });
             }
-            this.iEvent.reConnect();
         } else {
             this.iEvent.logout("onClose");
         }
-
     }
 
     /**
@@ -58,7 +70,7 @@ public class MyWebSocket extends WebSocketClient {
      */
     @Override
     public void onError(Exception ex) {
-        Log.e("dds_error", "onError:" + ex.toString());
+        Log.e(TAG, "onError:" + ex.toString());
         this.iEvent.logout("onError");
         connectFlag = false;
     }
@@ -68,7 +80,7 @@ public class MyWebSocket extends WebSocketClient {
      */
     @Override
     public void onOpen(ServerHandshake handshakedata) {
-        Log.e("dds_info", "onOpen");
+        Log.i(TAG, "websocket 连接已打开");
         this.iEvent.onOpen();
         connectFlag = true;
     }

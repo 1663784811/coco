@@ -27,6 +27,9 @@ public interface IEvent {
      */
     void onCancel(String inviteId);
 
+    /**
+     * 响铃
+     */
     void onRing(String userId);
 
 

@@ -7,6 +7,7 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.cyyaw.webrtc.fragment.VoipEvent;
 import com.cyyaw.webrtc.rtc.SkyEngineKit;
 import com.cyyaw.webrtc.socket.SocketManager;
 
@@ -26,7 +27,10 @@ public class VideoServer extends Service {
 //        new VideoBroadcastReceiver(this, this);
         SkyEngineKit.init(new VoipEvent());
         // 连接服务器
-        SocketManager.getInstance().connect("ws//192.168.0.103", "", 0);
+        SocketManager.getInstance().connect(VideoConfig.WS, "1111", 0);
+
+
+
 
     }
 

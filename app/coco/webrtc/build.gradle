@@ -1,6 +1,14 @@
 plugins {
-    id 'com.android.library'
+//    id 'com.android.library'
+//    id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+}
+
+def isLibraryMode = project.hasProperty('LIBRARY_MODE') && project.LIBRARY_MODE.toBoolean()
+if (isLibraryMode) {
+    apply plugin: 'com.android.library'
+} else {
+    apply plugin: 'com.android.application'
 }
 
 android {
@@ -36,6 +44,15 @@ android {
     sourceSets {
         main {
             jniLibs.srcDirs = ['src/main/cpp/libyuv/libs']
+            if (isLibraryMode) {
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+                java.srcDirs = ['src/main/java']
+                res.srcDirs = ['src/main/res', 'src/app/res']
+            } else {
+                manifest.srcFile 'src/app/AndroidManifest.xml'
+                java.srcDirs = ['src/main/java', 'src/app/java']
+                res.srcDirs = ['src/main/res', 'src/app/res']
+            }
         }
     }
     externalNativeBuild {
@@ -58,6 +75,7 @@ dependencies {
     implementation 'org.java-websocket:Java-WebSocket:1.4.0'
     implementation 'com.google.code.gson:gson:2.10.1'
     implementation 'com.alibaba:fastjson:1.2.83'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

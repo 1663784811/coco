@@ -1,11 +1,9 @@
 package com.cyyaw.webrtc.socket;
 
-import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-
 
 import com.cyyaw.webrtc.rtc.EnumType;
 import com.cyyaw.webrtc.rtc.SkyEngineKit;
@@ -22,6 +20,7 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 
 /**
+ *
  */
 public class SocketManager implements IEvent {
     private final static String TAG = SocketManager.class.getName();
@@ -31,16 +30,13 @@ public class SocketManager implements IEvent {
 
     private final Handler handler = new Handler(Looper.getMainLooper());
 
+    private static final SocketManager socketManager = new SocketManager();
+
     private SocketManager() {
-
-    }
-
-    private static class Holder {
-        private static final SocketManager socketManager = new SocketManager();
     }
 
     public static SocketManager getInstance() {
-        return Holder.socketManager;
+        return socketManager;
     }
 
 
@@ -336,6 +332,7 @@ public class SocketManager implements IEvent {
     @Override
     public void reConnect() {
         handler.post(() -> {
+            Log.i(TAG, "正在重新连接....");
             webSocket.reconnect();
         });
     }
