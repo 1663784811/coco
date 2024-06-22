@@ -32,7 +32,7 @@ public class MyApplication extends Application {
 
 
         // 语音通话配置
-        VideoConfig.getInstance(this);
+       //  VideoConfig.getInstance(this);
 
 
 

@@ -1,62 +1,132 @@
 package com.cyyaw.webrtc;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
-import com.cyyaw.webrtc.fragment.FragmentAudio;
-import com.cyyaw.webrtc.fragment.FragmentVideo;
-import com.cyyaw.webrtc.fragment.SingleCallFragment;
+import com.cyyaw.webrtc.rtc.FragmentAudio;
+import com.cyyaw.webrtc.rtc.FragmentVideo;
+import com.cyyaw.webrtc.rtc.SingleCallFragment;
+import com.cyyaw.webrtc.rtc.aaaa.HeadsetPlugReceiver;
+import com.cyyaw.webrtc.rtc.aaaa.WindHandle;
+import com.cyyaw.webrtc.rtc.aaaa.webrtc.EnumType;
+import com.cyyaw.webrtc.rtc.aaaa.webrtc.SkyEngineKit;
+import com.cyyaw.webrtc.rtc.aaaa.webrtc.session.CallSession;
 import com.cyyaw.webrtc.permission.Permissions;
-import com.cyyaw.webrtc.rtc.EnumType;
-import com.cyyaw.webrtc.rtc.SkyEngineKit;
-import com.cyyaw.webrtc.rtc.session.CallSession;
 
 import java.util.UUID;
 
 
 /**
- * 等页面, 语音, 视频
+ * 视频
  */
 public class VideoActivity extends AppCompatActivity implements CallSession.CallSessionCallback {
 
-    private SkyEngineKit gEngineKit;
-
-    public boolean isAudioOnly;
-    private boolean isOutgoing;
-
-    private String targetId;
-
-    private SingleCallFragment currentFragment;
+    public static final String EXTRA_TARGET = "targetId";
+    public static final String EXTRA_MO = "isOutGoing";
+    public static final String EXTRA_AUDIO_ONLY = "audioOnly";
+    public static final String EXTRA_USER_NAME = "userName";
+    public static final String EXTRA_FROM_FLOATING_VIEW = "fromFloatingView";
+    private static final String TAG = "CallSingleActivity";
 
     private final Handler handler = new Handler(Looper.getMainLooper());
+    private boolean isOutgoing;
+    private String targetId;
+    public boolean isAudioOnly;
+    private boolean isFromFloatingView;
+
+    private SkyEngineKit gEngineKit;
+
+    private SingleCallFragment currentFragment;
+    private String room;
+    // 监听耳机广播 （todo 还有些问题）
+    protected HeadsetPlugReceiver headsetPlugReceiver;
+
+
+    public static Intent getCallIntent(Context context, String targetId, boolean isOutgoing, String inviteUserName, boolean isAudioOnly, boolean isClearTop) {
+        Intent voip = new Intent(context, VideoActivity.class);
+        voip.putExtra(EXTRA_MO, isOutgoing);
+        voip.putExtra(EXTRA_TARGET, targetId);
+        voip.putExtra(EXTRA_USER_NAME, inviteUserName);
+        voip.putExtra(EXTRA_AUDIO_ONLY, isAudioOnly);
+        voip.putExtra(EXTRA_FROM_FLOATING_VIEW, false);
+        if (isClearTop) {
+            voip.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        }
+        return voip;
+    }
+
+
+    /**
+     * 打开Activity
+     */
+    public static void openActivity(Context context, String targetId, boolean isOutgoing, String inviteUserName, boolean isAudioOnly, boolean isClearTop) {
+        Intent intent = getCallIntent(context, targetId, isOutgoing, inviteUserName, isAudioOnly, isClearTop);
+        if (context instanceof Activity) {
+            context.startActivity(intent);
+        } else {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+        }
+    }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        // 添加Activity到堆栈
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_single_call);
+        WindHandle.setStatusBarOrScreenStatus(this);
+        setContentView(R.layout.activity_single_call); // 空白页面？
         gEngineKit = SkyEngineKit.Instance();
-        Intent intent = getIntent();
-        isAudioOnly = intent.getBooleanExtra("audioOnly", false);
-        String[] per = new String[]{Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA};
-        Permissions.request(this, per, integer -> {
-            if (integer == 0) {
-                // 权限同意
-                init("111", true, isAudioOnly, false);
+        final Intent intent = getIntent();
+        targetId = intent.getStringExtra(EXTRA_TARGET);
+        isFromFloatingView = intent.getBooleanExtra(EXTRA_FROM_FLOATING_VIEW, false);
+        isOutgoing = intent.getBooleanExtra(EXTRA_MO, false);
+        isAudioOnly = intent.getBooleanExtra(EXTRA_AUDIO_ONLY, false);
+
+        if (isFromFloatingView) {
+//            Intent serviceIntent = new Intent(this, FloatingVoipService.class);
+//            stopService(serviceIntent);
+//            init(targetId, false, isAudioOnly, false);
+        } else {
+            // 权限检测
+            String[] per;
+            if (isAudioOnly) {
+                per = new String[]{android.Manifest.permission.RECORD_AUDIO};
             } else {
-                Toast.makeText(this, "权限被拒绝", Toast.LENGTH_SHORT).show();
-                finish();
+                per = new String[]{android.Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA};
             }
-        });
+            Permissions.request(this, per, integer -> {
+                Log.d(TAG, "Permissions.request integer = " + integer);
+                if (integer == 0) {
+                    // 权限同意
+                    init(targetId, isOutgoing, isAudioOnly, false);
+                } else {
+                    Toast.makeText(this, "权限被拒绝", Toast.LENGTH_SHORT).show();
+                    // 权限拒绝
+                    finish();
+                }
+            });
+        }
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Intent.ACTION_HEADSET_PLUG);
+        headsetPlugReceiver = new HeadsetPlugReceiver();
+        registerReceiver(headsetPlugReceiver, filter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(headsetPlugReceiver);  //注销监听
+        handler.removeCallbacksAndMessages(null);
     }
 
 
@@ -76,7 +146,7 @@ public class VideoActivity extends AppCompatActivity implements CallSession.Call
         }
         if (outgoing && !isReplace) {
             // 创建会话
-          String  room = UUID.randomUUID().toString() + System.currentTimeMillis();
+            room = UUID.randomUUID().toString() + System.currentTimeMillis();
             boolean b = gEngineKit.startOutCall(getApplicationContext(), room, targetId, audioOnly);
             if (!b) {
                 finish();
@@ -103,36 +173,22 @@ public class VideoActivity extends AppCompatActivity implements CallSession.Call
             }
         }
 
-
-    }
-
-    //        String room = UUID.randomUUID().toString() + System.currentTimeMillis();
-    //  SkyEngineKit.Instance().startOutCall(this, room, "ssss", false);
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-//        unregisterReceiver(headsetPlugReceiver);  //注销监听
-        handler.removeCallbacksAndMessages(null);
-    }
-
-    public boolean isFromFloatingView() {
-
-
-
-
-        return false;
-    }
-
-    public boolean isOutgoing() {
-        return isOutgoing;
     }
 
     public SkyEngineKit getEngineKit() {
         return gEngineKit;
     }
 
+    public boolean isOutgoing() {
+        return isOutgoing;
+    }
+
+
+    public boolean isFromFloatingView() {
+        return isFromFloatingView;
+    }
+
+    // 显示小窗
     public void showFloatingView() {
 //        if (!WindHandle.checkOverlayPermission(this)) {
 //            return;
@@ -149,7 +205,6 @@ public class VideoActivity extends AppCompatActivity implements CallSession.Call
     public void switchAudio() {
         init(targetId, isOutgoing, true, true);
     }
-
 
 
     // ======================================界面回调================================

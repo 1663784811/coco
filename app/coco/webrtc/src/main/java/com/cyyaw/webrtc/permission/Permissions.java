@@ -21,9 +21,7 @@ import androidx.core.content.ContextCompat;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Permission-related helpers
- */
+
 public class Permissions {
 
 
