@@ -84,7 +84,8 @@ public class VideoActivity extends AppCompatActivity implements CallSession.Call
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         WindHandle.setStatusBarOrScreenStatus(this);
-        setContentView(R.layout.activity_single_call); // 空白页面？
+        setContentView(R.layout.activity_single_call);
+
         gEngineKit = SkyEngineKit.Instance();
         final Intent intent = getIntent();
         targetId = intent.getStringExtra(EXTRA_TARGET);

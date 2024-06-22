@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
-import com.cyyaw.webrtc.rtc.core.util.StringUtil;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
@@ -305,7 +304,7 @@ public class MyWebSocket extends WebSocketClient {
         childMap.put("audioOnly", audioOnly);
         childMap.put("inviteID", myId);
 
-        String join = StringUtil.listToString(users);
+        String join = listToString(users);
         childMap.put("userList", join);
 
         map.put("data", childMap);
@@ -324,7 +323,7 @@ public class MyWebSocket extends WebSocketClient {
         childMap.put("inviteID", useId);
         childMap.put("room", mRoomId);
 
-        String join = StringUtil.listToString(users);
+        String join = listToString(users);
         childMap.put("userList", join);
 
 
@@ -508,4 +507,19 @@ public class MyWebSocket extends WebSocketClient {
         }
     }
 
+
+    private static String listToString(List<String> mList) {
+        final String SEPARATOR = ",";
+        StringBuilder sb = new StringBuilder();
+        String convertedListStr;
+        if (null != mList && mList.size() > 0) {
+            for (String item : mList) {
+                sb.append(item);
+                sb.append(SEPARATOR);
+            }
+            convertedListStr = sb.toString();
+            convertedListStr = convertedListStr.substring(0, convertedListStr.length() - SEPARATOR.length());
+            return convertedListStr;
+        } else return "";
+    }
 }

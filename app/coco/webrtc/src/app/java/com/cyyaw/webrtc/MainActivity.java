@@ -1,10 +1,9 @@
 package com.cyyaw.webrtc;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,10 +16,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button).setOnClickListener((View v) -> {
 
 
-            Intent intent = new Intent(MainActivity.this, VideoActivity.class);
-
-
-            startActivity(intent);
+            VideoActivity.openActivity(MainActivity.this, "11", true, "22", false, false);
 
         });
 

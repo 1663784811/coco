@@ -33,10 +33,8 @@ public class MyApplication extends Application {
 
 
         // 语音通话配置
-//        WebRtcConfig.init();
+        WebRtcConfig.init(this);
 
-
-        SkyEngineKit.init(new VoipEvent());
 
 
     }
