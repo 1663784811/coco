@@ -7,26 +7,20 @@ import android.util.Log;
 
 import com.cyyaw.webrtc.VideoActivity;
 import com.cyyaw.webrtc.WebRtcConfig;
-import com.cyyaw.webrtc.net.socket.MyWebSocket;
+import com.cyyaw.webrtc.net.socket.SocketConnect;
 import com.cyyaw.webrtc.rtc.SkyEngineKit;
 import com.cyyaw.webrtc.rtc.engine.EnumType;
 import com.cyyaw.webrtc.rtc.session.CallSession;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.security.SecureRandom;
 import java.util.List;
-
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManager;
 
 /**
  * 网线管理
  */
 public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent {
     private final static String TAG = SocketManager.class.getName();
-    private MyWebSocket webSocket;
+
+    private SocketConnect socketConnect;
     private String myId;
 
     private final Handler handler = new Handler(Looper.getMainLooper());
@@ -38,95 +32,50 @@ public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent
     }
 
 
-    /**
-     * 连接websocket
-     */
-    public void connect(String url, String userId, int device) {
-        if (webSocket == null || !webSocket.isOpen()) {
-            URI uri;
-            try {
-                String urls = url + "/" + userId + "/" + device;
-                uri = new URI(urls);
-            } catch (URISyntaxException e) {
-                e.printStackTrace();
-                return;
-            }
-            webSocket = new MyWebSocket(uri, this);
-            // 设置wss
-            if (url.startsWith("wss")) {
-                try {
-                    SSLContext sslContext = SSLContext.getInstance("TLS");
-                    if (sslContext != null) {
-                        sslContext.init(null, new TrustManager[]{new MyWebSocket.TrustManagerTest()}, new SecureRandom());
-                    }
-
-                    SSLSocketFactory factory = null;
-                    if (sslContext != null) {
-                        factory = sslContext.getSocketFactory();
-                    }
-
-                    if (factory != null) {
-                        webSocket.setSocket(factory.createSocket());
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            // 开始connect
-            webSocket.connect();
-        }
+    public static void connect(SocketConnect socketConnect) {
+        socketManager.socketConnect = socketConnect;
     }
-
-    public void unConnect() {
-        if (webSocket != null) {
-            webSocket.setConnectFlag(false);
-            webSocket.close();
-            webSocket = null;
-        }
-
-    }
-
 
     // ======================================================================================     发送数据
     public void sendCreateRoom(String room, int roomSize) {
-        if (webSocket != null) {
-            webSocket.sendCreateRoom(room, roomSize, myId);
+        if (socketConnect != null) {
+            socketConnect.sendCreateRoom(room, roomSize, myId);
         }
     }
 
     public void sendInvite(String room, List<String> users, boolean audioOnly) {
-        if (webSocket != null) {
-            webSocket.sendInvite(room, myId, users, audioOnly);
+        if (socketConnect != null) {
+            socketConnect.sendInvite(room, myId, users, audioOnly);
         }
     }
 
     public void sendLeave(String room, String userId) {
-        if (webSocket != null) {
-            webSocket.sendLeave(myId, room, userId);
+        if (socketConnect != null) {
+            socketConnect.sendLeave(myId, room, userId);
         }
     }
 
     public void sendRingBack(String targetId, String room) {
-        if (webSocket != null) {
-            webSocket.sendRing(myId, targetId, room);
+        if (socketConnect != null) {
+            socketConnect.sendRing(myId, targetId, room);
         }
     }
 
     public void sendRefuse(String room, String inviteId, int refuseType) {
-        if (webSocket != null) {
-            webSocket.sendRefuse(room, inviteId, myId, refuseType);
+        if (socketConnect != null) {
+            socketConnect.sendRefuse(room, inviteId, myId, refuseType);
         }
     }
 
     public void sendCancel(String mRoomId, List<String> userIds) {
-        if (webSocket != null) {
-            webSocket.sendCancel(mRoomId, myId, userIds);
+        if (socketConnect != null) {
+            socketConnect.sendCancel(mRoomId, myId, userIds);
         }
     }
 
     public void sendJoin(String room) {
-        if (webSocket != null) {
-            webSocket.sendJoin(room, myId);
+        if (socketConnect != null) {
+            socketConnect.sendJoin(room, myId);
         }
     }
 
@@ -135,36 +84,34 @@ public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent
     }
 
     public void sendOffer(String userId, String sdp) {
-        if (webSocket != null) {
-            webSocket.sendOffer(myId, userId, sdp);
+        if (socketConnect != null) {
+            socketConnect.sendOffer(myId, userId, sdp);
         }
     }
 
     public void sendAnswer(String userId, String sdp) {
-        if (webSocket != null) {
-            webSocket.sendAnswer(myId, userId, sdp);
+        if (socketConnect != null) {
+            socketConnect.sendAnswer(myId, userId, sdp);
         }
     }
 
     public void sendIceCandidate(String userId, String id, int label, String candidate) {
-        if (webSocket != null) {
-            webSocket.sendIceCandidate(myId, userId, id, label, candidate);
+        if (socketConnect != null) {
+            socketConnect.sendIceCandidate(myId, userId, id, label, candidate);
         }
     }
 
     public void sendTransAudio(String userId) {
-        if (webSocket != null) {
-            webSocket.sendTransAudio(myId, userId);
+        if (socketConnect != null) {
+            socketConnect.sendTransAudio(myId, userId);
         }
     }
 
     public void sendDisconnect(String room, String userId) {
-        if (webSocket != null) {
-            webSocket.sendDisconnect(room, myId, userId);
+        if (socketConnect != null) {
+            socketConnect.sendDisconnect(room, myId, userId);
         }
     }
-
-
 
 
     // ========================================================================================    接收数据
@@ -317,12 +264,8 @@ public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent
         });
     }
 
-    @Override
-    public void reConnect() {
-        handler.post(() -> {
-            webSocket.reconnect();
-        });
+
+    public void setUserId(String userId) {
+        myId = userId;
     }
-
-
 }

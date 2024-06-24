@@ -1,7 +1,7 @@
 package com.cyyaw.webrtc.net;
 
 /**
- * 网络事件   接收数据
+ * 网络事件  接收数据
  */
 public interface SocketReceiveDataEvent {
 
@@ -47,7 +47,5 @@ public interface SocketReceiveDataEvent {
     void onTransAudio(String userId);
 
     void onDisConnect(String userId);
-
-    void reConnect();
 
 }

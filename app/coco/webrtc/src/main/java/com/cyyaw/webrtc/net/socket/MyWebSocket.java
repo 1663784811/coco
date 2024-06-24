@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
+import com.cyyaw.webrtc.net.SocketManager;
 import com.cyyaw.webrtc.net.SocketReceiveDataEvent;
 
 import org.java_websocket.client.WebSocketClient;
@@ -11,6 +12,7 @@ import org.java_websocket.handshake.ServerHandshake;
 import org.json.JSONObject;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.HashMap;
@@ -22,16 +24,60 @@ import javax.net.ssl.X509TrustManager;
 /**
  *
  */
-public class MyWebSocket extends WebSocketClient {
+public class MyWebSocket extends WebSocketClient implements SocketConnect {
     private final static String TAG = MyWebSocket.class.getName();
-    private final SocketReceiveDataEvent iEvent;
+
+    private static MyWebSocket myWebSocket = null;
+    private static final String url =  "ws://192.168.0.103:3000/ws";
+
+    /**
+     * 接收回调
+     */
+    private final SocketReceiveDataEvent receiveEvent;
     private boolean connectFlag = false;
 
 
-    public MyWebSocket(URI serverUri, SocketReceiveDataEvent event) {
+    private MyWebSocket(URI serverUri, SocketReceiveDataEvent receiveEvent) {
         super(serverUri);
-        this.iEvent = event;
+        this.receiveEvent = receiveEvent;
     }
+
+    public static SocketConnect init(String appId, String token, SocketManager instance) {
+        if (myWebSocket == null || !myWebSocket.isOpen()) {
+            URI uri;
+            try {
+                String urls = url + "/" + appId + "/" + token;
+                uri = new URI(urls);
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+                return null;
+            }
+            myWebSocket = new MyWebSocket(uri, instance);
+            // 设置wss
+//            if (url.startsWith("wss")) {
+//                try {
+//                    SSLContext sslContext = SSLContext.getInstance("TLS");
+//                    if (sslContext != null) {
+//                        sslContext.init(null, new TrustManager[]{new MyWebSocket.TrustManagerTest()}, new SecureRandom());
+//                    }
+//                    SSLSocketFactory factory = null;
+//                    if (sslContext != null) {
+//                        factory = sslContext.getSocketFactory();
+//                    }
+//
+//                    if (factory != null) {
+//                        myWebSocket.setSocket(factory.createSocket());
+//                    }
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+            // 开始connect
+            myWebSocket.connect();
+        }
+        return myWebSocket;
+    }
+
 
     /**
      * 关闭连接
@@ -45,9 +91,9 @@ public class MyWebSocket extends WebSocketClient {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            this.iEvent.reConnect();
+//            this.receiveEvent.reConnect();
         } else {
-            this.iEvent.logout("onClose");
+            this.receiveEvent.logout("onClose");
         }
 
     }
@@ -58,7 +104,7 @@ public class MyWebSocket extends WebSocketClient {
     @Override
     public void onError(Exception ex) {
         Log.e("dds_error", "onError:" + ex.toString());
-        this.iEvent.logout("onError");
+        this.receiveEvent.logout("onError");
         connectFlag = false;
     }
 
@@ -68,7 +114,7 @@ public class MyWebSocket extends WebSocketClient {
     @Override
     public void onOpen(ServerHandshake handshakedata) {
         Log.e("dds_info", "onOpen");
-        this.iEvent.onOpenCallBack();
+        this.receiveEvent.onOpenCallBack();
         connectFlag = true;
     }
 
@@ -161,7 +207,7 @@ public class MyWebSocket extends WebSocketClient {
         Map data = (Map) map.get("data");
         if (data != null) {
             String fromId = (String) data.get("fromID");
-            this.iEvent.onDisConnect(fromId);
+            this.receiveEvent.onDisConnect(fromId);
         }
     }
 
@@ -169,7 +215,7 @@ public class MyWebSocket extends WebSocketClient {
         Map data = (Map) map.get("data");
         if (data != null) {
             String fromId = (String) data.get("fromID");
-            this.iEvent.onTransAudio(fromId);
+            this.receiveEvent.onTransAudio(fromId);
         }
     }
 
@@ -178,7 +224,7 @@ public class MyWebSocket extends WebSocketClient {
         if (data != null) {
             String userID = (String) data.get("userID");
             String avatar = (String) data.get("avatar");
-            this.iEvent.loginSuccess(userID, avatar);
+            this.receiveEvent.loginSuccess(userID, avatar);
         }
 
 
@@ -191,7 +237,7 @@ public class MyWebSocket extends WebSocketClient {
             String id = (String) data.get("id");
             int label = (int) data.get("label");
             String candidate = (String) data.get("candidate");
-            this.iEvent.onIceCandidate(userID, id, label, candidate);
+            this.receiveEvent.onIceCandidate(userID, id, label, candidate);
         }
     }
 
@@ -200,7 +246,7 @@ public class MyWebSocket extends WebSocketClient {
         if (data != null) {
             String sdp = (String) data.get("sdp");
             String userID = (String) data.get("fromID");
-            this.iEvent.onAnswer(userID, sdp);
+            this.receiveEvent.onAnswer(userID, sdp);
         }
     }
 
@@ -209,7 +255,7 @@ public class MyWebSocket extends WebSocketClient {
         if (data != null) {
             String sdp = (String) data.get("sdp");
             String userID = (String) data.get("fromID");
-            this.iEvent.onOffer(userID, sdp);
+            this.receiveEvent.onOffer(userID, sdp);
         }
     }
 
@@ -218,7 +264,7 @@ public class MyWebSocket extends WebSocketClient {
         if (data != null) {
             String fromID = (String) data.get("fromID");
             int rejectType = Integer.parseInt(String.valueOf(data.get("refuseType")));
-            this.iEvent.onReject(fromID, rejectType);
+            this.receiveEvent.onReject(fromID, rejectType);
         }
     }
 
@@ -228,7 +274,7 @@ public class MyWebSocket extends WebSocketClient {
             String you = (String) data.get("you");
             String connections = (String) data.get("connections");
             int roomSize = (int) data.get("roomSize");
-            this.iEvent.onPeers(you, connections, roomSize);
+            this.receiveEvent.onPeers(you, connections, roomSize);
         }
     }
 
@@ -236,7 +282,7 @@ public class MyWebSocket extends WebSocketClient {
         Map data = (Map) map.get("data");
         if (data != null) {
             String userID = (String) data.get("userID");
-            this.iEvent.onNewPeer(userID);
+            this.receiveEvent.onNewPeer(userID);
         }
     }
 
@@ -244,7 +290,7 @@ public class MyWebSocket extends WebSocketClient {
         Map data = (Map) map.get("data");
         if (data != null) {
             String fromId = (String) data.get("fromID");
-            this.iEvent.onRing(fromId);
+            this.receiveEvent.onRing(fromId);
         }
     }
 
@@ -253,7 +299,7 @@ public class MyWebSocket extends WebSocketClient {
         if (data != null) {
             String inviteID = (String) data.get("inviteID");
             String userList = (String) data.get("userList");
-            this.iEvent.onCancel(inviteID);
+            this.receiveEvent.onCancel(inviteID);
         }
     }
 
@@ -264,7 +310,7 @@ public class MyWebSocket extends WebSocketClient {
             boolean audioOnly = (boolean) data.get("audioOnly");
             String inviteID = (String) data.get("inviteID");
             String userList = (String) data.get("userList");
-            this.iEvent.onInvite(room, audioOnly, inviteID, userList);
+            this.receiveEvent.onInvite(room, audioOnly, inviteID, userList);
         }
     }
 
@@ -272,7 +318,7 @@ public class MyWebSocket extends WebSocketClient {
         Map data = (Map) map.get("data");
         if (data != null) {
             String fromID = (String) data.get("fromID");
-            this.iEvent.onLeave(fromID);
+            this.receiveEvent.onLeave(fromID);
         }
     }
 

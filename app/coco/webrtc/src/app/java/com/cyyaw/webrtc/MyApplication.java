@@ -17,7 +17,12 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         // 语音通话配置
-        WebRtcConfig.init(this);
+        WebRtcConfig.init(this, "111111", "sssss", new StatusCallBack() {
+            @Override
+            public int hashCode() {
+                return super.hashCode();
+            }
+        });
     }
 
 }

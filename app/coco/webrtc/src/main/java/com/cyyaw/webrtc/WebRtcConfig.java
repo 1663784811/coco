@@ -16,6 +16,8 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.cyyaw.webrtc.net.socket.MyWebSocket;
+import com.cyyaw.webrtc.net.socket.SocketConnect;
 import com.cyyaw.webrtc.page.VoipEvent;
 import com.cyyaw.webrtc.rtc.SkyEngineKit;
 import com.cyyaw.webrtc.net.SocketManager;
@@ -25,12 +27,13 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 
 /**
- *
+ * appId :  平台ID
+ * token :  平台密钥
+ * userId: 当前登录用户
  */
 public class WebRtcConfig {
     private static final String TAG = WebRtcConfig.class.getName();
     public static final Handler handler = new Handler(Looper.getMainLooper());
-    public static String socketUrl = "ws://192.168.0.103:3000/ws";
     private static Context appContext;
     private static MediaPlayer mediaPlayer;
     private static List<Activity> activityList = new CopyOnWriteArrayList<>();
@@ -39,14 +42,16 @@ public class WebRtcConfig {
     /**
      * 初始化
      */
-    public static void init(Application context) {
+    public static void init(Application context, String appId, String token, StatusCallBack statusCallBack) {
         appContext = context;
-        SocketManager.getInstance().connect(socketUrl, "111", 0);
-        SkyEngineKit.init(new VoipEvent());
 
+        SkyEngineKit.init(new VoipEvent());
+        // 网络连接
+        SocketConnect socketConnect = MyWebSocket.init(appId, token, SocketManager.getInstance());
+        // 设置连接
+        SocketManager.getInstance().connect(socketConnect);
 
         context.registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
-
             @Override
             public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle savedInstanceState) {
                 // 当 Activity 被创建时调用此方法
@@ -93,6 +98,14 @@ public class WebRtcConfig {
         });
 
     }
+
+    /**
+     * 用户登录
+     */
+    public static void loginUser(String userId) {
+        SocketManager.getInstance().setUserId(userId);
+    }
+
 
     public static Context getContext() {
         return appContext;
