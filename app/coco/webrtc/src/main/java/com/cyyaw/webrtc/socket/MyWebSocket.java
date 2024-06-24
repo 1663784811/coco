@@ -23,11 +23,11 @@ import javax.net.ssl.X509TrustManager;
  */
 public class MyWebSocket extends WebSocketClient {
     private final static String TAG = MyWebSocket.class.getName();
-    private final SocketEvent iEvent;
+    private final SocketReceiveDataEvent iEvent;
     private boolean connectFlag = false;
 
 
-    public MyWebSocket(URI serverUri, SocketEvent event) {
+    public MyWebSocket(URI serverUri, SocketReceiveDataEvent event) {
         super(serverUri);
         this.iEvent = event;
     }
@@ -67,7 +67,7 @@ public class MyWebSocket extends WebSocketClient {
     @Override
     public void onOpen(ServerHandshake handshakedata) {
         Log.e("dds_info", "onOpen");
-        this.iEvent.onOpen();
+        this.iEvent.onOpenCallBack();
         connectFlag = true;
     }
 

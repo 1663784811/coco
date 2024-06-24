@@ -1,12 +1,9 @@
 package com.cyyaw.webrtc.page;
 
 import android.media.AsyncPlayer;
-import android.media.AudioManager;
-import android.net.Uri;
 import android.util.Log;
 
 
-import com.cyyaw.webrtc.R;
 import com.cyyaw.webrtc.rtc.session.ISkyEvent;
 import com.cyyaw.webrtc.socket.SocketManager;
 
@@ -22,7 +19,7 @@ public class VoipEvent implements ISkyEvent {
 
     @Override
     public void createRoom(String room, int roomSize) {
-        SocketManager.getInstance().createRoom(room, roomSize);
+        SocketManager.getInstance().sendCreateRoom(room, roomSize);
     }
 
     @Override

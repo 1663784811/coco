@@ -21,9 +21,9 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 
 /**
- *
+ * 网线管理
  */
-public class SocketManager implements SocketEvent {
+public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent {
     private final static String TAG = SocketManager.class.getName();
     private MyWebSocket webSocket;
     private int userState;
@@ -93,7 +93,7 @@ public class SocketManager implements SocketEvent {
     }
 
     @Override
-    public void onOpen() {
+    public void onOpenCallBack() {
         Log.i(TAG, "socket is open!");
 
     }
@@ -106,8 +106,8 @@ public class SocketManager implements SocketEvent {
     }
 
 
-    // ======================================================================================
-    public void createRoom(String room, int roomSize) {
+    // ======================================================================================     发送数据
+    public void sendCreateRoom(String room, int roomSize) {
         if (webSocket != null) {
             webSocket.createRoom(room, roomSize, myId);
         }
@@ -184,7 +184,9 @@ public class SocketManager implements SocketEvent {
     }
 
 
-    // ========================================================================================
+
+
+    // ========================================================================================    接收数据
     @Override
     public void onInvite(String room, boolean audioOnly, String inviteId, String userList) {
         Intent intent = new Intent();

@@ -1,13 +1,18 @@
 package com.cyyaw.webrtc.socket;
 
 /**
- * 网络事件
+ * 网络事件   接收数据
  */
-public interface SocketEvent {
+public interface SocketReceiveDataEvent {
 
+    /**
+     * 网络连接成功回调
+     */
+    void onOpenCallBack();
 
-    void onOpen();
-
+    /**
+     * 登录成功
+     */
     void loginSuccess(String userId, String avatar);
 
 
