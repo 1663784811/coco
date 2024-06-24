@@ -18,15 +18,11 @@ public class CallSessionCallbackImpl implements CallSessionCallback {
     public CallSessionCallbackImpl(SingleCallFragment currentFragment, VideoActivity videoActivity) {
         this.currentFragment = currentFragment;
         this.videoActivity = videoActivity;
-
     }
 
 
     @Override
     public void didCallEndWithReason(EnumType.CallEndReason reason) {
-//        App.getInstance().setOtherUserId("0");
-        //交给fragment去finish
-//        finish();
         handler.post(() -> currentFragment.didCallEndWithReason(reason));
     }
 

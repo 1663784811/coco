@@ -27,7 +27,7 @@ import javax.net.ssl.X509TrustManager;
 public class MyWebSocket extends WebSocketClient implements SocketConnect {
     private final static String TAG = MyWebSocket.class.getName();
     private static MyWebSocket myWebSocket = null;
-    private static final String url =  "ws://192.168.0.103:3000/ws";
+    private static final String url = "ws://192.168.0.103:3000/ws";
 
     /**
      * 接收回调
@@ -327,92 +327,73 @@ public class MyWebSocket extends WebSocketClient implements SocketConnect {
     public void sendCreateRoom(String room, int roomSize, String myId) {
         Map<String, Object> map = new HashMap<>();
         map.put("eventName", "__create");
-
         Map<String, Object> childMap = new HashMap<>();
         childMap.put("room", room);
         childMap.put("roomSize", roomSize);
         childMap.put("userID", myId);
-
         map.put("data", childMap);
         JSONObject object = new JSONObject(map);
         final String jsonString = object.toString();
-        Log.d(TAG, "send-->" + jsonString);
-        send(jsonString);
+        sendData(jsonString);
     }
 
     // 发送邀请
     public void sendInvite(String room, String myId, List<String> users, boolean audioOnly) {
         Map<String, Object> map = new HashMap<>();
         map.put("eventName", "__invite");
-
         Map<String, Object> childMap = new HashMap<>();
         childMap.put("room", room);
         childMap.put("audioOnly", audioOnly);
         childMap.put("inviteID", myId);
-
         String join = listToString(users);
         childMap.put("userList", join);
-
         map.put("data", childMap);
         JSONObject object = new JSONObject(map);
         final String jsonString = object.toString();
         Log.d(TAG, "send-->" + jsonString);
-        send(jsonString);
+        sendData(jsonString);
     }
 
     // 取消邀请
     public void sendCancel(String mRoomId, String useId, List<String> users) {
         Map<String, Object> map = new HashMap<>();
         map.put("eventName", "__cancel");
-
         Map<String, Object> childMap = new HashMap<>();
         childMap.put("inviteID", useId);
         childMap.put("room", mRoomId);
-
         String join = listToString(users);
         childMap.put("userList", join);
-
-
         map.put("data", childMap);
         JSONObject object = new JSONObject(map);
         final String jsonString = object.toString();
-        Log.d(TAG, "send-->" + jsonString);
-        send(jsonString);
+        sendData(jsonString);
     }
 
     // 发送响铃通知
     public void sendRing(String myId, String toId, String room) {
         Map<String, Object> map = new HashMap<>();
         map.put("eventName", "__ring");
-
         Map<String, Object> childMap = new HashMap<>();
         childMap.put("fromID", myId);
         childMap.put("toID", toId);
         childMap.put("room", room);
-
-
         map.put("data", childMap);
         JSONObject object = new JSONObject(map);
         final String jsonString = object.toString();
-        Log.d(TAG, "send-->" + jsonString);
-        send(jsonString);
+        sendData(jsonString);
     }
 
     //加入房间
     public void sendJoin(String room, String myId) {
         Map<String, Object> map = new HashMap<>();
         map.put("eventName", "__join");
-
         Map<String, String> childMap = new HashMap<>();
         childMap.put("room", room);
         childMap.put("userID", myId);
-
-
         map.put("data", childMap);
         JSONObject object = new JSONObject(map);
         final String jsonString = object.toString();
-        Log.d(TAG, "send-->" + jsonString);
-        send(jsonString);
+        sendData(jsonString);
     }
 
     // 拒接接听
@@ -429,27 +410,21 @@ public class MyWebSocket extends WebSocketClient implements SocketConnect {
         map.put("data", childMap);
         JSONObject object = new JSONObject(map);
         final String jsonString = object.toString();
-        Log.d(TAG, "send-->" + jsonString);
-        send(jsonString);
+        sendData(jsonString);
     }
 
     // 离开房间
     public void sendLeave(String myId, String room, String userId) {
         Map<String, Object> map = new HashMap<>();
         map.put("eventName", "__leave");
-
         Map<String, Object> childMap = new HashMap<>();
         childMap.put("room", room);
         childMap.put("fromID", myId);
         childMap.put("userID", userId);
-
         map.put("data", childMap);
         JSONObject object = new JSONObject(map);
         final String jsonString = object.toString();
-        Log.d(TAG, "send-->" + jsonString);
-        if (isOpen()) {
-            send(jsonString);
-        }
+        sendData(jsonString);
     }
 
     // send offer
@@ -463,8 +438,7 @@ public class MyWebSocket extends WebSocketClient implements SocketConnect {
         map.put("eventName", "__offer");
         JSONObject object = new JSONObject(map);
         final String jsonString = object.toString();
-        Log.d(TAG, "send-->" + jsonString);
-        send(jsonString);
+        sendData(jsonString);
     }
 
     // send answer
@@ -478,29 +452,23 @@ public class MyWebSocket extends WebSocketClient implements SocketConnect {
         map.put("eventName", "__answer");
         JSONObject object = new JSONObject(map);
         final String jsonString = object.toString();
-        Log.d(TAG, "send-->" + jsonString);
-        send(jsonString);
+        sendData(jsonString);
     }
 
     // send ice-candidate
     public void sendIceCandidate(String myId, String userId, String id, int label, String candidate) {
         Map<String, Object> map = new HashMap<>();
         map.put("eventName", "__ice_candidate");
-
         Map<String, Object> childMap = new HashMap<>();
         childMap.put("userID", userId);
         childMap.put("fromID", myId);
         childMap.put("id", id);
         childMap.put("label", label);
         childMap.put("candidate", candidate);
-
         map.put("data", childMap);
         JSONObject object = new JSONObject(map);
         final String jsonString = object.toString();
-        Log.d(TAG, "send-->" + jsonString);
-        if (isOpen()) {
-            send(jsonString);
-        }
+        sendData(jsonString);
     }
 
     // 切换到语音
@@ -513,8 +481,7 @@ public class MyWebSocket extends WebSocketClient implements SocketConnect {
         map.put("eventName", "__audio");
         JSONObject object = new JSONObject(map);
         final String jsonString = object.toString();
-        Log.d(TAG, "send-->" + jsonString);
-        send(jsonString);
+        sendData(jsonString);
     }
 
     // 断开重连
@@ -528,9 +495,14 @@ public class MyWebSocket extends WebSocketClient implements SocketConnect {
         map.put("eventName", "__disconnect");
         JSONObject object = new JSONObject(map);
         final String jsonString = object.toString();
-        Log.d(TAG, "send-->" + jsonString);
-        send(jsonString);
+        sendData(jsonString);
     }
+
+    private void sendData(String data) {
+        Log.d(TAG, "send-->" + data);
+        send(data);
+    }
+
 
     // 忽略证书
     public static class TrustManagerTest implements X509TrustManager {

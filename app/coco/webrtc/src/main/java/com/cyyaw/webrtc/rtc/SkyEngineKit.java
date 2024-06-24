@@ -12,7 +12,10 @@ import com.cyyaw.webrtc.rtc.session.ISkyEvent;
  */
 public class SkyEngineKit {
     private final static String TAG = "AVEngineKit";
+
+
     private static SkyEngineKit avEngineKit;
+
     private CallSession mCurrentCallSession;
     private ISkyEvent mEvent;
     private boolean isAudioOnly = false;
@@ -73,8 +76,6 @@ public class SkyEngineKit {
         mCurrentCallSession.setCallState(EnumType.CallState.Outgoing);
         // 创建房间
         mCurrentCallSession.createHome(room, 2);
-
-
         return true;
     }
 

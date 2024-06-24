@@ -60,9 +60,11 @@ public class CallSession implements EngineCallback {
     }
 
 
-    // ----------------------------------------各种控制--------------------------------------------
+    // ========================--------各种控制========================------------
 
-    // 创建房间
+    /**
+     * 创建房间
+     */
     public void createHome(String room, int roomSize) {
         executor.execute(() -> {
             if (mEvent != null) {
@@ -71,7 +73,9 @@ public class CallSession implements EngineCallback {
         });
     }
 
-    // 加入房间
+    /**
+     * 加入房间
+     */
     public void joinHome(String roomId) {
         executor.execute(() -> {
             _callState = EnumType.CallState.Connecting;
@@ -81,17 +85,20 @@ public class CallSession implements EngineCallback {
                 mEvent.sendJoin(roomId);
             }
         });
-
     }
 
-    //开始响铃
+    /**
+     * 开始响铃
+     */
     public void shouldStartRing() {
         if (mEvent != null) {
             mEvent.shouldStartRing(true);
         }
     }
 
-    // 关闭响铃
+    /**
+     * 关闭响铃
+     */
     public void shouldStopRing() {
         Log.d(TAG, "shouldStopRing mEvent != null is " + (mEvent != null));
         if (mEvent != null) {
@@ -108,7 +115,9 @@ public class CallSession implements EngineCallback {
         });
     }
 
-    // 发送拒绝信令
+    /**
+     * 发送拒绝信令
+     */
     public void sendRefuse() {
         executor.execute(() -> {
             if (mEvent != null) {
@@ -119,7 +128,9 @@ public class CallSession implements EngineCallback {
         release(EnumType.CallEndReason.Hangup);
     }
 
-    // 发送忙时拒绝
+    /**
+     * 发送忙时拒绝
+     */
     public void sendBusyRefuse(String room, String targetId) {
         executor.execute(() -> {
             if (mEvent != null) {
@@ -131,7 +142,9 @@ public class CallSession implements EngineCallback {
 
     }
 
-    // 发送取消信令
+    /**
+     * 发送取消信令
+     */
     public void sendCancel() {
         executor.execute(() -> {
             if (mEvent != null) {
@@ -145,7 +158,9 @@ public class CallSession implements EngineCallback {
 
     }
 
-    // 离开房间
+    /**
+     * 离开房间
+     */
     public void leave() {
         executor.execute(() -> {
             if (mEvent != null) {
@@ -157,7 +172,9 @@ public class CallSession implements EngineCallback {
 
     }
 
-    // 切换到语音接听
+    /**
+     * 切换到语音接听
+     */
     public void sendTransAudio() {
         executor.execute(() -> {
             if (mEvent != null) {
@@ -167,23 +184,30 @@ public class CallSession implements EngineCallback {
         });
     }
 
-    // 设置静音
+    /**
+     * 设置静音
+     */
     public boolean toggleMuteAudio(boolean enable) {
         return iEngine.muteAudio(enable);
     }
 
-    // 设置扬声器
+    /**
+     * 设置扬声器
+     */
     public boolean toggleSpeaker(boolean enable) {
-
         return iEngine.toggleSpeaker(enable);
     }
 
-    // 设置扬声器
+    /**
+     * 设置扬声器
+     */
     public boolean toggleHeadset(boolean isHeadset) {
         return iEngine.toggleHeadset(isHeadset);
     }
 
-    // 切换到语音通话
+    /**
+     * 切换到语音通话
+     */
     public void switchToAudio() {
         mIsAudioOnly = true;
         // 告诉远端
@@ -195,12 +219,16 @@ public class CallSession implements EngineCallback {
 
     }
 
-    // 调整摄像头前置后置
+    /**
+     * 调整摄像头前置后置
+     */
     public void switchCamera() {
         iEngine.switchCamera();
     }
 
-    // 释放资源
+    /**
+     * 释放资源
+     */
     private void release(EnumType.CallEndReason reason) {
         executor.execute(() -> {
             // 释放内容
@@ -217,7 +245,7 @@ public class CallSession implements EngineCallback {
         });
     }
 
-    //------------------------------------receive---------------------------------------------------
+    //========================----receive========================-------------------
 
     // 加入房间成功
     public void onJoinHome(String myId, String users, int roomSize) {
@@ -347,7 +375,7 @@ public class CallSession implements EngineCallback {
     }
 
 
-    // --------------------------------界面显示相关--------------------------------------------/
+    // ========================界面显示相关========================/
 
     public long getStartTime() {
         return startTime;
@@ -362,7 +390,7 @@ public class CallSession implements EngineCallback {
     }
 
 
-    //------------------------------------各种参数----------------------------------------------/
+    //========================----各种参数========================--/
 
     public void setIsAudioOnly(boolean _isAudioOnly) {
         this.mIsAudioOnly = _isAudioOnly;
@@ -404,7 +432,7 @@ public class CallSession implements EngineCallback {
         this.sessionCallback = new WeakReference<>(sessionCallback);
     }
 
-    //-----------------------------Engine回调-----------------------------------------
+    //========================    Engine回调   ========================
 
     @Override
     public void joinRoomSucc() {

@@ -21,9 +21,7 @@ import com.cyyaw.webrtc.fragment.SingleCallFragment;
 import com.cyyaw.webrtc.fragment.WindHandle;
 import com.cyyaw.webrtc.permission.Permissions;
 import com.cyyaw.webrtc.rtc.SkyEngineKit;
-import com.cyyaw.webrtc.rtc.engine.EnumType;
 import com.cyyaw.webrtc.rtc.session.CallSession;
-import com.cyyaw.webrtc.rtc.session.CallSessionCallback;
 
 import java.util.UUID;
 
@@ -41,16 +39,12 @@ public class VideoActivity extends AppCompatActivity implements MediaOperationCa
     private static final String TAG = "CallSingleActivity";
 
     private final Handler handler = new Handler(Looper.getMainLooper());
-    public boolean setIsOutgoing;
     private boolean isOutgoing;
     private String targetId;
     public boolean isAudioOnly;
     private boolean isFromFloatingView;
     private SingleCallFragment currentFragment;
     private String room;
-//    // 监听耳机广播
-//    protected HeadsetPlugReceiver headsetPlugReceiver;
-
 
     public static Intent getCallIntent(Context context, String targetId, boolean isOutgoing, String inviteUserName, boolean isAudioOnly, boolean isClearTop) {
         Intent voip = new Intent(context, VideoActivity.class);
@@ -152,33 +146,21 @@ public class VideoActivity extends AppCompatActivity implements MediaOperationCa
                 finish();
                 return;
             }
-//            App.getInstance().setRoomId(room);
-//            App.getInstance().setOtherUserId(targetId);
             CallSession session = SkyEngineKit.Instance().getCurrentSession();
-            if (session == null) {
-                finish();
-            } else {
-                session.setSessionCallback(new CallSessionCallbackImpl(currentFragment, this));
-            }
+            // 设置回调
+            session.setSessionCallback(new CallSessionCallbackImpl(currentFragment, this));
         } else {
             CallSession session = SkyEngineKit.Instance().getCurrentSession();
-            if (session == null) {
-                finish();
-            } else {
-                if (session.isAudioOnly() && !audioOnly) {
-                    //这种情况是，对方切换成音频的时候，activity还没启动，这里启动后需要切换一下
-                    isAudioOnly = session.isAudioOnly();
-                    currentFragment.didChangeMode(true);
-                }
-                session.setSessionCallback(new CallSessionCallbackImpl(currentFragment, this));
+            if (session.isAudioOnly() && !audioOnly) {
+                //这种情况是，对方切换成音频的时候，activity还没启动，这里启动后需要切换一下
+                isAudioOnly = session.isAudioOnly();
+                currentFragment.didChangeMode(true);
             }
+            session.setSessionCallback(new CallSessionCallbackImpl(currentFragment, this));
         }
 
     }
 
-    public boolean isFromFloatingView() {
-        return isFromFloatingView;
-    }
 
     // 显示小窗
     public void showFloatingView() {
@@ -193,15 +175,22 @@ public class VideoActivity extends AppCompatActivity implements MediaOperationCa
 //        finish();
     }
 
-    // 切换到语音通话
+    /**
+     * 切换到语音通话
+     */
     public void switchAudio() {
         init(targetId, isOutgoing, true, true);
     }
 
 
+    public boolean isFromFloatingView() {
+        return isFromFloatingView;
+    }
+
     public boolean isOutgoing() {
         return isOutgoing;
     }
+
 
     public void setIsOutgoing(boolean b) {
         isOutgoing = b;
