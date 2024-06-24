@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -14,15 +13,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
-import com.cyyaw.webrtc.rtc.FragmentAudio;
-import com.cyyaw.webrtc.rtc.FragmentVideo;
-import com.cyyaw.webrtc.rtc.SingleCallFragment;
-import com.cyyaw.webrtc.rtc.aaaa.HeadsetPlugReceiver;
-import com.cyyaw.webrtc.rtc.aaaa.WindHandle;
-import com.cyyaw.webrtc.rtc.aaaa.webrtc.EnumType;
-import com.cyyaw.webrtc.rtc.aaaa.webrtc.SkyEngineKit;
-import com.cyyaw.webrtc.rtc.aaaa.webrtc.session.CallSession;
+import com.cyyaw.webrtc.fragment.FragmentAudio;
+import com.cyyaw.webrtc.fragment.FragmentVideo;
+import com.cyyaw.webrtc.fragment.SingleCallFragment;
+import com.cyyaw.webrtc.fragment.WindHandle;
 import com.cyyaw.webrtc.permission.Permissions;
+import com.cyyaw.webrtc.rtc.SkyEngineKit;
+import com.cyyaw.webrtc.rtc.engine.EnumType;
+import com.cyyaw.webrtc.rtc.session.CallSession;
 
 import java.util.UUID;
 
@@ -44,13 +42,11 @@ public class VideoActivity extends AppCompatActivity implements CallSession.Call
     private String targetId;
     public boolean isAudioOnly;
     private boolean isFromFloatingView;
-
     private SkyEngineKit gEngineKit;
-
     private SingleCallFragment currentFragment;
     private String room;
-    // 监听耳机广播 （todo 还有些问题）
-    protected HeadsetPlugReceiver headsetPlugReceiver;
+//    // 监听耳机广播
+//    protected HeadsetPlugReceiver headsetPlugReceiver;
 
 
     public static Intent getCallIntent(Context context, String targetId, boolean isOutgoing, String inviteUserName, boolean isAudioOnly, boolean isClearTop) {
@@ -85,7 +81,6 @@ public class VideoActivity extends AppCompatActivity implements CallSession.Call
         super.onCreate(savedInstanceState);
         WindHandle.setStatusBarOrScreenStatus(this);
         setContentView(R.layout.activity_single_call);
-
         gEngineKit = SkyEngineKit.Instance();
         final Intent intent = getIntent();
         targetId = intent.getStringExtra(EXTRA_TARGET);
@@ -117,16 +112,16 @@ public class VideoActivity extends AppCompatActivity implements CallSession.Call
                 }
             });
         }
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(Intent.ACTION_HEADSET_PLUG);
-        headsetPlugReceiver = new HeadsetPlugReceiver();
-        registerReceiver(headsetPlugReceiver, filter);
+//        IntentFilter filter = new IntentFilter();
+//        filter.addAction(Intent.ACTION_HEADSET_PLUG);
+//        headsetPlugReceiver = new HeadsetPlugReceiver();
+//        registerReceiver(headsetPlugReceiver, filter);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(headsetPlugReceiver);  //注销监听
+//        unregisterReceiver(headsetPlugReceiver);  //注销监听
         handler.removeCallbacksAndMessages(null);
     }
 

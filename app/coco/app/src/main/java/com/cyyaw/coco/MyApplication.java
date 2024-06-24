@@ -5,7 +5,7 @@ import android.bluetooth.BluetoothDevice;
 import android.os.Handler;
 import android.widget.Toast;
 
-import com.cyyaw.webrtc.VideoConfig;
+//import com.cyyaw.webrtc.VideoConfig;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

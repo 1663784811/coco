@@ -61,6 +61,7 @@
             android:exported="false"
             android:label="@string/title_activity_video"
             android:theme="@style/Theme.Coco" />
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
