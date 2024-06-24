@@ -59,12 +59,6 @@
             android:screenOrientation="portrait" />
 
 
-        <activity
-            android:name=".AudioActivity"
-            android:exported="false"
-            android:label="local network"
-            android:screenOrientation="portrait" />
-
 
 
     </application>

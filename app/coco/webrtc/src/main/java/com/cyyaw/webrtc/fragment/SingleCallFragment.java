@@ -31,7 +31,6 @@ public abstract class SingleCallFragment extends Fragment {
     protected TextView nameTextView;         // 用户昵称
     protected TextView descTextView;         // 状态提示用语
     protected Chronometer durationTextView;  // 通话时长
-
     protected ImageView outgoingHangupImageView;
     protected ImageView incomingHangupImageView;
     protected ImageView acceptImageView;
@@ -41,23 +40,13 @@ public abstract class SingleCallFragment extends Fragment {
     protected View connectedActionContainer;
     protected View lytParent;
     boolean isOutgoing = false;
-
     protected VideoActivity callSingleActivity;
-
     boolean endWithNoAnswerFlag = false;
     boolean isConnectionClosed = false;
-
     public static final long OUTGOING_WAITING_TIME = 30 * 1000;
-
     protected EnumType.CallState currentState;
-
     private final Handler handler = new Handler(Looper.getMainLooper());
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setRetainInstance(true);
-    }
 
     @Nullable
     @Override

@@ -71,11 +71,6 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".AudioActivity"
-            android:exported="false"
-            android:screenOrientation="fullSensor" />
-
 
 
 
