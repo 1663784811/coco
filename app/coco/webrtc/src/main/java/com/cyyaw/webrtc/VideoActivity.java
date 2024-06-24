@@ -117,7 +117,6 @@ public class VideoActivity extends AppCompatActivity implements CallSessionCallb
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        unregisterReceiver(headsetPlugReceiver);  //注销监听
         handler.removeCallbacksAndMessages(null);
     }
 
@@ -157,7 +156,8 @@ public class VideoActivity extends AppCompatActivity implements CallSessionCallb
             if (session == null) {
                 finish();
             } else {
-                if (session.isAudioOnly() && !audioOnly) { //这种情况是，对方切换成音频的时候，activity还没启动，这里启动后需要切换一下
+                if (session.isAudioOnly() && !audioOnly) {
+                    //这种情况是，对方切换成音频的时候，activity还没启动，这里启动后需要切换一下
                     isAudioOnly = session.isAudioOnly();
                     currentFragment.didChangeMode(true);
                 }
