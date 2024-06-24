@@ -13,7 +13,7 @@ import com.cyyaw.webrtc.rtc.session.CallSession;
 /**
  * 语音通话控制界面
  */
-public class FragmentAudio extends SingleCallFragment implements View.OnClickListener {
+public class FragmentAudio extends SingleCallFragment {
     private static final String TAG = "FragmentAudio";
     private ImageView muteImageView;
     private ImageView speakerImageView;
@@ -31,12 +31,57 @@ public class FragmentAudio extends SingleCallFragment implements View.OnClickLis
         muteImageView = view.findViewById(R.id.muteImageView);
         speakerImageView = view.findViewById(R.id.speakerImageView);
         minimizeImageView.setVisibility(View.GONE);
-        outgoingHangupImageView.setOnClickListener(this);
-        incomingHangupImageView.setOnClickListener(this);
-        minimizeImageView.setOnClickListener(this);
-        muteImageView.setOnClickListener(this);
-        acceptImageView.setOnClickListener(this);
-        speakerImageView.setOnClickListener(this);
+
+        outgoingHangupImageView.setOnClickListener((View v) -> {
+            CallSession session = SkyEngineKit.Instance().getCurrentSession();
+            if (session != null) {
+                SkyEngineKit.Instance().endCall();
+            }
+        });
+
+        incomingHangupImageView.setOnClickListener((View v) -> {
+            CallSession session = SkyEngineKit.Instance().getCurrentSession();
+            if (session != null) {
+                SkyEngineKit.Instance().endCall();
+            }
+        });
+
+        minimizeImageView.setOnClickListener((View v) -> {
+            if (callSingleActivity != null) {
+                callSingleActivity.showFloatingView();
+            }
+        });
+
+        muteImageView.setOnClickListener((View v) -> {
+            CallSession session = SkyEngineKit.Instance().getCurrentSession();
+            if (session != null && session.getState() != EnumType.CallState.Idle) {
+                if (session.toggleMuteAudio(!micEnabled)) {
+                    micEnabled = !micEnabled;
+                }
+                muteImageView.setSelected(micEnabled);
+            }
+        });
+
+        acceptImageView.setOnClickListener((View v) -> {
+            CallSession session = SkyEngineKit.Instance().getCurrentSession();
+            if (session != null)
+                Log.d(TAG, "session = " + session + "; session.getState() = " + session.getState());
+            if (session != null && session.getState() == EnumType.CallState.Incoming) {
+                session.joinHome(session.getRoomId());
+            } else if (session != null) {
+                session.sendRefuse();
+            }
+        });
+
+        speakerImageView.setOnClickListener((View v) -> {
+            CallSession session = SkyEngineKit.Instance().getCurrentSession();
+            if (session != null && session.getState() != EnumType.CallState.Idle) {
+                if (session.toggleSpeaker(!isSpeakerOn)) {
+                    isSpeakerOn = !isSpeakerOn;
+                }
+                speakerImageView.setSelected(isSpeakerOn);
+            }
+        });
 
     }
 
@@ -81,57 +126,5 @@ public class FragmentAudio extends SingleCallFragment implements View.OnClickLis
                 // do nothing now
             }
         });
-    }
-
-    @Override
-    public void onClick(View v) {
-        int id = v.getId();
-        // 接听
-        if (id == R.id.acceptImageView) {
-            CallSession session = SkyEngineKit.Instance().getCurrentSession();
-            if (session != null)
-                Log.d(TAG, "session = " + session + "; session.getState() = " + session.getState());
-            if (session != null && session.getState() == EnumType.CallState.Incoming) {
-                session.joinHome(session.getRoomId());
-            } else if (session != null) {
-                session.sendRefuse();
-            }
-        }
-        // 挂断电话
-        if (id == R.id.incomingHangupImageView || id == R.id.outgoingHangupImageView) {
-            // App.getInstance().setOtherUserId("0");
-            CallSession session = SkyEngineKit.Instance().getCurrentSession();
-            if (session != null) {
-                SkyEngineKit.Instance().endCall();
-            }
-            //            activity.finish();
-            //再onEvent中结束，防止ChatActivity结束了，消息发送不了
-        }
-        // 静音
-        if (id == R.id.muteImageView) {
-            CallSession session = SkyEngineKit.Instance().getCurrentSession();
-            if (session != null && session.getState() != EnumType.CallState.Idle) {
-                if (session.toggleMuteAudio(!micEnabled)) {
-                    micEnabled = !micEnabled;
-                }
-                muteImageView.setSelected(micEnabled);
-            }
-        }
-        // 扬声器
-        if (id == R.id.speakerImageView) {
-            CallSession session = SkyEngineKit.Instance().getCurrentSession();
-            if (session != null && session.getState() != EnumType.CallState.Idle) {
-                if (session.toggleSpeaker(!isSpeakerOn)) {
-                    isSpeakerOn = !isSpeakerOn;
-                }
-                speakerImageView.setSelected(isSpeakerOn);
-            }
-        }
-        // 小窗
-        if (id == R.id.minimizeImageView) {
-            if (callSingleActivity != null) {
-                callSingleActivity.showFloatingView();
-            }
-        }
     }
 }
