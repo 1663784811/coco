@@ -125,44 +125,7 @@ public abstract class SingleCallFragment extends Fragment {
 
     // ======================================界面回调================================
     public void didCallEndWithReason(EnumType.CallEndReason callEndReason) {
-        switch (callEndReason) {
-            case Busy: {
-                tvStatus.setText("对方忙线中");
-                break;
-            }
-            case SignalError: {
-                tvStatus.setText("连接断开");
-                break;
-            }
-            case RemoteSignalError: {
-                tvStatus.setText("对方网络断开");
-                break;
-            }
-            case Hangup: {
-                tvStatus.setText("挂断");
-                break;
-            }
-            case MediaError: {
-                tvStatus.setText("媒体错误");
-                break;
-            }
-            case RemoteHangup: {
-                tvStatus.setText("对方挂断");
-                break;
-            }
-            case OpenCameraFailure: {
-                tvStatus.setText("打开摄像头错误");
-                break;
-            }
-            case Timeout: {
-                tvStatus.setText("对方未接听");
-                break;
-            }
-            case AcceptByOtherClient: {
-                tvStatus.setText("在其它设备接听");
-                break;
-            }
-        }
+        tvStatus.setText(callEndReason.getNote());
         incomingActionContainer.setVisibility(View.GONE);
         outgoingActionContainer.setVisibility(View.GONE);
         if (connectedActionContainer != null) connectedActionContainer.setVisibility(View.GONE);
