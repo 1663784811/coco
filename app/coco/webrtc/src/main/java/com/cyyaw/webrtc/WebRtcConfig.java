@@ -9,18 +9,16 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.cyyaw.webrtc.net.SocketManager;
 import com.cyyaw.webrtc.net.socket.MyWebSocket;
 import com.cyyaw.webrtc.net.socket.SocketConnect;
 import com.cyyaw.webrtc.page.VoipEvent;
 import com.cyyaw.webrtc.rtc.SkyEngineKit;
-import com.cyyaw.webrtc.net.SocketManager;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -33,7 +31,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class WebRtcConfig {
     private static final String TAG = WebRtcConfig.class.getName();
-    public static final Handler handler = new Handler(Looper.getMainLooper());
     private static Context appContext;
     private static MediaPlayer mediaPlayer;
     private static List<Activity> activityList = new CopyOnWriteArrayList<>();

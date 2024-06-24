@@ -26,7 +26,6 @@ import javax.net.ssl.X509TrustManager;
  */
 public class MyWebSocket extends WebSocketClient implements SocketConnect {
     private final static String TAG = MyWebSocket.class.getName();
-
     private static MyWebSocket myWebSocket = null;
     private static final String url =  "ws://192.168.0.103:3000/ws";
 

@@ -120,7 +120,14 @@ public class VideoActivity extends AppCompatActivity implements CallSessionCallb
         handler.removeCallbacksAndMessages(null);
     }
 
-
+    /**
+     * 初化
+     *
+     * @param targetId  目标ID
+     * @param outgoing  是否呼出
+     * @param audioOnly 只语音
+     * @param isReplace 是否重新进入
+     */
     private void init(String targetId, boolean outgoing, boolean audioOnly, boolean isReplace) {
         if (audioOnly) {
             // 语音
