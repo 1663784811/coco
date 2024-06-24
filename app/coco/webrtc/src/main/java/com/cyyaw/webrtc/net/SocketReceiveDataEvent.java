@@ -1,4 +1,4 @@
-package com.cyyaw.webrtc.socket;
+package com.cyyaw.webrtc.net;
 
 /**
  * 网络事件   接收数据
@@ -14,6 +14,9 @@ public interface SocketReceiveDataEvent {
      * 登录成功
      */
     void loginSuccess(String userId, String avatar);
+
+
+    void logout(String str);
 
 
     void onInvite(String room, boolean audioOnly, String inviteId, String userList);
@@ -40,8 +43,6 @@ public interface SocketReceiveDataEvent {
     void onIceCandidate(String userId, String id, int label, String candidate);
 
     void onLeave(String userId);
-
-    void logout(String str);
 
     void onTransAudio(String userId);
 

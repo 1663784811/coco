@@ -1,4 +1,4 @@
-package com.cyyaw.webrtc.socket;
+package com.cyyaw.webrtc.net;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.cyyaw.webrtc.VideoActivity;
 import com.cyyaw.webrtc.WebRtcConfig;
+import com.cyyaw.webrtc.net.socket.MyWebSocket;
 import com.cyyaw.webrtc.rtc.SkyEngineKit;
 import com.cyyaw.webrtc.rtc.engine.EnumType;
 import com.cyyaw.webrtc.rtc.session.CallSession;
@@ -26,21 +27,14 @@ import javax.net.ssl.TrustManager;
 public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent {
     private final static String TAG = SocketManager.class.getName();
     private MyWebSocket webSocket;
-    private int userState;
     private String myId;
 
     private final Handler handler = new Handler(Looper.getMainLooper());
 
-    private SocketManager() {
-
-    }
-
-    private static class Holder {
-        private static final SocketManager socketManager = new SocketManager();
-    }
+    private static final SocketManager socketManager = new SocketManager();
 
     public static SocketManager getInstance() {
-        return Holder.socketManager;
+        return socketManager;
     }
 
 
@@ -92,24 +86,11 @@ public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent
 
     }
 
-    @Override
-    public void onOpenCallBack() {
-        Log.i(TAG, "socket is open!");
-
-    }
-
-    @Override
-    public void loginSuccess(String userId, String avatar) {
-        Log.i(TAG, "loginSuccess:" + userId);
-        myId = userId;
-        userState = 1;
-    }
-
 
     // ======================================================================================     发送数据
     public void sendCreateRoom(String room, int roomSize) {
         if (webSocket != null) {
-            webSocket.createRoom(room, roomSize, myId);
+            webSocket.sendCreateRoom(room, roomSize, myId);
         }
     }
 
@@ -187,6 +168,19 @@ public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent
 
 
     // ========================================================================================    接收数据
+
+    @Override
+    public void onOpenCallBack() {
+        Log.i(TAG, "socket is open!");
+
+    }
+
+    @Override
+    public void loginSuccess(String userId, String avatar) {
+        Log.i(TAG, "loginSuccess:" + userId);
+        myId = userId;
+    }
+
     @Override
     public void onInvite(String room, boolean audioOnly, String inviteId, String userList) {
         Intent intent = new Intent();
@@ -301,7 +295,6 @@ public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent
     @Override
     public void logout(String str) {
         Log.i(TAG, "logout:" + str);
-        userState = 0;
     }
 
     @Override

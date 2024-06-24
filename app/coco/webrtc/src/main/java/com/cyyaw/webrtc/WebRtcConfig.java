@@ -18,7 +18,7 @@ import androidx.annotation.Nullable;
 
 import com.cyyaw.webrtc.page.VoipEvent;
 import com.cyyaw.webrtc.rtc.SkyEngineKit;
-import com.cyyaw.webrtc.socket.SocketManager;
+import com.cyyaw.webrtc.net.SocketManager;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;

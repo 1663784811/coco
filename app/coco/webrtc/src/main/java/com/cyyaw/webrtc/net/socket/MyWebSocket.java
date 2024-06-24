@@ -1,9 +1,10 @@
-package com.cyyaw.webrtc.socket;
+package com.cyyaw.webrtc.net.socket;
 
 import android.annotation.SuppressLint;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
+import com.cyyaw.webrtc.net.SocketReceiveDataEvent;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
@@ -278,7 +279,7 @@ public class MyWebSocket extends WebSocketClient {
     /**
      * ------------------------------发送消息----------------------------------------
      */
-    public void createRoom(String room, int roomSize, String myId) {
+    public void sendCreateRoom(String room, int roomSize, String myId) {
         Map<String, Object> map = new HashMap<>();
         map.put("eventName", "__create");
 
