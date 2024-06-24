@@ -21,6 +21,7 @@ import com.cyyaw.webrtc.permission.Permissions;
 import com.cyyaw.webrtc.rtc.SkyEngineKit;
 import com.cyyaw.webrtc.rtc.engine.EnumType;
 import com.cyyaw.webrtc.rtc.session.CallSession;
+import com.cyyaw.webrtc.rtc.session.CallSessionCallback;
 
 import java.util.UUID;
 
@@ -28,7 +29,7 @@ import java.util.UUID;
 /**
  * 视频
  */
-public class VideoActivity extends AppCompatActivity implements CallSession.CallSessionCallback {
+public class VideoActivity extends AppCompatActivity implements CallSessionCallback {
 
     public static final String EXTRA_TARGET = "targetId";
     public static final String EXTRA_MO = "isOutGoing";
@@ -112,10 +113,6 @@ public class VideoActivity extends AppCompatActivity implements CallSession.Call
                 }
             });
         }
-//        IntentFilter filter = new IntentFilter();
-//        filter.addAction(Intent.ACTION_HEADSET_PLUG);
-//        headsetPlugReceiver = new HeadsetPlugReceiver();
-//        registerReceiver(headsetPlugReceiver, filter);
     }
 
     @Override

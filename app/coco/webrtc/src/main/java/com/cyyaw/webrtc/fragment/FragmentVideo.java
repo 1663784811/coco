@@ -27,8 +27,6 @@ import org.webrtc.SurfaceViewRenderer;
 public class FragmentVideo extends SingleCallFragment implements View.OnClickListener {
 
     private static final String TAG = "FragmentVideo";
-
-
     private ImageView outgoingAudioOnlyImageView;
     private LinearLayout audioLayout;
     private ImageView incomingAudioOnlyImageView;
@@ -43,8 +41,6 @@ public class FragmentVideo extends SingleCallFragment implements View.OnClickLis
     private boolean isFromFloatingView = false;
     private SurfaceViewRenderer localSurfaceView;
     private SurfaceViewRenderer remoteSurfaceView;
-
-
 
     @Override
     public void onAttach(@NonNull Context context) {
