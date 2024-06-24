@@ -16,6 +16,7 @@ import java.util.List;
  *
  */
 public class VoipEvent implements ISkyEvent {
+
     private static final String TAG = "VoipEvent";
     private final AsyncPlayer ringPlayer = new AsyncPlayer(null);
 

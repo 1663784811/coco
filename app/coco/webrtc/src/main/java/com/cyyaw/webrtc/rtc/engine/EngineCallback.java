@@ -24,7 +24,11 @@ public interface EngineCallback {
      */
     void reject(int type);
 
+    /**
+     * 断开连接
+     */
     void disconnected(EnumType.CallEndReason reason);
+
 
     void onSendIceCandidate(String userId, IceCandidate candidate);
 

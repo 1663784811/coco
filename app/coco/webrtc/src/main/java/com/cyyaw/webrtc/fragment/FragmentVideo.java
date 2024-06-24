@@ -65,6 +65,8 @@ public class FragmentVideo extends SingleCallFragment {
         connectedAudioOnlyImageView = view.findViewById(R.id.connectedAudioOnlyImageView);
         connectedHangupImageView = view.findViewById(R.id.connectedHangupImageView);
         switchCameraImageView = view.findViewById(R.id.switchCameraImageView);
+
+
         outgoingHangupImageView.setOnClickListener((View v) -> {
             CallSession session = SkyEngineKit.Instance().getCurrentSession();
             if (session != null) {

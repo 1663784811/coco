@@ -2,13 +2,16 @@ package com.cyyaw.webrtc.rtc.engine;
 
 public class WebRtcDevice {
 
-
-    private String videoTrackId; // id
-    private int videoWidth;  // 宽
-    private int videoHeight;  // 高
-    private int videoFps;  // FPS
-
-    private String audioTrackId; // id
+    // id
+    private String videoTrackId;
+    // 宽
+    private int videoWidth;
+    // 高
+    private int videoHeight;
+    // FPS
+    private int videoFps;
+    // id
+    private String audioTrackId;
 
 
     public String getAudioTrackId() {
