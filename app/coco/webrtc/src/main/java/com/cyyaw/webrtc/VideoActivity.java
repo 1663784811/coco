@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.cyyaw.webrtc.fragment.FragmentAudio;
 import com.cyyaw.webrtc.fragment.FragmentVideo;
+import com.cyyaw.webrtc.fragment.MediaOperationCallback;
 import com.cyyaw.webrtc.fragment.SingleCallFragment;
 import com.cyyaw.webrtc.fragment.WindHandle;
 import com.cyyaw.webrtc.permission.Permissions;
@@ -29,7 +30,7 @@ import java.util.UUID;
 /**
  * 视频
  */
-public class VideoActivity extends AppCompatActivity implements CallSessionCallback {
+public class VideoActivity extends AppCompatActivity implements CallSessionCallback, MediaOperationCallback {
 
     public static final String EXTRA_TARGET = "targetId";
     public static final String EXTRA_MO = "isOutGoing";

@@ -1,13 +1,9 @@
 package com.cyyaw.webrtc.fragment;
 
-import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
-import com.cyyaw.webrtc.BarUtils;
-import com.cyyaw.webrtc.OSUtils;
 import com.cyyaw.webrtc.R;
 import com.cyyaw.webrtc.rtc.SkyEngineKit;
 import com.cyyaw.webrtc.rtc.engine.EnumType;
@@ -41,13 +37,7 @@ public class FragmentAudio extends SingleCallFragment implements View.OnClickLis
         muteImageView.setOnClickListener(this);
         acceptImageView.setOnClickListener(this);
         speakerImageView.setOnClickListener(this);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M || OSUtils.isMiui() || OSUtils.isFlyme()) {
-            lytParent.post(() -> {
-                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) minimizeImageView.getLayoutParams();
-                params.topMargin = BarUtils.getStatusBarHeight();
-                minimizeImageView.setLayoutParams(params);
-            });
-        }
+
     }
 
     @Override
