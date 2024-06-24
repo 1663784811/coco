@@ -44,7 +44,6 @@ public class VideoActivity extends AppCompatActivity implements CallSessionCallb
     private String targetId;
     public boolean isAudioOnly;
     private boolean isFromFloatingView;
-    private SkyEngineKit gEngineKit;
     private SingleCallFragment currentFragment;
     private String room;
 //    // 监听耳机广播
@@ -83,7 +82,6 @@ public class VideoActivity extends AppCompatActivity implements CallSessionCallb
         super.onCreate(savedInstanceState);
         WindHandle.setStatusBarOrScreenStatus(this);
         setContentView(R.layout.activity_single_call);
-        gEngineKit = SkyEngineKit.Instance();
         final Intent intent = getIntent();
         targetId = intent.getStringExtra(EXTRA_TARGET);
         isFromFloatingView = intent.getBooleanExtra(EXTRA_FROM_FLOATING_VIEW, false);
@@ -141,21 +139,21 @@ public class VideoActivity extends AppCompatActivity implements CallSessionCallb
         if (outgoing && !isReplace) {
             // 创建会话
             room = UUID.randomUUID().toString() + System.currentTimeMillis();
-            boolean b = gEngineKit.startOutCall(getApplicationContext(), room, targetId, audioOnly);
+            boolean b = SkyEngineKit.Instance().startOutCall(getApplicationContext(), room, targetId, audioOnly);
             if (!b) {
                 finish();
                 return;
             }
 //            App.getInstance().setRoomId(room);
 //            App.getInstance().setOtherUserId(targetId);
-            CallSession session = gEngineKit.getCurrentSession();
+            CallSession session = SkyEngineKit.Instance().getCurrentSession();
             if (session == null) {
                 finish();
             } else {
                 session.setSessionCallback(this);
             }
         } else {
-            CallSession session = gEngineKit.getCurrentSession();
+            CallSession session = SkyEngineKit.Instance().getCurrentSession();
             if (session == null) {
                 finish();
             } else {
@@ -167,10 +165,6 @@ public class VideoActivity extends AppCompatActivity implements CallSessionCallb
             }
         }
 
-    }
-
-    public SkyEngineKit getEngineKit() {
-        return gEngineKit;
     }
 
     public boolean isOutgoing() {

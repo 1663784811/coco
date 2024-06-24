@@ -43,7 +43,7 @@ public class FragmentAudio extends SingleCallFragment implements View.OnClickLis
     @Override
     public void init() {
         super.init();
-        CallSession currentSession = gEngineKit.getCurrentSession();
+        CallSession currentSession = SkyEngineKit.Instance().getCurrentSession();
         currentState = currentSession.getState();
         // 如果已经接通
         if (currentState == EnumType.CallState.Connected) {
@@ -88,7 +88,7 @@ public class FragmentAudio extends SingleCallFragment implements View.OnClickLis
         int id = v.getId();
         // 接听
         if (id == R.id.acceptImageView) {
-            CallSession session = gEngineKit.getCurrentSession();
+            CallSession session = SkyEngineKit.Instance().getCurrentSession();
             if (session != null)
                 Log.d(TAG, "session = " + session + "; session.getState() = " + session.getState());
             if (session != null && session.getState() == EnumType.CallState.Incoming) {
@@ -100,7 +100,7 @@ public class FragmentAudio extends SingleCallFragment implements View.OnClickLis
         // 挂断电话
         if (id == R.id.incomingHangupImageView || id == R.id.outgoingHangupImageView) {
             // App.getInstance().setOtherUserId("0");
-            CallSession session = gEngineKit.getCurrentSession();
+            CallSession session = SkyEngineKit.Instance().getCurrentSession();
             if (session != null) {
                 SkyEngineKit.Instance().endCall();
             }
@@ -109,7 +109,7 @@ public class FragmentAudio extends SingleCallFragment implements View.OnClickLis
         }
         // 静音
         if (id == R.id.muteImageView) {
-            CallSession session = gEngineKit.getCurrentSession();
+            CallSession session = SkyEngineKit.Instance().getCurrentSession();
             if (session != null && session.getState() != EnumType.CallState.Idle) {
                 if (session.toggleMuteAudio(!micEnabled)) {
                     micEnabled = !micEnabled;
@@ -119,7 +119,7 @@ public class FragmentAudio extends SingleCallFragment implements View.OnClickLis
         }
         // 扬声器
         if (id == R.id.speakerImageView) {
-            CallSession session = gEngineKit.getCurrentSession();
+            CallSession session = SkyEngineKit.Instance().getCurrentSession();
             if (session != null && session.getState() != EnumType.CallState.Idle) {
                 if (session.toggleSpeaker(!isSpeakerOn)) {
                     isSpeakerOn = !isSpeakerOn;

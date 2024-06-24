@@ -41,7 +41,6 @@ public abstract class SingleCallFragment extends Fragment {
     protected View connectedActionContainer;
     protected View lytParent;
     boolean isOutgoing = false;
-    protected SkyEngineKit gEngineKit;
 
     protected VideoActivity callSingleActivity;
 
@@ -91,7 +90,6 @@ public abstract class SingleCallFragment extends Fragment {
         callSingleActivity = (VideoActivity) getActivity();
         if (callSingleActivity != null) {
             isOutgoing = callSingleActivity.isOutgoing();
-            gEngineKit = callSingleActivity.getEngineKit();
         }
     }
 
