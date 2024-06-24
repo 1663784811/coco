@@ -51,7 +51,7 @@ public abstract class SingleCallFragment extends Fragment {
 
     protected EnumType.CallState currentState;
 
-    private Handler handler = new Handler();
+    private final Handler handler = new Handler(Looper.getMainLooper());
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -145,7 +145,8 @@ public abstract class SingleCallFragment extends Fragment {
 
     }
 
-    public void didChangeMode(Boolean isAudio) {
+    public void didChangeMode(boolean isAudio) {
+
     }
 
     public void didCreateLocalVideoTrack() {

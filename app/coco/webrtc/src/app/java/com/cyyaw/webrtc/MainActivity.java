@@ -14,6 +14,17 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button).setOnClickListener((View v) -> {
             VideoActivity.openActivity(MainActivity.this, "11", true, "22", false, false);
         });
+
+
+
+
+
+
+        findViewById(R.id.button1).setOnClickListener((View v) -> {
+            AudioActivity.openActivity(MainActivity.this, "11", true, "22",  false);
+        });
+
+
     }
 }
 

@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
+import com.cyyaw.webrtc.fragment.CallSessionCallbackImpl;
 import com.cyyaw.webrtc.fragment.FragmentAudio;
 import com.cyyaw.webrtc.fragment.FragmentVideo;
 import com.cyyaw.webrtc.fragment.MediaOperationCallback;
@@ -30,7 +31,7 @@ import java.util.UUID;
 /**
  * 视频
  */
-public class VideoActivity extends AppCompatActivity implements CallSessionCallback, MediaOperationCallback {
+public class VideoActivity extends AppCompatActivity implements MediaOperationCallback {
 
     public static final String EXTRA_TARGET = "targetId";
     public static final String EXTRA_MO = "isOutGoing";
@@ -40,6 +41,7 @@ public class VideoActivity extends AppCompatActivity implements CallSessionCallb
     private static final String TAG = "CallSingleActivity";
 
     private final Handler handler = new Handler(Looper.getMainLooper());
+    public boolean setIsOutgoing;
     private boolean isOutgoing;
     private String targetId;
     public boolean isAudioOnly;
@@ -156,7 +158,7 @@ public class VideoActivity extends AppCompatActivity implements CallSessionCallb
             if (session == null) {
                 finish();
             } else {
-                session.setSessionCallback(this);
+                session.setSessionCallback(new CallSessionCallbackImpl(currentFragment, this));
             }
         } else {
             CallSession session = SkyEngineKit.Instance().getCurrentSession();
@@ -168,16 +170,11 @@ public class VideoActivity extends AppCompatActivity implements CallSessionCallb
                     isAudioOnly = session.isAudioOnly();
                     currentFragment.didChangeMode(true);
                 }
-                session.setSessionCallback(this);
+                session.setSessionCallback(new CallSessionCallbackImpl(currentFragment, this));
             }
         }
 
     }
-
-    public boolean isOutgoing() {
-        return isOutgoing;
-    }
-
 
     public boolean isFromFloatingView() {
         return isFromFloatingView;
@@ -202,51 +199,11 @@ public class VideoActivity extends AppCompatActivity implements CallSessionCallb
     }
 
 
-    // ======================================界面回调================================
-    @Override
-    public void didCallEndWithReason(EnumType.CallEndReason reason) {
-//        App.getInstance().setOtherUserId("0");
-        //交给fragment去finish
-//        finish();
-        handler.post(() -> currentFragment.didCallEndWithReason(reason));
+    public boolean isOutgoing() {
+        return isOutgoing;
     }
 
-    @Override
-    public void didChangeState(EnumType.CallState callState) {
-        if (callState == EnumType.CallState.Connected) {
-            isOutgoing = false;
-        }
-        handler.post(() -> currentFragment.didChangeState(callState));
+    public void setIsOutgoing(boolean b) {
+        isOutgoing = b;
     }
-
-    @Override
-    public void didChangeMode(boolean var1) {
-        handler.post(() -> currentFragment.didChangeMode(var1));
-    }
-
-    @Override
-    public void didCreateLocalVideoTrack() {
-        handler.post(() -> currentFragment.didCreateLocalVideoTrack());
-    }
-
-    @Override
-    public void didReceiveRemoteVideoTrack(String userId) {
-        handler.post(() -> currentFragment.didReceiveRemoteVideoTrack(userId));
-    }
-
-    @Override
-    public void didUserLeave(String userId) {
-        handler.post(() -> currentFragment.didUserLeave(userId));
-    }
-
-    @Override
-    public void didError(String var1) {
-        handler.post(() -> currentFragment.didError(var1));
-    }
-
-    @Override
-    public void didDisconnected(String userId) {
-        handler.post(() -> currentFragment.didDisconnected(userId));
-    }
-
 }

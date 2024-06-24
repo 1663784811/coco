@@ -14,6 +14,7 @@ import com.cyyaw.webrtc.rtc.session.CallSession;
  * 语音通话控制界面
  */
 public class FragmentAudio extends SingleCallFragment {
+
     private static final String TAG = "FragmentAudio";
     private ImageView muteImageView;
     private ImageView speakerImageView;

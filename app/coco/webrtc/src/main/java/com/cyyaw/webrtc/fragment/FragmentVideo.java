@@ -231,7 +231,7 @@ public class FragmentVideo extends SingleCallFragment {
     }
 
     @Override
-    public void didChangeMode(Boolean isAudio) {
+    public void didChangeMode(boolean isAudio) {
         runOnUiThread(() -> callSingleActivity.switchAudio());
     }
 

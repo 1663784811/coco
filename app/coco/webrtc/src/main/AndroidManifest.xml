@@ -58,7 +58,14 @@
             android:label="local network"
             android:screenOrientation="portrait" />
 
-        <service android:name=".VideoServer" />
+
+        <activity
+            android:name=".AudioActivity"
+            android:exported="false"
+            android:label="local network"
+            android:screenOrientation="portrait" />
+
+
 
     </application>
 
