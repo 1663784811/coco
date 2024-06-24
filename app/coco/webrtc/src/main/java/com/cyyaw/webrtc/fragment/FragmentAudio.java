@@ -17,8 +17,10 @@ public class FragmentAudio extends SingleCallFragment {
     private static final String TAG = "FragmentAudio";
     private ImageView muteImageView;
     private ImageView speakerImageView;
-    private boolean micEnabled = false; // 静音
-    private boolean isSpeakerOn = false; // 扬声器
+    // 静音
+    private boolean micEnabled = false;
+    // 扬声器
+    private boolean isSpeakerOn = false;
 
     @Override
     int getLayout() {

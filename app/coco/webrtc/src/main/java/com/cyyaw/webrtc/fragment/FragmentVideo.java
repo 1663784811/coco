@@ -20,7 +20,7 @@ import org.webrtc.SurfaceViewRenderer;
 /**
  * 视频通话控制界面
  */
-public class FragmentVideo extends SingleCallFragment implements View.OnClickListener {
+public class FragmentVideo extends SingleCallFragment {
 
     private static final String TAG = "FragmentVideo";
     private ImageView outgoingAudioOnlyImageView;
@@ -65,16 +65,97 @@ public class FragmentVideo extends SingleCallFragment implements View.OnClickLis
         connectedAudioOnlyImageView = view.findViewById(R.id.connectedAudioOnlyImageView);
         connectedHangupImageView = view.findViewById(R.id.connectedHangupImageView);
         switchCameraImageView = view.findViewById(R.id.switchCameraImageView);
-        outgoingHangupImageView.setOnClickListener(this);
-        incomingHangupImageView.setOnClickListener(this);
-        minimizeImageView.setOnClickListener(this);
-        connectedHangupImageView.setOnClickListener(this);
-        acceptImageView.setOnClickListener(this);
-        switchCameraImageView.setOnClickListener(this);
-        pipRenderer.setOnClickListener(this);
-        outgoingAudioOnlyImageView.setOnClickListener(this);
-        incomingAudioOnlyImageView.setOnClickListener(this);
-        connectedAudioOnlyImageView.setOnClickListener(this);
+        outgoingHangupImageView.setOnClickListener((View v) -> {
+            CallSession session = SkyEngineKit.Instance().getCurrentSession();
+            if (session != null) {
+                Log.d(TAG, "endCall");
+                SkyEngineKit.Instance().endCall();
+            }
+            if (callSingleActivity != null) callSingleActivity.finish();
+        });
+        incomingHangupImageView.setOnClickListener((View v) -> {
+            CallSession session = SkyEngineKit.Instance().getCurrentSession();
+            if (session != null) {
+                Log.d(TAG, "endCall");
+                SkyEngineKit.Instance().endCall();
+            }
+            if (callSingleActivity != null) callSingleActivity.finish();
+        });
+        minimizeImageView.setOnClickListener((View v) -> {
+            if (callSingleActivity != null) {
+                callSingleActivity.showFloatingView();
+            }
+        });
+        connectedHangupImageView.setOnClickListener((View v) -> {
+            CallSession session = SkyEngineKit.Instance().getCurrentSession();
+            if (session != null) {
+                Log.d(TAG, "endCall");
+                SkyEngineKit.Instance().endCall();
+            }
+            if (callSingleActivity != null) callSingleActivity.finish();
+        });
+
+        acceptImageView.setOnClickListener((View v) -> {
+            CallSession session = SkyEngineKit.Instance().getCurrentSession();
+            // 接听
+            if (session != null && session.getState() == EnumType.CallState.Incoming) {
+                session.joinHome(session.getRoomId());
+            } else if (session != null) {
+                if (callSingleActivity != null) {
+                    session.sendRefuse();
+                    callSingleActivity.finish();
+                }
+            }
+        });
+
+        switchCameraImageView.setOnClickListener((View v) -> {
+            CallSession session = SkyEngineKit.Instance().getCurrentSession();
+            session.switchCamera();
+        });
+        pipRenderer.setOnClickListener((View v) -> {
+            // 点击渲染器
+            boolean isFullScreenRemote = fullscreenRenderer.getChildAt(0) == remoteSurfaceView;
+            fullscreenRenderer.removeAllViews();
+            pipRenderer.removeAllViews();
+            if (isFullScreenRemote) {
+                remoteSurfaceView.setZOrderMediaOverlay(true);
+                pipRenderer.addView(remoteSurfaceView);
+                localSurfaceView.setZOrderMediaOverlay(false);
+                fullscreenRenderer.addView(localSurfaceView);
+            } else {
+                localSurfaceView.setZOrderMediaOverlay(true);
+                pipRenderer.addView(localSurfaceView);
+                remoteSurfaceView.setZOrderMediaOverlay(false);
+                fullscreenRenderer.addView(remoteSurfaceView);
+            }
+        });
+        outgoingAudioOnlyImageView.setOnClickListener((View v) -> {
+            CallSession session = SkyEngineKit.Instance().getCurrentSession();
+            if (session != null) {
+                if (callSingleActivity != null) {
+                    callSingleActivity.isAudioOnly = true;
+                }
+                session.switchToAudio();
+            }
+        });
+        incomingAudioOnlyImageView.setOnClickListener((View v) -> {
+            CallSession session = SkyEngineKit.Instance().getCurrentSession();
+            if (session != null) {
+                if (callSingleActivity != null) {
+                    callSingleActivity.isAudioOnly = true;
+                }
+                session.switchToAudio();
+            }
+        });
+        connectedAudioOnlyImageView.setOnClickListener((View v) -> {
+            CallSession session = SkyEngineKit.Instance().getCurrentSession();
+            if (session != null) {
+                if (callSingleActivity != null) {
+                    callSingleActivity.isAudioOnly = true;
+                }
+                session.switchToAudio();
+            }
+        });
     }
 
 
@@ -218,59 +299,6 @@ public class FragmentVideo extends SingleCallFragment implements View.OnClickLis
     @Override
     public void didError(String error) {
 
-    }
-
-
-    @Override
-    public void onClick(View v) {
-        int id = v.getId();
-        CallSession session = SkyEngineKit.Instance().getCurrentSession();
-        if (id == R.id.acceptImageView) {
-            // 接听
-            if (session != null && session.getState() == EnumType.CallState.Incoming) {
-                session.joinHome(session.getRoomId());
-            } else if (session != null) {
-                if (callSingleActivity != null) {
-                    session.sendRefuse();
-                    callSingleActivity.finish();
-                }
-            }
-        } else if (id == R.id.incomingHangupImageView || id == R.id.outgoingHangupImageView || id == R.id.connectedHangupImageView) {
-            if (session != null) {
-                Log.d(TAG, "endCall");
-                SkyEngineKit.Instance().endCall();
-            }
-            if (callSingleActivity != null) callSingleActivity.finish();
-        } else if (id == R.id.switchCameraImageView) {
-            session.switchCamera();
-        } else if (id == R.id.pip_video_view) {
-            // 点击渲染器
-            boolean isFullScreenRemote = fullscreenRenderer.getChildAt(0) == remoteSurfaceView;
-            fullscreenRenderer.removeAllViews();
-            pipRenderer.removeAllViews();
-            if (isFullScreenRemote) {
-                remoteSurfaceView.setZOrderMediaOverlay(true);
-                pipRenderer.addView(remoteSurfaceView);
-                localSurfaceView.setZOrderMediaOverlay(false);
-                fullscreenRenderer.addView(localSurfaceView);
-            } else {
-                localSurfaceView.setZOrderMediaOverlay(true);
-                pipRenderer.addView(localSurfaceView);
-                remoteSurfaceView.setZOrderMediaOverlay(false);
-                fullscreenRenderer.addView(remoteSurfaceView);
-            }
-        } else if (id == R.id.outgoingAudioOnlyImageView || id == R.id.incomingAudioOnlyImageView || id == R.id.connectedAudioOnlyImageView) {
-            if (session != null) {
-                if (callSingleActivity != null) {
-                    callSingleActivity.isAudioOnly = true;
-                }
-                session.switchToAudio();
-            }
-        } else if (id == R.id.minimizeImageView) {
-            if (callSingleActivity != null) {
-                callSingleActivity.showFloatingView();
-            }
-        }
     }
 
 
