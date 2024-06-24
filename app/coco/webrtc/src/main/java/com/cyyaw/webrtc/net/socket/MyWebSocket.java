@@ -122,7 +122,7 @@ public class MyWebSocket extends WebSocketClient implements SocketConnect {
      */
     @Override
     public void onMessage(String message) {
-        Log.d(TAG, message);
+        Log.d(TAG, "  Receive <<<====  " + message);
         handleMessage(message);
     }
 
@@ -350,7 +350,6 @@ public class MyWebSocket extends WebSocketClient implements SocketConnect {
         map.put("data", childMap);
         JSONObject object = new JSONObject(map);
         final String jsonString = object.toString();
-        Log.d(TAG, "send-->" + jsonString);
         sendData(jsonString);
     }
 
@@ -499,7 +498,7 @@ public class MyWebSocket extends WebSocketClient implements SocketConnect {
     }
 
     private void sendData(String data) {
-        Log.d(TAG, "send-->" + data);
+        Log.d(TAG, "  send ====>>>  " + data);
         send(data);
     }
 
