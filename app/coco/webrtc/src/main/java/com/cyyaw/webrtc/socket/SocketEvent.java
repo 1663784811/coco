@@ -1,8 +1,9 @@
 package com.cyyaw.webrtc.socket;
 
 /**
+ * 网络事件
  */
-public interface IEvent {
+public interface SocketEvent {
 
 
     void onOpen();

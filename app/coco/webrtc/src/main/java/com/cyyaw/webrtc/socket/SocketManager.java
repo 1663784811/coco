@@ -1,11 +1,9 @@
 package com.cyyaw.webrtc.socket;
 
-import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-
 
 import com.cyyaw.webrtc.VideoActivity;
 import com.cyyaw.webrtc.WebRtcConfig;
@@ -16,9 +14,7 @@ import com.cyyaw.webrtc.rtc.session.CallSession;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.SecureRandom;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
@@ -27,7 +23,7 @@ import javax.net.ssl.TrustManager;
 /**
  *
  */
-public class SocketManager implements IEvent {
+public class SocketManager implements SocketEvent {
     private final static String TAG = SocketManager.class.getName();
     private MyWebSocket webSocket;
     private int userState;
@@ -115,7 +111,6 @@ public class SocketManager implements IEvent {
         if (webSocket != null) {
             webSocket.createRoom(room, roomSize, myId);
         }
-
     }
 
     public void sendInvite(String room, List<String> users, boolean audioOnly) {

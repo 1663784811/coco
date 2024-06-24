@@ -23,11 +23,11 @@ import javax.net.ssl.X509TrustManager;
  */
 public class MyWebSocket extends WebSocketClient {
     private final static String TAG = MyWebSocket.class.getName();
-    private final IEvent iEvent;
+    private final SocketEvent iEvent;
     private boolean connectFlag = false;
 
 
-    public MyWebSocket(URI serverUri, IEvent event) {
+    public MyWebSocket(URI serverUri, SocketEvent event) {
         super(serverUri);
         this.iEvent = event;
     }
