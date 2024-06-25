@@ -21,12 +21,22 @@ public interface CallSessionCallback {
 
     void didChangeMode(boolean isAudioOnly);
 
+    /**
+     * 创建本地
+     */
     void didCreateLocalVideoTrack();
 
+    /**
+     * 远程画面
+     */
     void didReceiveRemoteVideoTrack(String userId);
 
+    /**
+     * 用户离开
+     */
     void didUserLeave(String userId);
 
+    
     void didError(String error);
 
     void didDisconnected(String userId);

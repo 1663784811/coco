@@ -236,10 +236,12 @@ public class FragmentVideo extends SingleCallFragment {
     }
 
 
+    /**
+     * 创建本地 画面预览
+     */
     @Override
     public void didCreateLocalVideoTrack() {
         if (localSurfaceView == null) {
-            //
             View surfaceView = SkyEngineKit.Instance().getCurrentSession().setupLocalVideo(true);
             if (surfaceView != null) {
                 localSurfaceView = (SurfaceViewRenderer) surfaceView;
@@ -251,16 +253,18 @@ public class FragmentVideo extends SingleCallFragment {
             localSurfaceView.setZOrderMediaOverlay(true);
         }
         Log.d(TAG, "didCreateLocalVideoTrack localSurfaceView != null is " + (localSurfaceView != null) + "; remoteSurfaceView == null = " + (remoteSurfaceView == null));
-
         if (localSurfaceView.getParent() != null) {
             ((ViewGroup) localSurfaceView.getParent()).removeView(localSurfaceView);
         }
         if (isOutgoing && remoteSurfaceView == null) {
-            if (fullscreenRenderer != null && fullscreenRenderer.getChildCount() != 0)
+            if (fullscreenRenderer != null && fullscreenRenderer.getChildCount() != 0) {
                 fullscreenRenderer.removeAllViews();
+            }
             fullscreenRenderer.addView(localSurfaceView);
         } else {
-            if (pipRenderer.getChildCount() != 0) pipRenderer.removeAllViews();
+            if (pipRenderer.getChildCount() != 0) {
+                pipRenderer.removeAllViews();
+            }
             pipRenderer.addView(localSurfaceView);
         }
     }
