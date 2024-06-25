@@ -1,6 +1,7 @@
 package com.cyyaw.coco.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.View;
 import androidx.annotation.RequiresApi;
 import androidx.viewpager.widget.ViewPager;
 
+import com.cyyaw.coco.MyApplication;
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.activity.home.ChatListView;
 import com.cyyaw.coco.activity.home.HomeView;
@@ -41,6 +43,10 @@ public class MainActivity extends BaseAppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (!MyApplication.checkToken()) {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+        }
         // =====================================   tabbar
         tabBarData.add(new TabBarItemEntity("首页", R.mipmap.tab_home_unselect, R.mipmap.tab_home_select));
         tabBarData.add(new TabBarItemEntity("消息", R.mipmap.tab_speech_unselect, R.mipmap.tab_speech_select));
