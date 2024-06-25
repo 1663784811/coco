@@ -48,7 +48,9 @@ public class MainActivity extends BaseAppCompatActivity {
             finish();
         }
         // =====================================   tabbar
-        tabBarData.add(new TabBarItemEntity("首页", R.mipmap.tab_home_unselect, R.mipmap.tab_home_select));
+        tabBarData.add(new TabBarItemEntity("发现", R.mipmap.tab_home_unselect, R.mipmap.tab_home_select));
+        tabBarData.add(new TabBarItemEntity("探索", R.drawable.baseline_search_24, R.drawable.baseline_search_24));
+        tabBarData.add(new TabBarItemEntity("发布", R.drawable.baseline_add_circle_24, R.drawable.baseline_add_circle_24));
         tabBarData.add(new TabBarItemEntity("消息", R.mipmap.tab_speech_unselect, R.mipmap.tab_speech_select));
         tabBarData.add(new TabBarItemEntity("我的", R.mipmap.tab_contact_unselect, R.mipmap.tab_contact_select));
         CommonTabLayout tabBar = findViewById(R.id.app_tabBar);
@@ -56,6 +58,8 @@ public class MainActivity extends BaseAppCompatActivity {
         // 初始化ViewPage
         List<View> pageData = new ArrayList<>();
         pageData.add(new HomeView(this));
+        pageData.add(new HomeView(this));
+        pageData.add(new ChatListView(this));
         pageData.add(new ChatListView(this));
         pageData.add(new MyView(this));
 

@@ -89,17 +89,17 @@ public class HomeView extends LinearLayout {
         }
         contentListAdapter.setDataList(dataList);
 
-        Button gitMeACallBtn = viewHome.findViewById(R.id.gitMeACallBtn);
-        gitMeACallBtn.setOnClickListener((View v) -> {
-            // 打开面
-            String[] per = new String[]{Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA};
-//            Permissions.request(context, per, integer -> {
-//                Log.d(TAG, "Permissions.request integer = " + integer);
-//                if (integer != 0) {
-//                    ActivityUtils.startActivity(context, VideoActivity.class, null);
-//                }
-//            });
-        });
+//        Button gitMeACallBtn = viewHome.findViewById(R.id.gitMeACallBtn);
+//        gitMeACallBtn.setOnClickListener((View v) -> {
+//            // 打开面
+//            String[] per = new String[]{Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA};
+////            Permissions.request(context, per, integer -> {
+////                Log.d(TAG, "Permissions.request integer = " + integer);
+////                if (integer != 0) {
+////                    ActivityUtils.startActivity(context, VideoActivity.class, null);
+////                }
+////            });
+//        });
     }
 
 
