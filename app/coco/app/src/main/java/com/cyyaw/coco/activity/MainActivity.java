@@ -99,27 +99,27 @@ public class MainActivity extends BaseAppCompatActivity {
         });
         // =====================================
 
-        BlueToothManager.getInstance().setCallBack(new BlueToothCallBack() {
-            @Override
-            public void error() {
-
-
-            }
-
-            @Override
-            public void foundBluetooth(BluetoothEntity bluetooth) {
-
-            }
-
-            @Override
-            public void readData(String address, byte[] data) {
-
-
-            }
-        });
-
-        BlueToothManager.getInstance().sendData("ss", "sssssss".getBytes());
-        BlueToothManager.getInstance().connectBlueTooth("ssss");
+//        BlueToothManager.getInstance().setCallBack(new BlueToothCallBack() {
+//            @Override
+//            public void error() {
+//
+//
+//            }
+//
+//            @Override
+//            public void foundBluetooth(BluetoothEntity bluetooth) {
+//
+//            }
+//
+//            @Override
+//            public void readData(String address, byte[] data) {
+//
+//
+//            }
+//        });
+//
+//        BlueToothManager.getInstance().sendData("ss", "sssssss".getBytes());
+//        BlueToothManager.getInstance().connectBlueTooth("ssss");
 
     }
 

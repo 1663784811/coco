@@ -40,7 +40,7 @@ public class BlueToothReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
         if (action == null) return;
-        Log.i(TAG, "===" + action);
+        Log.i(TAG, "==ssss=" + action);
         BluetoothDevice dev = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
         if (dev != null) Log.i(TAG, "BluetoothDevice: " + dev.getName() + ", " + dev.getAddress());
         switch (action) {

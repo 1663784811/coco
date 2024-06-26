@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.activity.home.adapter.ContentListAdapter;
-import com.cyyaw.coco.broadcast.BlueToothReceiver;
 import com.cyyaw.coco.common.BaseAppCompatActivity;
 import com.cyyaw.coco.entity.ContentEntity;
 
@@ -28,7 +27,6 @@ public class HomeView extends LinearLayout {
 
     private ContentListAdapter contentListAdapter;
 
-    BlueToothReceiver br;
 
 
     public HomeView(BaseAppCompatActivity context) {

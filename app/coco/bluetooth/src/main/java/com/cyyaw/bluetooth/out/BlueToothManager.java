@@ -74,7 +74,7 @@ public class BlueToothManager {
     /**
      * 搜索蓝牙
      */
-    public void searchBlueTooth() {
+    public void discoveryBlueTooth() {
         // 清空蓝牙列表
         bluetoothMap.clear();
         if (ActivityCompat.checkSelfPermission(cxt, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {

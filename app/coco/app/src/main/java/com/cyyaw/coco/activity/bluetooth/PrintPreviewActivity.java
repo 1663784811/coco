@@ -10,7 +10,6 @@ import com.cyyaw.coco.MyApplication;
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.activity.bluetooth.bt.BtBase;
 import com.cyyaw.coco.activity.bluetooth.bt.BtClient;
-import com.cyyaw.coco.broadcast.BlueToothReceiver;
 import com.cyyaw.coco.common.BaseAppCompatActivity;
 import com.cyyaw.coco.common.view.PrintBitMapImageView;
 import com.cyyaw.coco.entity.BluetoothEntity;
@@ -19,7 +18,7 @@ import com.cyyaw.coco.utils.ActivityUtils;
 import java.util.List;
 
 public class PrintPreviewActivity extends BaseAppCompatActivity implements BtBase.Listener {
-    private final String TAG = PrintPreviewActivity.class.getName();
+
 
     private final BtClient mClient = new BtClient(this, this);
 

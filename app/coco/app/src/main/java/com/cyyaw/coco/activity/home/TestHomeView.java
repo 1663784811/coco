@@ -1,26 +1,12 @@
 package com.cyyaw.coco.activity.home;
 
-import android.Manifest;
-import android.bluetooth.BluetoothAdapter;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.cyyaw.coco.R;
 import com.cyyaw.coco.activity.home.adapter.HomeBluetoothListAdapter;
-import com.cyyaw.coco.activity.home.adapter.LinearLayoutManagerNonScrollable;
 import com.cyyaw.coco.common.BaseAppCompatActivity;
-import com.cyyaw.coco.common.BroadcastEnum;
-import com.cyyaw.bluetooth.BluetoothClassicService;
-import com.cyyaw.coco.utils.ActivityUtils;
 
 public class TestHomeView extends LinearLayout {
 
@@ -53,27 +39,27 @@ public class TestHomeView extends LinearLayout {
 
 
     private void initView(AttributeSet attrs) {
-        // =============== 加载布局
-        View viewHome = LayoutInflater.from(context).inflate(R.layout.activity_main_home, this, true);
-        // =============== 设置适配器
-        RecyclerView recyclerView = viewHome.findViewById(R.id.equipmentList);
-        LinearLayoutManager layoutManager = new LinearLayoutManagerNonScrollable(context);
-        recyclerView.setLayoutManager(layoutManager);
-        homeBluetoothListAdapter = new HomeBluetoothListAdapter(context);
-        recyclerView.setAdapter(homeBluetoothListAdapter);
-        // 开启服务
-        Intent intent = new Intent(context, BluetoothClassicService.class);
-        intent.putExtra("clazz", BroadcastEnum.ACTIVITY_HOME);
-        context.startService(intent);
-        // 注册广播
-//        br = new BlueToothReceiver(context, this);
-
-        ActivityUtils.blueToothPermissions(context, () -> {
-            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
-                return;
-            }
-            BluetoothAdapter.getDefaultAdapter().startDiscovery();
-        });
+//        // =============== 加载布局
+//        View viewHome = LayoutInflater.from(context).inflate(R.layout.activity_main_home, this, true);
+//        // =============== 设置适配器
+//        RecyclerView recyclerView = viewHome.findViewById(R.id.equipmentList);
+//        LinearLayoutManager layoutManager = new LinearLayoutManagerNonScrollable(context);
+//        recyclerView.setLayoutManager(layoutManager);
+//        homeBluetoothListAdapter = new HomeBluetoothListAdapter(context);
+//        recyclerView.setAdapter(homeBluetoothListAdapter);
+//        // 开启服务
+//        Intent intent = new Intent(context, BluetoothClassicService.class);
+//        intent.putExtra("clazz", BroadcastEnum.ACTIVITY_HOME);
+//        context.startService(intent);
+//        // 注册广播
+////        br = new BlueToothReceiver(context, this);
+//
+//        ActivityUtils.blueToothPermissions(context, () -> {
+//            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
+//                return;
+//            }
+//            BluetoothAdapter.getDefaultAdapter().startDiscovery();
+//        });
     }
 
 

@@ -1,39 +1,27 @@
 package com.cyyaw.coco.activity.home;
 
-import android.Manifest;
-import android.bluetooth.BluetoothAdapter;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.cyyaw.bluetooth.entity.BluetoothEntity;
+import com.cyyaw.bluetooth.out.BlueToothCallBack;
+import com.cyyaw.bluetooth.out.BlueToothManager;
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.activity.home.adapter.HomeBluetoothListAdapter;
 import com.cyyaw.coco.activity.home.adapter.StaggeredGridLayoutManagerNonScrollable;
-import com.cyyaw.coco.broadcast.BlueToothReceiver;
 import com.cyyaw.coco.common.BaseAppCompatActivity;
-import com.cyyaw.coco.common.BroadcastEnum;
-import com.cyyaw.coco.entity.BluetoothEntity;
-import com.cyyaw.bluetooth.BluetoothClassicService;
-import com.cyyaw.coco.utils.ActivityUtils;
 
 public class FindView extends LinearLayout {
-
-
-    private static final String TAG = FindView.class.getName();
 
     private BaseAppCompatActivity context;
 
     private HomeBluetoothListAdapter homeBluetoothListAdapter;
-
-    BlueToothReceiver br;
 
 
     public FindView(BaseAppCompatActivity context) {
@@ -71,33 +59,28 @@ public class FindView extends LinearLayout {
         recyclerView.setAdapter(homeBluetoothListAdapter);
 
 
-        //
-        for (int i = 0; i < 50; i++) {
-            BluetoothEntity bluetooth = new BluetoothEntity();
-            bluetooth.setName("sss:" + i);
-            bluetooth.setAddress("ddd" + i);
-            bluetooth.setType(0);
-            bluetooth.setRssi(0);
-            homeBluetoothListAdapter.updateData(bluetooth);
-        }
+        BlueToothManager.getInstance().setCallBack(new BlueToothCallBack() {
+            @Override
+            public void error() {
 
-
-        // 开启服务
-        Intent intent = new Intent(context, BluetoothClassicService.class);
-        intent.putExtra("clazz", BroadcastEnum.ACTIVITY_HOME);
-        context.startService(intent);
-
-
-        // 注册广播
-//        br = new BlueToothReceiver(context, this);
-
-
-        ActivityUtils.blueToothPermissions(context, () -> {
-            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
-                return;
             }
-            BluetoothAdapter.getDefaultAdapter().startDiscovery();
+
+            @Override
+            public void foundBluetooth(BluetoothEntity bluetooth) {
+                com.cyyaw.coco.entity.BluetoothEntity bt = new com.cyyaw.coco.entity.BluetoothEntity();
+                bt.setName("sss:");
+                bt.setAddress(bluetooth.getDev().getAddress());
+                bt.setType(0);
+                bt.setRssi(0);
+                homeBluetoothListAdapter.updateData(bt);
+            }
+
+            @Override
+            public void readData(String address, byte[] data) {
+
+            }
         });
+        BlueToothManager.getInstance().discoveryBlueTooth();
     }
 
 
