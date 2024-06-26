@@ -83,12 +83,12 @@
             android:exported="false" />
 
         <service
-            android:name=".service.BluetoothBleService"
+            android:name="com.cyyaw.bluetooth.device.BluetoothBleService"
             android:enabled="true"
             android:exported="false" />
 
         <service
-            android:name=".service.BluetoothClassicService"
+            android:name="com.cyyaw.bluetooth.BluetoothClassicService"
             android:enabled="true"
             android:exported="false" />
         <service android:name="org.eclipse.paho.android.service.MqttService" />

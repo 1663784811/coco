@@ -3,7 +3,6 @@ package com.cyyaw.coco.activity.adapter;
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.le.ScanResult;
-import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -12,8 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cyyaw.coco.R;
-import com.cyyaw.coco.common.BroadcastEnum;
-import com.cyyaw.coco.service.BlueTooth;
+import com.cyyaw.bluetooth.device.BlueTooth;
 
 public class BluetoothListAdapterView extends RecyclerView.ViewHolder {
 

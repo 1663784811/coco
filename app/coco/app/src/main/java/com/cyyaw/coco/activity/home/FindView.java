@@ -2,7 +2,6 @@ package com.cyyaw.coco.activity.home;
 
 import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.util.AttributeSet;
@@ -12,20 +11,17 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import com.cyyaw.coco.MyApplication;
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.activity.home.adapter.HomeBluetoothListAdapter;
-import com.cyyaw.coco.activity.home.adapter.LinearLayoutManagerNonScrollable;
 import com.cyyaw.coco.activity.home.adapter.StaggeredGridLayoutManagerNonScrollable;
 import com.cyyaw.coco.broadcast.BlueToothReceiver;
 import com.cyyaw.coco.common.BaseAppCompatActivity;
 import com.cyyaw.coco.common.BroadcastEnum;
 import com.cyyaw.coco.entity.BluetoothEntity;
-import com.cyyaw.coco.service.BluetoothClassicService;
+import com.cyyaw.bluetooth.BluetoothClassicService;
 import com.cyyaw.coco.utils.ActivityUtils;
 
 public class FindView extends LinearLayout {

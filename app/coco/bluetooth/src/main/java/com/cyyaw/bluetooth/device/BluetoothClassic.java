@@ -1,18 +1,13 @@
-package com.cyyaw.coco.service;
+package com.cyyaw.bluetooth.device;
 
 
 import android.Manifest;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.Context;
 import android.content.pm.PackageManager;
-import android.util.Log;
-import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
-
-import com.cyyaw.coco.MyApplication;
-import com.cyyaw.coco.entity.BluetoothEntity;
-import com.cyyaw.coco.utils.BluetoothUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,10 +17,14 @@ import java.util.UUID;
 /**
  * 经典蓝牙
  */
-public class BluetoothClassicService extends BlueToothAbstract {
-    private static final String TAG = BluetoothClassicService.class.getName();
+public class BluetoothClassic implements BlueTooth {
+    private static final String TAG = BluetoothClassic.class.getName();
 
     static final UUID BLUETOOTH_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+
+    private Context context;
+    private BlueToothStatusCallBack callBack;
+
     private volatile BluetoothSocket mmSocket;
     private volatile BluetoothDevice mmDevice;
 
@@ -34,47 +33,58 @@ public class BluetoothClassicService extends BlueToothAbstract {
 
     // ========================================================
 
+
+    public BluetoothClassic(Context context, BlueToothStatusCallBack callBack) {
+        this.context = context;
+        this.callBack = callBack;
+    }
+
     @Override
-    public void connectBlueTooth(BluetoothEntity bluetooth) {
-        super.connectBlueTooth(bluetooth);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED)
-            return;
-        bluetoothAdapter.cancelDiscovery();
-        String ad = bluetoothAdapter.getAddress();
+    public void connectBlueTooth(BluetoothDevice bluetooth) {
+        String ad = bluetooth.getAddress();
         String address = bluetooth.getAddress();
-        mmDevice = blueToothList.get(address);
+        mmDevice = bluetooth;
         // 停止扫描
         try {
             //加密传输，Android系统强制配对，弹窗显示配对码
             //mmSocket = mmDevice.createRfcommSocketToServiceRecord(BLUETOOTH_UUID);
             //明文传输(不安全)，无需配对
-            mmSocket = mmDevice.createInsecureRfcommSocketToServiceRecord(BLUETOOTH_UUID);
-            MyApplication.run(() -> {
+            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
+            mmSocket = bluetooth.createInsecureRfcommSocketToServiceRecord(BLUETOOTH_UUID);
+            new Thread(() -> {
                 try {
                     // 连接
                     mmSocket.connect();
-                    BluetoothUtils.connectSuccess(BluetoothClassicService.this, bluetooth);
                     // 连接成功
                     mmInStream = mmSocket.getInputStream();
                     mmOutputStream = mmSocket.getOutputStream();
+                    if (callBack != null) {
+                        callBack.connectSuccess(address);
+                    }
                     // 缓冲区大小
                     byte[] mmBuffer = new byte[1024];
                     // 读取几个字节
-                    int numBytes = 0;
                     // 读取数据
                     while (true) {
-                        numBytes = mmInStream.read(mmBuffer);
-                        MyApplication.toast("数据：" + numBytes);
-                        // 处理读取的数据
+                        int numBytes = mmInStream.read(mmBuffer);
+                        if (null != callBack) {
+                            byte[] rest = new byte[numBytes];
+                            System.arraycopy(mmBuffer, 0, rest, 0, numBytes);
+                            callBack.readData(address, rest);
+                        }
                     }
                 } catch (IOException e) {
-                    BluetoothUtils.connectFail(BluetoothClassicService.this, bluetooth);
                     closeConnectBlueTooth();
+//                    if (callBack != null) {
+//                         callBack.sendFail(address);
+//                    }
                 }
-            });
+            }).start();
         } catch (Exception e) {
-            BluetoothUtils.connectFail(BluetoothClassicService.this, bluetooth);
-            MyApplication.toast("连接蓝牙失败");
+            // BluetoothUtils.connectFail(BluetoothClassicService.this, bluetooth);
+            // MyApplication.toast("连接蓝牙失败");
         }
     }
 
@@ -84,7 +94,9 @@ public class BluetoothClassicService extends BlueToothAbstract {
             mmOutputStream.write(bytes);
             mmOutputStream.flush();
         } catch (IOException e) {
-            MyApplication.toast("向蓝牙写数据失败");
+            if (callBack != null) {
+                // callBack.sendFail(address);
+            }
         }
     }
 

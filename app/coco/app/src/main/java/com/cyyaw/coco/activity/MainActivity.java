@@ -9,6 +9,9 @@ import android.view.View;
 import androidx.annotation.RequiresApi;
 import androidx.viewpager.widget.ViewPager;
 
+import com.cyyaw.bluetooth.entity.BluetoothEntity;
+import com.cyyaw.bluetooth.out.BlueToothCallBack;
+import com.cyyaw.bluetooth.out.BlueToothManager;
 import com.cyyaw.coco.MyApplication;
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.activity.home.ChatListView;
@@ -95,6 +98,29 @@ public class MainActivity extends BaseAppCompatActivity {
             }
         });
         // =====================================
+
+        BlueToothManager.getInstance().setCallBack(new BlueToothCallBack() {
+            @Override
+            public void error() {
+
+
+            }
+
+            @Override
+            public void foundBluetooth(BluetoothEntity bluetooth) {
+
+            }
+
+            @Override
+            public void readData(String address, byte[] data) {
+
+
+            }
+        });
+
+        BlueToothManager.getInstance().sendData("ss", "sssssss".getBytes());
+        BlueToothManager.getInstance().connectBlueTooth("ssss");
+
     }
 
 

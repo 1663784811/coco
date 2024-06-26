@@ -2,7 +2,6 @@ package com.cyyaw.coco.activity.home;
 
 import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.util.AttributeSet;
@@ -15,18 +14,15 @@ import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.cyyaw.coco.MyApplication;
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.activity.home.adapter.HomeBluetoothListAdapter;
 import com.cyyaw.coco.activity.home.adapter.LinearLayoutManagerNonScrollable;
-import com.cyyaw.coco.broadcast.BlueToothReceiver;
 import com.cyyaw.coco.common.BaseAppCompatActivity;
 import com.cyyaw.coco.common.BroadcastEnum;
-import com.cyyaw.coco.entity.BluetoothEntity;
-import com.cyyaw.coco.service.BluetoothClassicService;
+import com.cyyaw.bluetooth.BluetoothClassicService;
 import com.cyyaw.coco.utils.ActivityUtils;
 
-public class TestHomeView extends LinearLayout implements BlueToothReceiver.BlueToothListener {
+public class TestHomeView extends LinearLayout {
 
     private static final String TAG = TestHomeView.class.getName();
 
@@ -34,7 +30,7 @@ public class TestHomeView extends LinearLayout implements BlueToothReceiver.Blue
 
     private HomeBluetoothListAdapter homeBluetoothListAdapter;
 
-    BlueToothReceiver br;
+//    BlueToothReceiver br;
 
 
     public TestHomeView(BaseAppCompatActivity context) {
@@ -70,7 +66,7 @@ public class TestHomeView extends LinearLayout implements BlueToothReceiver.Blue
         intent.putExtra("clazz", BroadcastEnum.ACTIVITY_HOME);
         context.startService(intent);
         // 注册广播
-        br = new BlueToothReceiver(context, this);
+//        br = new BlueToothReceiver(context, this);
 
         ActivityUtils.blueToothPermissions(context, () -> {
             if (ActivityCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
@@ -81,15 +77,15 @@ public class TestHomeView extends LinearLayout implements BlueToothReceiver.Blue
     }
 
 
-    @Override
-    public void foundDev(BluetoothDevice dev, short rssi) {
-        BluetoothEntity bluetooth = new BluetoothEntity();
-        bluetooth.setName(dev.getName());
-        bluetooth.setAddress(dev.getAddress());
-        bluetooth.setType(dev.getType());
-        bluetooth.setRssi(rssi);
-        homeBluetoothListAdapter.updateData(bluetooth);
-        MyApplication.blueTooth.put(dev.getAddress(), dev);
-    }
+//    @Override
+//    public void foundDev(BluetoothDevice dev, short rssi) {
+//        BluetoothEntity bluetooth = new BluetoothEntity();
+//        bluetooth.setName(dev.getName());
+//        bluetooth.setAddress(dev.getAddress());
+//        bluetooth.setType(dev.getType());
+//        bluetooth.setRssi(rssi);
+//        homeBluetoothListAdapter.updateData(bluetooth);
+//        MyApplication.blueTooth.put(dev.getAddress(), dev);
+//    }
 
 }

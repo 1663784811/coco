@@ -1,18 +1,10 @@
 package com.cyyaw.coco.activity.bluetooth;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-
-import androidx.core.app.ActivityCompat;
 
 import com.cyyaw.coco.MyApplication;
 import com.cyyaw.coco.R;
@@ -23,7 +15,6 @@ import com.cyyaw.coco.common.BaseAppCompatActivity;
 import com.cyyaw.coco.common.view.PrintBitMapImageView;
 import com.cyyaw.coco.entity.BluetoothEntity;
 import com.cyyaw.coco.utils.ActivityUtils;
-import com.cyyaw.coco.utils.BluetoothUtils;
 
 import java.util.List;
 

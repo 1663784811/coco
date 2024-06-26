@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 //import com.cyyaw.webrtc.VideoConfig;
 
+import com.cyyaw.bluetooth.out.BlueToothManager;
 import com.cyyaw.webrtc.StatusCallBack;
 import com.cyyaw.webrtc.WebRtcConfig;
 
@@ -36,18 +37,15 @@ public class MyApplication extends Application {
         sToast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
 
 
-
-
-
-
-
-
         WebRtcConfig.init(this, "111111", "sssss", new StatusCallBack() {
             @Override
             public int hashCode() {
                 return super.hashCode();
             }
         });
+
+        // 初始化蓝牙
+        BlueToothManager.init(this);
 
     }
 
