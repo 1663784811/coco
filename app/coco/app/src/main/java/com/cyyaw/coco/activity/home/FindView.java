@@ -70,11 +70,6 @@ public class FindView extends LinearLayout {
                 bt.setRssi(0);
                 homeBluetoothListAdapter.updateData(bt);
             }
-
-            @Override
-            public void readData(String address, byte[] data) {
-
-            }
         });
         BlueToothManager.getInstance().discoveryBlueTooth();
     }

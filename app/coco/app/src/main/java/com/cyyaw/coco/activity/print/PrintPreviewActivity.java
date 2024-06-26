@@ -7,12 +7,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.cyyaw.bluetooth.device.BtStatus;
+import com.cyyaw.bluetooth.out.BlueToothConnectCallBack;
 import com.cyyaw.bluetooth.out.BlueToothManager;
 import com.cyyaw.coco.MyApplication;
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.common.BaseAppCompatActivity;
 import com.cyyaw.coco.common.view.PrintBitMapImageView;
-import com.cyyaw.coco.entity.BluetoothEntity;
 import com.cyyaw.coco.utils.ActivityUtils;
 
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.List;
 /**
  * 打印机
  */
-public class PrintPreviewActivity extends BaseAppCompatActivity {
+public class PrintPreviewActivity extends BaseAppCompatActivity implements BlueToothConnectCallBack {
 
 
     private static final String addressKey = "keyAddress";
@@ -30,10 +31,7 @@ public class PrintPreviewActivity extends BaseAppCompatActivity {
     private TextView blueToothName;
     private TextView blueToothStatus;
 
-    /**
-     * 选择的蓝牙
-     */
-    private BluetoothEntity bluetooth;
+    private String blueToothAddress;
 
 
     public static void openActivity(Context context, String address) {
@@ -48,15 +46,15 @@ public class PrintPreviewActivity extends BaseAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_print_preview);
         // 接收数据
-        bluetooth = ActivityUtils.getParameter(this, BluetoothEntity.class);
+
         // ========================
         nowPrintBtn = findViewById(R.id.nowPrintBtn);
         printPager = findViewById(R.id.printPager);
         blueToothName = findViewById(R.id.blueToothName);
         blueToothStatus = findViewById(R.id.blueToothStatus);
         // ========================
-        blueToothName.setText("蓝牙: " + bluetooth.getName());
-
+        blueToothAddress = getIntent().getStringExtra(addressKey);
+        blueToothName.setText("蓝牙: " + blueToothAddress);
         printPager.setWordData("白云机场综保南区开园3周年，跨境电商进出口货值超300亿元");
         nowPrintBtn.setOnClickListener((View v) -> {
             // 第一步: 获取打印像素数据
@@ -78,8 +76,7 @@ public class PrintPreviewActivity extends BaseAppCompatActivity {
     // 连接蓝牙
     private void connectBlueTooth() {
         ActivityUtils.blueToothPermissions(this, () -> {
-            blueToothStatus.setText("正在连接...");
-            BlueToothManager.getInstance().connectBlueTooth("ssssssss");
+            BlueToothManager.getInstance().connectBlueTooth(blueToothAddress, PrintPreviewActivity.this);
         });
     }
 
@@ -88,22 +85,15 @@ public class PrintPreviewActivity extends BaseAppCompatActivity {
         return this;
     }
 
+    @Override
+    public void statusCallBack(String address, BtStatus status) {
+        blueToothStatus.setText(status.getNote());
+    }
 
-//    public void socketNotify(int state, Object obj) {
-//        switch (state) {
-//            case BtStatus.CONNECTED:
-//                blueToothStatus.setText("已连接");
-//                break;
-//            case BtStatus.DISCONNECTED:
-//                blueToothStatus.setText("断开连接");
-//                break;
-//            case BtStatus.MSG:
-//
-//                break;
-//            default:
-//        }
-//
-//    }
+    @Override
+    public void readData(String address, byte[] data) {
+
+    }
 
 }
 

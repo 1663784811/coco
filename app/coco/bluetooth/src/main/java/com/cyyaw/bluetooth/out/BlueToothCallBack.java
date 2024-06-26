@@ -19,13 +19,4 @@ public interface BlueToothCallBack {
      */
     void foundBluetooth(BluetoothEntity bluetooth);
 
-
-    /**
-     * 接收数据
-     */
-    void readData(String address, byte data[]);
-
-
-
-
 }

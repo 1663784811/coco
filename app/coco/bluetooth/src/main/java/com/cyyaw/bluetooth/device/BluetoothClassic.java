@@ -9,6 +9,8 @@ import android.content.pm.PackageManager;
 
 import androidx.core.app.ActivityCompat;
 
+import com.cyyaw.bluetooth.out.BlueToothConnectCallBack;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -23,10 +25,9 @@ public class BluetoothClassic implements BlueTooth {
     static final UUID BLUETOOTH_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
     private Context context;
-    private BlueToothStatusCallBack callBack;
+    private BlueToothConnectCallBack callBack;
 
     private volatile BluetoothSocket mmSocket;
-    private volatile BluetoothDevice mmDevice;
 
     private volatile InputStream mmInStream;
     private volatile OutputStream mmOutputStream;
@@ -34,16 +35,16 @@ public class BluetoothClassic implements BlueTooth {
     // ========================================================
 
 
-    public BluetoothClassic(Context context, BlueToothStatusCallBack callBack) {
+    public BluetoothClassic(Context context) {
         this.context = context;
-        this.callBack = callBack;
     }
 
     @Override
     public void connectBlueTooth(BluetoothDevice bluetooth) {
-        String ad = bluetooth.getAddress();
         String address = bluetooth.getAddress();
-        mmDevice = bluetooth;
+        if (callBack != null) {
+            callBack.statusCallBack(address, BtStatus.CONNECTTING);
+        }
         // 停止扫描
         try {
             //加密传输，Android系统强制配对，弹窗显示配对码
@@ -61,7 +62,7 @@ public class BluetoothClassic implements BlueTooth {
                     mmInStream = mmSocket.getInputStream();
                     mmOutputStream = mmSocket.getOutputStream();
                     if (callBack != null) {
-                        callBack.connectSuccess(address);
+                        callBack.statusCallBack(address, BtStatus.SUCCESS);
                     }
                     // 缓冲区大小
                     byte[] mmBuffer = new byte[1024];
@@ -76,15 +77,16 @@ public class BluetoothClassic implements BlueTooth {
                         }
                     }
                 } catch (IOException e) {
+                    if (callBack != null) {
+                        callBack.statusCallBack(address, BtStatus.FAIL);
+                    }
                     closeConnectBlueTooth();
-//                    if (callBack != null) {
-//                         callBack.sendFail(address);
-//                    }
                 }
             }).start();
         } catch (Exception e) {
-            // BluetoothUtils.connectFail(BluetoothClassicService.this, bluetooth);
-            // MyApplication.toast("连接蓝牙失败");
+            if (callBack != null) {
+                callBack.statusCallBack(address, BtStatus.FAIL);
+            }
         }
     }
 
@@ -123,7 +125,9 @@ public class BluetoothClassic implements BlueTooth {
         }
     }
 
-
+    public void setCallBack(BlueToothConnectCallBack callBack) {
+        this.callBack = callBack;
+    }
 }
 
 

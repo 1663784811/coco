@@ -1,6 +1,10 @@
 package com.cyyaw.bluetooth.device;
 
 
+
+/**
+ *
+ */
 public class BlueToothConnect {
 
     private String address;

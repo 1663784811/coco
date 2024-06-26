@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 
 import androidx.core.app.ActivityCompat;
 
-import com.cyyaw.bluetooth.device.BlueToothStatus;
 import com.cyyaw.bluetooth.receiver.BlueToothReceiver;
 import com.cyyaw.bluetooth.device.BlueTooth;
 import com.cyyaw.bluetooth.device.BlueToothConnect;
@@ -100,18 +99,18 @@ public class BlueToothManager {
     }
 
 
-
     /**
      * 连接蓝牙
      */
-    public void connectBlueTooth(String address) {
+    public void connectBlueTooth(String address, BlueToothConnectCallBack callBack) {
         BluetoothEntity bte = bluetoothMap.get(address);
         if (null != bte) {
             BlueToothConnect blueTooth = connectMap.get(address);
             if (null == blueTooth) {
                 // 根据类型判断
-                BluetoothClassic bt = new BluetoothClassic(cxt, new BlueToothStatus());
+                BluetoothClassic bt = new BluetoothClassic(cxt);
                 bt.connectBlueTooth(bte.getDev());
+                bt.setCallBack(callBack);
                 blueTooth = new BlueToothConnect();
                 blueTooth.setBlueTooth(bt);
                 blueTooth.setAddress(address);
@@ -119,8 +118,10 @@ public class BlueToothManager {
             } else if (!blueTooth.isConnect()) {
                 BlueTooth bt = blueTooth.getBlueTooth();
                 bt.connectBlueTooth(bte.getDev());
+                bt.setCallBack(callBack);
             } else {
-                toothCallBack.error();
+                BlueTooth bt = blueTooth.getBlueTooth();
+                bt.setCallBack(callBack);
             }
         } else {
             toothCallBack.error();

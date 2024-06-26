@@ -3,6 +3,8 @@ package com.cyyaw.bluetooth.device;
 
 import android.bluetooth.BluetoothDevice;
 
+import com.cyyaw.bluetooth.out.BlueToothConnectCallBack;
+
 public interface BlueTooth {
 
     /**
@@ -19,5 +21,8 @@ public interface BlueTooth {
      * 发送数据
      */
     void writeData(byte data[]);
+
+
+    void setCallBack(BlueToothConnectCallBack callBack);
 
 }
