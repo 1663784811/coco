@@ -16,6 +16,8 @@ import com.cyyaw.bluetooth.receiver.BlueToothStatusListener;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 /**
  * 蓝牙管理器
@@ -23,16 +25,15 @@ import java.util.concurrent.ConcurrentHashMap;
 public class BlueToothManager {
 
     private static BlueToothManager blueToothManager;
+    // 线程池
+    private static final Executor threadPool = Executors.newCachedThreadPool();
 
     /**
      * 回调
      */
     private BlueToothCallBack toothCallBack;
-
     protected final BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
     private Context cxt;
-
     /**
      * 蓝牙列表
      */
@@ -109,16 +110,16 @@ public class BlueToothManager {
             if (null == blueTooth) {
                 // 根据类型判断
                 BluetoothClassic bt = new BluetoothClassic(cxt);
-                bt.connectBlueTooth(bte.getDev());
                 bt.setCallBack(callBack);
+                bt.connectBlueTooth(bte.getDev());
                 blueTooth = new BlueToothConnect();
                 blueTooth.setBlueTooth(bt);
                 blueTooth.setAddress(address);
                 connectMap.put(address, blueTooth);
             } else if (!blueTooth.isConnect()) {
                 BlueTooth bt = blueTooth.getBlueTooth();
-                bt.connectBlueTooth(bte.getDev());
                 bt.setCallBack(callBack);
+                bt.connectBlueTooth(bte.getDev());
             } else {
                 BlueTooth bt = blueTooth.getBlueTooth();
                 bt.setCallBack(callBack);

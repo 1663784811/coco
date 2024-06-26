@@ -25,10 +25,8 @@ public class BluetoothClassic implements BlueTooth {
     static final UUID BLUETOOTH_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
     private Context context;
-    private BlueToothConnectCallBack callBack;
-
+    private volatile BlueToothConnectCallBack callBack;
     private volatile BluetoothSocket mmSocket;
-
     private volatile InputStream mmInStream;
     private volatile OutputStream mmOutputStream;
 

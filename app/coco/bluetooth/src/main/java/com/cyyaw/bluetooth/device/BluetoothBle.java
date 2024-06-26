@@ -2,6 +2,8 @@ package com.cyyaw.bluetooth.device;
 
 import android.bluetooth.BluetoothDevice;
 
+import com.cyyaw.bluetooth.out.BlueToothConnectCallBack;
+
 /**
  * 低功耗蓝牙
  */
@@ -23,6 +25,10 @@ public class BluetoothBle implements BlueTooth {
 
     }
 
+    @Override
+    public void setCallBack(BlueToothConnectCallBack callBack) {
+
+    }
 
 
 //    public static final String TAG = "BluetoothLeService";
