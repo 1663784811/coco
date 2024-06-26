@@ -1,7 +1,5 @@
 package com.cyyaw.bluetooth.device;
 
-import com.cyyaw.bluetooth.device.BlueToothConnect;
-import com.cyyaw.bluetooth.device.BlueToothStatusCallBack;
 import com.cyyaw.bluetooth.out.BlueToothCallBack;
 import com.cyyaw.bluetooth.out.BlueToothManager;
 

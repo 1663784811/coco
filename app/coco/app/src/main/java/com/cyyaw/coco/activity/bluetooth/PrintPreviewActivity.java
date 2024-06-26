@@ -5,11 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-
+import com.cyyaw.bluetooth.out.BlueToothManager;
 import com.cyyaw.coco.MyApplication;
 import com.cyyaw.coco.R;
-import com.cyyaw.coco.activity.bluetooth.bt.BtBase;
-import com.cyyaw.coco.activity.bluetooth.bt.BtClient;
 import com.cyyaw.coco.common.BaseAppCompatActivity;
 import com.cyyaw.coco.common.view.PrintBitMapImageView;
 import com.cyyaw.coco.entity.BluetoothEntity;
@@ -17,17 +15,19 @@ import com.cyyaw.coco.utils.ActivityUtils;
 
 import java.util.List;
 
-public class PrintPreviewActivity extends BaseAppCompatActivity implements BtBase.Listener {
+/**
+ * 打印机
+ */
+public class PrintPreviewActivity extends BaseAppCompatActivity {
 
 
-    private final BtClient mClient = new BtClient(this, this);
-
-    // =============
     private View nowPrintBtn;
     private PrintBitMapImageView printPager;
     private TextView blueToothName;
     private TextView blueToothStatus;
-    // ========================
+
+
+
 
     /**
      * 选择的蓝牙
@@ -59,7 +59,6 @@ public class PrintPreviewActivity extends BaseAppCompatActivity implements BtBas
             MyApplication.run(() -> {
                 for (int i = 0; i < size; i++) {
                     byte[] bytes = printImageData.get(i);
-                    mClient.sendMsg(bytes);
                 }
             });
 
@@ -71,21 +70,8 @@ public class PrintPreviewActivity extends BaseAppCompatActivity implements BtBas
     private void connectBlueTooth() {
         ActivityUtils.blueToothPermissions(this, () -> {
             blueToothStatus.setText("正在连接...");
-            mClient.connect(MyApplication.blueTooth.get(bluetooth.getAddress()));
+            BlueToothManager.getInstance().connectBlueTooth("ssssssss");
         });
-    }
-
-    private String bytesToHex(byte[] bytes) {
-        StringBuilder hexString = new StringBuilder();
-        for (byte b : bytes) {
-            // 将每个字节转换为两个十六进制字符
-            String hex = Integer.toHexString(0xFF & b);
-            if (hex.length() == 1) {
-                hex = "0" + hex; // 如果只有一个字符，前面补0
-            }
-            hexString.append(" " + hex);
-        }
-        return hexString.toString();
     }
 
     @Override
@@ -93,28 +79,22 @@ public class PrintPreviewActivity extends BaseAppCompatActivity implements BtBas
         return this;
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mClient.close();
-    }
 
-    @Override
-    public void socketNotify(int state, Object obj) {
-        switch (state) {
-            case BtBase.Listener.CONNECTED:
-                blueToothStatus.setText("已连接");
-                break;
-            case BtBase.Listener.DISCONNECTED:
-                blueToothStatus.setText("断开连接");
-                break;
-            case BtBase.Listener.MSG:
-
-                break;
-            default:
-        }
-
-    }
+//    public void socketNotify(int state, Object obj) {
+//        switch (state) {
+//            case BtStatus.CONNECTED:
+//                blueToothStatus.setText("已连接");
+//                break;
+//            case BtStatus.DISCONNECTED:
+//                blueToothStatus.setText("断开连接");
+//                break;
+//            case BtStatus.MSG:
+//
+//                break;
+//            default:
+//        }
+//
+//    }
 
 }
 

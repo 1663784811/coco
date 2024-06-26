@@ -48,16 +48,12 @@ public class FindView extends LinearLayout {
         View viewHome = LayoutInflater.from(context).inflate(R.layout.activity_main_find, this, true);
         // =============== 设置适配器
         RecyclerView recyclerView = viewHome.findViewById(R.id.equipmentList);
-
         // 瀑布流
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManagerNonScrollable(2, StaggeredGridLayoutManager.VERTICAL);
 //        LinearLayoutManager layoutManager = new LinearLayoutManagerNonScrollable(context);
-
-
         recyclerView.setLayoutManager(layoutManager);
         homeBluetoothListAdapter = new HomeBluetoothListAdapter(context);
         recyclerView.setAdapter(homeBluetoothListAdapter);
-
 
         BlueToothManager.getInstance().setCallBack(new BlueToothCallBack() {
             @Override
@@ -82,16 +78,4 @@ public class FindView extends LinearLayout {
         });
         BlueToothManager.getInstance().discoveryBlueTooth();
     }
-
-
-//    public void foundDev(BluetoothDevice dev, short rssi) {
-//        BluetoothEntity bluetooth = new BluetoothEntity();
-//        bluetooth.setName(dev.getName());
-//        bluetooth.setAddress(dev.getAddress());
-//        bluetooth.setType(dev.getType());
-//        bluetooth.setRssi(rssi);
-//        homeBluetoothListAdapter.updateData(bluetooth);
-//        MyApplication.blueTooth.put(dev.getAddress(), dev);
-//    }
-
 }
