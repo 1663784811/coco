@@ -62,13 +62,11 @@ public class PrintPreviewActivity extends BaseAppCompatActivity implements BlueT
             // 第二步: 发送数据
             MyApplication.toast(printImageData.size() + "行数据");
             int size = printImageData.size();
-
             MyApplication.run(() -> {
                 for (int i = 0; i < size; i++) {
-                    byte[] bytes = printImageData.get(i);
+                    BlueToothManager.getInstance().sendData(blueToothAddress, printImageData.get(i));
                 }
             });
-
         });
         connectBlueTooth();
     }
