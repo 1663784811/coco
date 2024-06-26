@@ -2,7 +2,6 @@ package com.cyyaw.coco.activity.home;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -13,10 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.activity.PersonCenterActivity;
-import com.cyyaw.coco.activity.bluetooth.PrintPreviewActivity;
 import com.cyyaw.coco.activity.home.adapter.FriendsListAdapter;
-import com.cyyaw.coco.activity.home.adapter.HomeBluetoothListAdapter;
-import com.cyyaw.coco.activity.home.adapter.LinearLayoutManagerNonScrollable;
 import com.cyyaw.coco.dao.FriendsDao;
 import com.cyyaw.coco.entity.FriendsEntity;
 import com.cyyaw.coco.utils.ActivityUtils;

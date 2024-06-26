@@ -4,17 +4,12 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cyyaw.coco.R;
-import com.cyyaw.coco.activity.bluetooth.PrintPreviewActivity;
-import com.cyyaw.coco.entity.BluetoothEntity;
 import com.cyyaw.coco.entity.ContentEntity;
-import com.cyyaw.coco.utils.ActivityUtils;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,8 @@
-package com.cyyaw.coco.activity.bluetooth;
+package com.cyyaw.coco.activity.print;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -21,18 +23,25 @@ import java.util.List;
 public class PrintPreviewActivity extends BaseAppCompatActivity {
 
 
+    private static final String addressKey = "keyAddress";
+
     private View nowPrintBtn;
     private PrintBitMapImageView printPager;
     private TextView blueToothName;
     private TextView blueToothStatus;
 
-
-
-
     /**
      * 选择的蓝牙
      */
     private BluetoothEntity bluetooth;
+
+
+    public static void openActivity(Context context, String address) {
+        Intent intent = new Intent(context, PrintPreviewActivity.class);
+        intent.putExtra(addressKey, address);
+        context.startActivity(intent);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -76,26 +76,17 @@
             android:name=".activity.PersonCenterActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.bluetooth.PrintPreviewActivity"
+            android:name=".activity.print.PrintPreviewActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.bluetooth.AddEquipmentActivity"
+            android:name=".activity.print.AddEquipmentActivity"
             android:exported="false" />
 
-        <service
-            android:name="com.cyyaw.bluetooth.device.BluetoothBleService"
-            android:enabled="true"
-            android:exported="false" />
 
-        <service
-            android:name="com.cyyaw.bluetooth.BluetoothClassicService"
-            android:enabled="true"
-            android:exported="false" />
+
+
         <service android:name="org.eclipse.paho.android.service.MqttService" />
-
         <!-- 声明 MQTT PingSender 接收器 -->
-
-
         <receiver
             android:name="org.eclipse.paho.android.service.MqttService$PingSender"
             android:exported="true"
