@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/aaaaddd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="我的设备"
+            tools:ignore="MissingConstraints" />
+
+
+        <!--    添加-删除-列表 连接 - 状态:在线、离线     -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/equipmentList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="添加设备"
+                android:layout_centerHorizontal="true"/>
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+
+
+
+
+
+</ScrollView>

@@ -4,6 +4,10 @@ import android.content.Context;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+
+/**
+ * 线性布局
+ */
 public class LinearLayoutManagerNonScrollable extends LinearLayoutManager {
 
     public LinearLayoutManagerNonScrollable(Context context) {

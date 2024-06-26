@@ -22,7 +22,7 @@
         <ImageView
             android:layout_width="46dp"
             android:layout_height="46dp"
-            android:background="@drawable/baseline_person_pin_24"
+            android:background="#EFEDED"
             tools:ignore="MissingConstraints" />
     </androidx.cardview.widget.CardView>
 

@@ -12,6 +12,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.cyyaw.coco.MyApplication;
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.activity.home.ChatListView;
+import com.cyyaw.coco.activity.home.FindView;
 import com.cyyaw.coco.activity.home.HomeView;
 import com.cyyaw.coco.activity.home.MyView;
 import com.cyyaw.coco.activity.home.adapter.MyPagerAdapter;
@@ -57,7 +58,7 @@ public class MainActivity extends BaseAppCompatActivity {
         tabBar.setTabData(tabBarData);
         // 初始化ViewPage
         List<View> pageData = new ArrayList<>();
-        pageData.add(new HomeView(this));
+        pageData.add(new FindView(this));
         pageData.add(new HomeView(this));
         pageData.add(new ChatListView(this));
         pageData.add(new ChatListView(this));

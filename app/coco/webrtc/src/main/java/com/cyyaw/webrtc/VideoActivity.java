@@ -132,11 +132,10 @@ public class VideoActivity extends AppCompatActivity implements MediaOperationCa
             // 视频
             currentFragment = new FragmentVideo();
         }
-        FragmentManager fragmentManager = getSupportFragmentManager();
         if (isReplace) {
-            fragmentManager.beginTransaction().replace(android.R.id.content, currentFragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(android.R.id.content, currentFragment).commit();
         } else {
-            fragmentManager.beginTransaction().add(android.R.id.content, currentFragment).commit();
+            getSupportFragmentManager().beginTransaction().add(android.R.id.content, currentFragment).commit();
         }
         if (outgoing && !isReplace) {
             // 创建会话

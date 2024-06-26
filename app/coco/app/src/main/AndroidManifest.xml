@@ -86,11 +86,16 @@
             android:name=".service.BluetoothBleService"
             android:enabled="true"
             android:exported="false" />
+
         <service
             android:name=".service.BluetoothClassicService"
             android:enabled="true"
             android:exported="false" />
-        <service android:name="org.eclipse.paho.android.service.MqttService" /> <!-- 声明 MQTT PingSender 接收器 -->
+        <service android:name="org.eclipse.paho.android.service.MqttService" />
+
+        <!-- 声明 MQTT PingSender 接收器 -->
+
+
         <receiver
             android:name="org.eclipse.paho.android.service.MqttService$PingSender"
             android:exported="true"
@@ -99,6 +104,8 @@
                 <action android:name="org.eclipse.paho.android.service.Ping" />
             </intent-filter>
         </receiver>
+
+
     </application>
 
 </manifest>

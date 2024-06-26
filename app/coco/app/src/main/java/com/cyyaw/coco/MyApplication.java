@@ -9,6 +9,9 @@ import android.widget.Toast;
 
 //import com.cyyaw.webrtc.VideoConfig;
 
+import com.cyyaw.webrtc.StatusCallBack;
+import com.cyyaw.webrtc.WebRtcConfig;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executor;
@@ -31,13 +34,20 @@ public class MyApplication extends Application {
         super.onCreate();
         appContext = this;
         sToast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
-        // 注册Activity生命周期回调
-        // registerActivityLifecycleCallbacks(new MyActivityLifecycleCallbacks());
 
 
-        // 语音通话配置
-        //  VideoConfig.getInstance(this);
 
+
+
+
+
+
+        WebRtcConfig.init(this, "111111", "sssss", new StatusCallBack() {
+            @Override
+            public int hashCode() {
+                return super.hashCode();
+            }
+        });
 
     }
 

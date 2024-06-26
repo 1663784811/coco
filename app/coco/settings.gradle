@@ -21,3 +21,4 @@ rootProject.name = "coco"
 include ':app'
 include ':tabbar'
 include ':webrtc'
+include ':bluetooth'
