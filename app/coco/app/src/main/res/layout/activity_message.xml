@@ -6,42 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".activity.MessageActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/header_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="1dp"
-        android:background="#B1B1B1"
-        android:padding="3dp"
-        tools:ignore="MissingConstraints">
 
-        <ImageView
-            android:id="@+id/face"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="#ff0000"
-            app:layout_constraintLeft_toLeftOf="parent"
-            tools:ignore="MissingConstraints" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="消息sssssssssssssss"
-            app:layout_constraintLeft_toRightOf="@id/face"
-            app:layout_constraintRight_toLeftOf="@id/more"
-            tools:ignore="MissingConstraints" />
-
-
-        <ImageView
-            android:id="@+id/more"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="#ff0000"
-            app:layout_constraintRight_toRightOf="parent"
-            tools:ignore="MissingConstraints" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <include layout="@layout/ui_nav_bar" />
 
 
     <ScrollView
@@ -122,59 +88,6 @@
         </LinearLayout>
     </ScrollView>
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/bottomInputBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#ccc"
-        android:paddingBottom="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:ignore="MissingConstraints">
-
-        <ImageView
-            android:id="@+id/speechIcon"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="#ff0000"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints" />
-
-
-        <EditText
-            android:id="@+id/edit_text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="Enter text here"
-            android:inputType="text"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/speechIcon"
-            app:layout_constraintRight_toLeftOf="@+id/expressionIcon"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-        <ImageView
-            android:id="@+id/expressionIcon"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="#ff0000"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/moreUse"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints" />
-
-        <ImageView
-            android:id="@+id/moreUse"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="#ff0000"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <include layout="@layout/ui_chat_input" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

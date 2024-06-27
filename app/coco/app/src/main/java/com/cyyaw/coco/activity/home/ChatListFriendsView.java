@@ -51,7 +51,7 @@ public class ChatListFriendsView extends ConstraintLayout implements FriendsList
         recyclerView.setAdapter(friendsListAdapter);
         // 同步好友
         FriendsDao instance = FriendsDao.getInstance(context);
-        List<FriendsEntity> friends = instance.getFriends(friendsListAdapter);
+        instance.getFriends(friendsListAdapter);
     }
 
 

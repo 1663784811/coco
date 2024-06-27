@@ -23,8 +23,6 @@ public class Http {
 
 
     public static void getRequest(String url, Map<String, Objects> parameter, RunCallback<String> success, RunCallback<IOException> error, Map<String, Object> headers) {
-
-
         Request request = getRB(headers).url(url).get().build();
         Call call = client.newBuilder().build().newCall(request);
         runCall(call, success, error);
@@ -42,8 +40,10 @@ public class Http {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.d(TAG, "onFailure;" + e.getLocalizedMessage());
-                error.run(e);
+                Log.e(TAG, "onFailure;" + e.getLocalizedMessage());
+                if (null != error) {
+                    error.run(e);
+                }
             }
 
             @Override

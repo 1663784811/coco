@@ -13,7 +13,7 @@ import java.util.Objects;
  */
 public class AppRequest {
 
-    public static String token = "";
+    public static String token = "ssss";
 
     // =================================================================================   GET
     public static void getRequest(String url, RunCallback<String> success) {
