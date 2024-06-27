@@ -3,26 +3,50 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/header_title"
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="添加好友、创建群"
+        tools:ignore="MissingConstraints" />
+
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:ignore="MissingConstraints">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="卡片"
+            tools:ignore="MissingConstraints" />
+    </LinearLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/header_title"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        tools:ignore="MissingConstraints"
+        android:background="#ccc"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="好友" />
+                android:text="关注" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -32,6 +56,7 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/char_ViewPager"
