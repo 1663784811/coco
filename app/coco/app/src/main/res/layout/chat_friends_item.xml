@@ -2,12 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/friendsItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#fff"
     android:layout_margin="1dp"
+    android:background="#fff"
     android:padding="3dp"
-    android:id="@+id/friendsItem"
+
     >
 
 
@@ -15,16 +16,18 @@
         android:id="@+id/face"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="#ff0000"
+        android:background="#E8E8E8"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteY="0dp" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:gravity="center_vertical"
         android:orientation="vertical"
         app:layout_constraintLeft_toRightOf="@id/face"
+        app:layout_constraintRight_toRightOf="parent"
         tools:ignore="MissingConstraints">
 
         <TextView

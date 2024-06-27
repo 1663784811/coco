@@ -56,9 +56,8 @@ public class ChatListMsgView extends ConstraintLayout implements FriendsListAdap
 
         // 同步好友
         FriendsDao instance = FriendsDao.getInstance(context);
-        List<FriendsEntity> friends = instance.getFriends();
-        friendsListAdapter.setDataList(friends);
 
+        instance.getFriends(friendsListAdapter);
 
     }
 
