@@ -1,25 +1,18 @@
 package com.cyyaw.coco.common.network;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import com.alibaba.fastjson.JSONObject;
 import com.cyyaw.coco.common.RunCallback;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import okio.BufferedSink;
 
 public class Http {
 

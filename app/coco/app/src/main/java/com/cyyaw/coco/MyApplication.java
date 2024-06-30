@@ -7,8 +7,6 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.widget.Toast;
 
-//import com.cyyaw.webrtc.VideoConfig;
-
 import com.cyyaw.bluetooth.out.BlueToothManager;
 import com.cyyaw.webrtc.StatusCallBack;
 import com.cyyaw.webrtc.WebRtcConfig;
@@ -79,9 +77,14 @@ public class MyApplication extends Application {
         editor.apply();
     }
 
-    public static boolean checkToken() {
+    public static String getToken() {
         SharedPreferences sharedPreferences = appContext.getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
         String authToken = sharedPreferences.getString("auth_token", null);
+        return authToken;
+    }
+
+    public static boolean checkToken() {
+        String authToken = getToken();
         if (null != authToken && authToken.length() > 0) {
             return true;
         }

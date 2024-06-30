@@ -6,10 +6,8 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cyyaw.coco.MyApplication;
+import com.cyyaw.coco.activity.MainActivity;
 import com.cyyaw.coco.common.network.AppRequest;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class LoginDao {
 
@@ -25,11 +23,14 @@ public class LoginDao {
         json.put("password", password);
         AppRequest.postRequest("http://192.168.0.103:8080/app/" + MyApplication.appId + "/login/login", json, (String body) -> {
             // 登录成功, 保存token
-
-
+            JSONObject js = JSONObject.parseObject(body);
+            JSONObject data = js.getJSONObject("data");
+            MyApplication.saveToken(data.getString("jwtToken"));
+            //
+            data.getJSONObject("uuser");
             Log.d(TAG, "userLogin: " + body);
-
-            //context.finish();
+            MainActivity.openActivity(context);
+            context.finish();
         });
 
     }

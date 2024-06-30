@@ -31,12 +31,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         Button loginBtn = findViewById(R.id.loginBtn);
         loginBtn.setOnClickListener((View v) -> {
-
-
-            LoginDao.userLogin(LoginActivity.this, "root", "root");
-
-
-
+            LoginDao.userLogin(LoginActivity.this, "root", "123456");
         });
     }
 

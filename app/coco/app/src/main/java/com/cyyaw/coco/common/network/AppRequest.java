@@ -2,6 +2,7 @@ package com.cyyaw.coco.common.network;
 
 
 import com.alibaba.fastjson.JSONObject;
+import com.cyyaw.coco.MyApplication;
 import com.cyyaw.coco.common.RunCallback;
 
 import java.io.IOException;
@@ -45,7 +46,7 @@ public class AppRequest {
 
     private static Map<String, Object> getHeaders() {
         Map<String, Object> rest = new HashMap<>();
-        rest.put("token", "");
+        rest.put("token", MyApplication.getToken());
         return rest;
     }
 

@@ -1,17 +1,13 @@
 package com.cyyaw.coco.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.annotation.RequiresApi;
 import androidx.viewpager.widget.ViewPager;
 
-import com.cyyaw.bluetooth.entity.BluetoothEntity;
-import com.cyyaw.bluetooth.out.BlueToothCallBack;
-import com.cyyaw.bluetooth.out.BlueToothManager;
 import com.cyyaw.coco.MyApplication;
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.activity.home.ChatListView;
@@ -36,6 +32,11 @@ public class MainActivity extends BaseAppCompatActivity {
     // =====================================   tabbar
     private final List<CustomTabEntity> tabBarData = new ArrayList<>();
     // =====================================
+
+    public static void openActivity(Context context) {
+        Intent intent = new Intent(context, MainActivity.class);
+        context.startActivity(intent);
+    }
 
     @Override
     public Activity getActivity() {
