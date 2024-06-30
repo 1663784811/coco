@@ -47,21 +47,8 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
      * 更新数据
      */
     public void updateData(FriendsEntity friendsEntity) {
-//        String address = friendsEntity.getAddress();
-//        boolean h = false;
-//        for (int i = 0; i < dataList.size(); i++) {
-//            String ad = dataList.get(i).getAddress();
-//            if (ad.equals(address)) {
-//                h = true;
-//                dataList.set(i, bluetooth);
-//                notifyDataSetChanged();
-//                break;
-//            }
-//        }
-//        if (!h) {
-//            dataList.add(bluetooth);
-//            notifyItemRangeInserted(dataList.size() - 1, 1);
-//        }
+        dataList.add(friendsEntity);
+        notifyItemRangeInserted(dataList.size() - 1, 1);
     }
 
 

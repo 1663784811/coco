@@ -58,6 +58,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".activity.SettingActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.LoginActivity"
             android:exported="false" />
         <activity
@@ -83,9 +86,7 @@
             android:name=".activity.print.AddEquipmentActivity"
             android:exported="false" />
 
-
-        <service android:name="org.eclipse.paho.android.service.MqttService" />
-        <!-- 声明 MQTT PingSender 接收器 -->
+        <service android:name="org.eclipse.paho.android.service.MqttService" /> <!-- 声明 MQTT PingSender 接收器 -->
         <receiver
             android:name="org.eclipse.paho.android.service.MqttService$PingSender"
             android:exported="true"
@@ -94,8 +95,6 @@
                 <action android:name="org.eclipse.paho.android.service.Ping" />
             </intent-filter>
         </receiver>
-
-
     </application>
 
 </manifest>

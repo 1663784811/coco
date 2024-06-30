@@ -9,8 +9,9 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.cyyaw.coco.R;
+import com.cyyaw.coco.activity.SettingActivity;
 
-public class MyView  extends ConstraintLayout {
+public class MyView extends ConstraintLayout {
     public MyView(Context context) {
         super(context);
         initView(context, null);
@@ -28,6 +29,11 @@ public class MyView  extends ConstraintLayout {
 
     private void initView(Context context, AttributeSet attrs) {
         //加载布局
-        View inflate = LayoutInflater.from(context).inflate(R.layout.activity_main_my, this, true);
+        View view = LayoutInflater.from(context).inflate(R.layout.activity_main_my, this, true);
+        View settingImgView = view.findViewById(R.id.settingImgView);
+        settingImgView.setOnClickListener((View v) -> {
+            SettingActivity.openActivity(context);
+        });
+
     }
 }

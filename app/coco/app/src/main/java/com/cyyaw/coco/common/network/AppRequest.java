@@ -1,6 +1,7 @@
 package com.cyyaw.coco.common.network;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.cyyaw.coco.common.RunCallback;
 
 import java.io.IOException;
@@ -20,7 +21,7 @@ public class AppRequest {
         getRequest(url, success, null);
     }
 
-    public static void getRequest(String url, Map<String, Objects> parameter, RunCallback<String> success) {
+    public static void getRequest(String url, Map<String, Object> parameter, RunCallback<String> success) {
         getRequest(url, parameter, success, null);
     }
 
@@ -28,18 +29,18 @@ public class AppRequest {
         getRequest(url, null, success, error);
     }
 
-    public static void getRequest(String url, Map<String, Objects> parameter, RunCallback<String> success, RunCallback<IOException> error) {
+    public static void getRequest(String url, Map<String, Object> parameter, RunCallback<String> success, RunCallback<IOException> error) {
         Http.getRequest(url, parameter, success, error, getHeaders());
     }
 
     // =================================================================================   POST
 
-    public static void postRequest(String url, Map<String, Objects> parameter, RunCallback<String> success) {
-        postRequest(url, parameter, success, null);
+    public static void postRequest(String url, JSONObject json, RunCallback<String> success) {
+        postRequest(url, json, success, null);
     }
 
-    public static void postRequest(String url, Map<String, Objects> parameter, RunCallback<String> success, RunCallback<IOException> error) {
-        Http.postRequest(url, parameter, success, error, getHeaders());
+    public static void postRequest(String url, JSONObject json, RunCallback<String> success, RunCallback<IOException> error) {
+        Http.postRequest(url, json, success, error, getHeaders());
     }
 
     private static Map<String, Object> getHeaders() {
