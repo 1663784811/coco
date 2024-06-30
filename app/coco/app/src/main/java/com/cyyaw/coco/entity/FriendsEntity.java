@@ -49,4 +49,12 @@ public class FriendsEntity implements Serializable {
     public void setNickName(String nickName) {
         this.nickName = nickName;
     }
+
+    public String getFace() {
+        return face;
+    }
+
+    public void setFace(String face) {
+        this.face = face;
+    }
 }

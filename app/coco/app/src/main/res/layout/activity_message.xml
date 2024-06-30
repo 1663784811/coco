@@ -22,69 +22,41 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:orientation="vertical">
 
-            <!-- 示例内容 -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:text="Item 1" />
+            <include layout="@layout/ui_char_msg_from" />
+            <include layout="@layout/ui_char_msg_from" />
+            <include layout="@layout/ui_char_msg_from" />
+            <include layout="@layout/ui_char_msg_send" />
+            <include layout="@layout/ui_char_msg_send" />
+            <include layout="@layout/ui_char_msg_send" />
+            <include layout="@layout/ui_char_msg_from" />
+            <include layout="@layout/ui_char_msg_from" />
+            <include layout="@layout/ui_char_msg_from" />
+            <include layout="@layout/ui_char_msg_from" />
+            <include layout="@layout/ui_char_msg_from" />
+            <include layout="@layout/ui_char_msg_from" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:text="Item 2" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:text="Item 3" />
-            <!-- 添加更多项以测试滚动 -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:text="Item 4" />
+            <include layout="@layout/ui_char_msg_send" />
+            <include layout="@layout/ui_char_msg_send" />
+            <include layout="@layout/ui_char_msg_send" />
+            <include layout="@layout/ui_char_msg_send" />
+            <include layout="@layout/ui_char_msg_send" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:text="Item 5" />
+            <include layout="@layout/ui_char_msg_from" />
+            <include layout="@layout/ui_char_msg_from" />
+            <include layout="@layout/ui_char_msg_from" />
+            <include layout="@layout/ui_char_msg_from" />
+            <include layout="@layout/ui_char_msg_from" />
+            <include layout="@layout/ui_char_msg_from" />
+            <include layout="@layout/ui_char_msg_from" />
+            <include layout="@layout/ui_char_msg_from" />
+            <include layout="@layout/ui_char_msg_from" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:text="Item 6" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:text="Item 7" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:text="Item 8" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:text="Item 9" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:text="Item 10" />
         </LinearLayout>
     </ScrollView>
 

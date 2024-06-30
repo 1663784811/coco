@@ -4,10 +4,12 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.entity.FriendsEntity;
 
@@ -69,7 +71,12 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
 
         public void setData(FriendsEntity friendsEntity) {
             View friendsItem = view.findViewById(R.id.friendsItem);
+            ImageView face = view.findViewById(R.id.face);
+            Glide.with(view.getContext()).load("https://imgcps.jd.com/img-cubic/creative_server_cia_jdcloud/v2/2000366/10073105930305/FocusFullshop/CkJqZnMvdDEvNzYyNzMvMjkvMjQzMzkvNTY0MTIvNjQ1N2VhNWVGYTU3ZmQyMjQvYTM0ODNiZTU5YzE0MzNiMC5qcGcSCjk5OS10eV8wXzEwATjui3pYwbCan5WlAg/cr/s/q.jpg").into(face);
 
+            /**
+             * 点击
+             */
             friendsItem.setOnClickListener((View v) -> {
                 listenerFriends.click(v, friendsEntity);
             });
