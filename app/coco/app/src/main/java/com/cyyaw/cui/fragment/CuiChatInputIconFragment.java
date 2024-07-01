@@ -58,8 +58,7 @@ public class CuiChatInputIconFragment extends Fragment {
         /**
          * 点击图标
          */
-        default void clickIcon(View v) {
-        }
+        void clickIcon(View v);
     }
 
 

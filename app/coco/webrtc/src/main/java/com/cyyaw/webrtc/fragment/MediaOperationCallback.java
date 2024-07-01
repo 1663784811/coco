@@ -17,4 +17,15 @@ public interface MediaOperationCallback {
      */
     void switchAudio();
 
+    /**
+     *
+     */
+    boolean isFromFloatingView();
+
+
+    boolean isOutgoing();
+
+
+    void setIsOutgoing(boolean b);
+
 }

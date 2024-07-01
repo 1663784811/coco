@@ -9,13 +9,14 @@ import com.cyyaw.webrtc.rtc.session.ISkyEvent;
 
 
 /**
+ *
  */
 public class SkyEngineKit {
     private final static String TAG = "AVEngineKit";
 
 
     private static SkyEngineKit avEngineKit;
-
+    // 会话
     private CallSession mCurrentCallSession;
     private ISkyEvent mEvent;
     private boolean isAudioOnly = false;
@@ -79,7 +80,9 @@ public class SkyEngineKit {
         return true;
     }
 
-    // 接听电话
+    /**
+     * 接听电话
+     */
     public boolean startInCall(Context context, final String room, final String targetId, final boolean audioOnly) {
         if (avEngineKit == null) {
             Log.e(TAG, "startInCall error,init is not set");
@@ -98,12 +101,9 @@ public class SkyEngineKit {
         mCurrentCallSession.setTargetId(targetId);
         mCurrentCallSession.setIsComing(true);
         mCurrentCallSession.setCallState(EnumType.CallState.Incoming);
-
         // 开始响铃并回复
         mCurrentCallSession.shouldStartRing();
         mCurrentCallSession.sendRingBack(targetId, room);
-
-
         return true;
     }
 

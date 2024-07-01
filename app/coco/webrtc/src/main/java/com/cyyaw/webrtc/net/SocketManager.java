@@ -135,7 +135,10 @@ public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent
         intent.putExtra("audioOnly", audioOnly);
         intent.putExtra("inviteId", inviteId);
         intent.putExtra("userList", userList);
-        WebRtcConfig.startActivity(intent, VideoActivity.class);
+        boolean b = SkyEngineKit.Instance().startInCall(WebRtcConfig.getContext(), room, inviteId, audioOnly);
+        if (b) {
+            WebRtcConfig.startActivity(intent, VideoActivity.class);
+        }
     }
 
     @Override

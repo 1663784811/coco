@@ -4,8 +4,7 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical"
-    android:paddingBottom="30dp"
-    android:background="#ccc">
+    android:paddingBottom="30dp">
 
     <Chronometer
         android:id="@+id/durationTextView"

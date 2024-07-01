@@ -31,6 +31,7 @@ public class FragmentVideo extends SingleCallFragment {
     private ImageView connectedAudioOnlyImageView;
     private ImageView connectedHangupImageView;
     private ImageView switchCameraImageView;
+
     private FrameLayout fullscreenRenderer;
     private FrameLayout pipRenderer;
     private LinearLayout inviteeInfoContainer;

@@ -23,7 +23,6 @@ import com.cyyaw.webrtc.rtc.engine.EnumType;
 import com.cyyaw.webrtc.rtc.session.CallSession;
 
 
-
 public abstract class SingleCallFragment extends Fragment {
     private static final String TAG = "SingleCallFragment";
     protected ImageView minimizeImageView;
@@ -39,8 +38,13 @@ public abstract class SingleCallFragment extends Fragment {
     protected View incomingActionContainer;
     protected View connectedActionContainer;
     protected View lytParent;
+    //是否呼出
     boolean isOutgoing = false;
+
+
     protected VideoActivity callSingleActivity;
+
+
     boolean endWithNoAnswerFlag = false;
     boolean isConnectionClosed = false;
     public static final long OUTGOING_WAITING_TIME = 30 * 1000;
