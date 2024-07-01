@@ -22,15 +22,21 @@ import com.cyyaw.webrtc.WebRtcConfig;
 import com.cyyaw.webrtc.rtc.SkyEngineKit;
 import com.cyyaw.webrtc.rtc.engine.EnumType;
 import com.cyyaw.webrtc.rtc.session.CallSession;
+import com.cyyaw.webrtc.rtc.session.CallSessionCallback;
 
 
-public abstract class SingleCallFragment extends Fragment {
+public abstract class SingleCallFragment extends Fragment implements CallSessionCallback {
     private static final String TAG = "SingleCallFragment";
+    //
     protected ImageView minimizeImageView;
-    protected ImageView portraitImageView;   // 用户头像
-    protected TextView nameTextView;         // 用户昵称
-    protected TextView descTextView;         // 状态提示用语
-    protected Chronometer durationTextView;  // 通话时长
+    // 用户头像
+    protected ImageView portraitImageView;
+    // 用户昵称
+    protected TextView nameTextView;
+    // 状态提示用语
+    protected TextView descTextView;
+    // 通话时长
+    protected Chronometer durationTextView;
     protected ImageView outgoingHangupImageView;
     protected ImageView incomingHangupImageView;
     protected ImageView acceptImageView;
@@ -40,21 +46,22 @@ public abstract class SingleCallFragment extends Fragment {
     protected View connectedActionContainer;
     protected View lytParent;
     //是否呼出
-    boolean isOutgoing = false;
+    boolean isOutgoing;
 
 
-    protected MediaOperationCallback callSingleActivity;
+    protected MediaOperationCallback mediaOperationCallback;
 
 
     boolean endWithNoAnswerFlag = false;
     boolean isConnectionClosed = false;
+    // 30秒
     public static final long OUTGOING_WAITING_TIME = 30 * 1000;
     protected EnumType.CallState currentState;
     private final Handler handler = new Handler(Looper.getMainLooper());
 
 
     public SingleCallFragment(MediaOperationCallback mediaOperationCallback, boolean isOutgoing) {
-        this.callSingleActivity = mediaOperationCallback;
+        this.mediaOperationCallback = mediaOperationCallback;
         this.isOutgoing = isOutgoing;
     }
 
@@ -81,18 +88,12 @@ public abstract class SingleCallFragment extends Fragment {
         handler.removeCallbacks(waitingRunnable);
     }
 
-
     abstract int getLayout();
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-    }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        callSingleActivity = null;
+        mediaOperationCallback = null;
     }
 
 
@@ -112,11 +113,18 @@ public abstract class SingleCallFragment extends Fragment {
         connectedActionContainer = view.findViewById(R.id.connectedActionContainer);
         durationTextView.setVisibility(View.GONE);
         if (isOutgoing) {
+            // 计时
             handler.postDelayed(waitingRunnable, OUTGOING_WAITING_TIME);
         }
     }
 
     public void init() {
+
+
+
+
+
+
     }
 
     // ======================================界面回调================================
@@ -127,8 +135,8 @@ public abstract class SingleCallFragment extends Fragment {
         if (connectedActionContainer != null) connectedActionContainer.setVisibility(View.GONE);
         refreshMessage(false);
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            if (callSingleActivity != null) {
-                callSingleActivity.finish();
+            if (mediaOperationCallback != null) {
+                mediaOperationCallback.finish();
             }
 
         }, 1500);
@@ -158,13 +166,13 @@ public abstract class SingleCallFragment extends Fragment {
 
     public void didDisconnected(String error) {
         isConnectionClosed = true;
-        if (callSingleActivity != null) {
+        if (mediaOperationCallback != null) {
             SkyEngineKit.Instance().endCall();
         }
     }
 
     private void refreshMessage(Boolean isForCallTime) {
-        if (callSingleActivity == null) {
+        if (mediaOperationCallback == null) {
             return;
         }
         // 刷新消息; demo中没有消息，不用处理这儿快逻辑
@@ -181,7 +189,7 @@ public abstract class SingleCallFragment extends Fragment {
     }
 
     void runOnUiThread(Runnable runnable) {
-        if (callSingleActivity != null) {
+        if (mediaOperationCallback != null) {
             handler.post(runnable);
         }
     }
@@ -192,7 +200,7 @@ public abstract class SingleCallFragment extends Fragment {
         public void run() {
             if (currentState != EnumType.CallState.Connected) {
                 endWithNoAnswerFlag = true;
-                if (callSingleActivity != null) {
+                if (mediaOperationCallback != null) {
                     SkyEngineKit.Instance().endCall();
                 }
             }

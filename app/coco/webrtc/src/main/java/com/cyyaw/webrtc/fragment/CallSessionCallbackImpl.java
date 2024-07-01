@@ -13,11 +13,8 @@ public class CallSessionCallbackImpl implements CallSessionCallback {
 
     private SingleCallFragment currentFragment;
 
-    private VideoActivity videoActivity;
-
     public CallSessionCallbackImpl(SingleCallFragment currentFragment, VideoActivity videoActivity) {
         this.currentFragment = currentFragment;
-        this.videoActivity = videoActivity;
     }
 
 

@@ -19,6 +19,9 @@ public interface CallSessionCallback {
      */
     void didChangeState(EnumType.CallState var1);
 
+    /**
+     * 模式改变
+     */
     void didChangeMode(boolean isAudioOnly);
 
     /**
@@ -36,9 +39,14 @@ public interface CallSessionCallback {
      */
     void didUserLeave(String userId);
 
-    
+    /**
+     * 错误
+     */
     void didError(String error);
 
+    /**
+     * 连接断开
+     */
     void didDisconnected(String userId);
 
 }

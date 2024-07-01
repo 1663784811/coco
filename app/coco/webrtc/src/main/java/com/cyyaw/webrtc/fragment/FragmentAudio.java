@@ -54,8 +54,8 @@ public class FragmentAudio extends SingleCallFragment {
         });
 
         minimizeImageView.setOnClickListener((View v) -> {
-            if (callSingleActivity != null) {
-                callSingleActivity.showFloatingView();
+            if (mediaOperationCallback != null) {
+                mediaOperationCallback.showFloatingView();
             }
         });
 

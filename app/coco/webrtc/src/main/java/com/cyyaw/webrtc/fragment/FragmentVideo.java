@@ -45,10 +45,6 @@ public class FragmentVideo extends SingleCallFragment {
         this.isFromFloatingView = isFromFloatingView;
     }
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-    }
 
     @Override
     int getLayout() {
@@ -77,7 +73,7 @@ public class FragmentVideo extends SingleCallFragment {
                 Log.d(TAG, "endCall");
                 SkyEngineKit.Instance().endCall();
             }
-            if (callSingleActivity != null) callSingleActivity.finish();
+            if (mediaOperationCallback != null) mediaOperationCallback.finish();
         });
         incomingHangupImageView.setOnClickListener((View v) -> {
             CallSession session = SkyEngineKit.Instance().getCurrentSession();
@@ -85,11 +81,11 @@ public class FragmentVideo extends SingleCallFragment {
                 Log.d(TAG, "endCall");
                 SkyEngineKit.Instance().endCall();
             }
-            if (callSingleActivity != null) callSingleActivity.finish();
+            if (mediaOperationCallback != null) mediaOperationCallback.finish();
         });
         minimizeImageView.setOnClickListener((View v) -> {
-            if (callSingleActivity != null) {
-                callSingleActivity.showFloatingView();
+            if (mediaOperationCallback != null) {
+                mediaOperationCallback.showFloatingView();
             }
         });
         connectedHangupImageView.setOnClickListener((View v) -> {
@@ -98,7 +94,7 @@ public class FragmentVideo extends SingleCallFragment {
                 Log.d(TAG, "endCall");
                 SkyEngineKit.Instance().endCall();
             }
-            if (callSingleActivity != null) callSingleActivity.finish();
+            if (mediaOperationCallback != null) mediaOperationCallback.finish();
         });
 
         acceptImageView.setOnClickListener((View v) -> {
@@ -107,9 +103,9 @@ public class FragmentVideo extends SingleCallFragment {
             if (session != null && session.getState() == EnumType.CallState.Incoming) {
                 session.joinHome(session.getRoomId());
             } else if (session != null) {
-                if (callSingleActivity != null) {
+                if (mediaOperationCallback != null) {
                     session.sendRefuse();
-                    callSingleActivity.finish();
+                    mediaOperationCallback.finish();
                 }
             }
         });
@@ -164,8 +160,8 @@ public class FragmentVideo extends SingleCallFragment {
             currentState = session.getState();
         }
         if (session == null || EnumType.CallState.Idle == session.getState()) {
-            if (callSingleActivity != null) {
-                callSingleActivity.finish();
+            if (mediaOperationCallback != null) {
+                mediaOperationCallback.finish();
             }
         } else if (EnumType.CallState.Connected == session.getState()) {
             incomingActionContainer.setVisibility(View.GONE);
@@ -227,7 +223,7 @@ public class FragmentVideo extends SingleCallFragment {
 
     @Override
     public void didChangeMode(boolean isAudio) {
-        runOnUiThread(() -> callSingleActivity.switchAudio());
+        runOnUiThread(() -> mediaOperationCallback.switchAudio());
     }
 
 
@@ -241,7 +237,7 @@ public class FragmentVideo extends SingleCallFragment {
             if (surfaceView != null) {
                 localSurfaceView = (SurfaceViewRenderer) surfaceView;
             } else {
-                if (callSingleActivity != null) callSingleActivity.finish();
+                if (mediaOperationCallback != null) mediaOperationCallback.finish();
                 return;
             }
         } else {
@@ -291,17 +287,6 @@ public class FragmentVideo extends SingleCallFragment {
             fullscreenRenderer.addView(remoteSurfaceView);
         }
     }
-
-    @Override
-    public void didUserLeave(String userId) {
-
-    }
-
-    @Override
-    public void didError(String error) {
-
-    }
-
 
     @Override
     public void onDestroyView() {
