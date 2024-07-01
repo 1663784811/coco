@@ -39,12 +39,7 @@ public class FragmentAudio extends SingleCallFragment {
         speakerImageView = view.findViewById(R.id.speakerImageView);
         minimizeImageView.setVisibility(View.GONE);
 
-
-
-
-
-
-
+        // 静音
         muteImageView.setOnClickListener((View v) -> {
             CallSession session = SkyEngineKit.Instance().getCurrentSession();
             if (session != null && session.getState() != EnumType.CallState.Idle) {
@@ -55,8 +50,7 @@ public class FragmentAudio extends SingleCallFragment {
             }
         });
 
-
-
+        // 免提
         speakerImageView.setOnClickListener((View v) -> {
             CallSession session = SkyEngineKit.Instance().getCurrentSession();
             if (session != null && session.getState() != EnumType.CallState.Idle) {

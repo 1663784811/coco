@@ -239,13 +239,23 @@ public abstract class SingleCallFragment extends Fragment implements CallSession
     /**
      * 通话结束
      */
-    private void finishCall() {
+    protected void finishCall() {
         CallSession session = SkyEngineKit.Instance().getCurrentSession();
         if (session != null) {
             Log.d(TAG, "endCall");
             SkyEngineKit.Instance().endCall();
         }
         if (mediaOperationCallback != null) mediaOperationCallback.finish();
+    }
+
+    /**
+     * 切换语音
+     */
+    protected void changeAudio(){
+        CallSession session = SkyEngineKit.Instance().getCurrentSession();
+        if (session != null) {
+            session.switchToAudio();
+        }
     }
 
 }

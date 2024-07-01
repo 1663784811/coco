@@ -20,10 +20,15 @@ import org.webrtc.SurfaceViewRenderer;
 public class FragmentVideo extends SingleCallFragment {
 
     private static final String TAG = "FragmentVideo";
+    // 呼出切换语音
     private ImageView outgoingAudioOnlyImageView;
+    // 呼入切换语音
     private ImageView incomingAudioOnlyImageView;
+    // 连接切换语音
     private ImageView connectedAudioOnlyImageView;
+    // 连接挂断
     private ImageView connectedHangupImageView;
+    // 切换的摄像头
     private ImageView switchCameraImageView;
 
     private FrameLayout fullscreenRenderer;
@@ -57,30 +62,17 @@ public class FragmentVideo extends SingleCallFragment {
         connectedHangupImageView = view.findViewById(R.id.connectedHangupImageView);
         switchCameraImageView = view.findViewById(R.id.switchCameraImageView);
 
-
-
-
-
-
-
-
+        // 挂断
         connectedHangupImageView.setOnClickListener((View v) -> {
-            CallSession session = SkyEngineKit.Instance().getCurrentSession();
-            if (session != null) {
-                Log.d(TAG, "endCall");
-                SkyEngineKit.Instance().endCall();
-            }
-            if (mediaOperationCallback != null) mediaOperationCallback.finish();
+            finishCall();
         });
-
-
-
+        // 切换的摄像头
         switchCameraImageView.setOnClickListener((View v) -> {
             CallSession session = SkyEngineKit.Instance().getCurrentSession();
             session.switchCamera();
         });
+        // 点击小渲染器
         pipRenderer.setOnClickListener((View v) -> {
-            // 点击渲染器
             boolean isFullScreenRemote = fullscreenRenderer.getChildAt(0) == remoteSurfaceView;
             fullscreenRenderer.removeAllViews();
             pipRenderer.removeAllViews();
@@ -96,23 +88,15 @@ public class FragmentVideo extends SingleCallFragment {
                 fullscreenRenderer.addView(remoteSurfaceView);
             }
         });
+        // 切换语音
         outgoingAudioOnlyImageView.setOnClickListener((View v) -> {
-            CallSession session = SkyEngineKit.Instance().getCurrentSession();
-            if (session != null) {
-                session.switchToAudio();
-            }
+            changeAudio();
         });
         incomingAudioOnlyImageView.setOnClickListener((View v) -> {
-            CallSession session = SkyEngineKit.Instance().getCurrentSession();
-            if (session != null) {
-                session.switchToAudio();
-            }
+            changeAudio();
         });
         connectedAudioOnlyImageView.setOnClickListener((View v) -> {
-            CallSession session = SkyEngineKit.Instance().getCurrentSession();
-            if (session != null) {
-                session.switchToAudio();
-            }
+            changeAudio();
         });
     }
 
