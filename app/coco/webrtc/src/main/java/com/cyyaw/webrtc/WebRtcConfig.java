@@ -22,6 +22,8 @@ import com.cyyaw.webrtc.rtc.SkyEngineKit;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 
 /**
@@ -34,6 +36,9 @@ public class WebRtcConfig {
     private static Context appContext;
     private static MediaPlayer mediaPlayer;
     private static List<Activity> activityList = new CopyOnWriteArrayList<>();
+
+
+    private static final Executor threadPool = Executors.newCachedThreadPool();
 
 
     /**
@@ -154,4 +159,9 @@ public class WebRtcConfig {
             activity.startActivity(intent);
         }
     }
+
+    public static void run(Runnable runnable) {
+        threadPool.execute(runnable);
+    }
+
 }

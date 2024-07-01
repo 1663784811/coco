@@ -28,4 +28,11 @@ public interface MediaOperationCallback {
 
     void setIsOutgoing(boolean b);
 
+
+    void setAudioOnly(boolean b);
+
+
+
+    void finish();
+
 }

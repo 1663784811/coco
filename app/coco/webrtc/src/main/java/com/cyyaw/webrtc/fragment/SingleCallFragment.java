@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 
 import com.cyyaw.webrtc.R;
 import com.cyyaw.webrtc.VideoActivity;
+import com.cyyaw.webrtc.WebRtcConfig;
 import com.cyyaw.webrtc.rtc.SkyEngineKit;
 import com.cyyaw.webrtc.rtc.engine.EnumType;
 import com.cyyaw.webrtc.rtc.session.CallSession;
@@ -42,7 +43,7 @@ public abstract class SingleCallFragment extends Fragment {
     boolean isOutgoing = false;
 
 
-    protected VideoActivity callSingleActivity;
+    protected MediaOperationCallback callSingleActivity;
 
 
     boolean endWithNoAnswerFlag = false;
@@ -50,6 +51,11 @@ public abstract class SingleCallFragment extends Fragment {
     public static final long OUTGOING_WAITING_TIME = 30 * 1000;
     protected EnumType.CallState currentState;
     private final Handler handler = new Handler(Looper.getMainLooper());
+
+
+    public SingleCallFragment(MediaOperationCallback mediaOperationCallback) {
+        this.callSingleActivity = mediaOperationCallback;
+    }
 
 
     @Nullable
@@ -80,7 +86,6 @@ public abstract class SingleCallFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        callSingleActivity = (VideoActivity) getActivity();
         if (callSingleActivity != null) {
             isOutgoing = callSingleActivity.isOutgoing();
         }
@@ -180,7 +185,7 @@ public abstract class SingleCallFragment extends Fragment {
 
     void runOnUiThread(Runnable runnable) {
         if (callSingleActivity != null) {
-            callSingleActivity.runOnUiThread(runnable);
+            handler.post(runnable);
         }
     }
 

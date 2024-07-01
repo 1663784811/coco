@@ -23,6 +23,10 @@ public class FragmentAudio extends SingleCallFragment {
     // 扬声器
     private boolean isSpeakerOn = false;
 
+    public FragmentAudio(MediaOperationCallback mediaOperationCallback) {
+        super(mediaOperationCallback);
+    }
+
     @Override
     int getLayout() {
         return R.layout.fragment_audio;

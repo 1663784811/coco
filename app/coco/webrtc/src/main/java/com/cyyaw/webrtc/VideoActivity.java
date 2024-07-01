@@ -27,7 +27,7 @@ import java.util.UUID;
 
 
 /**
- * 视频
+ * 视频音频通话
  */
 public class VideoActivity extends AppCompatActivity implements MediaOperationCallback {
 
@@ -127,10 +127,10 @@ public class VideoActivity extends AppCompatActivity implements MediaOperationCa
     private void init(String targetId, boolean outgoing, boolean audioOnly, boolean isReplace) {
         if (audioOnly) {
             // 语音
-            currentFragment = new FragmentAudio();
+            currentFragment = new FragmentAudio(this);
         } else {
             // 视频
-            currentFragment = new FragmentVideo();
+            currentFragment = new FragmentVideo(this);
         }
         if (isReplace) {
             getSupportFragmentManager().beginTransaction().replace(android.R.id.content, currentFragment).commit();
@@ -194,4 +194,11 @@ public class VideoActivity extends AppCompatActivity implements MediaOperationCa
     public void setIsOutgoing(boolean b) {
         isOutgoing = b;
     }
+
+    @Override
+    public void setAudioOnly(boolean b) {
+        this.isAudioOnly = b;
+    }
+
+
 }

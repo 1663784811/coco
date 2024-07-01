@@ -39,6 +39,11 @@ public class FragmentVideo extends SingleCallFragment {
     private SurfaceViewRenderer localSurfaceView;
     private SurfaceViewRenderer remoteSurfaceView;
 
+
+    public FragmentVideo(MediaOperationCallback mediaOperationCallback) {
+        super(mediaOperationCallback);
+    }
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -136,7 +141,7 @@ public class FragmentVideo extends SingleCallFragment {
             CallSession session = SkyEngineKit.Instance().getCurrentSession();
             if (session != null) {
                 if (callSingleActivity != null) {
-                    callSingleActivity.isAudioOnly = true;
+                    callSingleActivity.setAudioOnly(true);
                 }
                 session.switchToAudio();
             }
@@ -145,7 +150,7 @@ public class FragmentVideo extends SingleCallFragment {
             CallSession session = SkyEngineKit.Instance().getCurrentSession();
             if (session != null) {
                 if (callSingleActivity != null) {
-                    callSingleActivity.isAudioOnly = true;
+                    callSingleActivity.setAudioOnly(true);
                 }
                 session.switchToAudio();
             }
@@ -154,7 +159,7 @@ public class FragmentVideo extends SingleCallFragment {
             CallSession session = SkyEngineKit.Instance().getCurrentSession();
             if (session != null) {
                 if (callSingleActivity != null) {
-                    callSingleActivity.isAudioOnly = true;
+                    callSingleActivity.setAudioOnly(true);
                 }
                 session.switchToAudio();
             }
