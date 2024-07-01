@@ -40,16 +40,14 @@ public class FragmentVideo extends SingleCallFragment {
     private SurfaceViewRenderer remoteSurfaceView;
 
 
-    public FragmentVideo(MediaOperationCallback mediaOperationCallback) {
-        super(mediaOperationCallback);
+    public FragmentVideo(MediaOperationCallback mediaOperationCallback, boolean isOutgoing, boolean isFromFloatingView) {
+        super(mediaOperationCallback, isOutgoing);
+        this.isFromFloatingView = isFromFloatingView;
     }
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        if (callSingleActivity != null) {
-            isFromFloatingView = callSingleActivity.isFromFloatingView();
-        }
     }
 
     @Override
@@ -140,27 +138,18 @@ public class FragmentVideo extends SingleCallFragment {
         outgoingAudioOnlyImageView.setOnClickListener((View v) -> {
             CallSession session = SkyEngineKit.Instance().getCurrentSession();
             if (session != null) {
-                if (callSingleActivity != null) {
-                    callSingleActivity.setAudioOnly(true);
-                }
                 session.switchToAudio();
             }
         });
         incomingAudioOnlyImageView.setOnClickListener((View v) -> {
             CallSession session = SkyEngineKit.Instance().getCurrentSession();
             if (session != null) {
-                if (callSingleActivity != null) {
-                    callSingleActivity.setAudioOnly(true);
-                }
                 session.switchToAudio();
             }
         });
         connectedAudioOnlyImageView.setOnClickListener((View v) -> {
             CallSession session = SkyEngineKit.Instance().getCurrentSession();
             if (session != null) {
-                if (callSingleActivity != null) {
-                    callSingleActivity.setAudioOnly(true);
-                }
                 session.switchToAudio();
             }
         });

@@ -53,8 +53,9 @@ public abstract class SingleCallFragment extends Fragment {
     private final Handler handler = new Handler(Looper.getMainLooper());
 
 
-    public SingleCallFragment(MediaOperationCallback mediaOperationCallback) {
+    public SingleCallFragment(MediaOperationCallback mediaOperationCallback, boolean isOutgoing) {
         this.callSingleActivity = mediaOperationCallback;
+        this.isOutgoing = isOutgoing;
     }
 
 
@@ -86,9 +87,6 @@ public abstract class SingleCallFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        if (callSingleActivity != null) {
-            isOutgoing = callSingleActivity.isOutgoing();
-        }
     }
 
     @Override
@@ -140,7 +138,6 @@ public abstract class SingleCallFragment extends Fragment {
         if (state == EnumType.CallState.Connected) {
             handler.removeCallbacks(waitingRunnable);
         }
-
     }
 
     public void didChangeMode(boolean isAudio) {

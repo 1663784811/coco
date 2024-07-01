@@ -127,10 +127,10 @@ public class VideoActivity extends AppCompatActivity implements MediaOperationCa
     private void init(String targetId, boolean outgoing, boolean audioOnly, boolean isReplace) {
         if (audioOnly) {
             // 语音
-            currentFragment = new FragmentAudio(this);
+            currentFragment = new FragmentAudio(this, isOutgoing);
         } else {
             // 视频
-            currentFragment = new FragmentVideo(this);
+            currentFragment = new FragmentVideo(this, isOutgoing, isFromFloatingView);
         }
         if (isReplace) {
             getSupportFragmentManager().beginTransaction().replace(android.R.id.content, currentFragment).commit();
@@ -178,27 +178,8 @@ public class VideoActivity extends AppCompatActivity implements MediaOperationCa
      * 切换到语音通话
      */
     public void switchAudio() {
+        this.isAudioOnly = true;
         init(targetId, isOutgoing, true, true);
     }
-
-
-    public boolean isFromFloatingView() {
-        return isFromFloatingView;
-    }
-
-    public boolean isOutgoing() {
-        return isOutgoing;
-    }
-
-
-    public void setIsOutgoing(boolean b) {
-        isOutgoing = b;
-    }
-
-    @Override
-    public void setAudioOnly(boolean b) {
-        this.isAudioOnly = b;
-    }
-
 
 }

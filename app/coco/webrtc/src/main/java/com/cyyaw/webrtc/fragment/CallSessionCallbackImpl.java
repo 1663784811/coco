@@ -28,9 +28,6 @@ public class CallSessionCallbackImpl implements CallSessionCallback {
 
     @Override
     public void didChangeState(EnumType.CallState callState) {
-        if (callState == EnumType.CallState.Connected) {
-            videoActivity.setIsOutgoing(false);
-        }
         handler.post(() -> currentFragment.didChangeState(callState));
     }
 

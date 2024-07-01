@@ -11,28 +11,14 @@ public interface MediaOperationCallback {
      */
     void showFloatingView();
 
-
     /**
      * 切换到语音通话
      */
     void switchAudio();
 
     /**
-     *
+     * 通话结束
      */
-    boolean isFromFloatingView();
-
-
-    boolean isOutgoing();
-
-
-    void setIsOutgoing(boolean b);
-
-
-    void setAudioOnly(boolean b);
-
-
-
     void finish();
 
 }
