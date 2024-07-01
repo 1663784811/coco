@@ -23,7 +23,7 @@
         tools:ignore="MissingConstraints">
 
         <ImageView
-            android:id="@+id/speechIcon"
+            android:id="@+id/cuiSpeechIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/cui_icon_voice_24"
@@ -45,10 +45,25 @@
             android:padding="6dp"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/speechIcon"
+            app:layout_constraintLeft_toRightOf="@+id/cuiSpeechIcon"
             app:layout_constraintRight_toLeftOf="@+id/expressionIcon"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/cuiChatAudioText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="#ECECEC"
+            android:gravity="center"
+            android:padding="6dp"
+            android:text="长按录制语音"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/cuiSpeechIcon"
+            app:layout_constraintRight_toLeftOf="@+id/expressionIcon"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/expressionIcon"
@@ -58,12 +73,34 @@
             android:layout_marginEnd="10dp"
             android:src="@drawable/cui_icon_expression_24"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/moreUse"
+            app:layout_constraintRight_toLeftOf="@+id/cui_chat_sendBtn"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints" />
 
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cui_chat_sendBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="0dp"
+            app:layout_constraintRight_toLeftOf="@+id/cui_moreUse">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#4CAF50"
+                android:paddingStart="12dp"
+                android:paddingTop="6dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="6dp"
+                android:text="发送"
+                android:textColor="@color/white" />
+        </androidx.cardview.widget.CardView>
+
+
         <ImageView
-            android:id="@+id/moreUse"
+            android:id="@+id/cui_moreUse"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/cui_icon_add_circle_24"
@@ -76,6 +113,7 @@
 
 
     <LinearLayout
+        android:id="@+id/cui_chat_icon_box"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -90,6 +128,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/cuiExpressionContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">

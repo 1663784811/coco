@@ -41,6 +41,11 @@ public class CuiChatInputIconFragment extends Fragment {
         img.setImageResource(icon);
         TextView tx = view.findViewById(R.id.cui_chat_input_text);
         tx.setText(text);
+        if (null != callBack) {
+            view.setOnClickListener((View v) -> {
+                callBack.clickIcon(v);
+            });
+        }
         return view;
     }
 
@@ -53,7 +58,7 @@ public class CuiChatInputIconFragment extends Fragment {
         /**
          * 点击图标
          */
-        default void clickIcon() {
+        default void clickIcon(View v) {
         }
     }
 

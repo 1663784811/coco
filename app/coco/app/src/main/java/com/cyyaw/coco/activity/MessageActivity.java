@@ -10,6 +10,7 @@ import com.cyyaw.coco.R;
 import com.cyyaw.coco.common.BaseAppCompatActivity;
 import com.cyyaw.cui.fragment.CUiNavBarFragment;
 import com.cyyaw.cui.fragment.CuiChatInputFragment;
+import com.cyyaw.cui.fragment.CuiChatInputIconFragment;
 import com.cyyaw.cui.fragment.CuiChatMsgFromFragment;
 import com.cyyaw.cui.fragment.CuiChatMsgSendFragment;
 
@@ -23,7 +24,11 @@ public class MessageActivity extends BaseAppCompatActivity implements CuiChatInp
         FragmentTransaction trs = getSupportFragmentManager().beginTransaction();
         // fragment
         trs.add(R.id.header_bar, new CUiNavBarFragment());
-        trs.add(R.id.chat_input, new CuiChatInputFragment());
+
+        CuiChatInputFragment cuiChatInputFragment = new CuiChatInputFragment();
+        cuiChatInputFragment.addIcon(new CuiChatInputIconFragment(R.drawable.cui_icon_video_24, "视频"));
+        trs.add(R.id.chat_input, cuiChatInputFragment);
+
         trs.add(R.id.messageContent, new CuiChatMsgFromFragment());
         trs.add(R.id.messageContent, new CuiChatMsgFromFragment());
         trs.add(R.id.messageContent, new CuiChatMsgFromFragment());
