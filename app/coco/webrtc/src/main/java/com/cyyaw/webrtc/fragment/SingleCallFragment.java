@@ -1,6 +1,5 @@
 package com.cyyaw.webrtc.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -18,8 +17,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.cyyaw.webrtc.R;
-import com.cyyaw.webrtc.VideoActivity;
-import com.cyyaw.webrtc.WebRtcConfig;
 import com.cyyaw.webrtc.rtc.SkyEngineKit;
 import com.cyyaw.webrtc.rtc.engine.EnumType;
 import com.cyyaw.webrtc.rtc.session.CallSession;
@@ -38,23 +35,26 @@ public abstract class SingleCallFragment extends Fragment implements CallSession
     protected TextView descTextView;
     // 通话时长
     protected Chronometer durationTextView;
+    // 呼出挂断
     protected ImageView outgoingHangupImageView;
-
-
+    // 呼入挂断
     private ImageView incomingHangupImageView;
     // 接听按钮
     protected ImageView acceptImageView;
+    // 时间文字
     protected TextView tvStatus;
+    // 呼出模块
     protected View outgoingActionContainer;
+    // 呼入模块
     protected View incomingActionContainer;
+    // 连接模块
     protected View connectedActionContainer;
+
     protected View lytParent;
     //是否呼出
     boolean isOutgoing;
-
-
+    // 回调
     protected MediaOperationCallback mediaOperationCallback;
-
 
     boolean endWithNoAnswerFlag = false;
     boolean isConnectionClosed = false;
@@ -251,7 +251,7 @@ public abstract class SingleCallFragment extends Fragment implements CallSession
     /**
      * 切换语音
      */
-    protected void changeAudio(){
+    protected void changeAudio() {
         CallSession session = SkyEngineKit.Instance().getCurrentSession();
         if (session != null) {
             session.switchToAudio();

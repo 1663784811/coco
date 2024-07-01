@@ -30,14 +30,19 @@ public class FragmentVideo extends SingleCallFragment {
     private ImageView connectedHangupImageView;
     // 切换的摄像头
     private ImageView switchCameraImageView;
-
+    // 渲染器
     private FrameLayout fullscreenRenderer;
+    // 小渲染器
     private FrameLayout pipRenderer;
+
     private LinearLayout inviteeInfoContainer;
-    private boolean isFromFloatingView;
+
+    // 本地图像
     private SurfaceViewRenderer localSurfaceView;
+    // 远程图像
     private SurfaceViewRenderer remoteSurfaceView;
 
+    private boolean isFromFloatingView;
 
     public FragmentVideo(MediaOperationCallback mediaOperationCallback, boolean isOutgoing, boolean isFromFloatingView) {
         super(mediaOperationCallback, isOutgoing);
