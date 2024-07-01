@@ -41,18 +41,9 @@ public class FragmentAudio extends SingleCallFragment {
 
 
 
-        incomingHangupImageView.setOnClickListener((View v) -> {
-            CallSession session = SkyEngineKit.Instance().getCurrentSession();
-            if (session != null) {
-                SkyEngineKit.Instance().endCall();
-            }
-        });
 
-        minimizeImageView.setOnClickListener((View v) -> {
-            if (mediaOperationCallback != null) {
-                mediaOperationCallback.showFloatingView();
-            }
-        });
+
+
 
         muteImageView.setOnClickListener((View v) -> {
             CallSession session = SkyEngineKit.Instance().getCurrentSession();
@@ -64,16 +55,7 @@ public class FragmentAudio extends SingleCallFragment {
             }
         });
 
-        acceptImageView.setOnClickListener((View v) -> {
-            CallSession session = SkyEngineKit.Instance().getCurrentSession();
-            if (session != null)
-                Log.d(TAG, "session = " + session + "; session.getState() = " + session.getState());
-            if (session != null && session.getState() == EnumType.CallState.Incoming) {
-                session.joinHome(session.getRoomId());
-            } else if (session != null) {
-                session.sendRefuse();
-            }
-        });
+
 
         speakerImageView.setOnClickListener((View v) -> {
             CallSession session = SkyEngineKit.Instance().getCurrentSession();

@@ -62,19 +62,8 @@ public class FragmentVideo extends SingleCallFragment {
 
 
 
-        incomingHangupImageView.setOnClickListener((View v) -> {
-            CallSession session = SkyEngineKit.Instance().getCurrentSession();
-            if (session != null) {
-                Log.d(TAG, "endCall");
-                SkyEngineKit.Instance().endCall();
-            }
-            if (mediaOperationCallback != null) mediaOperationCallback.finish();
-        });
-        minimizeImageView.setOnClickListener((View v) -> {
-            if (mediaOperationCallback != null) {
-                mediaOperationCallback.showFloatingView();
-            }
-        });
+
+
         connectedHangupImageView.setOnClickListener((View v) -> {
             CallSession session = SkyEngineKit.Instance().getCurrentSession();
             if (session != null) {
@@ -84,18 +73,7 @@ public class FragmentVideo extends SingleCallFragment {
             if (mediaOperationCallback != null) mediaOperationCallback.finish();
         });
 
-        acceptImageView.setOnClickListener((View v) -> {
-            CallSession session = SkyEngineKit.Instance().getCurrentSession();
-            // 接听
-            if (session != null && session.getState() == EnumType.CallState.Incoming) {
-                session.joinHome(session.getRoomId());
-            } else if (session != null) {
-                if (mediaOperationCallback != null) {
-                    session.sendRefuse();
-                    mediaOperationCallback.finish();
-                }
-            }
-        });
+
 
         switchCameraImageView.setOnClickListener((View v) -> {
             CallSession session = SkyEngineKit.Instance().getCurrentSession();

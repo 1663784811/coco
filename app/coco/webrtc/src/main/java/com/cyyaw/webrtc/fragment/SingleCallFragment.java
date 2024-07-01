@@ -28,7 +28,7 @@ import com.cyyaw.webrtc.rtc.session.CallSessionCallback;
 
 public abstract class SingleCallFragment extends Fragment implements CallSessionCallback {
     private static final String TAG = "SingleCallFragment";
-    //
+    // 最小化按钮
     protected ImageView minimizeImageView;
     // 用户头像
     protected ImageView portraitImageView;
@@ -41,7 +41,8 @@ public abstract class SingleCallFragment extends Fragment implements CallSession
     protected ImageView outgoingHangupImageView;
 
 
-    protected ImageView incomingHangupImageView;
+    private ImageView incomingHangupImageView;
+    // 接听按钮
     protected ImageView acceptImageView;
     protected TextView tvStatus;
     protected View outgoingActionContainer;
@@ -123,8 +124,26 @@ public abstract class SingleCallFragment extends Fragment implements CallSession
         outgoingHangupImageView.setOnClickListener((View v) -> {
             finishCall();
         });
-
-
+        incomingHangupImageView.setOnClickListener((View v) -> {
+            finishCall();
+        });
+        // 最小化
+        minimizeImageView.setOnClickListener((View v) -> {
+            if (mediaOperationCallback != null) {
+                mediaOperationCallback.showFloatingView();
+            }
+        });
+        // 接听
+        acceptImageView.setOnClickListener((View v) -> {
+            CallSession session = SkyEngineKit.Instance().getCurrentSession();
+            if (session != null) {
+                if (session.getState() == EnumType.CallState.Incoming) {
+                    session.joinHome(session.getRoomId());
+                } else {
+                    session.sendRefuse();
+                }
+            }
+        });
     }
 
     public void init() {
