@@ -1,14 +1,11 @@
 package com.cyyaw.webrtc.fragment;
 
-import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
-import androidx.annotation.NonNull;
 
 import com.cyyaw.webrtc.R;
 import com.cyyaw.webrtc.rtc.SkyEngineKit;
@@ -24,10 +21,7 @@ public class FragmentVideo extends SingleCallFragment {
 
     private static final String TAG = "FragmentVideo";
     private ImageView outgoingAudioOnlyImageView;
-    private LinearLayout audioLayout;
     private ImageView incomingAudioOnlyImageView;
-    private LinearLayout hangupLinearLayout;
-    private LinearLayout acceptLinearLayout;
     private ImageView connectedAudioOnlyImageView;
     private ImageView connectedHangupImageView;
     private ImageView switchCameraImageView;
@@ -35,7 +29,7 @@ public class FragmentVideo extends SingleCallFragment {
     private FrameLayout fullscreenRenderer;
     private FrameLayout pipRenderer;
     private LinearLayout inviteeInfoContainer;
-    private boolean isFromFloatingView = false;
+    private boolean isFromFloatingView;
     private SurfaceViewRenderer localSurfaceView;
     private SurfaceViewRenderer remoteSurfaceView;
 
@@ -58,23 +52,16 @@ public class FragmentVideo extends SingleCallFragment {
         pipRenderer = view.findViewById(R.id.pip_video_view);
         inviteeInfoContainer = view.findViewById(R.id.inviteeInfoContainer);
         outgoingAudioOnlyImageView = view.findViewById(R.id.outgoingAudioOnlyImageView);
-        audioLayout = view.findViewById(R.id.audioLayout);
         incomingAudioOnlyImageView = view.findViewById(R.id.incomingAudioOnlyImageView);
-        hangupLinearLayout = view.findViewById(R.id.hangupLinearLayout);
-        acceptLinearLayout = view.findViewById(R.id.acceptLinearLayout);
         connectedAudioOnlyImageView = view.findViewById(R.id.connectedAudioOnlyImageView);
         connectedHangupImageView = view.findViewById(R.id.connectedHangupImageView);
         switchCameraImageView = view.findViewById(R.id.switchCameraImageView);
 
 
-        outgoingHangupImageView.setOnClickListener((View v) -> {
-            CallSession session = SkyEngineKit.Instance().getCurrentSession();
-            if (session != null) {
-                Log.d(TAG, "endCall");
-                SkyEngineKit.Instance().endCall();
-            }
-            if (mediaOperationCallback != null) mediaOperationCallback.finish();
-        });
+
+
+
+
         incomingHangupImageView.setOnClickListener((View v) -> {
             CallSession session = SkyEngineKit.Instance().getCurrentSession();
             if (session != null) {

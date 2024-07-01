@@ -39,12 +39,7 @@ public class FragmentAudio extends SingleCallFragment {
         speakerImageView = view.findViewById(R.id.speakerImageView);
         minimizeImageView.setVisibility(View.GONE);
 
-        outgoingHangupImageView.setOnClickListener((View v) -> {
-            CallSession session = SkyEngineKit.Instance().getCurrentSession();
-            if (session != null) {
-                SkyEngineKit.Instance().endCall();
-            }
-        });
+
 
         incomingHangupImageView.setOnClickListener((View v) -> {
             CallSession session = SkyEngineKit.Instance().getCurrentSession();

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,8 @@ public abstract class SingleCallFragment extends Fragment implements CallSession
     // 通话时长
     protected Chronometer durationTextView;
     protected ImageView outgoingHangupImageView;
+
+
     protected ImageView incomingHangupImageView;
     protected ImageView acceptImageView;
     protected TextView tvStatus;
@@ -116,13 +119,15 @@ public abstract class SingleCallFragment extends Fragment implements CallSession
             // 计时
             handler.postDelayed(waitingRunnable, OUTGOING_WAITING_TIME);
         }
+        // === 点击结束
+        outgoingHangupImageView.setOnClickListener((View v) -> {
+            finishCall();
+        });
+
+
     }
 
     public void init() {
-
-
-
-
 
 
     }
@@ -207,5 +212,21 @@ public abstract class SingleCallFragment extends Fragment implements CallSession
         }
     };
 
+
+    /**
+     * ============================================    公共操作
+     */
+
+    /**
+     * 通话结束
+     */
+    private void finishCall() {
+        CallSession session = SkyEngineKit.Instance().getCurrentSession();
+        if (session != null) {
+            Log.d(TAG, "endCall");
+            SkyEngineKit.Instance().endCall();
+        }
+        if (mediaOperationCallback != null) mediaOperationCallback.finish();
+    }
 
 }
