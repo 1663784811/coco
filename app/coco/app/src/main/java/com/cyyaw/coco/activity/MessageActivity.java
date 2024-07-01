@@ -3,12 +3,15 @@ package com.cyyaw.coco.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.View;
 
-import com.cyyaw.coco.MyApplication;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.common.BaseAppCompatActivity;
-import com.cyyaw.webrtc.VideoActivity;
+import com.cyyaw.cui.fragment.CUiNavBarFragment;
+import com.cyyaw.cui.fragment.CuiChatInputFragment;
+import com.cyyaw.cui.fragment.CuiChatMsgFromFragment;
+import com.cyyaw.cui.fragment.CuiChatMsgSendFragment;
 
 public class MessageActivity extends BaseAppCompatActivity {
 
@@ -17,12 +20,30 @@ public class MessageActivity extends BaseAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
 
+        FragmentTransaction trs = getSupportFragmentManager().beginTransaction();
+        // fragment
+        trs.add(R.id.header_bar, new CUiNavBarFragment()).commit();
 
-        View videoBtn = findViewById(R.id.videoBtn);
-        videoBtn.setOnClickListener((View v) -> {
-            MyApplication.toast("sssssssssss");
-            VideoActivity.openActivity(MessageActivity.this, "sss", false, "aaaaaaaaaaaa", false, false);
-        });
+        trs.add(R.id.chat_input, new CuiChatInputFragment()).commit();
+
+
+        trs.add(R.id.messageContent, new CuiChatMsgFromFragment()).commit();
+        trs.add(R.id.messageContent, new CuiChatMsgFromFragment()).commit();
+        trs.add(R.id.messageContent, new CuiChatMsgFromFragment()).commit();
+        trs.add(R.id.messageContent, new CuiChatMsgFromFragment()).commit();
+        trs.add(R.id.messageContent, new CuiChatMsgFromFragment()).commit();
+        trs.add(R.id.messageContent, new CuiChatMsgFromFragment()).commit();
+        trs.add(R.id.messageContent, new CuiChatMsgFromFragment()).commit();
+        trs.add(R.id.messageContent, new CuiChatMsgFromFragment()).commit();
+        trs.add(R.id.messageContent, new CuiChatMsgSendFragment()).commit();
+        trs.add(R.id.messageContent, new CuiChatMsgSendFragment()).commit();
+        trs.add(R.id.messageContent, new CuiChatMsgSendFragment()).commit();
+        trs.add(R.id.messageContent, new CuiChatMsgSendFragment()).commit();
+        trs.add(R.id.messageContent, new CuiChatMsgSendFragment()).commit();
+        trs.add(R.id.messageContent, new CuiChatMsgFromFragment()).commit();
+        trs.add(R.id.messageContent, new CuiChatMsgFromFragment()).commit();
+        trs.add(R.id.messageContent, new CuiChatMsgFromFragment()).commit();
+        trs.add(R.id.messageContent, new CuiChatMsgFromFragment()).commit();
 
 
     }

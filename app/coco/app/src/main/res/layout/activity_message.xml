@@ -7,59 +7,39 @@
     tools:context=".activity.MessageActivity">
 
 
-    <include layout="@layout/ui_nav_bar" />
+    <LinearLayout
+        android:id="@+id/header_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints" />
 
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@+id/bottomInputBox"
+        app:layout_constraintBottom_toTopOf="@+id/chat_input"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/header_bar"
         tools:ignore="MissingConstraints">
 
         <LinearLayout
+            android:id="@+id/messageContent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <include layout="@layout/ui_char_msg_from" />
-            <include layout="@layout/ui_char_msg_from" />
-            <include layout="@layout/ui_char_msg_from" />
-            <include layout="@layout/ui_char_msg_send" />
-            <include layout="@layout/ui_char_msg_send" />
-            <include layout="@layout/ui_char_msg_send" />
-            <include layout="@layout/ui_char_msg_from" />
-            <include layout="@layout/ui_char_msg_from" />
-            <include layout="@layout/ui_char_msg_from" />
-            <include layout="@layout/ui_char_msg_from" />
-            <include layout="@layout/ui_char_msg_from" />
-            <include layout="@layout/ui_char_msg_from" />
-
-
-            <include layout="@layout/ui_char_msg_send" />
-            <include layout="@layout/ui_char_msg_send" />
-            <include layout="@layout/ui_char_msg_send" />
-            <include layout="@layout/ui_char_msg_send" />
-            <include layout="@layout/ui_char_msg_send" />
-
-            <include layout="@layout/ui_char_msg_from" />
-            <include layout="@layout/ui_char_msg_from" />
-            <include layout="@layout/ui_char_msg_from" />
-            <include layout="@layout/ui_char_msg_from" />
-            <include layout="@layout/ui_char_msg_from" />
-            <include layout="@layout/ui_char_msg_from" />
-            <include layout="@layout/ui_char_msg_from" />
-            <include layout="@layout/ui_char_msg_from" />
-            <include layout="@layout/ui_char_msg_from" />
-
-
-
-
-        </LinearLayout>
+            android:orientation="vertical" />
     </ScrollView>
 
-    <include layout="@layout/ui_chat_input" />
+
+    <LinearLayout
+        android:id="@+id/chat_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:ignore="MissingConstraints" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
