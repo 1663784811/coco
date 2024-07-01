@@ -6,21 +6,20 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.cyyaw.coco.R;
 
 
 public class CuiChatInputFragment extends Fragment {
 
-    private String title;
-    private CuiChatInputFragment callBack;
+    private CuiChatInputCallBack callBack;
 
 
     public CuiChatInputFragment() {
     }
 
-    public CuiChatInputFragment(String title, CuiChatInputFragment callBack) {
-        this.title = title;
+    public CuiChatInputFragment(CuiChatInputCallBack callBack) {
         this.callBack = callBack;
     }
 
@@ -28,7 +27,12 @@ public class CuiChatInputFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.cui_chat_input, container, false);
-
+        FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+        ft.add(R.id.cuiChatIconContainer, new CuiChatInputIconFragment(R.drawable.cui_icon_voice_24, "图片"));
+        ft.add(R.id.cuiChatIconContainer, new CuiChatInputIconFragment(R.drawable.cui_icon_voice_24, "图片"));
+        ft.add(R.id.cuiChatIconContainer, new CuiChatInputIconFragment(R.drawable.cui_icon_voice_24, "图片"));
+        ft.add(R.id.cuiChatIconContainer, new CuiChatInputIconFragment(R.drawable.cui_icon_voice_24, "图片"));
+        ft.commit();
         return view;
     }
 
@@ -36,9 +40,13 @@ public class CuiChatInputFragment extends Fragment {
     /**
      * 方法回调
      */
-    public interface CuiChatInputFragmentCallBack {
+    public interface CuiChatInputCallBack {
 
-
+        /**
+         * 点击图标
+         */
+        default void clickIcon() {
+        }
     }
 
 

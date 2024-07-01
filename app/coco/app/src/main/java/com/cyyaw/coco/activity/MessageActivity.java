@@ -13,7 +13,7 @@ import com.cyyaw.cui.fragment.CuiChatInputFragment;
 import com.cyyaw.cui.fragment.CuiChatMsgFromFragment;
 import com.cyyaw.cui.fragment.CuiChatMsgSendFragment;
 
-public class MessageActivity extends BaseAppCompatActivity {
+public class MessageActivity extends BaseAppCompatActivity implements CuiChatInputFragment.CuiChatInputCallBack {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,30 +22,26 @@ public class MessageActivity extends BaseAppCompatActivity {
 
         FragmentTransaction trs = getSupportFragmentManager().beginTransaction();
         // fragment
-        trs.add(R.id.header_bar, new CUiNavBarFragment()).commit();
-
-        trs.add(R.id.chat_input, new CuiChatInputFragment()).commit();
-
-
-        trs.add(R.id.messageContent, new CuiChatMsgFromFragment()).commit();
-        trs.add(R.id.messageContent, new CuiChatMsgFromFragment()).commit();
-        trs.add(R.id.messageContent, new CuiChatMsgFromFragment()).commit();
-        trs.add(R.id.messageContent, new CuiChatMsgFromFragment()).commit();
-        trs.add(R.id.messageContent, new CuiChatMsgFromFragment()).commit();
-        trs.add(R.id.messageContent, new CuiChatMsgFromFragment()).commit();
-        trs.add(R.id.messageContent, new CuiChatMsgFromFragment()).commit();
-        trs.add(R.id.messageContent, new CuiChatMsgFromFragment()).commit();
-        trs.add(R.id.messageContent, new CuiChatMsgSendFragment()).commit();
-        trs.add(R.id.messageContent, new CuiChatMsgSendFragment()).commit();
-        trs.add(R.id.messageContent, new CuiChatMsgSendFragment()).commit();
-        trs.add(R.id.messageContent, new CuiChatMsgSendFragment()).commit();
-        trs.add(R.id.messageContent, new CuiChatMsgSendFragment()).commit();
-        trs.add(R.id.messageContent, new CuiChatMsgFromFragment()).commit();
-        trs.add(R.id.messageContent, new CuiChatMsgFromFragment()).commit();
-        trs.add(R.id.messageContent, new CuiChatMsgFromFragment()).commit();
-        trs.add(R.id.messageContent, new CuiChatMsgFromFragment()).commit();
-
-
+        trs.add(R.id.header_bar, new CUiNavBarFragment());
+        trs.add(R.id.chat_input, new CuiChatInputFragment());
+        trs.add(R.id.messageContent, new CuiChatMsgFromFragment());
+        trs.add(R.id.messageContent, new CuiChatMsgFromFragment());
+        trs.add(R.id.messageContent, new CuiChatMsgFromFragment());
+        trs.add(R.id.messageContent, new CuiChatMsgFromFragment());
+        trs.add(R.id.messageContent, new CuiChatMsgFromFragment());
+        trs.add(R.id.messageContent, new CuiChatMsgFromFragment());
+        trs.add(R.id.messageContent, new CuiChatMsgFromFragment());
+        trs.add(R.id.messageContent, new CuiChatMsgFromFragment());
+        trs.add(R.id.messageContent, new CuiChatMsgSendFragment());
+        trs.add(R.id.messageContent, new CuiChatMsgSendFragment());
+        trs.add(R.id.messageContent, new CuiChatMsgSendFragment());
+        trs.add(R.id.messageContent, new CuiChatMsgSendFragment());
+        trs.add(R.id.messageContent, new CuiChatMsgSendFragment());
+        trs.add(R.id.messageContent, new CuiChatMsgFromFragment());
+        trs.add(R.id.messageContent, new CuiChatMsgFromFragment());
+        trs.add(R.id.messageContent, new CuiChatMsgFromFragment());
+        trs.add(R.id.messageContent, new CuiChatMsgFromFragment());
+        trs.commit();
     }
 
     @Override
