@@ -61,7 +61,12 @@ public class FriendsDao {
                     FriendsEntity friends = new FriendsEntity();
                     JSONObject user = js.getJSONObject("toUser");
                     friends.setId(user.getInteger("id"));
-                    friends.setFace(user.getString("face"));
+                    String face = user.getString("face");
+                    if (null != face && face.length() > 0) {
+                        friends.setFace(face);
+                    } else {
+                        friends.setFace("https://m.360buyimg.com/babel/jfs/t1/60865/19/20309/4778/660157d4F65db1655/b869b66cd4a18079.png");
+                    }
                     friends.setNickName(user.getString("trueName"));
                     adapter.updateData(friends);
                 }

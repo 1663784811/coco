@@ -17,6 +17,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="#E8E8E8"
+        android:scaleType="fitXY"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteY="0dp" />
 
