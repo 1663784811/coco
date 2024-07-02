@@ -5,7 +5,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
-import com.cyyaw.webrtc.VideoActivity;
+import com.cyyaw.webrtc.activity.VideoActivity;
 import com.cyyaw.webrtc.WebRtcConfig;
 import com.cyyaw.webrtc.net.socket.SocketConnect;
 import com.cyyaw.webrtc.rtc.SkyEngineKit;

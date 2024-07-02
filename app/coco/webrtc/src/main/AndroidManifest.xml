@@ -53,7 +53,7 @@
 
     <application>
         <activity
-            android:name=".VideoActivity"
+            android:name=".activity.VideoActivity"
             android:exported="false"
             android:label="local network"
             android:screenOrientation="portrait" />

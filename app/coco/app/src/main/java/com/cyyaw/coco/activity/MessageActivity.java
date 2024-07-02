@@ -14,7 +14,7 @@ import com.cyyaw.cui.fragment.CuiChatInputFragment;
 import com.cyyaw.cui.fragment.CuiChatInputIconFragment;
 import com.cyyaw.cui.fragment.CuiChatMsgFromFragment;
 import com.cyyaw.cui.fragment.CuiChatMsgSendFragment;
-import com.cyyaw.webrtc.VideoActivity;
+import com.cyyaw.webrtc.activity.VideoActivity;
 
 public class MessageActivity extends BaseAppCompatActivity implements CuiChatInputFragment.CuiChatInputCallBack {
 

@@ -1,4 +1,4 @@
-package com.cyyaw.webrtc;
+package com.cyyaw.webrtc.activity;
 
 import android.Manifest;
 import android.app.Activity;
@@ -11,14 +11,14 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 
+import com.cyyaw.webrtc.R;
 import com.cyyaw.webrtc.fragment.CallSessionCallbackImpl;
-import com.cyyaw.webrtc.fragment.FragmentAudio;
-import com.cyyaw.webrtc.fragment.FragmentVideo;
+import com.cyyaw.webrtc.fragment.singlecall.FragmentAudio;
+import com.cyyaw.webrtc.fragment.singlecall.FragmentVideo;
 import com.cyyaw.webrtc.fragment.MediaOperationCallback;
-import com.cyyaw.webrtc.fragment.SingleCallFragment;
-import com.cyyaw.webrtc.fragment.WindHandle;
+import com.cyyaw.webrtc.fragment.singlecall.SingleCallFragment;
+import com.cyyaw.webrtc.utils.WindHandle;
 import com.cyyaw.webrtc.permission.Permissions;
 import com.cyyaw.webrtc.rtc.SkyEngineKit;
 import com.cyyaw.webrtc.rtc.session.CallSession;
@@ -147,7 +147,7 @@ public class VideoActivity extends AppCompatActivity implements MediaOperationCa
             }
             CallSession session = SkyEngineKit.Instance().getCurrentSession();
             // 设置回调
-            session.setSessionCallback(new CallSessionCallbackImpl(currentFragment, this));
+            session.setSessionCallback(new CallSessionCallbackImpl(currentFragment));
         } else {
             CallSession session = SkyEngineKit.Instance().getCurrentSession();
             if (session.isAudioOnly() && !audioOnly) {
@@ -155,7 +155,7 @@ public class VideoActivity extends AppCompatActivity implements MediaOperationCa
                 isAudioOnly = session.isAudioOnly();
                 currentFragment.didChangeMode(true);
             }
-            session.setSessionCallback(new CallSessionCallbackImpl(currentFragment, this));
+            session.setSessionCallback(new CallSessionCallbackImpl(currentFragment));
         }
 
     }

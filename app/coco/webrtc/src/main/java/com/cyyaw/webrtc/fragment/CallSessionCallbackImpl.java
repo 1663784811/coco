@@ -3,7 +3,7 @@ package com.cyyaw.webrtc.fragment;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.cyyaw.webrtc.VideoActivity;
+import com.cyyaw.webrtc.fragment.singlecall.SingleCallFragment;
 import com.cyyaw.webrtc.rtc.engine.EnumType;
 import com.cyyaw.webrtc.rtc.session.CallSessionCallback;
 
@@ -13,7 +13,7 @@ public class CallSessionCallbackImpl implements CallSessionCallback {
 
     private SingleCallFragment currentFragment;
 
-    public CallSessionCallbackImpl(SingleCallFragment currentFragment, VideoActivity videoActivity) {
+    public CallSessionCallbackImpl(SingleCallFragment currentFragment) {
         this.currentFragment = currentFragment;
     }
 

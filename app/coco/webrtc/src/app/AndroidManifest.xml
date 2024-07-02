@@ -57,7 +57,7 @@
         android:theme="@style/Theme.Coco"
         >
         <activity
-            android:name=".VideoActivity"
+            android:name=".activity.VideoActivity"
             android:exported="false"
             android:label="@string/title_activity_video"
             android:theme="@style/Theme.Coco" />
