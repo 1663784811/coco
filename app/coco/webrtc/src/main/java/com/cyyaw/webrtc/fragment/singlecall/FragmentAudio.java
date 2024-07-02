@@ -5,7 +5,7 @@ import android.widget.ImageView;
 
 import com.cyyaw.webrtc.R;
 import com.cyyaw.webrtc.fragment.MediaOperationCallback;
-import com.cyyaw.webrtc.rtc.SkyEngineKit;
+import com.cyyaw.webrtc.rtc.CallEngineKit;
 import com.cyyaw.webrtc.rtc.engine.EnumType;
 import com.cyyaw.webrtc.rtc.session.CallSession;
 
@@ -41,7 +41,7 @@ public class FragmentAudio extends SingleCallFragment {
 
         // 静音
         muteImageView.setOnClickListener((View v) -> {
-            CallSession session = SkyEngineKit.Instance().getCurrentSession();
+            CallSession session = CallEngineKit.Instance().getCurrentSession();
             if (session != null && session.getState() != EnumType.CallState.Idle) {
                 if (session.toggleMuteAudio(!micEnabled)) {
                     micEnabled = !micEnabled;
@@ -52,7 +52,7 @@ public class FragmentAudio extends SingleCallFragment {
 
         // 免提
         speakerImageView.setOnClickListener((View v) -> {
-            CallSession session = SkyEngineKit.Instance().getCurrentSession();
+            CallSession session = CallEngineKit.Instance().getCurrentSession();
             if (session != null && session.getState() != EnumType.CallState.Idle) {
                 if (session.toggleSpeaker(!isSpeakerOn)) {
                     isSpeakerOn = !isSpeakerOn;
@@ -66,7 +66,7 @@ public class FragmentAudio extends SingleCallFragment {
     @Override
     public void init() {
         super.init();
-        CallSession currentSession = SkyEngineKit.Instance().getCurrentSession();
+        CallSession currentSession = CallEngineKit.Instance().getCurrentSession();
         currentState = currentSession.getState();
         // 如果已经接通
         if (currentState == EnumType.CallState.Connected) {

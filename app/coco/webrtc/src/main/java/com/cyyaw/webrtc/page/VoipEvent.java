@@ -4,7 +4,7 @@ import android.media.AsyncPlayer;
 import android.util.Log;
 
 
-import com.cyyaw.webrtc.rtc.session.ISkyEvent;
+import com.cyyaw.webrtc.rtc.session.CallEvent;
 import com.cyyaw.webrtc.net.SocketManager;
 
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
 /**
  *
  */
-public class VoipEvent implements ISkyEvent {
+public class VoipEvent implements CallEvent {
 
     private static final String TAG = "VoipEvent";
     private final AsyncPlayer ringPlayer = new AsyncPlayer(null);

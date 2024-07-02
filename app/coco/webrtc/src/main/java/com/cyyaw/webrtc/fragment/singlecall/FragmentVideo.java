@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 
 import com.cyyaw.webrtc.R;
 import com.cyyaw.webrtc.fragment.MediaOperationCallback;
-import com.cyyaw.webrtc.rtc.SkyEngineKit;
+import com.cyyaw.webrtc.rtc.CallEngineKit;
 import com.cyyaw.webrtc.rtc.engine.EnumType;
 import com.cyyaw.webrtc.rtc.session.CallSession;
 
@@ -74,7 +74,7 @@ public class FragmentVideo extends SingleCallFragment {
         });
         // 切换的摄像头
         switchCameraImageView.setOnClickListener((View v) -> {
-            CallSession session = SkyEngineKit.Instance().getCurrentSession();
+            CallSession session = CallEngineKit.Instance().getCurrentSession();
             session.switchCamera();
         });
         // 点击小渲染器
@@ -110,7 +110,7 @@ public class FragmentVideo extends SingleCallFragment {
     @Override
     public void init() {
         super.init();
-        CallSession session = SkyEngineKit.Instance().getCurrentSession();
+        CallSession session = CallEngineKit.Instance().getCurrentSession();
         if (session != null) {
             currentState = session.getState();
         }
@@ -137,7 +137,7 @@ public class FragmentVideo extends SingleCallFragment {
                 connectedActionContainer.setVisibility(View.GONE);
                 descTextView.setText(R.string.av_video_invite);
                 if (currentState == EnumType.CallState.Incoming) {
-                    View surfaceView = SkyEngineKit.Instance().getCurrentSession().setupLocalVideo(false);
+                    View surfaceView = CallEngineKit.Instance().getCurrentSession().setupLocalVideo(false);
                     Log.d(TAG, "init surfaceView != null is " + (surfaceView != null) + "; isOutgoing = " + isOutgoing + "; currentState = " + currentState);
                     if (surfaceView != null) {
                         localSurfaceView = (SurfaceViewRenderer) surfaceView;
@@ -188,7 +188,7 @@ public class FragmentVideo extends SingleCallFragment {
     @Override
     public void didCreateLocalVideoTrack() {
         if (localSurfaceView == null) {
-            View surfaceView = SkyEngineKit.Instance().getCurrentSession().setupLocalVideo(true);
+            View surfaceView = CallEngineKit.Instance().getCurrentSession().setupLocalVideo(true);
             if (surfaceView != null) {
                 localSurfaceView = (SurfaceViewRenderer) surfaceView;
             } else {
@@ -230,7 +230,7 @@ public class FragmentVideo extends SingleCallFragment {
         }
 
 
-        View surfaceView = SkyEngineKit.Instance().getCurrentSession().setupRemoteVideo(userId, false);
+        View surfaceView = CallEngineKit.Instance().getCurrentSession().setupRemoteVideo(userId, false);
         Log.d(TAG, "didReceiveRemoteVideoTrack,surfaceView = " + surfaceView);
         if (surfaceView != null) {
             fullscreenRenderer.setVisibility(View.VISIBLE);

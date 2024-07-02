@@ -5,32 +5,32 @@ import android.util.Log;
 
 import com.cyyaw.webrtc.rtc.engine.EnumType;
 import com.cyyaw.webrtc.rtc.session.CallSession;
-import com.cyyaw.webrtc.rtc.session.ISkyEvent;
+import com.cyyaw.webrtc.rtc.session.CallEvent;
 
 
 /**
  *
  */
-public class SkyEngineKit {
+public class CallEngineKit {
     private final static String TAG = "AVEngineKit";
 
 
-    private static SkyEngineKit avEngineKit;
+    private static CallEngineKit avEngineKit;
     // 会话
     private CallSession mCurrentCallSession;
-    private ISkyEvent mEvent;
+    private CallEvent mEvent;
     private boolean isAudioOnly = false;
 
-    public static SkyEngineKit Instance() {
+    public static CallEngineKit Instance() {
         return avEngineKit;
     }
 
     /**
      * SDK Enter init Engine
      */
-    public static void init(ISkyEvent iSocketEvent) {
+    public static void init(CallEvent iSocketEvent) {
         if (avEngineKit == null) {
-            avEngineKit = new SkyEngineKit();
+            avEngineKit = new CallEngineKit();
             avEngineKit.mEvent = iSocketEvent;
         }
     }
@@ -59,12 +59,6 @@ public class SkyEngineKit {
 
     /**
      * 拨打电话
-     *
-     * @param context
-     * @param room
-     * @param targetId
-     * @param audioOnly
-     * @return
      */
     public boolean startOutCall(Context context, final String room, final String targetId, final boolean audioOnly) {
         // 未初始化
@@ -99,7 +93,7 @@ public class SkyEngineKit {
         // 忙线中
         if (mCurrentCallSession != null && mCurrentCallSession.getState() != EnumType.CallState.Idle) {
             // 发送->忙线中...
-            Log.i(TAG, "startInCall busy,currentCallSession is exist,start sendBusyRefuse!");
+            Log.i(TAG, "发送->忙线中...!");
             mCurrentCallSession.sendBusyRefuse(room, targetId);
             return false;
         }
@@ -111,17 +105,19 @@ public class SkyEngineKit {
         mCurrentCallSession.setCallState(EnumType.CallState.Incoming);
         // 开始响铃并回复
         mCurrentCallSession.shouldStartRing();
+        // 响铃并回复
         mCurrentCallSession.sendRingBack(targetId, room);
         return true;
     }
 
-    // 挂断会话
+    /**
+     * 挂断会话
+     */
     public void endCall() {
         Log.d(TAG, "endCall mCurrentCallSession != null is " + (mCurrentCallSession != null));
         if (mCurrentCallSession != null) {
             // 停止响铃
             mCurrentCallSession.shouldStopRing();
-
             if (mCurrentCallSession.isComing()) {
                 if (mCurrentCallSession.getState() == EnumType.CallState.Incoming) {
                     // 接收到邀请，还没同意，发送拒绝
@@ -140,10 +136,11 @@ public class SkyEngineKit {
             }
             mCurrentCallSession.setCallState(EnumType.CallState.Idle);
         }
-
     }
 
-    // 加入房间
+    /**
+     * 加入房间
+     */
     public void joinRoom(Context context, String room) {
         if (avEngineKit == null) {
             Log.e(TAG, "joinRoom error,init is not set");
@@ -174,7 +171,9 @@ public class SkyEngineKit {
         mCurrentCallSession.createHome(room, 9);
     }
 
-    // 离开房间
+    /**
+     * 离开房间
+     */
     public void leaveRoom() {
         if (avEngineKit == null) {
             Log.e(TAG, "leaveRoom error,init is not set");
@@ -190,7 +189,9 @@ public class SkyEngineKit {
         return isAudioOnly;
     }
 
-    // 获取对话实例
+    /**
+     * 获取对话实例
+     */
     public CallSession getCurrentSession() {
         return this.mCurrentCallSession;
     }

@@ -20,7 +20,7 @@ import com.cyyaw.webrtc.fragment.MediaOperationCallback;
 import com.cyyaw.webrtc.fragment.singlecall.SingleCallFragment;
 import com.cyyaw.webrtc.utils.WindHandle;
 import com.cyyaw.webrtc.permission.Permissions;
-import com.cyyaw.webrtc.rtc.SkyEngineKit;
+import com.cyyaw.webrtc.rtc.CallEngineKit;
 import com.cyyaw.webrtc.rtc.session.CallSession;
 
 import java.util.UUID;
@@ -140,16 +140,16 @@ public class VideoActivity extends AppCompatActivity implements MediaOperationCa
         if (outgoing && !isReplace) {
             // 创建会话
             String room = UUID.randomUUID().toString() + System.currentTimeMillis();
-            boolean b = SkyEngineKit.Instance().startOutCall(getApplicationContext(), room, targetId, audioOnly);
+            boolean b = CallEngineKit.Instance().startOutCall(getApplicationContext(), room, targetId, audioOnly);
             if (!b) {
                 finish();
                 return;
             }
-            CallSession session = SkyEngineKit.Instance().getCurrentSession();
+            CallSession session = CallEngineKit.Instance().getCurrentSession();
             // 设置回调
             session.setSessionCallback(new CallSessionCallbackImpl(currentFragment));
         } else {
-            CallSession session = SkyEngineKit.Instance().getCurrentSession();
+            CallSession session = CallEngineKit.Instance().getCurrentSession();
             if (session.isAudioOnly() && !audioOnly) {
                 //这种情况是，对方切换成音频的时候，activity还没启动，这里启动后需要切换一下
                 isAudioOnly = session.isAudioOnly();

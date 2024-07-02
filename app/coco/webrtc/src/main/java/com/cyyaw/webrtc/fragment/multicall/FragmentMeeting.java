@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import com.cyyaw.webrtc.R;
 import com.cyyaw.webrtc.fragment.MediaOperationCallback;
-import com.cyyaw.webrtc.rtc.SkyEngineKit;
+import com.cyyaw.webrtc.rtc.CallEngineKit;
 import com.cyyaw.webrtc.rtc.engine.EnumType;
 import com.cyyaw.webrtc.rtc.session.CallSession;
 import com.cyyaw.webrtc.rtc.session.CallSessionCallback;
@@ -78,9 +78,9 @@ public class FragmentMeeting extends Fragment implements CallSessionCallback {
 
     @Override
     public void didCreateLocalVideoTrack() {
-        View surfaceView = SkyEngineKit.Instance().getCurrentSession().setupLocalVideo(true);
+        View surfaceView = CallEngineKit.Instance().getCurrentSession().setupLocalVideo(true);
         if (surfaceView != null) {
-            CallSession callSession = SkyEngineKit.Instance().getCurrentSession();
+            CallSession callSession = CallEngineKit.Instance().getCurrentSession();
             videoViews.put(callSession.mMyId, surfaceView);
             multi_video_view.addView(surfaceView);
             refreshView();
@@ -90,7 +90,7 @@ public class FragmentMeeting extends Fragment implements CallSessionCallback {
 
     @Override
     public void didReceiveRemoteVideoTrack(String userId) {
-        View surfaceView = SkyEngineKit.Instance().getCurrentSession().setupRemoteVideo(userId, true);
+        View surfaceView = CallEngineKit.Instance().getCurrentSession().setupRemoteVideo(userId, true);
         if (surfaceView != null) {
             videoViews.put(userId, surfaceView);
             multi_video_view.addView(surfaceView);

@@ -18,7 +18,7 @@ import androidx.fragment.app.Fragment;
 
 import com.cyyaw.webrtc.R;
 import com.cyyaw.webrtc.fragment.MediaOperationCallback;
-import com.cyyaw.webrtc.rtc.SkyEngineKit;
+import com.cyyaw.webrtc.rtc.CallEngineKit;
 import com.cyyaw.webrtc.rtc.engine.EnumType;
 import com.cyyaw.webrtc.rtc.session.CallSession;
 import com.cyyaw.webrtc.rtc.session.CallSessionCallback;
@@ -136,7 +136,7 @@ public abstract class SingleCallFragment extends Fragment implements CallSession
         });
         // 接听
         acceptImageView.setOnClickListener((View v) -> {
-            CallSession session = SkyEngineKit.Instance().getCurrentSession();
+            CallSession session = CallEngineKit.Instance().getCurrentSession();
             if (session != null) {
                 if (session.getState() == EnumType.CallState.Incoming) {
                     session.joinHome(session.getRoomId());
@@ -192,19 +192,16 @@ public abstract class SingleCallFragment extends Fragment implements CallSession
     public void didDisconnected(String error) {
         isConnectionClosed = true;
         if (mediaOperationCallback != null) {
-            SkyEngineKit.Instance().endCall();
+            CallEngineKit.Instance().endCall();
         }
     }
 
     private void refreshMessage(Boolean isForCallTime) {
-        if (mediaOperationCallback == null) {
-            return;
-        }
         // 刷新消息; demo中没有消息，不用处理这儿快逻辑
     }
 
     public void startRefreshTime() {
-        CallSession session = SkyEngineKit.Instance().getCurrentSession();
+        CallSession session = CallEngineKit.Instance().getCurrentSession();
         if (session == null) return;
         if (durationTextView != null) {
             durationTextView.setVisibility(View.VISIBLE);
@@ -226,7 +223,7 @@ public abstract class SingleCallFragment extends Fragment implements CallSession
             if (currentState != EnumType.CallState.Connected) {
                 endWithNoAnswerFlag = true;
                 if (mediaOperationCallback != null) {
-                    SkyEngineKit.Instance().endCall();
+                    CallEngineKit.Instance().endCall();
                 }
             }
         }
@@ -241,10 +238,10 @@ public abstract class SingleCallFragment extends Fragment implements CallSession
      * 通话结束
      */
     protected void finishCall() {
-        CallSession session = SkyEngineKit.Instance().getCurrentSession();
+        CallSession session = CallEngineKit.Instance().getCurrentSession();
         if (session != null) {
             Log.d(TAG, "endCall");
-            SkyEngineKit.Instance().endCall();
+            CallEngineKit.Instance().endCall();
         }
         if (mediaOperationCallback != null) mediaOperationCallback.finish();
     }
@@ -253,7 +250,7 @@ public abstract class SingleCallFragment extends Fragment implements CallSession
      * 切换语音
      */
     protected void changeAudio() {
-        CallSession session = SkyEngineKit.Instance().getCurrentSession();
+        CallSession session = CallEngineKit.Instance().getCurrentSession();
         if (session != null) {
             session.switchToAudio();
         }

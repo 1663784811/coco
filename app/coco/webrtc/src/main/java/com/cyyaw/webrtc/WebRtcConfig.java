@@ -18,7 +18,7 @@ import com.cyyaw.webrtc.net.SocketManager;
 import com.cyyaw.webrtc.net.socket.MyWebSocket;
 import com.cyyaw.webrtc.net.socket.SocketConnect;
 import com.cyyaw.webrtc.page.VoipEvent;
-import com.cyyaw.webrtc.rtc.SkyEngineKit;
+import com.cyyaw.webrtc.rtc.CallEngineKit;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -47,7 +47,7 @@ public class WebRtcConfig {
     public static void init(Application context, String appId, String token, StatusCallBack statusCallBack) {
         appContext = context;
 
-        SkyEngineKit.init(new VoipEvent());
+        CallEngineKit.init(new VoipEvent());
         // 网络连接
         SocketConnect socketConnect = MyWebSocket.init(appId, token, SocketManager.getInstance());
         // 设置连接

@@ -53,9 +53,9 @@ public class CallSession implements EngineCallback {
     private long startTime;
 
     private final AVEngine iEngine;
-    private final ISkyEvent mEvent;
+    private final CallEvent mEvent;
 
-    public CallSession(Context context, String roomId, boolean audioOnly, ISkyEvent event) {
+    public CallSession(Context context, String roomId, boolean audioOnly, CallEvent event) {
         this.mIsAudioOnly = audioOnly;
         this.mRoomId = roomId;
         this.mEvent = event;

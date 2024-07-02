@@ -8,7 +8,7 @@ import android.util.Log;
 import com.cyyaw.webrtc.activity.VideoActivity;
 import com.cyyaw.webrtc.WebRtcConfig;
 import com.cyyaw.webrtc.net.socket.SocketConnect;
-import com.cyyaw.webrtc.rtc.SkyEngineKit;
+import com.cyyaw.webrtc.rtc.CallEngineKit;
 import com.cyyaw.webrtc.rtc.engine.EnumType;
 import com.cyyaw.webrtc.rtc.session.CallSession;
 
@@ -135,7 +135,7 @@ public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent
         intent.putExtra("audioOnly", audioOnly);
         intent.putExtra("inviteId", inviteId);
         intent.putExtra("userList", userList);
-        boolean b = SkyEngineKit.Instance().startInCall(WebRtcConfig.getContext(), room, inviteId, audioOnly);
+        boolean b = CallEngineKit.Instance().startInCall(WebRtcConfig.getContext(), room, inviteId, audioOnly);
         if (b) {
             WebRtcConfig.startActivity(intent, VideoActivity.class);
         }
@@ -144,7 +144,7 @@ public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent
     @Override
     public void onCancel(String inviteId) {
         handler.post(() -> {
-            CallSession currentSession = SkyEngineKit.Instance().getCurrentSession();
+            CallSession currentSession = CallEngineKit.Instance().getCurrentSession();
             if (currentSession != null) {
                 currentSession.onCancel(inviteId);
             }
@@ -155,7 +155,7 @@ public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent
     @Override
     public void onRing(String fromId) {
         handler.post(() -> {
-            CallSession currentSession = SkyEngineKit.Instance().getCurrentSession();
+            CallSession currentSession = CallEngineKit.Instance().getCurrentSession();
             if (currentSession != null) {
                 currentSession.onRingBack(fromId);
             }
@@ -168,7 +168,7 @@ public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent
     public void onPeers(String myId, String connections, int roomSize) {
         handler.post(() -> {
             //自己进入了房间，然后开始发送offer
-            CallSession currentSession = SkyEngineKit.Instance().getCurrentSession();
+            CallSession currentSession = CallEngineKit.Instance().getCurrentSession();
             if (currentSession != null) {
                 currentSession.onJoinHome(myId, connections, roomSize);
             }
@@ -179,7 +179,7 @@ public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent
     @Override
     public void onNewPeer(String userId) {
         handler.post(() -> {
-            CallSession currentSession = SkyEngineKit.Instance().getCurrentSession();
+            CallSession currentSession = CallEngineKit.Instance().getCurrentSession();
             if (currentSession != null) {
                 currentSession.newPeer(userId);
             }
@@ -190,7 +190,7 @@ public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent
     @Override
     public void onReject(String userId, int type) {
         handler.post(() -> {
-            CallSession currentSession = SkyEngineKit.Instance().getCurrentSession();
+            CallSession currentSession = CallEngineKit.Instance().getCurrentSession();
             if (currentSession != null) {
                 currentSession.onRefuse(userId, type);
             }
@@ -201,7 +201,7 @@ public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent
     @Override
     public void onOffer(String userId, String sdp) {
         handler.post(() -> {
-            CallSession currentSession = SkyEngineKit.Instance().getCurrentSession();
+            CallSession currentSession = CallEngineKit.Instance().getCurrentSession();
             if (currentSession != null) {
                 currentSession.onReceiveOffer(userId, sdp);
             }
@@ -213,7 +213,7 @@ public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent
     @Override
     public void onAnswer(String userId, String sdp) {
         handler.post(() -> {
-            CallSession currentSession = SkyEngineKit.Instance().getCurrentSession();
+            CallSession currentSession = CallEngineKit.Instance().getCurrentSession();
             if (currentSession != null) {
                 currentSession.onReceiverAnswer(userId, sdp);
             }
@@ -224,7 +224,7 @@ public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent
     @Override
     public void onIceCandidate(String userId, String id, int label, String candidate) {
         handler.post(() -> {
-            CallSession currentSession = SkyEngineKit.Instance().getCurrentSession();
+            CallSession currentSession = CallEngineKit.Instance().getCurrentSession();
             if (currentSession != null) {
                 currentSession.onRemoteIceCandidate(userId, id, label, candidate);
             }
@@ -235,7 +235,7 @@ public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent
     @Override
     public void onLeave(String userId) {
         handler.post(() -> {
-            CallSession currentSession = SkyEngineKit.Instance().getCurrentSession();
+            CallSession currentSession = CallEngineKit.Instance().getCurrentSession();
             if (currentSession != null) {
                 currentSession.onLeave(userId);
             }
@@ -250,7 +250,7 @@ public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent
     @Override
     public void onTransAudio(String userId) {
         handler.post(() -> {
-            CallSession currentSession = SkyEngineKit.Instance().getCurrentSession();
+            CallSession currentSession = CallEngineKit.Instance().getCurrentSession();
             if (currentSession != null) {
                 currentSession.onTransAudio(userId);
             }
@@ -260,7 +260,7 @@ public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent
     @Override
     public void onDisConnect(String userId) {
         handler.post(() -> {
-            CallSession currentSession = SkyEngineKit.Instance().getCurrentSession();
+            CallSession currentSession = CallEngineKit.Instance().getCurrentSession();
             if (currentSession != null) {
                 currentSession.onDisConnect(userId, EnumType.CallEndReason.RemoteSignalError);
             }

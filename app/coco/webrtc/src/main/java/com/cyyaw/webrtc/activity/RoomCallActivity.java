@@ -21,7 +21,7 @@ import com.cyyaw.webrtc.fragment.MediaOperationCallback;
 import com.cyyaw.webrtc.fragment.multicall.FragmentMeeting;
 import com.cyyaw.webrtc.page.VoipEvent;
 import com.cyyaw.webrtc.permission.Permissions;
-import com.cyyaw.webrtc.rtc.SkyEngineKit;
+import com.cyyaw.webrtc.rtc.CallEngineKit;
 import com.cyyaw.webrtc.rtc.engine.EnumType;
 import com.cyyaw.webrtc.rtc.session.CallSession;
 import com.cyyaw.webrtc.rtc.session.CallSessionCallback;
@@ -93,15 +93,15 @@ public class RoomCallActivity extends AppCompatActivity implements CallSessionCa
     }
 
     private void init(String room, boolean isOutgoing) {
-        SkyEngineKit.init(new VoipEvent());
+        CallEngineKit.init(new VoipEvent());
         if (isOutgoing) {
             // 创建一个房间并进入
-            SkyEngineKit.Instance().createAndJoinRoom(this, "room-" + UUID.randomUUID().toString().substring(0, 16));
+            CallEngineKit.Instance().createAndJoinRoom(this, "room-" + UUID.randomUUID().toString().substring(0, 16));
         } else {
             // 加入房间
-            SkyEngineKit.Instance().joinRoom(getApplicationContext(), room);
+            CallEngineKit.Instance().joinRoom(getApplicationContext(), room);
         }
-        CallSession session = SkyEngineKit.Instance().getCurrentSession();
+        CallSession session = CallEngineKit.Instance().getCurrentSession();
         if (session == null) {
             this.finish();
         } else {
@@ -164,7 +164,7 @@ public class RoomCallActivity extends AppCompatActivity implements CallSessionCa
 
     // 处理挂断事件
     private void handleHangup() {
-        SkyEngineKit.Instance().leaveRoom();
+        CallEngineKit.Instance().leaveRoom();
         this.finish();
     }
 

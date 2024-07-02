@@ -3,7 +3,7 @@ package com.cyyaw.webrtc.rtc.session;
 import java.util.List;
 
 
-public interface ISkyEvent {
+public interface CallEvent {
 
     /**
      * 创建房间
@@ -16,7 +16,7 @@ public interface ISkyEvent {
     void sendInvite(String room, List<String> userIds, boolean audioOnly);
 
     /**
-     *
+     * 发送拒绝
      */
     void sendRefuse(String room, String inviteId, int refuseType);
 
@@ -25,8 +25,14 @@ public interface ISkyEvent {
      */
     void sendTransAudio(String toId);
 
+    /**
+     * 断开连接
+     */
     void sendDisConnect(String room, String toId, boolean isCrashed);
 
+    /**
+     * 发送取消
+     */
     void sendCancel(String mRoomId, List<String> toId);
 
     /**
@@ -34,18 +40,31 @@ public interface ISkyEvent {
      */
     void sendJoin(String room);
 
+    /**
+     * 发送响铃回复
+     */
     void sendRingBack(String targetId, String room);
 
+    /**
+     *  发送离开
+     */
     void sendLeave(String room, String userId);
 
-    // sendOffer
+    /**
+     * 发送提供包
+     */
     void sendOffer(String userId, String sdp);
 
-    // sendAnswer
+    /**
+     * 发送回答包
+     */
     void sendAnswer(String userId, String sdp);
 
-    // sendIceCandidate
+    /**
+     * 发送ICE 数据包
+     */
     void sendIceCandidate(String userId, String id, int label, String candidate);
+
 
     /**
      * 远程响铃
