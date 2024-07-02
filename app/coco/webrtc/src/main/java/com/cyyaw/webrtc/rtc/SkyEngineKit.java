@@ -57,7 +57,15 @@ public class SkyEngineKit {
         avEngineKit.mEvent.sendDisConnect(room, toId, isCrashed);
     }
 
-    // 拨打电话
+    /**
+     * 拨打电话
+     *
+     * @param context
+     * @param room
+     * @param targetId
+     * @param audioOnly
+     * @return
+     */
     public boolean startOutCall(Context context, final String room, final String targetId, final boolean audioOnly) {
         // 未初始化
         if (avEngineKit == null) {

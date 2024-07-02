@@ -44,7 +44,7 @@ public class VideoActivity extends AppCompatActivity implements MediaOperationCa
     public boolean isAudioOnly;
     private boolean isFromFloatingView;
     private SingleCallFragment currentFragment;
-    private String room;
+
 
     public static Intent getCallIntent(Context context, String targetId, boolean isOutgoing, String inviteUserName, boolean isAudioOnly, boolean isClearTop) {
         Intent voip = new Intent(context, VideoActivity.class);
@@ -139,7 +139,7 @@ public class VideoActivity extends AppCompatActivity implements MediaOperationCa
         }
         if (outgoing && !isReplace) {
             // 创建会话
-            room = UUID.randomUUID().toString() + System.currentTimeMillis();
+            String room = UUID.randomUUID().toString() + System.currentTimeMillis();
             boolean b = SkyEngineKit.Instance().startOutCall(getApplicationContext(), room, targetId, audioOnly);
             if (!b) {
                 finish();

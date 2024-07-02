@@ -27,8 +27,11 @@ import java.util.concurrent.Executors;
  */
 public class CallSession implements EngineCallback {
     private static final String TAG = CallSession.class.getSimpleName();
+    // 回调
     private WeakReference<CallSessionCallback> sessionCallback;
-    private final ExecutorService executor;
+    // 线程池
+    private static final ExecutorService executor = Executors.newSingleThreadExecutor();
+    // 页面处理线程
     private final Handler handler = new Handler(Looper.getMainLooper());
     // session参数
     private boolean mIsAudioOnly;
@@ -42,16 +45,17 @@ public class CallSession implements EngineCallback {
     public String mMyId;
     // 房间大小
     private int mRoomSize;
-
+    // 是否呼进
     private boolean mIsComing;
+    // 状态
     private EnumType.CallState _callState = EnumType.CallState.Idle;
+    // 开始时间
     private long startTime;
 
     private final AVEngine iEngine;
     private final ISkyEvent mEvent;
 
     public CallSession(Context context, String roomId, boolean audioOnly, ISkyEvent event) {
-        executor = Executors.newSingleThreadExecutor();
         this.mIsAudioOnly = audioOnly;
         this.mRoomId = roomId;
         this.mEvent = event;
@@ -100,13 +104,14 @@ public class CallSession implements EngineCallback {
      * 关闭响铃
      */
     public void shouldStopRing() {
-        Log.d(TAG, "shouldStopRing mEvent != null is " + (mEvent != null));
         if (mEvent != null) {
             mEvent.shouldStopRing();
         }
     }
 
-    // 发送响铃回复
+    /**
+     * 发送响铃回复
+     */
     public void sendRingBack(String targetId, String room) {
         executor.execute(() -> {
             if (mEvent != null) {
@@ -169,7 +174,6 @@ public class CallSession implements EngineCallback {
         });
         // 释放变量
         release(EnumType.CallEndReason.Hangup);
-
     }
 
     /**
@@ -235,7 +239,6 @@ public class CallSession implements EngineCallback {
             iEngine.release();
             // 状态设置为Idle
             _callState = EnumType.CallState.Idle;
-
             //界面回调
             if (sessionCallback != null && sessionCallback.get() != null) {
                 sessionCallback.get().didCallEndWithReason(reason);
@@ -260,7 +263,6 @@ public class CallSession implements EngineCallback {
                 strings = Arrays.asList(split);
                 mUserIDList = strings;
             }
-
             // 发送邀请
             if (!mIsComing) {
                 if (roomSize == 2) {
@@ -287,18 +289,15 @@ public class CallSession implements EngineCallback {
         handler.post(() -> executor.execute(() -> {
             // 其他人加入房间
             iEngine.userIn(userId);
-
             // 关闭响铃
             if (mEvent != null) {
                 mEvent.shouldStopRing();
             }
             // 更换界面
             _callState = EnumType.CallState.Connected;
-
             if (sessionCallback != null && sessionCallback.get() != null) {
                 startTime = System.currentTimeMillis();
                 sessionCallback.get().didChangeState(_callState);
-
             }
         }));
 
@@ -309,7 +308,9 @@ public class CallSession implements EngineCallback {
         iEngine.userReject(userId, type);
     }
 
-    // 对方已响铃
+    /**
+     * 对方已响铃
+     */
     public void onRingBack(String userId) {
         if (mEvent != null) {
             mEvent.onRemoteRing();
@@ -317,7 +318,9 @@ public class CallSession implements EngineCallback {
         }
     }
 
-    // 切换到语音
+    /**
+     * 切换到语音
+     */
     public void onTransAudio(String userId) {
         mIsAudioOnly = true;
         // 本地切换
@@ -326,14 +329,18 @@ public class CallSession implements EngineCallback {
         }
     }
 
-    // 对方网络断开
+    /**
+     * 对方网络断开
+     */
     public void onDisConnect(String userId, EnumType.CallEndReason reason) {
         executor.execute(() -> {
             iEngine.disconnected(userId, reason);
         });
     }
 
-    // 对方取消拨出
+    /**
+     * 对方取消拨出
+     */
     public void onCancel(String userId) {
         Log.d(TAG, "onCancel userId = " + userId);
         shouldStopRing();
@@ -344,7 +351,6 @@ public class CallSession implements EngineCallback {
         executor.execute(() -> {
             iEngine.receiveOffer(userId, description);
         });
-
     }
 
     public void onReceiverAnswer(String userId, String sdp) {
@@ -361,7 +367,9 @@ public class CallSession implements EngineCallback {
 
     }
 
-    // 对方离开房间
+    /**
+     * 对方离开房间
+     */
     public void onLeave(String userId) {
         if (mRoomSize > 2) {
             // 返回到界面上
@@ -370,8 +378,6 @@ public class CallSession implements EngineCallback {
             }
         }
         executor.execute(() -> iEngine.leaveRoom(userId));
-
-
     }
 
 
@@ -466,7 +472,6 @@ public class CallSession implements EngineCallback {
     public void reject(int type) {
         shouldStopRing();
         Log.d(TAG, "reject type = " + type);
-//        handler.post(() -> {
         switch (type) {
             case 0:
                 release(EnumType.CallEndReason.Busy);
@@ -476,7 +481,6 @@ public class CallSession implements EngineCallback {
                 break;
 
         }
-//        });
     }
 
     @Override
