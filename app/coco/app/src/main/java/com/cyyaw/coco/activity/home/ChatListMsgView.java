@@ -64,6 +64,6 @@ public class ChatListMsgView extends ConstraintLayout implements FriendsListAdap
 
     @Override
     public void click(View v, FriendsEntity friendsEntity) {
-        ActivityUtils.startActivity(context, MessageActivity.class, friendsEntity);
+        MessageActivity.openActivity(context, friendsEntity.getTid(), friendsEntity.getNickName(), friendsEntity.getFace());
     }
 }

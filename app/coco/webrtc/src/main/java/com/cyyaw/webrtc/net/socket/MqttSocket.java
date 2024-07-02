@@ -21,11 +21,10 @@ import java.util.List;
 public class MqttSocket implements MqttCallback, SocketConnect {
     private final static String TAG = MqttSocket.class.getName();
 
-
     private static final String broker = "tcp://192.168.0.205:1883";
-
     private static MqttSocket mqttSocket = null;
 
+    
 
     private final SocketReceiveDataEvent receiveEvent;
 

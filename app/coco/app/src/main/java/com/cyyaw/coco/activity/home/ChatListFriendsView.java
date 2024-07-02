@@ -58,6 +58,9 @@ public class ChatListFriendsView extends ConstraintLayout implements FriendsList
     @Override
     public void click(View v, FriendsEntity friendsEntity) {
         // 跳转个人中心页面
+
         ActivityUtils.startActivity(context, PersonCenterActivity.class, friendsEntity);
+
+
     }
 }

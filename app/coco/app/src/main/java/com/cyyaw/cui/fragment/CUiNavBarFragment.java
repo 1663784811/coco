@@ -20,6 +20,11 @@ public class CUiNavBarFragment extends Fragment {
     public CUiNavBarFragment() {
     }
 
+
+    public CUiNavBarFragment(String title) {
+        this(title, null);
+    }
+
     public CUiNavBarFragment(String title, UiNavBarFragmentCallBack callBack) {
         this.title = title;
         this.callBack = callBack;

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -73,7 +74,10 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
             View friendsItem = view.findViewById(R.id.friendsItem);
             ImageView face = view.findViewById(R.id.face);
             Glide.with(view.getContext()).load("https://imgcps.jd.com/img-cubic/creative_server_cia_jdcloud/v2/2000366/10073105930305/FocusFullshop/CkJqZnMvdDEvNzYyNzMvMjkvMjQzMzkvNTY0MTIvNjQ1N2VhNWVGYTU3ZmQyMjQvYTM0ODNiZTU5YzE0MzNiMC5qcGcSCjk5OS10eV8wXzEwATjui3pYwbCan5WlAg/cr/s/q.jpg").into(face);
-
+            TextView userName = view.findViewById(R.id.userName);
+            userName.setText(friendsEntity.getNickName());
+            TextView message = view.findViewById(R.id.message);
+            message.setText("...");
             /**
              * 点击
              */

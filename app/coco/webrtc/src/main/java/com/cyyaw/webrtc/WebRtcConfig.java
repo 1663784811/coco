@@ -50,9 +50,8 @@ public class WebRtcConfig {
 
         CallEngineKit.init(new VoipEvent());
         // WebSockt网络连接
-//        SocketConnect socketConnect = MyWebSocket.init(appId, token, SocketManager.getInstance());
-        SocketConnect socketConnect = MqttSocket.init(appId, token, SocketManager.getInstance());
-
+        SocketConnect socketConnect = MyWebSocket.init(appId, token, SocketManager.getInstance());
+//        SocketConnect socketConnect = MqttSocket.init(appId, token, SocketManager.getInstance());
         // 设置连接
         SocketManager.getInstance().connect(socketConnect);
 

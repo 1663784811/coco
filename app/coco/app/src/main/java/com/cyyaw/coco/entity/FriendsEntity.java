@@ -6,33 +6,25 @@ import java.util.Date;
 
 public class FriendsEntity implements Serializable {
 
-
+    // id
     private Integer id;
+    // tid
     private String tid;
-    private Date createTime;
-    private Integer del;
-    private String note;
-    private String appId;
-    private String account;
-    private String password;
-    private String trueName;
-    private String phone;
+    // 昵称
     private String nickName;
+    // 备注
+    private String note;
+    // 帐号
+    private String account;
+    // 手机
+    private String phone;
+    // 头像
     private String face;
+    // 性别
     private String sex;
-    private Date canLoginTime;
-    private String email;
-    private String ip;
-    private Date lastLoginTime;
-    private String salt;
+    // 状态
     private Integer status;
-    private Integer type;
-    private String adminId;
-    private BigDecimal balance;
-    private Integer integral;
-    private String openId;
-    private String unionId;
-    private String introduceSign;
+
 
     public Integer getId() {
         return id;
@@ -40,6 +32,14 @@ public class FriendsEntity implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getTid() {
+        return tid;
+    }
+
+    public void setTid(String tid) {
+        this.tid = tid;
     }
 
     public String getNickName() {
@@ -50,11 +50,51 @@ public class FriendsEntity implements Serializable {
         this.nickName = nickName;
     }
 
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public String getFace() {
         return face;
     }
 
     public void setFace(String face) {
         this.face = face;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.cyyaw.coco.MyApplication;
 import com.cyyaw.coco.activity.home.adapter.FriendsListAdapter;
 import com.cyyaw.coco.common.ChatInfoDatabaseHelper;
 import com.cyyaw.coco.common.network.AppRequest;
@@ -51,17 +52,21 @@ public class FriendsDao {
         adapter.setDataList(rest);
 
 
-        AppRequest.getRequest("http://192.168.0.103:8080/admin/aaa/common/query?code=select_ent_app_user&appId=sss&total=0&size=1000&sort=&page=1", (String body) -> {
+        AppRequest.getRequest("http://192.168.0.103:8080/app/" + MyApplication.appId + "/friends/myFriends", (String body) -> {
             JSONObject json = JSONObject.parseObject(body);
             JSONArray data = json.getJSONArray("data");
             if (null != data) {
                 for (int i = 0; i < data.size(); i++) {
-                    FriendsEntity object = data.getObject(i, FriendsEntity.class);
-                    adapter.updateData(object);
+                    JSONObject js = data.getJSONObject(i);
+                    FriendsEntity friends = new FriendsEntity();
+                    JSONObject user = js.getJSONObject("toUser");
+                    friends.setId(user.getInteger("id"));
+                    friends.setFace(user.getString("face"));
+                    friends.setNickName(user.getString("trueName"));
+                    adapter.updateData(friends);
                 }
             }
             Log.e(TAG, "getFriends: " + body);
-
         });
 
 
