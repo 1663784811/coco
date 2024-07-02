@@ -22,6 +22,8 @@ public class MqttSocket implements MqttCallback, SocketConnect {
     private final static String TAG = MqttSocket.class.getName();
 
 
+    private static final String broker = "tcp://192.168.0.205:1883";
+
     private static MqttSocket mqttSocket = null;
 
 
@@ -29,39 +31,48 @@ public class MqttSocket implements MqttCallback, SocketConnect {
 
     private MqttClient client;
 
-    private boolean connectFlag = false;
+    private boolean connectFlag;
 
     private MqttSocket(SocketReceiveDataEvent receiveEvent) {
         this.receiveEvent = receiveEvent;
     }
 
 
-    public static void init(String appId, String token, SocketReceiveDataEvent socketManager) {
+    public static SocketConnect init(String appId, String token, SocketReceiveDataEvent socketManager) {
         if (mqttSocket == null) {
             synchronized (MqttSocket.class) {
                 if (mqttSocket == null) {
+                    String clientId = appId + "_";
                     MqttSocket rest = new MqttSocket(socketManager);
+                    MqttClient client = null;
                     try {
-                        MqttClient client = new MqttClient("", appId, new MemoryPersistence());
+                        client = new MqttClient(broker, clientId, new MemoryPersistence());
                         // MQTT 连接选项
                         MqttConnectOptions connOpts = new MqttConnectOptions();
                         // 用户名
-                        connOpts.setUserName("emqx_test");
+                        connOpts.setUserName("admin");
                         // 密码
-                        connOpts.setPassword("emqx_test_password".toCharArray());
+                        connOpts.setPassword("123456".toCharArray());
                         // 保留会话
                         connOpts.setCleanSession(true);
                         // 设置回调
                         client.setCallback(rest);
                         // 建立连接
                         client.connect(connOpts);
+                        // 订阅
+                        client.subscribe(clientId);
                     } catch (MqttException e) {
-                        Log.e(TAG, "init: 错误.....");
+                        e.printStackTrace();
+                        Log.e(TAG, "init: 错误....." + e.getMessage());
                     }
+                    rest.client = client;
                     mqttSocket = rest;
+                    mqttSocket.connectFlag = true;
+                    return mqttSocket;
                 }
             }
         }
+        return null;
     }
 
     /**
@@ -70,6 +81,7 @@ public class MqttSocket implements MqttCallback, SocketConnect {
     @Override
     public void connectionLost(Throwable cause) {
         // 30秒内重新连接
+        mqttSocket.connectFlag = false;
     }
 
     /**
