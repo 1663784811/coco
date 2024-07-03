@@ -34,9 +34,9 @@ public class CuiChatMsgFromFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.cui_chat_msg_from, container, false);
-        ImageView imageView = view.findViewById(R.id.faceImage);
+        ImageView imageView = view.findViewById(R.id.faceImageView);
         if (null != face) {
-            Glide.with(view.getContext()).load(face).into(imageView);
+              Glide.with(view.getContext()).load(face).into(imageView);
         }
         return view;
     }
