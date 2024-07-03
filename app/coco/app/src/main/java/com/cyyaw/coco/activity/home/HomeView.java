@@ -8,13 +8,18 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cyyaw.coco.R;
+import com.cyyaw.coco.activity.AddContentActivity;
 import com.cyyaw.coco.activity.home.adapter.ContentListAdapter;
 import com.cyyaw.coco.common.BaseAppCompatActivity;
+import com.cyyaw.coco.dao.ContentDao;
 import com.cyyaw.coco.entity.ContentEntity;
+import com.cyyaw.cui.fragment.CuiChatMsgSendFragment;
+import com.cyyaw.cui.fragment.CuiEmptyFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +31,6 @@ public class HomeView extends LinearLayout {
     private BaseAppCompatActivity context;
 
     private ContentListAdapter contentListAdapter;
-
 
 
     public HomeView(BaseAppCompatActivity context) {
@@ -51,6 +55,10 @@ public class HomeView extends LinearLayout {
     private void initView(AttributeSet attrs) {
         // =============== 加载布局
         View viewHome = LayoutInflater.from(context).inflate(R.layout.activity_main_home, this, true);
+        View addContentBtn = viewHome.findViewById(R.id.addContentBtn);
+        addContentBtn.setOnClickListener((View v) -> {
+            AddContentActivity.openActivity(context);
+        });
         // =============== 设置适配器
         RecyclerView recyclerView = viewHome.findViewById(R.id.contentList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
@@ -77,10 +85,13 @@ public class HomeView extends LinearLayout {
         List<ContentEntity> dataList = new ArrayList<>();
         for (int i = 0; i < 50; i++) {
             ContentEntity contentEntity = new ContentEntity();
-            contentEntity.setName("sss");
+            contentEntity.setUserName("sss");
             dataList.add(contentEntity);
         }
         contentListAdapter.setDataList(dataList);
+
+
+        ContentDao.loadContent(contentListAdapter, 1);
 
     }
 

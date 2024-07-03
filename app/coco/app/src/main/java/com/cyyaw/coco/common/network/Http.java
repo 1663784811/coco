@@ -25,6 +25,9 @@ public class Http {
 
 
     public static void getRequest(String url, Map<String, Object> parameter, RunCallback<String> success, RunCallback<IOException> error, Map<String, Object> headers) {
+
+
+
         Request request = getRB(headers).url(url).get().build();
         Call call = client.newBuilder().build().newCall(request);
         runCall(call, success, error);

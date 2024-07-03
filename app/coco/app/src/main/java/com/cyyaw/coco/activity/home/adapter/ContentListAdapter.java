@@ -61,6 +61,11 @@ public class ContentListAdapter extends RecyclerView.Adapter<ContentListAdapter.
 //        }
     }
 
+    public void addData(ContentEntity content) {
+        dataList.add(content);
+        notifyItemRangeInserted(dataList.size() - 1, 1);
+    }
+
 
     public void setDataList(List<ContentEntity> dataList) {
         this.dataList = dataList;
