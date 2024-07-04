@@ -68,7 +68,7 @@ public class MainActivity extends BaseAppCompatActivity {
         MyPagerAdapter myPagerAdapter = new MyPagerAdapter(this, pageData);
         viewPager.setAdapter(myPagerAdapter);
         viewPager.setCurrentItem(tabBar.getCurrentTab());
-
+        viewPager.setUserInputEnabled(false);
         // ======= 事件设置
         tabBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
@@ -79,13 +79,13 @@ public class MainActivity extends BaseAppCompatActivity {
             public void onTabReselect(int position) {
             }
         });
-        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
-                tabBar.setCurrentTab(position);
-            }
-        });
+//        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+//            @Override
+//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+//                tabBar.setCurrentTab(position);
+//            }
+//        });
         // =====================================
     }
 

@@ -1,17 +1,12 @@
 package com.cyyaw.coco.activity.home;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.cyyaw.coco.R;
@@ -25,11 +20,9 @@ public class ChatListView extends Fragment {
     private FragmentActivity context;
 
 
-
     public ChatListView(FragmentActivity context) {
         this.context = context;
     }
-
 
 
     @Override
@@ -37,6 +30,7 @@ public class ChatListView extends Fragment {
         View view = inflater.inflate(R.layout.activity_main_chat, container, false);
         ViewPager2 vp = view.findViewById(R.id.char_ViewPager);
         List<Fragment> pageData = new ArrayList<>();
+
         pageData.add(new ChatListFriendsView(context));
         pageData.add(new ChatListMsgView(context));
 
@@ -44,13 +38,8 @@ public class ChatListView extends Fragment {
         vp.setAdapter(adapter);
         vp.setCurrentItem(0);
 
-
-
         return view;
     }
-
-
-
 
 
 }
