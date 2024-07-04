@@ -7,9 +7,14 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.cyyaw.coco.MyApplication;
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.utils.ActivityUtils;
+import com.cyyaw.cui.fragment.CuiCellFragment;
+import com.cyyaw.cui.fragment.CuiCellGroupFragment;
+import com.cyyaw.cui.fragment.CuiNavBarFragment;
 
 
 /**
@@ -19,12 +24,14 @@ public class PersonCenterActivity extends AppCompatActivity {
 
     private static final String USERID = "userId";
     private static final String USERNAME = "userName";
+    private static final String FACE = "face";
 
 
-    public static void openActivity(Context context, String userId, String userName) {
+    public static void openActivity(Context context, String userId, String userName, String face) {
         Intent intent = new Intent(context, PersonCenterActivity.class);
         intent.putExtra(USERID, userId);
         intent.putExtra(USERNAME, userName);
+        intent.putExtra(FACE, face);
         context.startActivity(intent);
     }
 
@@ -36,13 +43,18 @@ public class PersonCenterActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String userId = intent.getStringExtra(USERID);
         String userName = intent.getStringExtra(USERNAME);
+        String face = intent.getStringExtra(FACE);
 
 
-        Button privateMessageBtn = findViewById(R.id.privateMessageBtn);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.add(R.id.header_bar, new CuiNavBarFragment());
+        ft.commit();
 
-        privateMessageBtn.setOnClickListener((View v) -> {
-            ActivityUtils.startActivity(PersonCenterActivity.this, MessageActivity.class, null);
+        findViewById(R.id.privateMessageBtn).setOnClickListener((View v) -> {
+            MessageActivity.openActivity(PersonCenterActivity.this, userId, userName, face);
         });
+
+
     }
 
 
