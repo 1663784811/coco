@@ -43,6 +43,9 @@ public class ChatListView extends Fragment {
         vp.setAdapter(adapter);
         vp.setCurrentItem(0);
 
+
+
+
         return view;
     }
 

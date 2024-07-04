@@ -1,9 +1,11 @@
 package com.cyyaw.coco.activity.home;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -33,6 +35,7 @@ public class ChatListFriendsView extends Fragment implements FriendsListAdapter.
     }
 
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.chat_friends, container, false);
@@ -44,6 +47,14 @@ public class ChatListFriendsView extends Fragment implements FriendsListAdapter.
         // 同步好友
         FriendsDao instance = FriendsDao.getInstance(context);
         instance.getFriends(friendsListAdapter);
+
+        recyclerView.setOnTouchListener((View v, MotionEvent event) -> {
+
+            v.getParent().requestDisallowInterceptTouchEvent(true);
+            return false;
+        });
+
+
         return view;
     }
 

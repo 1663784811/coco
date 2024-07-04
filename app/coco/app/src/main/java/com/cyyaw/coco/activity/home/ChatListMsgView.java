@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -49,7 +50,10 @@ public class ChatListMsgView extends Fragment implements FriendsListAdapter.List
         FriendsDao instance = FriendsDao.getInstance(context);
 
         instance.getFriends(friendsListAdapter);
-
+        recyclerView.setOnTouchListener((View v, MotionEvent event) -> {
+            v.getParent().requestDisallowInterceptTouchEvent(true);
+            return false;
+        });
         return view;
     }
 
