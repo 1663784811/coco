@@ -1,12 +1,15 @@
 package com.cyyaw.coco.activity.home;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -22,32 +25,20 @@ import com.cyyaw.coco.utils.ActivityUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatListMsgView extends ConstraintLayout implements FriendsListAdapter.ListenerFriends {
+public class ChatListMsgView extends Fragment implements FriendsListAdapter.ListenerFriends {
 
     private Context context;
 
     public ChatListMsgView(Context context) {
-        super(context);
-        initView(context, null);
-    }
-
-    public ChatListMsgView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-        initView(context, null);
-    }
-
-    public ChatListMsgView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        initView(context, null);
-    }
-
-
-    private void initView(Context context, AttributeSet attrs) {
         this.context = context;
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.chat_list, container, false);
         //加载布局
-        View chatView = LayoutInflater.from(context).inflate(R.layout.chat_list, this, true);
-        //加载布局
-        RecyclerView recyclerView = chatView.findViewById(R.id.chatList);
+        RecyclerView recyclerView = view.findViewById(R.id.chatList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
         FriendsListAdapter friendsListAdapter = new FriendsListAdapter(context, this);
@@ -59,6 +50,7 @@ public class ChatListMsgView extends ConstraintLayout implements FriendsListAdap
 
         instance.getFriends(friendsListAdapter);
 
+        return view;
     }
 
 

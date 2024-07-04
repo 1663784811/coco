@@ -1,46 +1,36 @@
 package com.cyyaw.coco.activity.home.adapter;
 
 import android.content.Context;
-import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.viewpager.widget.PagerAdapter;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import java.util.List;
 
-public class MyPagerAdapter extends PagerAdapter {
+public class MyPagerAdapter extends FragmentStateAdapter {
 
-    private final Context context;
-    private final List<View> viewList;
 
-    public MyPagerAdapter(Context context, List<View> viewList) {
+    private Context context;
+    private List<Fragment> fragmentList;
+
+
+    public MyPagerAdapter(@NonNull FragmentActivity context, List<Fragment> fragmentList) {
+        super(context);
         this.context = context;
-        this.viewList = viewList;
+        this.fragmentList = fragmentList;
     }
 
-    @Override
-    public int getCount() {
-        return viewList.size();
-    }
-
-    @Override
-    public boolean isViewFromObject(View view, Object object) {
-        return view == object;
-    }
 
     @NonNull
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
-        //加载布局
-        View view = viewList.get(position);
-        //获取控件
-        container.addView(view);
-        return view;
+    public Fragment createFragment(int position) {
+        return fragmentList.get(position);
     }
 
     @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
-        container.removeView((View) object);
+    public int getItemCount() {
+        return fragmentList.size();
     }
 }

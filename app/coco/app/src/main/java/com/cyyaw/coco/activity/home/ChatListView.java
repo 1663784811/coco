@@ -1,13 +1,18 @@
 package com.cyyaw.coco.activity.home;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.activity.home.adapter.MyPagerAdapter;
@@ -15,38 +20,37 @@ import com.cyyaw.coco.activity.home.adapter.MyPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatListView extends ConstraintLayout {
+public class ChatListView extends Fragment {
 
-    private Context context;
-
-    public ChatListView(Context context) {
-        super(context);
-        initView(context, null);
-    }
-
-    public ChatListView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-        initView(context, null);
-    }
-
-    public ChatListView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        initView(context, null);
-    }
+    private FragmentActivity context;
 
 
-    private void initView(Context context, AttributeSet attrs) {
+
+    public ChatListView(FragmentActivity context) {
         this.context = context;
-        //加载布局
-        View chatView = LayoutInflater.from(context).inflate(R.layout.activity_main_chat, this, true);
-        ViewPager vp = chatView.findViewById(R.id.char_ViewPager);
-        List<View> pageData = new ArrayList<>();
+    }
+
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_main_chat, container, false);
+        ViewPager2 vp = view.findViewById(R.id.char_ViewPager);
+        List<Fragment> pageData = new ArrayList<>();
         pageData.add(new ChatListFriendsView(context));
         pageData.add(new ChatListMsgView(context));
-        MyPagerAdapter myPagerAdapter = new MyPagerAdapter(context, pageData);
-        vp.setAdapter(myPagerAdapter);
+
+        MyPagerAdapter adapter = new MyPagerAdapter(context, pageData);
+        vp.setAdapter(adapter);
         vp.setCurrentItem(0);
+
+
+
+        return view;
     }
+
+
+
 
 
 }

@@ -1,66 +1,49 @@
 package com.cyyaw.coco.activity.home;
 
-import android.util.AttributeSet;
+import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.activity.AddContentActivity;
 import com.cyyaw.coco.activity.home.adapter.ContentListAdapter;
-import com.cyyaw.coco.common.BaseAppCompatActivity;
 import com.cyyaw.coco.dao.ContentDao;
 import com.cyyaw.coco.entity.ContentEntity;
-import com.cyyaw.cui.fragment.CuiChatMsgSendFragment;
-import com.cyyaw.cui.fragment.CuiEmptyFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeView extends LinearLayout {
+public class HomeView extends Fragment {
 
     private static final String TAG = HomeView.class.getName();
 
-    private BaseAppCompatActivity context;
+    private Context context;
 
     private ContentListAdapter contentListAdapter;
 
 
-    public HomeView(BaseAppCompatActivity context) {
-        super(context);
+    public HomeView(Context context) {
         this.context = context;
-        initView(null);
-    }
-
-    public HomeView(BaseAppCompatActivity context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-        this.context = context;
-        initView(null);
-    }
-
-    public HomeView(BaseAppCompatActivity context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        this.context = context;
-        initView(null);
     }
 
 
-    private void initView(AttributeSet attrs) {
-        // =============== 加载布局
-        View viewHome = LayoutInflater.from(context).inflate(R.layout.activity_main_home, this, true);
-        View addContentBtn = viewHome.findViewById(R.id.addContentBtn);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_main_home, container, false);
+        View addContentBtn = view.findViewById(R.id.addContentBtn);
         addContentBtn.setOnClickListener((View v) -> {
             AddContentActivity.openActivity(context);
         });
         // =============== 设置适配器
-        RecyclerView recyclerView = viewHome.findViewById(R.id.contentList);
+        RecyclerView recyclerView = view.findViewById(R.id.contentList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
         contentListAdapter = new ContentListAdapter(context);
@@ -80,8 +63,6 @@ public class HomeView extends LinearLayout {
                 }
             }
         });
-
-
         List<ContentEntity> dataList = new ArrayList<>();
         for (int i = 0; i < 50; i++) {
             ContentEntity contentEntity = new ContentEntity();
@@ -89,10 +70,8 @@ public class HomeView extends LinearLayout {
             dataList.add(contentEntity);
         }
         contentListAdapter.setDataList(dataList);
-
-
         ContentDao.loadContent(contentListAdapter, 1);
-
+        return view;
     }
 
 
