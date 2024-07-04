@@ -7,14 +7,16 @@
     tools:context=".activity.MainActivity">
 
 
-    <androidx.viewpager2.widget.ViewPager2
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/app_tabBar_ViewPager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/defaultBackground"
         app:layout_constraintBottom_toTopOf="@+id/app_tabBar"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        android:fillViewport="true"
+        />
 
 
     <com.cyyaw.tabbar.CommonTabLayout

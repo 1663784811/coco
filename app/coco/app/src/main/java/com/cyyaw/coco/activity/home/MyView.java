@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -12,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cyyaw.coco.MyApplication;
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.activity.AddContentActivity;
 import com.cyyaw.coco.activity.SettingActivity;
@@ -31,7 +33,7 @@ public class MyView extends Fragment {
 
     private Context context;
 
-    private ContentListAdapter contentListAdapter;
+    private MyContentListAdapter contentListAdapter;
 
 
 
@@ -45,26 +47,34 @@ public class MyView extends Fragment {
         View view = inflater.inflate(R.layout.activity_main_my, container, false);
         View settingImgView = view.findViewById(R.id.settingImgView);
         settingImgView.setOnClickListener((View v) -> {
-            SettingActivity.openActivity(context);
+            // SettingActivity.openActivity(context);
+            MyApplication.toast("sssss");
+            aaa();
+
         });
 
 
         // 内容
         RecyclerView recyclerView = view.findViewById(R.id.contentList);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+        LinearLayoutManager layoutManager = new LinearLayoutManagerNonScrollable(context);
         recyclerView.setLayoutManager(layoutManager);
-        MyContentListAdapter contentListAdapter = new MyContentListAdapter(context);
+        contentListAdapter = new MyContentListAdapter(context);
         recyclerView.setAdapter(contentListAdapter);
 
 
+
+        return view;
+    }
+
+    public void aaa(){
+
         List<ContentEntity> dataList = new ArrayList<>();
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 500; i++) {
             ContentEntity contentEntity = new ContentEntity();
             contentEntity.setUserName("sss");
             dataList.add(contentEntity);
         }
         contentListAdapter.setDataList(dataList);
-        return view;
     }
 
 }

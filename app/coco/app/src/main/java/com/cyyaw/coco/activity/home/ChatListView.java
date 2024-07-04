@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.viewpager2.widget.ViewPager2;
+import androidx.viewpager.widget.ViewPager;
 
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.activity.home.adapter.MyPagerAdapter;
@@ -33,19 +33,15 @@ public class ChatListView extends Fragment {
         CuiNavBarFragment nav = new CuiNavBarFragment("关注");
         getChildFragmentManager().beginTransaction().add(R.id.header_title, nav).commit();
 
-        ViewPager2 vp = view.findViewById(R.id.char_ViewPager);
+        ViewPager vp = view.findViewById(R.id.char_ViewPager);
         List<Fragment> pageData = new ArrayList<>();
 
         pageData.add(new ChatListFriendsView(context));
         pageData.add(new ChatListMsgView(context));
 
-        MyPagerAdapter adapter = new MyPagerAdapter(context, pageData);
+        MyPagerAdapter adapter = new MyPagerAdapter(pageData, getChildFragmentManager());
         vp.setAdapter(adapter);
         vp.setCurrentItem(0);
-
-
-
-
         return view;
     }
 
