@@ -11,21 +11,21 @@ import androidx.fragment.app.Fragment;
 import com.cyyaw.coco.R;
 
 
-public class CUiNavBarFragment extends Fragment {
+public class CuiNavBarFragment extends Fragment {
 
     private String title;
     private UiNavBarFragmentCallBack callBack;
 
 
-    public CUiNavBarFragment() {
+    public CuiNavBarFragment() {
     }
 
 
-    public CUiNavBarFragment(String title) {
+    public CuiNavBarFragment(String title) {
         this(title, null);
     }
 
-    public CUiNavBarFragment(String title, UiNavBarFragmentCallBack callBack) {
+    public CuiNavBarFragment(String title, UiNavBarFragmentCallBack callBack) {
         this.title = title;
         this.callBack = callBack;
     }

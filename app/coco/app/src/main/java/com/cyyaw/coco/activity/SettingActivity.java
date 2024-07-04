@@ -10,7 +10,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.cyyaw.coco.MyApplication;
 import com.cyyaw.coco.R;
-import com.cyyaw.cui.fragment.CUiNavBarFragment;
+import com.cyyaw.cui.fragment.CuiNavBarFragment;
 import com.cyyaw.cui.fragment.CuiCellFragment;
 import com.cyyaw.cui.fragment.CuiCellGroupFragment;
 
@@ -31,7 +31,7 @@ public class SettingActivity extends AppCompatActivity {
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
-        ft.add(R.id.header_bar, new CUiNavBarFragment("设置"));
+        ft.add(R.id.header_bar, new CuiNavBarFragment("设置"));
 
 
         CuiCellGroupFragment group = new CuiCellGroupFragment();

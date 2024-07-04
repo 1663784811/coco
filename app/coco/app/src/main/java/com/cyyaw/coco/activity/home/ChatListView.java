@@ -11,6 +11,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.activity.home.adapter.MyPagerAdapter;
+import com.cyyaw.cui.fragment.CuiNavBarFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,10 @@ public class ChatListView extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_main_chat, container, false);
+
+        CuiNavBarFragment nav = new CuiNavBarFragment("关注");
+        getChildFragmentManager().beginTransaction().add(R.id.header_title, nav).commit();
+
         ViewPager2 vp = view.findViewById(R.id.char_ViewPager);
         List<Fragment> pageData = new ArrayList<>();
 
