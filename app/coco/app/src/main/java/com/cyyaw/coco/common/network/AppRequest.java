@@ -26,11 +26,11 @@ public class AppRequest {
         getRequest(url, parameter, success, null);
     }
 
-    public static void getRequest(String url, RunCallback<String> success, RunCallback<IOException> error) {
+    public static void getRequest(String url, RunCallback<String> success, RunCallback<Exception> error) {
         getRequest(url, null, success, error);
     }
 
-    public static void getRequest(String url, Map<String, Object> parameter, RunCallback<String> success, RunCallback<IOException> error) {
+    public static void getRequest(String url, Map<String, Object> parameter, RunCallback<String> success, RunCallback<Exception> error) {
         Http.getRequest(url, parameter, success, error, getHeaders());
     }
 
@@ -40,7 +40,7 @@ public class AppRequest {
         postRequest(url, json, success, null);
     }
 
-    public static void postRequest(String url, JSONObject json, RunCallback<String> success, RunCallback<IOException> error) {
+    public static void postRequest(String url, JSONObject json, RunCallback<String> success, RunCallback<Exception> error) {
         Http.postRequest(url, json, success, error, getHeaders());
     }
 

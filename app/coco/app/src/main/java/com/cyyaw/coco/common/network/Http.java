@@ -24,8 +24,7 @@ public class Http {
     private static OkHttpClient client = new OkHttpClient();
 
 
-    public static void getRequest(String url, Map<String, Object> parameter, RunCallback<String> success, RunCallback<IOException> error, Map<String, Object> headers) {
-
+    public static void getRequest(String url, Map<String, Object> parameter, RunCallback<String> success, RunCallback<Exception> error, Map<String, Object> headers) {
 
 
         Request request = getRB(headers).url(url).get().build();
@@ -33,14 +32,14 @@ public class Http {
         runCall(call, success, error);
     }
 
-    public static void postRequest(String url, JSONObject json, RunCallback<String> success, RunCallback<IOException> error, Map<String, Object> headers) {
+    public static void postRequest(String url, JSONObject json, RunCallback<String> success, RunCallback<Exception> error, Map<String, Object> headers) {
         RequestBody requestBody = RequestBody.create(MediaType.parse(httpHeaderMediaType), json.toJSONString());
         Request request = getRB(headers).url(url).post(requestBody).build();
         Call call = client.newBuilder().build().newCall(request);
         runCall(call, success, error);
     }
 
-    private static void runCall(Call call, RunCallback<String> success, RunCallback<IOException> error) {
+    private static void runCall(Call call, RunCallback<String> success, RunCallback<Exception> error) {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -51,7 +50,14 @@ public class Http {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                success.run(response.body().string());
+                try {
+                    success.run(response.body().string());
+                } catch (Exception e) {
+                    if (null != error) {
+                        error.run(e);
+                    }
+                }
+
             }
         });
     }
