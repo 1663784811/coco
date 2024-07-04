@@ -148,6 +148,17 @@
         android:layout_height="wrap_content"
         android:text="关注" />
 
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="删除" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="拉黑" />
+
     <Button
         android:id="@+id/privateMessageBtn"
         android:layout_width="match_parent"

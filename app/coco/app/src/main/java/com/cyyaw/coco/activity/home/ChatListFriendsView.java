@@ -62,6 +62,7 @@ public class ChatListFriendsView extends Fragment implements FriendsListAdapter.
     @Override
     public void click(View v, FriendsEntity friendsEntity) {
         // 跳转个人中心页面
-        ActivityUtils.startActivity(context, PersonCenterActivity.class, friendsEntity);
+        PersonCenterActivity.openActivity(context, friendsEntity.getTid(), friendsEntity.getNickName(), friendsEntity.getFace());
+
     }
 }

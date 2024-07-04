@@ -48,19 +48,19 @@ public class MessageActivity extends AppCompatActivity implements CuiChatInputFr
         trs.add(R.id.header_bar, new CuiNavBarFragment(userName));
 
         CuiChatInputFragment cuiChatInputFragment = new CuiChatInputFragment();
-        cuiChatInputFragment.addIcon(new CuiChatInputIconFragment(R.drawable.cui_icon_video_24, "视频", (View v) -> {
+        cuiChatInputFragment.addIcon(new CuiChatInputIconFragment(R.drawable.cui_icon_video_24, "图片", (View v) -> {
 
 
         }));
-        cuiChatInputFragment.addIcon(new CuiChatInputIconFragment(R.drawable.cui_icon_video_24, "xxx", (View v) -> {
+        cuiChatInputFragment.addIcon(new CuiChatInputIconFragment(R.drawable.cui_icon_video_24, "拍摄", (View v) -> {
 
 
         }));
-        cuiChatInputFragment.addIcon(new CuiChatInputIconFragment(R.drawable.cui_icon_video_24, "ddd", (View v) -> {
+        cuiChatInputFragment.addIcon(new CuiChatInputIconFragment(R.drawable.cui_icon_video_24, "语音通话", (View v) -> {
 
 
         }));
-        cuiChatInputFragment.addIcon(new CuiChatInputIconFragment(R.drawable.cui_icon_video_24, "xxx", (View v) -> {
+        cuiChatInputFragment.addIcon(new CuiChatInputIconFragment(R.drawable.cui_icon_video_24, "视频通话", (View v) -> {
             VideoActivity.openActivity(MessageActivity.this, "11", true, "22", false, false);
         }));
         trs.add(R.id.chat_input, cuiChatInputFragment);

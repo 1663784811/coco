@@ -7,8 +7,8 @@ package com.cyyaw.webrtc;
 public interface StatusCallBack {
 
     /**
-     *
+     * 网络状态回调
      */
-
+    void netWorkStatus();
 
 }
