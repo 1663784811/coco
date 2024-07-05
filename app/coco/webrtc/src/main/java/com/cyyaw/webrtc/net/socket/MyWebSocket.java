@@ -88,15 +88,10 @@ public class MyWebSocket extends WebSocketClient implements SocketConnect {
      */
     @Override
     public void onClose(int code, String reason, boolean remote) {
-        Log.e("dds_error", "onClose:" + reason + "remote:" + remote);
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        Log.e("关闭连接", "onClose:" + reason + "remote:" + remote);
         this.receiveEvent.logout("onClose");
         if (null != statusCallBack) {
-            statusCallBack.netWorkStatus(StatusCallBack.NetStatus.CLOSE);
+            statusCallBack.netWorkStatus(StatusCallBack.NetStatus.CLOSE, "关闭连接");
         }
     }
 
@@ -105,10 +100,16 @@ public class MyWebSocket extends WebSocketClient implements SocketConnect {
      */
     @Override
     public void onError(Exception ex) {
-        Log.e("dds_error", "onError:" + ex.toString());
+        Log.e("连接错误", "onError:" + ex.toString());
         this.receiveEvent.logout("onError");
         if (null != statusCallBack) {
-            statusCallBack.netWorkStatus(StatusCallBack.NetStatus.ERROR);
+            statusCallBack.netWorkStatus(StatusCallBack.NetStatus.ERROR, "连接错误:" + ex.toString() + "3秒后尝试重连...");
+        }
+        try {
+            Thread.sleep(3000);
+            reconnect();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
@@ -117,10 +118,10 @@ public class MyWebSocket extends WebSocketClient implements SocketConnect {
      */
     @Override
     public void onOpen(ServerHandshake handshake) {
-        Log.e("dds_info", "onOpen");
+        Log.e("打开连接", "onOpen");
         this.receiveEvent.onOpenCallBack();
         if (null != statusCallBack) {
-            statusCallBack.netWorkStatus(StatusCallBack.NetStatus.CONNECT);
+            statusCallBack.netWorkStatus(StatusCallBack.NetStatus.CONNECT, "打开连接");
         }
     }
 
@@ -129,17 +130,20 @@ public class MyWebSocket extends WebSocketClient implements SocketConnect {
      */
     @Override
     public void onMessage(String message) {
-        Log.d(TAG, "  Receive <<<====  " + message);
+        Log.d(TAG, "收到消息 Receive <<<====  " + message);
         handleMessage(message);
     }
 
+    /**
+     * 发送消息
+     */
     private void sendData(String data) {
-        Log.d(TAG, "  send ====>>>  " + data);
+        Log.d(TAG, "发送消息 send ====>>>  " + data);
         try {
             send(data);
         } catch (Exception e) {
             if (null != statusCallBack) {
-                statusCallBack.netWorkStatus(StatusCallBack.NetStatus.CLOSE);
+                statusCallBack.netWorkStatus(StatusCallBack.NetStatus.MSGERROR, "发送消息错误");
             }
         }
     }
