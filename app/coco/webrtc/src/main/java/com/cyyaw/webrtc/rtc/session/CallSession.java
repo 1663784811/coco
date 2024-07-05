@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 
 import com.cyyaw.webrtc.rtc.engine.EngineCallback;
-import com.cyyaw.webrtc.rtc.engine.EnumType;
 import com.cyyaw.webrtc.rtc.engine.RtcConfig;
 import com.cyyaw.webrtc.rtc.engine.WebRTCEngine;
 

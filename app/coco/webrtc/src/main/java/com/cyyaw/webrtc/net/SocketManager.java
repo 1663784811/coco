@@ -9,7 +9,7 @@ import com.cyyaw.webrtc.activity.PhoneCallActivity;
 import com.cyyaw.webrtc.WebRtcConfig;
 import com.cyyaw.webrtc.net.socket.SocketConnect;
 import com.cyyaw.webrtc.rtc.CallEngineKit;
-import com.cyyaw.webrtc.rtc.engine.EnumType;
+import com.cyyaw.webrtc.rtc.session.EnumType;
 import com.cyyaw.webrtc.rtc.session.CallSession;
 
 import java.util.List;

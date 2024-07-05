@@ -3,7 +3,7 @@ package com.cyyaw.webrtc.rtc;
 import android.content.Context;
 import android.util.Log;
 
-import com.cyyaw.webrtc.rtc.engine.EnumType;
+import com.cyyaw.webrtc.rtc.session.EnumType;
 import com.cyyaw.webrtc.rtc.session.CallSession;
 import com.cyyaw.webrtc.rtc.session.CallEvent;
 

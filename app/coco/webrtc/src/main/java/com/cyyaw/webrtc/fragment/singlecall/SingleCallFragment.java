@@ -19,9 +19,8 @@ import androidx.fragment.app.Fragment;
 import com.cyyaw.webrtc.R;
 import com.cyyaw.webrtc.fragment.MediaOperationCallback;
 import com.cyyaw.webrtc.rtc.CallEngineKit;
-import com.cyyaw.webrtc.rtc.engine.EnumType;
+import com.cyyaw.webrtc.rtc.session.EnumType;
 import com.cyyaw.webrtc.rtc.session.CallSession;
-import com.cyyaw.webrtc.rtc.session.CallSessionCallback;
 
 
 public abstract class SingleCallFragment extends Fragment {

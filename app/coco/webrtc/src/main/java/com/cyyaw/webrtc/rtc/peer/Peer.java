@@ -72,7 +72,9 @@ public class Peer implements SdpObserver, PeerConnection.Observer {
         pc.createOffer(this, offerOrAnswerConstraint());
     }
 
-    // 创建answer
+    /**
+     * 创建answer
+     */
     public void createAnswer() {
         if (pc == null) return;
         Log.d(TAG, "createAnswer");
@@ -80,14 +82,19 @@ public class Peer implements SdpObserver, PeerConnection.Observer {
 
     }
 
-    // 设置LocalDescription
+    /**
+     * 设置LocalDescription
+     */
     public void setLocalDescription(SessionDescription sdp) {
         Log.d(TAG, "setLocalDescription");
         if (pc == null) return;
         pc.setLocalDescription(this, sdp);
     }
 
-    // 设置RemoteDescription
+    /**
+     * 设置RemoteDescription
+     * @param sdp
+     */
     public void setRemoteDescription(SessionDescription sdp) {
         if (pc == null) return;
         Log.d(TAG, "setRemoteDescription");
@@ -112,7 +119,9 @@ public class Peer implements SdpObserver, PeerConnection.Observer {
         pc.addTrack(audioTrack, mediaStreamLabels);
     }
 
-    // 添加RemoteIceCandidate
+    /**
+     * 添加RemoteIceCandidate
+     */
     public synchronized void addRemoteIceCandidate(final IceCandidate candidate) {
         Log.d(TAG, "addRemoteIceCandidate");
         if (pc != null) {
@@ -128,7 +137,9 @@ public class Peer implements SdpObserver, PeerConnection.Observer {
         }
     }
 
-    // 移除RemoteIceCandidates
+    /**
+     * 移除RemoteIceCandidates
+     */
     public void removeRemoteIceCandidates(final IceCandidate[] candidates) {
         if (pc == null) {
             return;
