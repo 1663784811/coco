@@ -139,12 +139,16 @@ public class MyWebSocket extends WebSocketClient implements SocketConnect {
      */
     private void sendData(String data) {
         Log.d(TAG, "发送消息 send ====>>>  " + data);
-        try {
-            send(data);
-        } catch (Exception e) {
-            if (null != statusCallBack) {
-                statusCallBack.netWorkStatus(StatusCallBack.NetStatus.MSGERROR, "发送消息错误");
+        if (isOpen()) {
+            try {
+                send(data);
+            } catch (Exception e) {
+                if (null != statusCallBack) {
+                    statusCallBack.netWorkStatus(StatusCallBack.NetStatus.MSGERROR, "发送消息错误");
+                }
             }
+        } else {
+            this.receiveEvent.onConnectError();
         }
     }
     // ---------------------------------------处理接收消息-------------------------------------

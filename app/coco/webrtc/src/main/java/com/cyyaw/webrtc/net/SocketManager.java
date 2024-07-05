@@ -36,6 +36,10 @@ public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent
         socketManager.socketConnect = socketConnect;
     }
 
+    public void setUserId(String userId) {
+        myId = userId;
+    }
+
     // ======================================================================================     发送数据
     public void sendAskRoom(int roomSize) {
         if (socketConnect != null) {
@@ -268,8 +272,13 @@ public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent
         });
     }
 
-
-    public void setUserId(String userId) {
-        myId = userId;
+    @Override
+    public void onConnectError() {
+        handler.post(() -> {
+            CallSession currentSession = CallEngineKit.Instance().getCurrentSession();
+            if (currentSession != null) {
+                currentSession.onDisConnect(myId, EnumType.CallEndReason.SignalError);
+            }
+        });
     }
 }

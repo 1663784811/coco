@@ -38,6 +38,10 @@ public interface EngineCallback {
 
     void onRemoteStream(String userId);
 
+    /**
+     * 连接断开
+     */
     void onDisconnected(String userId);
+
 
 }

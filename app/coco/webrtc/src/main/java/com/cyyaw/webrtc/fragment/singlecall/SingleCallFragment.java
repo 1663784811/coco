@@ -187,6 +187,8 @@ public abstract class SingleCallFragment extends Fragment implements CallSession
     public void didUserLeave(String userId) {
     }
 
+
+
     public void didError(String error) {
     }
 

@@ -58,4 +58,5 @@ public interface SocketReceiveDataEvent {
 
     void onDisConnect(String userId);
 
+    void onConnectError();
 }
