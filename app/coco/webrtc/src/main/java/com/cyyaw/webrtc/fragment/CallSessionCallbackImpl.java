@@ -4,7 +4,7 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.cyyaw.webrtc.fragment.singlecall.SingleCallFragment;
-import com.cyyaw.webrtc.rtc.session.EnumType;
+import com.cyyaw.webrtc.rtc.EnumType;
 import com.cyyaw.webrtc.rtc.session.CallSessionCallback;
 
 public class CallSessionCallbackImpl implements CallSessionCallback {
