@@ -15,7 +15,7 @@ import com.cyyaw.webrtc.fragment.MediaOperationCallback;
 import com.cyyaw.webrtc.rtc.CallEngineKit;
 import com.cyyaw.webrtc.rtc.session.EnumType;
 import com.cyyaw.webrtc.rtc.session.CallSession;
-import com.cyyaw.webrtc.rtc.session.CallSessionCallback;
+import com.cyyaw.webrtc.rtc.CallOperationCallback;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -23,7 +23,7 @@ import java.util.Map;
 /**
  * 多人聊天场景
  */
-public class FragmentMeeting extends Fragment implements CallSessionCallback {
+public class FragmentMeeting extends Fragment implements CallOperationCallback {
 
 
     private MediaOperationCallback callback;

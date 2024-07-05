@@ -2,7 +2,9 @@ package com.cyyaw.webrtc.rtc.session;
 
 import java.util.List;
 
-
+/**
+ * 电话通信事件 ( 发送 )
+ */
 public interface CallEvent {
 
     /**

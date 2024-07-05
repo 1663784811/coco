@@ -23,7 +23,7 @@ import com.cyyaw.webrtc.permission.Permissions;
 import com.cyyaw.webrtc.rtc.CallEngineKit;
 import com.cyyaw.webrtc.rtc.session.EnumType;
 import com.cyyaw.webrtc.rtc.session.CallSession;
-import com.cyyaw.webrtc.rtc.session.CallSessionCallback;
+import com.cyyaw.webrtc.rtc.CallOperationCallback;
 
 
 import java.util.UUID;
@@ -31,11 +31,11 @@ import java.util.UUID;
 /**
  * 多人通话界面
  */
-public class RoomCallActivity extends AppCompatActivity implements CallSessionCallback, MediaOperationCallback {
+public class RoomCallActivity extends AppCompatActivity implements CallOperationCallback, MediaOperationCallback {
 
     private final Handler handler = new Handler(Looper.getMainLooper());
     private ImageView meetingHangupImageView;
-    private CallSessionCallback currentFragment;
+    private CallOperationCallback currentFragment;
     public static final String EXTRA_MO = "isOutGoing";
     private boolean isOutgoing;
 
@@ -64,7 +64,7 @@ public class RoomCallActivity extends AppCompatActivity implements CallSessionCa
         Fragment fragment = new FragmentMeeting(this);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().add(R.id.meeting_container, fragment).commit();
-        currentFragment = (CallSessionCallback) fragment;
+        currentFragment = (CallOperationCallback) fragment;
     }
 
     private void initListener() {

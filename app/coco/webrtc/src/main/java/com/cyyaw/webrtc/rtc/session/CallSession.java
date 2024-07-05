@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
+import com.cyyaw.webrtc.rtc.CallOperationCallback;
 import com.cyyaw.webrtc.rtc.engine.EngineCallback;
 import com.cyyaw.webrtc.rtc.engine.EngineProxy;
 import com.cyyaw.webrtc.rtc.engine.config.RtcConfig;
@@ -28,7 +29,7 @@ import java.util.concurrent.Executors;
 public class CallSession implements EngineCallback {
     private static final String TAG = CallSession.class.getSimpleName();
     // 回调
-    private WeakReference<CallSessionCallback> sessionCallback;
+    private WeakReference<CallOperationCallback> sessionCallback;
     // 线程池
     private static final ExecutorService executor = Executors.newSingleThreadExecutor();
     // 页面处理线程
@@ -434,7 +435,7 @@ public class CallSession implements EngineCallback {
         this._callState = callState;
     }
 
-    public void setSessionCallback(CallSessionCallback sessionCallback) {
+    public void setSessionCallback(CallOperationCallback sessionCallback) {
         this.sessionCallback = new WeakReference<>(sessionCallback);
     }
 

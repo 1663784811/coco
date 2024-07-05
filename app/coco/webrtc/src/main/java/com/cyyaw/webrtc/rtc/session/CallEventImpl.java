@@ -1,25 +1,25 @@
-package com.cyyaw.webrtc.page;
+package com.cyyaw.webrtc.rtc.session;
 
 import android.app.Activity;
 import android.media.AsyncPlayer;
 import android.media.AudioManager;
 import android.net.Uri;
-import android.util.Log;
 
 
 import com.cyyaw.webrtc.R;
 import com.cyyaw.webrtc.WebRtcConfig;
-import com.cyyaw.webrtc.rtc.session.CallEvent;
 import com.cyyaw.webrtc.net.SocketManager;
 
 import java.util.List;
 
 /**
- *
+ * 电话通信事件
  */
-public class VoipEvent implements CallEvent {
+public class CallEventImpl implements CallEvent {
 
     private static final String TAG = "VoipEvent";
+
+
     private final AsyncPlayer ringPlayer = new AsyncPlayer(null);
 
     @Override

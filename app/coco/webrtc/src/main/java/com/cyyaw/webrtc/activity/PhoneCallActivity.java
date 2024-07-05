@@ -13,7 +13,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.cyyaw.webrtc.R;
-import com.cyyaw.webrtc.fragment.CallSessionCallbackImpl;
+import com.cyyaw.webrtc.fragment.CallOperationCallbackImpl;
 import com.cyyaw.webrtc.fragment.singlecall.FragmentAudio;
 import com.cyyaw.webrtc.fragment.singlecall.FragmentVideo;
 import com.cyyaw.webrtc.fragment.MediaOperationCallback;
@@ -22,8 +22,6 @@ import com.cyyaw.webrtc.utils.WindHandle;
 import com.cyyaw.webrtc.permission.Permissions;
 import com.cyyaw.webrtc.rtc.CallEngineKit;
 import com.cyyaw.webrtc.rtc.session.CallSession;
-
-import java.util.UUID;
 
 
 /**
@@ -146,7 +144,7 @@ public class PhoneCallActivity extends AppCompatActivity implements MediaOperati
             }
             CallSession session = CallEngineKit.Instance().getCurrentSession();
             // 设置回调
-            session.setSessionCallback(new CallSessionCallbackImpl(currentFragment));
+            session.setSessionCallback(new CallOperationCallbackImpl(currentFragment));
         } else {
             CallSession session = CallEngineKit.Instance().getCurrentSession();
             if (session.isAudioOnly() && !audioOnly) {
@@ -154,7 +152,7 @@ public class PhoneCallActivity extends AppCompatActivity implements MediaOperati
                 isAudioOnly = session.isAudioOnly();
                 currentFragment.didChangeMode(true);
             }
-            session.setSessionCallback(new CallSessionCallbackImpl(currentFragment));
+            session.setSessionCallback(new CallOperationCallbackImpl(currentFragment));
         }
     }
 

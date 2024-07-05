@@ -1,10 +1,12 @@
-package com.cyyaw.webrtc.rtc.session;
+package com.cyyaw.webrtc.rtc;
 
+
+import com.cyyaw.webrtc.rtc.session.EnumType;
 
 /**
- * 回调
+ * 操作回调
  */
-public interface CallSessionCallback {
+public interface CallOperationCallback {
 
     /**
      * call 结束原因

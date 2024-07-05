@@ -15,10 +15,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.cyyaw.webrtc.net.SocketManager;
-import com.cyyaw.webrtc.net.socket.MqttSocket;
 import com.cyyaw.webrtc.net.socket.MyWebSocket;
 import com.cyyaw.webrtc.net.socket.SocketConnect;
-import com.cyyaw.webrtc.page.VoipEvent;
+import com.cyyaw.webrtc.rtc.session.CallEventImpl;
 import com.cyyaw.webrtc.rtc.CallEngineKit;
 
 import java.util.List;
@@ -48,7 +47,7 @@ public class WebRtcConfig {
     public static void init(Application context, String appId, String token, StatusCallBack statusCallBack) {
         appContext = context;
 
-        CallEngineKit.init(new VoipEvent());
+        CallEngineKit.init(new CallEventImpl());
         // WebSockt网络连接
         SocketConnect socketConnect = MyWebSocket.init(appId, token, SocketManager.getInstance(), statusCallBack);
 //        SocketConnect socketConnect = MqttSocket.init(appId, token, SocketManager.getInstance());

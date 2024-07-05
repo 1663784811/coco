@@ -5,15 +5,15 @@ import android.os.Looper;
 
 import com.cyyaw.webrtc.fragment.singlecall.SingleCallFragment;
 import com.cyyaw.webrtc.rtc.session.EnumType;
-import com.cyyaw.webrtc.rtc.session.CallSessionCallback;
+import com.cyyaw.webrtc.rtc.CallOperationCallback;
 
-public class CallSessionCallbackImpl implements CallSessionCallback {
+public class CallOperationCallbackImpl implements CallOperationCallback {
 
     private final Handler handler = new Handler(Looper.getMainLooper());
 
     private SingleCallFragment currentFragment;
 
-    public CallSessionCallbackImpl(SingleCallFragment currentFragment) {
+    public CallOperationCallbackImpl(SingleCallFragment currentFragment) {
         this.currentFragment = currentFragment;
     }
 
