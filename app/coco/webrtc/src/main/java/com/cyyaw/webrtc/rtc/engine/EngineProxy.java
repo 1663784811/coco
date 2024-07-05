@@ -1,27 +1,24 @@
-package com.cyyaw.webrtc.rtc.session;
+package com.cyyaw.webrtc.rtc.engine;
 
 import android.util.Log;
 import android.view.View;
 
-import com.cyyaw.webrtc.rtc.engine.EngineCallback;
-import com.cyyaw.webrtc.rtc.engine.IEngine;
-
 import java.util.List;
 
-public class AVEngine implements IEngine {
+public class EngineProxy implements Engine {
     private static final String TAG = "AVEngine";
-    private final IEngine iEngine;
-    private static volatile AVEngine instance;
+    private final Engine iEngine;
+    private static volatile EngineProxy instance;
 
-    private AVEngine(IEngine engine) {
+    private EngineProxy(Engine engine) {
         iEngine = engine;
     }
 
-    public static AVEngine createEngine(IEngine engine) {
+    public static EngineProxy createEngine(Engine engine) {
         if (null == instance) {
-            synchronized (AVEngine.class) {
+            synchronized (EngineProxy.class) {
                 if (null == instance) {
-                    instance = new AVEngine(engine);
+                    instance = new EngineProxy(engine);
                 }
             }
         }

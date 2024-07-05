@@ -8,8 +8,9 @@ import android.util.Log;
 import android.view.View;
 
 import com.cyyaw.webrtc.rtc.engine.EngineCallback;
+import com.cyyaw.webrtc.rtc.engine.EngineProxy;
 import com.cyyaw.webrtc.rtc.engine.RtcConfig;
-import com.cyyaw.webrtc.rtc.engine.WebRTCEngine;
+import com.cyyaw.webrtc.rtc.engine.EngineWebRtc;
 
 import org.webrtc.IceCandidate;
 import org.webrtc.SessionDescription;
@@ -51,13 +52,13 @@ public class CallSession implements EngineCallback {
     // 开始时间
     private long startTime;
 
-    private final AVEngine iEngine;
+    private final EngineProxy iEngine;
     private final CallEvent mEvent;
 
     public CallSession(Context context, boolean audioOnly, CallEvent event) {
         this.mIsAudioOnly = audioOnly;
         this.mEvent = event;
-        iEngine = AVEngine.createEngine(new WebRTCEngine(audioOnly, context, RtcConfig.getDifaulWebRtcDevice()));
+        iEngine = EngineProxy.createEngine(new EngineWebRtc(audioOnly, context, RtcConfig.getDifaulWebRtcDevice()));
         iEngine.init(this);
     }
 

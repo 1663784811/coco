@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * rtc基类
  */
-public interface IEngine {
+public interface Engine {
 
     /**
      * 初始化

@@ -41,8 +41,8 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * WebRtc 引擎
  */
-public class WebRTCEngine implements IEngine, PeerCallBack {
-    private final static String TAG = WebRTCEngine.class.getSimpleName();
+public class EngineWebRtc implements Engine, PeerCallBack {
+    private final static String TAG = EngineWebRtc.class.getSimpleName();
     private PeerConnectionFactory factory;
     private EglBase mRootEglBase;
     // video
@@ -72,7 +72,7 @@ public class WebRTCEngine implements IEngine, PeerCallBack {
     // 是否正在切换摄像头
     private volatile boolean isSwitch = false;
 
-    public WebRTCEngine(boolean mIsAudioOnly, Context mContext, WebRtcDevice webRtcDevice) {
+    public EngineWebRtc(boolean mIsAudioOnly, Context mContext, WebRtcDevice webRtcDevice) {
         this.mIsAudioOnly = mIsAudioOnly;
         this.mContext = mContext;
         this.webRtcDevice = webRtcDevice;
