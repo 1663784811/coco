@@ -12,7 +12,7 @@ import com.cyyaw.webrtc.rtc.session.EnumType;
  *
  */
 public class CallEngineKit {
-    private final static String TAG = "AVEngineKit";
+    private final static String TAG = CallEngineKit.class.getName();
 
 
     private static CallEngineKit avEngineKit;
@@ -194,7 +194,6 @@ public class CallEngineKit {
         }
         avEngineKit.mEvent.sendDisConnect(room, toId, isCrashed);
     }
-
 
 
     public boolean isAudioOnly() {
