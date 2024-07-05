@@ -88,10 +88,16 @@ public class MyWebSocket extends WebSocketClient implements SocketConnect {
      */
     @Override
     public void onClose(int code, String reason, boolean remote) {
-        Log.e("关闭连接", "onClose:" + reason + "remote:" + remote);
+        Log.e("关闭连接,10秒后尝试重新连接...", "onClose:" + reason + "remote:" + remote);
         this.receiveEvent.logout("onClose");
         if (null != statusCallBack) {
             statusCallBack.netWorkStatus(StatusCallBack.NetStatus.CLOSE, "关闭连接");
+        }
+        try {
+            Thread.sleep(10000);
+            reconnect();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -104,12 +110,6 @@ public class MyWebSocket extends WebSocketClient implements SocketConnect {
         this.receiveEvent.logout("onError");
         if (null != statusCallBack) {
             statusCallBack.netWorkStatus(StatusCallBack.NetStatus.ERROR, "连接错误:" + ex.toString() + "3秒后尝试重连...");
-        }
-        try {
-            Thread.sleep(3000);
-            reconnect();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
     }
 
