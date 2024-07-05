@@ -55,22 +55,6 @@ public class AVEngine implements IEngine {
     }
 
     @Override
-    public void userReject(String userId, int type) {
-        if (iEngine == null) {
-            return;
-        }
-        iEngine.userReject(userId, type);
-    }
-
-    @Override
-    public void disconnected(String userId, EnumType.CallEndReason reason) {
-        if (iEngine == null) {
-            return;
-        }
-        iEngine.disconnected(userId, reason);
-    }
-
-    @Override
     public void receiveOffer(String userId, String description) {
         if (iEngine == null) {
             return;
@@ -118,22 +102,6 @@ public class AVEngine implements IEngine {
             return;
         }
         iEngine.stopPreview();
-    }
-
-    @Override
-    public void startStream() {
-        if (iEngine == null) {
-            return;
-        }
-        iEngine.startStream();
-    }
-
-    @Override
-    public void stopStream() {
-        if (iEngine == null) {
-            return;
-        }
-        iEngine.stopStream();
     }
 
     @Override

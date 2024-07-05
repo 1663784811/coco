@@ -19,17 +19,6 @@ public interface EngineCallback {
      */
     void exitRoom();
 
-    /**
-     * 拒绝连接
-     */
-    void reject(int type);
-
-    /**
-     * 断开连接
-     */
-    void disconnected(EnumType.CallEndReason reason);
-
-
     void onSendIceCandidate(String userId, IceCandidate candidate);
 
     void onSendOffer(String userId, SessionDescription description);
@@ -42,6 +31,5 @@ public interface EngineCallback {
      * 连接断开
      */
     void onDisconnected(String userId);
-
 
 }

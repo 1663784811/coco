@@ -267,7 +267,7 @@ public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent
         handler.post(() -> {
             CallSession currentSession = CallEngineKit.Instance().getCurrentSession();
             if (currentSession != null) {
-                currentSession.onDisConnect(userId, EnumType.CallEndReason.RemoteSignalError);
+                currentSession.onDisConnect(EnumType.CallEndReason.RemoteSignalError);
             }
         });
     }
@@ -277,7 +277,7 @@ public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent
         handler.post(() -> {
             CallSession currentSession = CallEngineKit.Instance().getCurrentSession();
             if (currentSession != null) {
-                currentSession.onDisConnect(myId, EnumType.CallEndReason.SignalError);
+                currentSession.onDisConnect(EnumType.CallEndReason.SignalError);
             }
         });
     }

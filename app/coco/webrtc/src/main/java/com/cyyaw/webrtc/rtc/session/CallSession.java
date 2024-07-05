@@ -302,9 +302,11 @@ public class CallSession implements EngineCallback {
 
     }
 
-    // 对方已拒绝
+    /**
+     * 对方已拒绝
+     */
     public void onRefuse(String userId, int type) {
-        iEngine.userReject(userId, type);
+        reject(type);
     }
 
     /**
@@ -330,9 +332,9 @@ public class CallSession implements EngineCallback {
     /**
      * 对方网络断开
      */
-    public void onDisConnect(String userId, EnumType.CallEndReason reason) {
+    public void onDisConnect(EnumType.CallEndReason reason) {
         executor.execute(() -> {
-            iEngine.disconnected(userId, reason);
+            disconnected(reason);
         });
     }
 
@@ -465,7 +467,7 @@ public class CallSession implements EngineCallback {
 
     }
 
-    @Override
+
     public void reject(int type) {
         shouldStopRing();
         Log.d(TAG, "reject type = " + type);
@@ -480,7 +482,6 @@ public class CallSession implements EngineCallback {
         }
     }
 
-    @Override
     public void disconnected(EnumType.CallEndReason reason) {
         handler.post(() -> {
             shouldStopRing();

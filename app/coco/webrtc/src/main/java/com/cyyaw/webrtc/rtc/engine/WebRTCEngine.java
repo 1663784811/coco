@@ -162,24 +162,6 @@ public class WebRTCEngine implements IEngine, PeerEvent {
     }
 
 
-    /**
-     * 用户拒绝
-     */
-    @Override
-    public void userReject(String userId, int type) {
-        //拒绝接听userId应该是没有添加进peers里去不需要remove
-        if (mCallback != null) {
-            mCallback.reject(type);
-        }
-    }
-
-    @Override
-    public void disconnected(String userId, EnumType.CallEndReason reason) {
-        if (mCallback != null) {
-            mCallback.disconnected(reason);
-        }
-    }
-
     @Override
     public void receiveOffer(String userId, String description) {
         Peer peer = peerList.get(userId);
@@ -286,16 +268,6 @@ public class WebRTCEngine implements IEngine, PeerEvent {
             localRenderer.release();
             localRenderer = null;
         }
-    }
-
-    @Override
-    public void startStream() {
-
-    }
-
-    @Override
-    public void stopStream() {
-
     }
 
     @Override

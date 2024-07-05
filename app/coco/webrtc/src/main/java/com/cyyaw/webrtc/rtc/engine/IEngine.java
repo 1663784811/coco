@@ -3,7 +3,6 @@ package com.cyyaw.webrtc.rtc.engine;
 
 import android.view.View;
 
-
 import java.util.List;
 
 /**
@@ -27,14 +26,9 @@ public interface IEngine {
     void userIn(String userId);
 
     /**
-     * 用户拒绝
+     * 离开房间
      */
-    void userReject(String userId,int type);
-
-    /**
-     * 用户网络断开
-     */
-    void disconnected(String userId, EnumType.CallEndReason reason);
+    void leaveRoom(String userId);
 
     /**
      * receive Offer
@@ -52,13 +46,6 @@ public interface IEngine {
     void receiveIceCandidate(String userId, String id, int label, String candidate);
 
     /**
-     * 离开房间
-     *
-     * @param userId userId
-     */
-    void leaveRoom(String userId);
-
-    /**
      * 开启本地预览
      */
     View setupLocalPreview(boolean isOverlay);
@@ -67,16 +54,6 @@ public interface IEngine {
      * 关闭本地预览
      */
     void stopPreview();
-
-    /**
-     * 开始远端推流
-     */
-    void startStream();
-
-    /**
-     * 停止远端推流
-     */
-    void stopStream();
 
     /**
      * 开始远端预览
