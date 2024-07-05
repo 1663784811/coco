@@ -34,7 +34,7 @@ public class Peer implements SdpObserver, PeerConnection.Observer {
     private SessionDescription localSdp;
     private final PeerConnectionFactory mFactory;
     private final List<PeerConnection.IceServer> mIceLis;
-    private final PeerEvent mEvent;
+    private final PeerCallBack mEvent;
     private boolean isOffer;
 
     public MediaStream _remoteStream;
@@ -42,7 +42,7 @@ public class Peer implements SdpObserver, PeerConnection.Observer {
     public ProxyVideoSink sink;
 
 
-    public Peer(PeerConnectionFactory factory, List<PeerConnection.IceServer> list, String userId, PeerEvent event) {
+    public Peer(PeerConnectionFactory factory, List<PeerConnection.IceServer> list, String userId, PeerCallBack event) {
         mFactory = factory;
         mIceLis = list;
         mEvent = event;
@@ -180,12 +180,20 @@ public class Peer implements SdpObserver, PeerConnection.Observer {
         }
     }
 
+
     //------------------------------Observer-------------------------------------
+
+    /**
+     * 信号改变
+     */
     @Override
     public void onSignalingChange(PeerConnection.SignalingState signalingState) {
         Log.i(TAG, "onSignalingChange: " + signalingState);
     }
 
+    /**
+     * Ice连接改变
+     */
     @Override
     public void onIceConnectionChange(PeerConnection.IceConnectionState newState) {
         Log.i(TAG, "onIceConnectionChange: " + newState);
@@ -195,11 +203,17 @@ public class Peer implements SdpObserver, PeerConnection.Observer {
 
     }
 
+    /**
+     * Ice连接接收改变
+     */
     @Override
     public void onIceConnectionReceivingChange(boolean receiving) {
         Log.i(TAG, "onIceConnectionReceivingChange:" + receiving);
     }
 
+    /**
+     * 采集改变
+     */
     @Override
     public void onIceGatheringChange(PeerConnection.IceGatheringState newState) {
         // 检测本地ice状态
@@ -208,15 +222,21 @@ public class Peer implements SdpObserver, PeerConnection.Observer {
 
     @Override
     public void onIceCandidate(IceCandidate candidate) {
-        // 发送IceCandidate
+        // 发送IceCandidate 候选人
         mEvent.onSendIceCandidate(mUserId, candidate);
     }
 
+    /**
+     * 候选人删除
+     */
     @Override
     public void onIceCandidatesRemoved(IceCandidate[] candidates) {
         Log.i(TAG, "onIceCandidatesRemoved:");
     }
 
+    /**
+     * 添加流
+     */
     @Override
     public void onAddStream(MediaStream stream) {
         Log.i(TAG, "onAddStream:");
@@ -227,6 +247,9 @@ public class Peer implements SdpObserver, PeerConnection.Observer {
         }
     }
 
+    /**
+     * 删除流
+     */
     @Override
     public void onRemoveStream(MediaStream stream) {
         Log.i(TAG, "onRemoveStream:");
@@ -235,16 +258,25 @@ public class Peer implements SdpObserver, PeerConnection.Observer {
         }
     }
 
+    /**
+     * 数据通道建立
+     */
     @Override
     public void onDataChannel(DataChannel dataChannel) {
         Log.i(TAG, "onDataChannel:");
     }
 
+    /**
+     * 需要重新协商
+     */
     @Override
     public void onRenegotiationNeeded() {
         Log.i(TAG, "onRenegotiationNeeded:");
     }
 
+    /**
+     * 添加轨道
+     */
     @Override
     public void onAddTrack(RtpReceiver receiver, MediaStream[] mediaStreams) {
         Log.i(TAG, "onAddTrack:" + mediaStreams.length);
@@ -279,10 +311,8 @@ public class Peer implements SdpObserver, PeerConnection.Observer {
                 }
             } else {
                 Log.d(TAG, "Remote SDP set succesfully");
-
                 drainCandidates();
             }
-
         } else {
             if (pc.getLocalDescription() != null) {
                 Log.d(TAG, "Local SDP set succesfully");
@@ -293,14 +323,11 @@ public class Peer implements SdpObserver, PeerConnection.Observer {
                     //发送者,发送自己的offer
                     mEvent.onSendOffer(mUserId, localSdp);
                 }
-
                 drainCandidates();
             } else {
                 Log.d(TAG, "Remote SDP set succesfully");
             }
         }
-
-
     }
 
     @Override
@@ -338,7 +365,4 @@ public class Peer implements SdpObserver, PeerConnection.Observer {
     }
 
     // ----------------------------回调-----------------------------------
-
-
-
 }

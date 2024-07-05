@@ -61,11 +61,6 @@ public interface IEngine {
     View setupRemoteVideo(String userId, boolean isO);
 
     /**
-     * 关闭远端预览
-     */
-    void stopRemoteVideo();
-
-    /**
      * 切换摄像头
      */
     void switchCamera();

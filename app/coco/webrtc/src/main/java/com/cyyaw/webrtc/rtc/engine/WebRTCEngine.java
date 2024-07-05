@@ -9,7 +9,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.cyyaw.webrtc.rtc.peer.Peer;
-import com.cyyaw.webrtc.rtc.peer.PeerEvent;
+import com.cyyaw.webrtc.rtc.peer.PeerCallBack;
 import com.cyyaw.webrtc.rtc.peer.ProxyVideoSink;
 
 import org.webrtc.AudioSource;
@@ -41,7 +41,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * WebRtc 引擎
  */
-public class WebRTCEngine implements IEngine, PeerEvent {
+public class WebRTCEngine implements IEngine, PeerCallBack {
     private final static String TAG = WebRTCEngine.class.getSimpleName();
     private PeerConnectionFactory factory;
     private EglBase mRootEglBase;
@@ -278,20 +278,11 @@ public class WebRTCEngine implements IEngine, PeerEvent {
         }
         Peer peer = peerList.get(userId);
         if (peer == null) return null;
-
         if (peer.renderer == null) {
             peer.createRender(mRootEglBase, mContext, isOverlay);
         }
-
         return peer.renderer;
-
     }
-
-    @Override
-    public void stopRemoteVideo() {
-
-    }
-
 
     @Override
     public void switchCamera() {

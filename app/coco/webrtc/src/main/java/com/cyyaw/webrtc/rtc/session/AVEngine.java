@@ -113,15 +113,6 @@ public class AVEngine implements IEngine {
     }
 
     @Override
-    public void stopRemoteVideo() {
-        if (iEngine == null) {
-            return;
-        }
-        iEngine.stopRemoteVideo();
-    }
-
-
-    @Override
     public void switchCamera() {
         if (iEngine == null) {
             return;
