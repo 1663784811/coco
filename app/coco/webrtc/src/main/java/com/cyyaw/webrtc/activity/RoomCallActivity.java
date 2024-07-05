@@ -93,7 +93,7 @@ public class RoomCallActivity extends AppCompatActivity implements CallSessionCa
     }
 
     private void init(String room, boolean isOutgoing) {
-        CallEngineKit.init(new VoipEvent());
+
         if (isOutgoing) {
             // 创建一个房间并进入
             CallEngineKit.Instance().createAndJoinRoom(this, "room-" + UUID.randomUUID().toString().substring(0, 16));

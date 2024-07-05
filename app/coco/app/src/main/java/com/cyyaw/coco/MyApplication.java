@@ -36,11 +36,8 @@ public class MyApplication extends Application {
         super.onCreate();
         appContext = this;
         sToast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
-
-
         WebRtcConfig.init(this, "111111", "sssss", (StatusCallBack.NetStatus netStatus, String msg) -> {
             // 回调
-
         });
 
         // 初始化蓝牙

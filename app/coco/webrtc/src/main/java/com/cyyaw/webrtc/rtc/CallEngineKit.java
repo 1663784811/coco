@@ -35,28 +35,6 @@ public class CallEngineKit {
         }
     }
 
-    public void sendRefuseOnPermissionDenied(String room, String inviteId) {
-        // 未初始化
-        if (avEngineKit == null) {
-            Log.e(TAG, "startOutCall error,please init first");
-            return;
-        }
-        if (mCurrentCallSession != null) {
-            endCall();
-        } else {
-            avEngineKit.mEvent.sendRefuse(room, inviteId, EnumType.RefuseType.Hangup.ordinal());
-        }
-    }
-
-    public void sendDisconnected(String room, String toId, boolean isCrashed) {
-        // 未初始化
-        if (avEngineKit == null) {
-            Log.e(TAG, "startOutCall error,please init first");
-            return;
-        }
-        avEngineKit.mEvent.sendDisConnect(room, toId, isCrashed);
-    }
-
     /**
      * 拨打电话
      */
@@ -193,6 +171,31 @@ public class CallEngineKit {
             mCurrentCallSession.setCallState(EnumType.CallState.Idle);
         }
     }
+
+
+    public void sendRefuseOnPermissionDenied(String room, String inviteId) {
+        // 未初始化
+        if (avEngineKit == null) {
+            Log.e(TAG, "startOutCall error,please init first");
+            return;
+        }
+        if (mCurrentCallSession != null) {
+            endCall();
+        } else {
+            avEngineKit.mEvent.sendRefuse(room, inviteId, EnumType.RefuseType.Hangup.ordinal());
+        }
+    }
+
+    public void sendDisconnected(String room, String toId, boolean isCrashed) {
+        // 未初始化
+        if (avEngineKit == null) {
+            Log.e(TAG, "startOutCall error,please init first");
+            return;
+        }
+        avEngineKit.mEvent.sendDisConnect(room, toId, isCrashed);
+    }
+
+
 
     public boolean isAudioOnly() {
         return isAudioOnly;

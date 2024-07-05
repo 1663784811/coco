@@ -81,8 +81,6 @@ public class WebRTCEngine implements IEngine, PeerEvent {
         this.iceServers.addAll(RtcConfig.getIceServer());
     }
 
-    // -----------------------------------对外方法------------------------------------------
-
     @Override
     public void init(EngineCallback callback) {
         mCallback = callback;
@@ -107,7 +105,7 @@ public class WebRTCEngine implements IEngine, PeerEvent {
         }
     }
 
-
+    // -----------------------------------对外方法------------------------------------------
     /**
      * 加入房间
      *
@@ -151,12 +149,11 @@ public class WebRTCEngine implements IEngine, PeerEvent {
         Log.d(TAG, "userIn:用户进入 " + userId);
         Peer peer = new Peer(factory, iceServers, userId, this);
         peer.setOffer(true);
-        List<String> mediaStreamLabels = Collections.singletonList("ARDAMS");
         if (localVideoTrack != null) {
-            peer.addVideoTrack(localVideoTrack, mediaStreamLabels);
+            peer.addVideoTrack(localVideoTrack, Collections.singletonList("ARDAMS"));
         }
         if (localAudioTrack != null) {
-            peer.addAudioTrack(localAudioTrack, mediaStreamLabels);
+            peer.addAudioTrack(localAudioTrack, Collections.singletonList("ARDAMS"));
         }
         // 添加列表
         peerList.put(userId, peer);
@@ -165,6 +162,9 @@ public class WebRTCEngine implements IEngine, PeerEvent {
     }
 
 
+    /**
+     * 用户拒绝
+     */
     @Override
     public void userReject(String userId, int type) {
         //拒绝接听userId应该是没有添加进peers里去不需要remove
@@ -189,8 +189,6 @@ public class WebRTCEngine implements IEngine, PeerEvent {
             peer.setRemoteDescription(sdp);
             peer.createAnswer();
         }
-
-
     }
 
     @Override
@@ -386,6 +384,9 @@ public class WebRTCEngine implements IEngine, PeerEvent {
 
     }
 
+    /**
+     * 切换外放和耳机
+     */
     @Override
     public boolean toggleHeadset(boolean isHeadset) {
         if (audioManager != null) {
