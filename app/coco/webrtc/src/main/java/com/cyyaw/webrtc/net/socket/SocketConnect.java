@@ -32,6 +32,9 @@ public interface SocketConnect {
 
     void sendCancel(String mRoomId, String myId, List<String> userIds);
 
+    /**
+     * 发送加入房间
+     */
     void sendJoin(String room, String myId);
 
     void sendOffer(String myId, String userId, String sdp);

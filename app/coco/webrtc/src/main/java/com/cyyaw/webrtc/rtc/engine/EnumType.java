@@ -15,7 +15,7 @@ public class EnumType {
         Outgoing,
         // 呼入
         Incoming,
-        // 连接
+        // 连接中....
         Connecting,
         // 已连接
         Connected;

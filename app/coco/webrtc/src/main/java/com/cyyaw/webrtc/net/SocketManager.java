@@ -166,7 +166,7 @@ public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent
 
     // 加入房间
     @Override
-    public void onPeers(String room, String connections, int roomSize) {
+    public void onReceivePeers(String room, String connections, int roomSize) {
         handler.post(() -> {
             //自己进入了房间，然后开始发送offer
             CallSession currentSession = CallEngineKit.Instance().getCurrentSession();

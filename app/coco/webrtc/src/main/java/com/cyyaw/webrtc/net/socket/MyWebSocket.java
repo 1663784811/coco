@@ -289,7 +289,7 @@ public class MyWebSocket extends WebSocketClient implements SocketConnect {
             String connections = (String) data.get("connections");
             int roomSize = (int) data.get("roomSize");
             String room = (String) data.get("room");
-            this.receiveEvent.onPeers(room, connections, roomSize);
+            this.receiveEvent.onReceivePeers(room, connections, roomSize);
         }
     }
 

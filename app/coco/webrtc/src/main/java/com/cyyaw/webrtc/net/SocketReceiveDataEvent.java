@@ -33,15 +33,17 @@ public interface SocketReceiveDataEvent {
     void onReceiveRing(String userId);
 
     /**
-     *
+     * 接收所有人信息
      */
-    void onPeers(String room, String userList, int roomSize);
+    void onReceivePeers(String room, String userList, int roomSize);
 
     void onNewPeer(String myId);
 
     void onReject(String userId, int type);
 
-    // onOffer
+    /**
+     *
+     */
     void onOffer(String userId, String sdp);
 
     // onAnswer
