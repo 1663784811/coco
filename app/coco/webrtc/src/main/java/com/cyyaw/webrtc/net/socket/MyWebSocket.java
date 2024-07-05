@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.cyyaw.webrtc.StatusCallBack;
+import com.cyyaw.webrtc.WebRtcConfig;
 import com.cyyaw.webrtc.net.SocketManager;
 import com.cyyaw.webrtc.net.SocketReceiveDataEvent;
 
@@ -93,12 +94,15 @@ public class MyWebSocket extends WebSocketClient implements SocketConnect {
         if (null != statusCallBack) {
             statusCallBack.netWorkStatus(StatusCallBack.NetStatus.CLOSE, "关闭连接");
         }
-        try {
-            Thread.sleep(10000);
-            reconnect();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        WebRtcConfig.run(()->{
+            try {
+                Thread.sleep(30000);
+                reconnect();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        this.receiveEvent.onConnectError();
     }
 
     /**
@@ -111,6 +115,7 @@ public class MyWebSocket extends WebSocketClient implements SocketConnect {
         if (null != statusCallBack) {
             statusCallBack.netWorkStatus(StatusCallBack.NetStatus.ERROR, "连接错误:" + ex.toString() + "3秒后尝试重连...");
         }
+        this.receiveEvent.onConnectError();
     }
 
     /**
