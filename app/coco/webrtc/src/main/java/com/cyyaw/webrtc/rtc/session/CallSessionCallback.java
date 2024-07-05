@@ -1,8 +1,6 @@
 package com.cyyaw.webrtc.rtc.session;
 
 
-import com.cyyaw.webrtc.rtc.EnumType;
-
 /**
  * 回调
  */

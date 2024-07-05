@@ -21,7 +21,7 @@ import com.cyyaw.webrtc.fragment.MediaOperationCallback;
 import com.cyyaw.webrtc.fragment.multicall.FragmentMeeting;
 import com.cyyaw.webrtc.permission.Permissions;
 import com.cyyaw.webrtc.rtc.CallEngineKit;
-import com.cyyaw.webrtc.rtc.EnumType;
+import com.cyyaw.webrtc.rtc.session.EnumType;
 import com.cyyaw.webrtc.rtc.session.CallSession;
 import com.cyyaw.webrtc.rtc.session.CallSessionCallback;
 

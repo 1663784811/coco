@@ -65,7 +65,6 @@ public interface CallEvent {
      */
     void sendIceCandidate(String userId, String id, int label, String candidate);
 
-
     /**
      * 开始响铃
      */

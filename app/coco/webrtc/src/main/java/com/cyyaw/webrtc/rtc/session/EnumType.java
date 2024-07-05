@@ -1,4 +1,4 @@
-package com.cyyaw.webrtc.rtc;
+package com.cyyaw.webrtc.rtc.session;
 
 /**
  * 类型
