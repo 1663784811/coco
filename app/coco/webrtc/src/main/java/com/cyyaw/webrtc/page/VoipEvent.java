@@ -1,9 +1,14 @@
 package com.cyyaw.webrtc.page;
 
+import android.app.Activity;
 import android.media.AsyncPlayer;
+import android.media.AudioManager;
+import android.net.Uri;
 import android.util.Log;
 
 
+import com.cyyaw.webrtc.R;
+import com.cyyaw.webrtc.WebRtcConfig;
 import com.cyyaw.webrtc.rtc.session.CallEvent;
 import com.cyyaw.webrtc.net.SocketManager;
 
@@ -18,8 +23,8 @@ public class VoipEvent implements CallEvent {
     private final AsyncPlayer ringPlayer = new AsyncPlayer(null);
 
     @Override
-    public void createRoom(String room, int roomSize) {
-        SocketManager.getInstance().sendCreateRoom(room, roomSize);
+    public void sendAskRoom(int roomSize) {
+        SocketManager.getInstance().sendAskRoom(roomSize);
     }
 
     @Override
@@ -84,25 +89,24 @@ public class VoipEvent implements CallEvent {
     public void onRemoteRing() {
 
 
-
     }
 
 
     //==============================================================================
     @Override
     public void shouldStartRing(boolean isComing) {
-//        Uri uri;
-//        if (isComing) {
-//            uri = Uri.parse("android.resource://" + App.getInstance().getPackageName() + "/" + R.raw.incoming_call_ring);
-//        } else {
-//            uri = Uri.parse("android.resource://" + App.getInstance().getPackageName() + "/" + R.raw.wr_ringback);
-//        }
-//        ringPlayer.play(App.getInstance(), uri, true, AudioManager.STREAM_RING);
+        Activity activity = WebRtcConfig.getActivity();
+        Uri uri;
+        if (isComing) {
+            uri = Uri.parse("android.resource://" + activity.getPackageName() + "/" + R.raw.incoming_call_ring);
+        } else {
+            uri = Uri.parse("android.resource://" + activity.getPackageName() + "/" + R.raw.wr_ringback);
+        }
+        ringPlayer.play(activity, uri, true, AudioManager.STREAM_RING);
     }
 
     @Override
     public void shouldStopRing() {
-        Log.d(TAG, "shouldStopRing begin");
         ringPlayer.stop();
     }
 }

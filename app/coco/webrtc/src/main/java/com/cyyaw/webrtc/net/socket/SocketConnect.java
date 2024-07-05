@@ -10,9 +10,15 @@ public interface SocketConnect {
     /**
      * 创建房间
      */
-    void sendCreateRoom(String room, int roomSize, String myId);
+    void sendAskRoom(int roomSize, String myId);
 
-
+    /**
+     * 邀请通话
+     * @param room 房间号
+     * @param myId
+     * @param users
+     * @param audioOnly
+     */
     void sendInvite(String room, String myId, List<String> users, boolean audioOnly);
 
     void sendLeave(String myId, String room, String userId);

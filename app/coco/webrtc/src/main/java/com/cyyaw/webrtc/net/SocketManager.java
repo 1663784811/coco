@@ -5,7 +5,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
-import com.cyyaw.webrtc.activity.VideoActivity;
+import com.cyyaw.webrtc.activity.PhoneCallActivity;
 import com.cyyaw.webrtc.WebRtcConfig;
 import com.cyyaw.webrtc.net.socket.SocketConnect;
 import com.cyyaw.webrtc.rtc.CallEngineKit;
@@ -37,9 +37,9 @@ public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent
     }
 
     // ======================================================================================     发送数据
-    public void sendCreateRoom(String room, int roomSize) {
+    public void sendAskRoom(int roomSize) {
         if (socketConnect != null) {
-            socketConnect.sendCreateRoom(room, roomSize, myId);
+            socketConnect.sendAskRoom(roomSize, myId);
         }
     }
 
@@ -129,7 +129,7 @@ public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent
     }
 
     @Override
-    public void onInvite(String room, boolean audioOnly, String inviteId, String userList) {
+    public void onReceiveInvite(String room, boolean audioOnly, String inviteId, String userList) {
         Intent intent = new Intent();
         intent.putExtra("room", room);
         intent.putExtra("audioOnly", audioOnly);
@@ -137,7 +137,7 @@ public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent
         intent.putExtra("userList", userList);
         boolean b = CallEngineKit.Instance().startInCall(WebRtcConfig.getContext(), room, inviteId, audioOnly);
         if (b) {
-            WebRtcConfig.startActivity(intent, VideoActivity.class);
+            WebRtcConfig.startActivity(intent, PhoneCallActivity.class);
         }
     }
 
@@ -164,13 +164,14 @@ public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent
 
     }
 
-    @Override  // 加入房间
-    public void onPeers(String myId, String connections, int roomSize) {
+    // 加入房间
+    @Override
+    public void onPeers(String room, String connections, int roomSize) {
         handler.post(() -> {
             //自己进入了房间，然后开始发送offer
             CallSession currentSession = CallEngineKit.Instance().getCurrentSession();
             if (currentSession != null) {
-                currentSession.onJoinHome(myId, connections, roomSize);
+                currentSession.onJoinHome(myId, connections, roomSize, room);
             }
         });
 

@@ -6,9 +6,9 @@ import java.util.List;
 public interface CallEvent {
 
     /**
-     * 创建房间
+     * 申请创建房间
      */
-    void createRoom(String room, int roomSize);
+    void sendAskRoom(int roomSize);
 
     /**
      * 发送单人邀请
@@ -46,7 +46,7 @@ public interface CallEvent {
     void sendRingBack(String targetId, String room);
 
     /**
-     *  发送离开
+     * 发送离开
      */
     void sendLeave(String room, String userId);
 

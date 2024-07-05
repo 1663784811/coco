@@ -55,9 +55,8 @@ public class CallSession implements EngineCallback {
     private final AVEngine iEngine;
     private final CallEvent mEvent;
 
-    public CallSession(Context context, String roomId, boolean audioOnly, CallEvent event) {
+    public CallSession(Context context, boolean audioOnly, CallEvent event) {
         this.mIsAudioOnly = audioOnly;
-        this.mRoomId = roomId;
         this.mEvent = event;
         iEngine = AVEngine.createEngine(new WebRTCEngine(audioOnly, context, RtcConfig.getDifaulWebRtcDevice()));
         iEngine.init(this);
@@ -67,12 +66,12 @@ public class CallSession implements EngineCallback {
     // ========================--------各种控制========================------------
 
     /**
-     * 创建房间
+     * 申请创建房间
      */
-    public void createHome(String room, int roomSize) {
+    public void askRoom(int roomSize) {
         executor.execute(() -> {
             if (mEvent != null) {
-                mEvent.createRoom(room, roomSize);
+                mEvent.sendAskRoom(roomSize);
             }
         });
     }
@@ -250,10 +249,17 @@ public class CallSession implements EngineCallback {
 
     //========================----receive========================-------------------
 
-    // 加入房间成功
-    public void onJoinHome(String myId, String users, int roomSize) {
+    /**
+     * 加入房间成功
+     *
+     * @param myId     我的ID
+     * @param users    其它用户
+     * @param roomSize 大小
+     */
+    public void onJoinHome(String myId, String users, int roomSize, String room) {
         // 开始计时
         mRoomSize = roomSize;
+        mRoomId = room;
         startTime = 0;
         handler.post(() -> executor.execute(() -> {
             mMyId = myId;
@@ -273,15 +279,8 @@ public class CallSession implements EngineCallback {
             } else {
                 iEngine.joinRoom(mUserIDList);
             }
-            if (!isAudioOnly()) {
-                // 画面预览
-                if (sessionCallback != null && sessionCallback.get() != null) {
-                    sessionCallback.get().didCreateLocalVideoTrack();
-                }
-            }
+            showVideo();
         }));
-
-
     }
 
     // 新成员进入
@@ -546,5 +545,19 @@ public class CallSession implements EngineCallback {
         }
     }
 
+    /**
+     * 画面预览
+     */
+    public void showVideo() {
+        if (!mIsAudioOnly) {
+            // 画面预览
+            if (sessionCallback != null && sessionCallback.get() != null) {
+                sessionCallback.get().didCreateLocalVideoTrack();
+            }
+        }
+    }
 
+    public void setMRoomId(String mRoomId) {
+        this.mRoomId = mRoomId;
+    }
 }

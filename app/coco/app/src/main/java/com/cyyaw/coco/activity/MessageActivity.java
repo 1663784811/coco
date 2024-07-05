@@ -15,7 +15,7 @@ import com.cyyaw.cui.fragment.CuiChatInputFragment;
 import com.cyyaw.cui.fragment.CuiChatInputIconFragment;
 import com.cyyaw.cui.fragment.CuiChatMsgFromFragment;
 import com.cyyaw.cui.fragment.CuiChatMsgSendFragment;
-import com.cyyaw.webrtc.activity.VideoActivity;
+import com.cyyaw.webrtc.activity.PhoneCallActivity;
 
 public class MessageActivity extends AppCompatActivity implements CuiChatInputFragment.CuiChatInputCallBack {
 
@@ -61,7 +61,7 @@ public class MessageActivity extends AppCompatActivity implements CuiChatInputFr
 
         }));
         cuiChatInputFragment.addIcon(new CuiChatInputIconFragment(R.drawable.cui_icon_video_24, "视频通话", (View v) -> {
-            VideoActivity.openActivity(MessageActivity.this, "11", true, "22", false, false);
+            PhoneCallActivity.openActivity(MessageActivity.this, "11", true, "22", false, false);
         }));
         trs.add(R.id.chat_input, cuiChatInputFragment);
 

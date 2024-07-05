@@ -1,7 +1,5 @@
 package com.cyyaw.webrtc.rtc.engine;
 
-import android.view.View;
-
 /**
  * 类型
  */

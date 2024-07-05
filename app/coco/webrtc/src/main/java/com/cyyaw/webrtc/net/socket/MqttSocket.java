@@ -103,7 +103,7 @@ public class MqttSocket implements MqttCallback, SocketConnect {
 
 
     @Override
-    public void sendCreateRoom(String room, int roomSize, String myId) {
+    public void sendAskRoom(int roomSize, String myId) {
 
 
     }

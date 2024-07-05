@@ -60,7 +60,7 @@ public class CallEngineKit {
     /**
      * 拨打电话
      */
-    public boolean startOutCall(Context context, final String room, final String targetId, final boolean audioOnly) {
+    public boolean startOutCall(Context context, final String targetId, final boolean audioOnly) {
         // 未初始化
         if (avEngineKit == null) {
             Log.e(TAG, "startOutCall error,please init first");
@@ -73,12 +73,17 @@ public class CallEngineKit {
         }
         isAudioOnly = audioOnly;
         // 初始化会话
-        mCurrentCallSession = new CallSession(context, room, audioOnly, mEvent);
+        mCurrentCallSession = new CallSession(context, audioOnly, mEvent);
         mCurrentCallSession.setTargetId(targetId);
         mCurrentCallSession.setIsComing(false);
         mCurrentCallSession.setCallState(EnumType.CallState.Outgoing);
         // 创建房间
-        mCurrentCallSession.createHome(room, 2);
+        mCurrentCallSession.askRoom(2);
+        // 显示画面
+        mCurrentCallSession.showVideo();
+        // 开始响铃
+
+
         return true;
     }
 
@@ -99,7 +104,8 @@ public class CallEngineKit {
         }
         this.isAudioOnly = audioOnly;
         // 初始化会话
-        mCurrentCallSession = new CallSession(context, room, audioOnly, mEvent);
+        mCurrentCallSession = new CallSession(context, audioOnly, mEvent);
+        mCurrentCallSession.setMRoomId(room);
         mCurrentCallSession.setTargetId(targetId);
         mCurrentCallSession.setIsComing(true);
         mCurrentCallSession.setCallState(EnumType.CallState.Incoming);
@@ -151,7 +157,7 @@ public class CallEngineKit {
             Log.e(TAG, "joinRoom error,currentCallSession is exist");
             return;
         }
-        mCurrentCallSession = new CallSession(context, room, false, mEvent);
+        mCurrentCallSession = new CallSession(context, false, mEvent);
         mCurrentCallSession.setIsComing(true);
         mCurrentCallSession.joinHome(room);
     }
@@ -166,9 +172,9 @@ public class CallEngineKit {
             Log.e(TAG, "joinRoom error,currentCallSession is exist");
             return;
         }
-        mCurrentCallSession = new CallSession(context, room, false, mEvent);
+        mCurrentCallSession = new CallSession(context, false, mEvent);
         mCurrentCallSession.setIsComing(false);
-        mCurrentCallSession.createHome(room, 9);
+        mCurrentCallSession.askRoom(9);
     }
 
     /**

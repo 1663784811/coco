@@ -27,9 +27,9 @@ import java.util.UUID;
 
 
 /**
- * 视频音频通话
+ * 视频或音频通话
  */
-public class VideoActivity extends AppCompatActivity implements MediaOperationCallback {
+public class PhoneCallActivity extends AppCompatActivity implements MediaOperationCallback {
 
     public static final String EXTRA_TARGET = "targetId";
     public static final String EXTRA_MO = "isOutGoing";
@@ -47,7 +47,7 @@ public class VideoActivity extends AppCompatActivity implements MediaOperationCa
 
 
     public static Intent getCallIntent(Context context, String targetId, boolean isOutgoing, String inviteUserName, boolean isAudioOnly, boolean isClearTop) {
-        Intent voip = new Intent(context, VideoActivity.class);
+        Intent voip = new Intent(context, PhoneCallActivity.class);
         voip.putExtra(EXTRA_MO, isOutgoing);
         voip.putExtra(EXTRA_TARGET, targetId);
         voip.putExtra(EXTRA_USER_NAME, inviteUserName);
@@ -139,8 +139,7 @@ public class VideoActivity extends AppCompatActivity implements MediaOperationCa
         }
         if (outgoing && !isReplace) {
             // 创建会话
-            String room = UUID.randomUUID().toString() + System.currentTimeMillis();
-            boolean b = CallEngineKit.Instance().startOutCall(getApplicationContext(), room, targetId, audioOnly);
+            boolean b = CallEngineKit.Instance().startOutCall(getApplicationContext(), targetId, audioOnly);
             if (!b) {
                 finish();
                 return;
@@ -157,7 +156,6 @@ public class VideoActivity extends AppCompatActivity implements MediaOperationCa
             }
             session.setSessionCallback(new CallSessionCallbackImpl(currentFragment));
         }
-
     }
 
 

@@ -19,15 +19,20 @@ public interface SocketReceiveDataEvent {
     void logout(String str);
 
 
-    void onInvite(String room, boolean audioOnly, String inviteId, String userList);
+    /**
+     * 接收邀请数据
+     */
+    void onReceiveInvite(String room, boolean audioOnly, String inviteId, String userList);
 
 
     void onCancel(String inviteId);
 
     void onRing(String userId);
 
-
-    void onPeers(String myId, String userList, int roomSize);
+    /**
+     *
+     */
+    void onPeers(String room, String userList, int roomSize);
 
     void onNewPeer(String myId);
 

@@ -286,10 +286,10 @@ public class MyWebSocket extends WebSocketClient implements SocketConnect {
     private void handlePeers(Map map) {
         Map data = (Map) map.get("data");
         if (data != null) {
-            String you = (String) data.get("you");
             String connections = (String) data.get("connections");
             int roomSize = (int) data.get("roomSize");
-            this.receiveEvent.onPeers(you, connections, roomSize);
+            String room = (String) data.get("room");
+            this.receiveEvent.onPeers(room, connections, roomSize);
         }
     }
 
@@ -321,11 +321,13 @@ public class MyWebSocket extends WebSocketClient implements SocketConnect {
     private void handleInvite(Map map) {
         Map data = (Map) map.get("data");
         if (data != null) {
+            // 房间号
             String room = (String) data.get("room");
             boolean audioOnly = (boolean) data.get("audioOnly");
+            // 对方id
             String inviteID = (String) data.get("inviteID");
             String userList = (String) data.get("userList");
-            this.receiveEvent.onInvite(room, audioOnly, inviteID, userList);
+            this.receiveEvent.onReceiveInvite(room, audioOnly, inviteID, userList);
         }
     }
 
@@ -340,11 +342,10 @@ public class MyWebSocket extends WebSocketClient implements SocketConnect {
     /**
      * ------------------------------发送消息----------------------------------------
      */
-    public void sendCreateRoom(String room, int roomSize, String myId) {
+    public void sendAskRoom(int roomSize, String myId) {
         Map<String, Object> map = new HashMap<>();
         map.put("eventName", "__create");
         Map<String, Object> childMap = new HashMap<>();
-        childMap.put("room", room);
         childMap.put("roomSize", roomSize);
         childMap.put("userID", myId);
         map.put("data", childMap);

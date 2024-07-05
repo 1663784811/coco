@@ -36,7 +36,7 @@ public abstract class SingleCallFragment extends Fragment implements CallSession
     protected TextView descTextView;
     // 通话时长
     protected Chronometer durationTextView;
-    // 呼出挂断
+    // 呼出挂断 ( 取消通话 )
     protected ImageView outgoingHangupImageView;
     // 呼入挂断
     private ImageView incomingHangupImageView;
@@ -60,7 +60,9 @@ public abstract class SingleCallFragment extends Fragment implements CallSession
     boolean endWithNoAnswerFlag = false;
     boolean isConnectionClosed = false;
     // 30秒
-    public static final long OUTGOING_WAITING_TIME = 30 * 1000;
+    public static final long OUTGOING_WAITING_TIME = 10 * 1000;
+
+    // 状态
     protected EnumType.CallState currentState;
     private final Handler handler = new Handler(Looper.getMainLooper());
 
@@ -117,10 +119,6 @@ public abstract class SingleCallFragment extends Fragment implements CallSession
         incomingActionContainer = view.findViewById(R.id.incomingActionContainer);
         connectedActionContainer = view.findViewById(R.id.connectedActionContainer);
         durationTextView.setVisibility(View.GONE);
-        if (isOutgoing) {
-            // 计时
-            handler.postDelayed(waitingRunnable, OUTGOING_WAITING_TIME);
-        }
         // === 点击结束
         outgoingHangupImageView.setOnClickListener((View v) -> {
             finishCall();
@@ -145,6 +143,9 @@ public abstract class SingleCallFragment extends Fragment implements CallSession
                 }
             }
         });
+        if (isOutgoing) {  // 呼出计时
+            handler.postDelayed(waitingRunnable, OUTGOING_WAITING_TIME);
+        }
     }
 
     public void init() {
@@ -220,6 +221,7 @@ public abstract class SingleCallFragment extends Fragment implements CallSession
     private final Runnable waitingRunnable = new Runnable() {
         @Override
         public void run() {
+            // 未接听自动挂断
             if (currentState != EnumType.CallState.Connected) {
                 endWithNoAnswerFlag = true;
                 if (mediaOperationCallback != null) {

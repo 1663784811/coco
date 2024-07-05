@@ -162,6 +162,14 @@ public class WebRtcConfig {
         }
     }
 
+    public static Activity getActivity() {
+        if (activityList.size() > 0) {
+            Activity activity = activityList.get(activityList.size() - 1);
+            return activity;
+        }
+        return null;
+    }
+
     public static void run(Runnable runnable) {
         threadPool.execute(runnable);
     }

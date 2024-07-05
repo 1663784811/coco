@@ -10,7 +10,7 @@ public interface SocketSenDataEvent {
     /**
      * 创建房间
      */
-    void sendCreateRoom(String room, int roomSize);
+    void sendAskRoom(int roomSize);
 
 
     void sendInvite(String room, List<String> users, boolean audioOnly);
