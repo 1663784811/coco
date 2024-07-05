@@ -32,7 +32,7 @@ public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent
     }
 
 
-    public static void connect(SocketConnect socketConnect) {
+    public void connect(SocketConnect socketConnect) {
         socketManager.socketConnect = socketConnect;
     }
 

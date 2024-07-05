@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
+import com.cyyaw.webrtc.StatusCallBack;
 import com.cyyaw.webrtc.net.SocketManager;
 import com.cyyaw.webrtc.net.SocketReceiveDataEvent;
 
@@ -25,7 +26,9 @@ import javax.net.ssl.X509TrustManager;
  *
  */
 public class MyWebSocket extends WebSocketClient implements SocketConnect {
+
     private final static String TAG = MyWebSocket.class.getName();
+
     private static MyWebSocket myWebSocket = null;
     private static final String url = "ws://192.168.0.103:3000/ws";
 
@@ -33,15 +36,17 @@ public class MyWebSocket extends WebSocketClient implements SocketConnect {
      * 接收回调
      */
     private final SocketReceiveDataEvent receiveEvent;
-    private boolean connectFlag = false;
+
+    private final StatusCallBack statusCallBack;
 
 
-    private MyWebSocket(URI serverUri, SocketReceiveDataEvent receiveEvent) {
+    private MyWebSocket(URI serverUri, SocketReceiveDataEvent receiveEvent, StatusCallBack statusCallBack) {
         super(serverUri);
         this.receiveEvent = receiveEvent;
+        this.statusCallBack = statusCallBack;
     }
 
-    public static SocketConnect init(String appId, String token, SocketManager instance) {
+    public static SocketConnect init(String appId, String token, SocketManager instance, StatusCallBack statusCallBack) {
         if (myWebSocket == null || !myWebSocket.isOpen()) {
             URI uri;
             try {
@@ -51,7 +56,7 @@ public class MyWebSocket extends WebSocketClient implements SocketConnect {
                 e.printStackTrace();
                 return null;
             }
-            myWebSocket = new MyWebSocket(uri, instance);
+            myWebSocket = new MyWebSocket(uri, instance, statusCallBack);
             // 设置wss
 //            if (url.startsWith("wss")) {
 //                try {
@@ -84,17 +89,15 @@ public class MyWebSocket extends WebSocketClient implements SocketConnect {
     @Override
     public void onClose(int code, String reason, boolean remote) {
         Log.e("dds_error", "onClose:" + reason + "remote:" + remote);
-        if (connectFlag) {
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-//            this.receiveEvent.reConnect();
-        } else {
-            this.receiveEvent.logout("onClose");
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-
+        this.receiveEvent.logout("onClose");
+        if (null != statusCallBack) {
+            statusCallBack.netWorkStatus(StatusCallBack.NetStatus.CLOSE);
+        }
     }
 
     /**
@@ -104,17 +107,21 @@ public class MyWebSocket extends WebSocketClient implements SocketConnect {
     public void onError(Exception ex) {
         Log.e("dds_error", "onError:" + ex.toString());
         this.receiveEvent.logout("onError");
-        connectFlag = false;
+        if (null != statusCallBack) {
+            statusCallBack.netWorkStatus(StatusCallBack.NetStatus.ERROR);
+        }
     }
 
     /**
      * 打开连接
      */
     @Override
-    public void onOpen(ServerHandshake handshakedata) {
+    public void onOpen(ServerHandshake handshake) {
         Log.e("dds_info", "onOpen");
         this.receiveEvent.onOpenCallBack();
-        connectFlag = true;
+        if (null != statusCallBack) {
+            statusCallBack.netWorkStatus(StatusCallBack.NetStatus.CONNECT);
+        }
     }
 
     /**
@@ -126,11 +133,16 @@ public class MyWebSocket extends WebSocketClient implements SocketConnect {
         handleMessage(message);
     }
 
-
-    public void setConnectFlag(boolean flag) {
-        connectFlag = flag;
+    private void sendData(String data) {
+        Log.d(TAG, "  send ====>>>  " + data);
+        try {
+            send(data);
+        } catch (Exception e) {
+            if (null != statusCallBack) {
+                statusCallBack.netWorkStatus(StatusCallBack.NetStatus.CLOSE);
+            }
+        }
     }
-
     // ---------------------------------------处理接收消息-------------------------------------
 
     private void handleMessage(String message) {
@@ -495,11 +507,6 @@ public class MyWebSocket extends WebSocketClient implements SocketConnect {
         JSONObject object = new JSONObject(map);
         final String jsonString = object.toString();
         sendData(jsonString);
-    }
-
-    private void sendData(String data) {
-        Log.d(TAG, "  send ====>>>  " + data);
-        send(data);
     }
 
 

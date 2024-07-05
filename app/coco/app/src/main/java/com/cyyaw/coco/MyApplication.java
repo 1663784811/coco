@@ -38,6 +38,7 @@ public class MyApplication extends Application {
 
 
         WebRtcConfig.init(this, "111111", "sssss", () -> {
+            // 回调
 
         });
 

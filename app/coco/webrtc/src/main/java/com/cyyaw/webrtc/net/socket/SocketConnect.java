@@ -7,7 +7,11 @@ import java.util.List;
  */
 public interface SocketConnect {
 
+    /**
+     * 创建房间
+     */
     void sendCreateRoom(String room, int roomSize, String myId);
+
 
     void sendInvite(String room, String myId, List<String> users, boolean audioOnly);
 
