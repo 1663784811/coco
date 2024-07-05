@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.widget.Toast;
 
 import com.cyyaw.bluetooth.out.BlueToothManager;
+import com.cyyaw.webrtc.StatusCallBack;
 import com.cyyaw.webrtc.WebRtcConfig;
 
 import java.util.Map;
@@ -37,7 +38,7 @@ public class MyApplication extends Application {
         sToast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
 
 
-        WebRtcConfig.init(this, "111111", "sssss", () -> {
+        WebRtcConfig.init(this, "111111", "sssss", (StatusCallBack.NetStatus netStatus) -> {
             // 回调
 
         });
