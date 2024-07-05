@@ -153,7 +153,7 @@ public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent
     }
 
     @Override
-    public void onRing(String fromId) {
+    public void onReceiveRing(String fromId) {
         handler.post(() -> {
             CallSession currentSession = CallEngineKit.Instance().getCurrentSession();
             if (currentSession != null) {

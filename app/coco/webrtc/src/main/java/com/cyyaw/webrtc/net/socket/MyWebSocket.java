@@ -305,7 +305,7 @@ public class MyWebSocket extends WebSocketClient implements SocketConnect {
         Map data = (Map) map.get("data");
         if (data != null) {
             String fromId = (String) data.get("fromID");
-            this.receiveEvent.onRing(fromId);
+            this.receiveEvent.onReceiveRing(fromId);
         }
     }
 

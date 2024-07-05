@@ -23,6 +23,9 @@ public interface SocketConnect {
 
     void sendLeave(String myId, String room, String userId);
 
+    /**
+     * 发送我已经响铃
+     */
     void sendRing(String myId, String targetId, String room);
 
     void sendRefuse(String room, String inviteId, String myId, int refuseType);

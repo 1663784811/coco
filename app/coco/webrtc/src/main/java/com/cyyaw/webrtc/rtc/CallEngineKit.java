@@ -79,16 +79,19 @@ public class CallEngineKit {
         mCurrentCallSession.setCallState(EnumType.CallState.Outgoing);
         // 创建房间
         mCurrentCallSession.askRoom(2);
-        // 显示画面
+        // 显示画面 TODO 页面还没挂载
         mCurrentCallSession.showVideo();
         // 开始响铃
-
-
+        mEvent.shouldStartRing(false);
         return true;
     }
 
     /**
      * 接听电话
+     *
+     * @param room      房间号
+     * @param targetId  对方的ID
+     * @param audioOnly 是否语音
      */
     public boolean startInCall(Context context, final String room, final String targetId, final boolean audioOnly) {
         if (avEngineKit == null) {
@@ -109,7 +112,7 @@ public class CallEngineKit {
         mCurrentCallSession.setTargetId(targetId);
         mCurrentCallSession.setIsComing(true);
         mCurrentCallSession.setCallState(EnumType.CallState.Incoming);
-        // 开始响铃并回复
+        // 开始响铃
         mCurrentCallSession.shouldStartRing();
         // 响铃并回复
         mCurrentCallSession.sendRingBack(targetId, room);

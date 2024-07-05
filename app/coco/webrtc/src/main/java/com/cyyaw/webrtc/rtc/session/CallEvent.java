@@ -67,11 +67,6 @@ public interface CallEvent {
 
 
     /**
-     * 远程响铃
-     */
-    void onRemoteRing();
-
-    /**
      * 开始响铃
      */
     void shouldStartRing(boolean isComing);

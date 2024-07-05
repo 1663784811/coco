@@ -27,7 +27,10 @@ public interface SocketReceiveDataEvent {
 
     void onCancel(String inviteId);
 
-    void onRing(String userId);
+    /**
+     * 接收到对方已响铃
+     */
+    void onReceiveRing(String userId);
 
     /**
      *

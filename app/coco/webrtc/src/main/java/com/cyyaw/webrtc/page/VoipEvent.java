@@ -85,13 +85,6 @@ public class VoipEvent implements CallEvent {
         SocketManager.getInstance().sendIceCandidate(userId, id, label, candidate);
     }
 
-    @Override
-    public void onRemoteRing() {
-
-
-    }
-
-
     //==============================================================================
     @Override
     public void shouldStartRing(boolean isComing) {

@@ -312,8 +312,7 @@ public class CallSession implements EngineCallback {
      */
     public void onRingBack(String userId) {
         if (mEvent != null) {
-            mEvent.onRemoteRing();
-            //mEvent.shouldStartRing(false);
+            Log.i(TAG, "onRemoteRing:  对方已经响铃... " + userId);
         }
     }
 
