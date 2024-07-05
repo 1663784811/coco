@@ -21,12 +21,15 @@ import org.webrtc.SurfaceViewRenderer;
 public class FragmentVideo extends SingleCallFragment {
 
     private static final String TAG = "FragmentVideo";
+
     // 呼出切换语音
     private ImageView outgoingAudioOnlyImageView;
     // 呼入切换语音
     private ImageView incomingAudioOnlyImageView;
     // 连接切换语音
     private ImageView connectedAudioOnlyImageView;
+
+
     // 连接挂断
     private ImageView connectedHangupImageView;
     // 切换的摄像头
@@ -175,6 +178,7 @@ public class FragmentVideo extends SingleCallFragment {
             }
         });
     }
+
 
     @Override
     public void didChangeMode(boolean isAudio) {

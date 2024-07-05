@@ -217,7 +217,7 @@ public class CallSession implements EngineCallback {
         sendTransAudio();
         // 本地切换
         if (sessionCallback != null && sessionCallback.get() != null) {
-            sessionCallback.get().didChangeMode(true);
+            sessionCallback.get().didChangeMode(mIsAudioOnly);
         }
 
     }
@@ -446,7 +446,6 @@ public class CallSession implements EngineCallback {
         }
         // 更换界面
         _callState = EnumType.CallState.Connected;
-        //Log.d(TAG, "joinRoomSucc, sessionCallback.get() = " + sessionCallback.get());
         if (sessionCallback != null && sessionCallback.get() != null) {
             startTime = System.currentTimeMillis();
             sessionCallback.get().didChangeState(_callState);

@@ -29,8 +29,8 @@ public class CallSessionCallbackImpl implements CallSessionCallback {
     }
 
     @Override
-    public void didChangeMode(boolean var1) {
-        handler.post(() -> currentFragment.didChangeMode(var1));
+    public void didChangeMode(boolean isAudio) {
+        handler.post(() -> currentFragment.didChangeMode(isAudio));
     }
 
     @Override

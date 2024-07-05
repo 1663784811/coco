@@ -24,7 +24,7 @@ import com.cyyaw.webrtc.rtc.session.CallSession;
 import com.cyyaw.webrtc.rtc.session.CallSessionCallback;
 
 
-public abstract class SingleCallFragment extends Fragment implements CallSessionCallback {
+public abstract class SingleCallFragment extends Fragment {
     private static final String TAG = "SingleCallFragment";
     // 最小化按钮
     protected ImageView minimizeImageView;
@@ -57,10 +57,10 @@ public abstract class SingleCallFragment extends Fragment implements CallSession
     // 回调
     protected MediaOperationCallback mediaOperationCallback;
 
-    boolean endWithNoAnswerFlag = false;
+
     boolean isConnectionClosed = false;
     // 30秒
-    public static final long OUTGOING_WAITING_TIME = 10 * 1000;
+    public static final long OUTGOING_WAITING_TIME = 30 * 1000;
 
     // 状态
     protected EnumType.CallState currentState;
@@ -188,7 +188,6 @@ public abstract class SingleCallFragment extends Fragment implements CallSession
     }
 
 
-
     public void didError(String error) {
     }
 
@@ -225,10 +224,7 @@ public abstract class SingleCallFragment extends Fragment implements CallSession
         public void run() {
             // 未接听自动挂断
             if (currentState != EnumType.CallState.Connected) {
-                endWithNoAnswerFlag = true;
-                if (mediaOperationCallback != null) {
-                    CallEngineKit.Instance().endCall();
-                }
+                finishCall();
             }
         }
     };

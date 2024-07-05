@@ -41,7 +41,7 @@ public class PhoneCallActivity extends AppCompatActivity implements MediaOperati
     private final Handler handler = new Handler(Looper.getMainLooper());
     private boolean isOutgoing;
     private String targetId;
-    public boolean isAudioOnly;
+    public volatile boolean isAudioOnly;
     private boolean isFromFloatingView;
     private SingleCallFragment currentFragment;
 
