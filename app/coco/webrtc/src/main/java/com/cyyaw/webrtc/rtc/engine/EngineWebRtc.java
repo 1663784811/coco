@@ -8,6 +8,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
+import com.cyyaw.webrtc.rtc.engine.config.RtcConfig;
+import com.cyyaw.webrtc.rtc.engine.config.WebRtcDevice;
 import com.cyyaw.webrtc.rtc.peer.Peer;
 import com.cyyaw.webrtc.rtc.peer.PeerCallBack;
 import com.cyyaw.webrtc.rtc.peer.ProxyVideoSink;

@@ -9,7 +9,7 @@ import android.view.View;
 
 import com.cyyaw.webrtc.rtc.engine.EngineCallback;
 import com.cyyaw.webrtc.rtc.engine.EngineProxy;
-import com.cyyaw.webrtc.rtc.engine.RtcConfig;
+import com.cyyaw.webrtc.rtc.engine.config.RtcConfig;
 import com.cyyaw.webrtc.rtc.engine.EngineWebRtc;
 
 import org.webrtc.IceCandidate;
