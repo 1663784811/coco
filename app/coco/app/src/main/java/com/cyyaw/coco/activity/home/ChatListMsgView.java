@@ -26,6 +26,10 @@ import com.cyyaw.coco.utils.ActivityUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * 聊天列表
+ */
 public class ChatListMsgView extends Fragment implements FriendsListAdapter.ListenerFriends {
 
     private Context context;
@@ -47,7 +51,7 @@ public class ChatListMsgView extends Fragment implements FriendsListAdapter.List
         // 请求网络
 
         // 同步好友
-        FriendsDao instance = FriendsDao.getInstance(context);
+        FriendsDao instance = FriendsDao.getInstance();
 
         instance.getFriends(friendsListAdapter);
         recyclerView.setOnTouchListener((View v, MotionEvent event) -> {

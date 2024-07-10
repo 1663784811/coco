@@ -23,11 +23,18 @@ public class ChatInfoDatabaseHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    public static ChatInfoDatabaseHelper getInstance(Context context) {
-        if (chatInfoDatabaseHelper == null) {
-            chatInfoDatabaseHelper = new ChatInfoDatabaseHelper(context);
-        }
+    public static ChatInfoDatabaseHelper getInstance() {
         return chatInfoDatabaseHelper;
+    }
+
+    public static void init(Context context) {
+        if (chatInfoDatabaseHelper == null) {
+            synchronized (ChatInfoDatabaseHelper.class) {
+                if (null != chatInfoDatabaseHelper) {
+                    chatInfoDatabaseHelper = new ChatInfoDatabaseHelper(context);
+                }
+            }
+        }
     }
 
 

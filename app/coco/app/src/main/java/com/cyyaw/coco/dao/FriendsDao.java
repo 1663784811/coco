@@ -23,18 +23,16 @@ public class FriendsDao {
 
     private static FriendsDao friendsDao;
 
-    private static ChatInfoDatabaseHelper chatInfoDatabaseHelper;
 
     private static final String TAG = "FriendsDao";
 
     private FriendsDao() {
     }
 
-    public static FriendsDao getInstance(Context context) {
+    public static FriendsDao getInstance() {
         if (friendsDao == null) {
             synchronized (FriendsDao.class) {
                 friendsDao = new FriendsDao();
-                chatInfoDatabaseHelper = ChatInfoDatabaseHelper.getInstance(context);
             }
         }
         return friendsDao;
@@ -42,6 +40,7 @@ public class FriendsDao {
 
 
     public List<FriendsEntity> getFriends(FriendsListAdapter adapter) {
+
         List<FriendsEntity> rest = new ArrayList<>();
         for (int i = 0; i < 1; i++) {
             FriendsEntity entity = new FriendsEntity();

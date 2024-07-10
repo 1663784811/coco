@@ -24,6 +24,10 @@ import com.cyyaw.coco.utils.ActivityUtils;
 
 import java.util.List;
 
+
+/**
+ * 好友列表
+ */
 public class ChatListFriendsView extends Fragment implements FriendsListAdapter.ListenerFriends {
 
     private static final String TAG = "ChatListFriendsView";
@@ -45,16 +49,13 @@ public class ChatListFriendsView extends Fragment implements FriendsListAdapter.
         FriendsListAdapter friendsListAdapter = new FriendsListAdapter(context, this);
         recyclerView.setAdapter(friendsListAdapter);
         // 同步好友
-        FriendsDao instance = FriendsDao.getInstance(context);
+        FriendsDao instance = FriendsDao.getInstance();
         instance.getFriends(friendsListAdapter);
 
         recyclerView.setOnTouchListener((View v, MotionEvent event) -> {
-
             v.getParent().requestDisallowInterceptTouchEvent(true);
             return false;
         });
-
-
         return view;
     }
 
@@ -63,6 +64,5 @@ public class ChatListFriendsView extends Fragment implements FriendsListAdapter.
     public void click(View v, FriendsEntity friendsEntity) {
         // 跳转个人中心页面
         PersonCenterActivity.openActivity(context, friendsEntity.getTid(), friendsEntity.getNickName(), friendsEntity.getFace());
-
     }
 }

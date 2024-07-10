@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.widget.Toast;
 
 import com.cyyaw.bluetooth.out.BlueToothManager;
+import com.cyyaw.coco.common.ChatInfoDatabaseHelper;
 import com.cyyaw.webrtc.net.StatusCallBack;
 import com.cyyaw.webrtc.WebRtcConfig;
 
@@ -42,6 +43,9 @@ public class MyApplication extends Application {
 
         // 初始化蓝牙
         BlueToothManager.init(this);
+
+
+        ChatInfoDatabaseHelper.init(this);
 
     }
 

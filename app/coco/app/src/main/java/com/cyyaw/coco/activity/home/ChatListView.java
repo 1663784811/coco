@@ -16,6 +16,10 @@ import com.cyyaw.cui.fragment.CuiNavBarFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * 消息页面
+ */
 public class ChatListView extends Fragment {
 
     private FragmentActivity context;
