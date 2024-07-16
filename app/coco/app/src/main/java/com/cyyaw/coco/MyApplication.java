@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Handler;
+import android.os.Looper;
 import android.widget.Toast;
 
 import com.cyyaw.bluetooth.out.BlueToothManager;
@@ -21,8 +22,7 @@ public class MyApplication extends Application {
 
 
     public static final String appId = "sss";
-
-    private static final Handler sHandler = new Handler();
+    private static final Handler sHandler = new Handler(Looper.getMainLooper());
     // 单例Toast,避免重复创建，显示时间过长
     private static Toast sToast;
     // 蓝牙列表
@@ -38,7 +38,7 @@ public class MyApplication extends Application {
         appContext = this;
         sToast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
         ChatInfoDatabaseHelper.init(this);
-        run(()->{
+        run(() -> {
             WebRtcConfig.init(appContext, "111111", "sssss", (StatusCallBack.NetStatus netStatus, String msg) -> {
                 // 回调
             });
@@ -61,6 +61,11 @@ public class MyApplication extends Application {
     public static void post(Runnable runnable) {
         sHandler.post(runnable);
     }
+
+    public static void post(Runnable runnable, long uptimeMillis) {
+        sHandler.postDelayed(runnable, uptimeMillis);
+    }
+
 
     public static void run(Runnable runnable) {
         ThreadPool.execute(runnable);
