@@ -1,19 +1,16 @@
 package com.cyyaw.coco.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
-import androidx.viewpager2.widget.ViewPager2;
 
 import com.cyyaw.coco.MyApplication;
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.activity.home.ChatListView;
 import com.cyyaw.coco.activity.home.FindView;
-import com.cyyaw.coco.activity.home.HomeView;
 import com.cyyaw.coco.activity.home.MyView;
 import com.cyyaw.coco.activity.home.adapter.MyPagerAdapter;
 import com.cyyaw.coco.common.BaseAppCompatActivity;
@@ -39,11 +36,6 @@ public class MainActivity extends BaseAppCompatActivity {
         context.startActivity(intent);
     }
 
-    @Override
-    public Activity getActivity() {
-        return this;
-    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +45,8 @@ public class MainActivity extends BaseAppCompatActivity {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         }
+
+
         // =====================================   tabbar
 //        tabBarData.add(new TabBarItemEntity("设备", R.mipmap.tab_more_unselect, R.mipmap.tab_more_select));
         tabBarData.add(new TabBarItemEntity("探索", R.mipmap.tab_home_unselect, R.mipmap.tab_home_select));

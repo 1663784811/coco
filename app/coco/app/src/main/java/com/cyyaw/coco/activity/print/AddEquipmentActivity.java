@@ -1,6 +1,5 @@
 package com.cyyaw.coco.activity.print;
 
-import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.os.Bundle;
 
@@ -39,12 +38,6 @@ public class AddEquipmentActivity extends BaseAppCompatActivity {
     private void scanLeDevice() {
 
 
-
     }
 
-
-    @Override
-    public Activity getActivity() {
-        return this;
-    }
 }

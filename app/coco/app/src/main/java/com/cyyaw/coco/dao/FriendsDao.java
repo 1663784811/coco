@@ -67,7 +67,9 @@ public class FriendsDao {
                             friends.setFace("https://m.360buyimg.com/babel/jfs/t1/60865/19/20309/4778/660157d4F65db1655/b869b66cd4a18079.png");
                         }
                         friends.setNickName(user.getString("trueName"));
-                        adapter.updateData(friends);
+                        if(null != adapter){
+                            adapter.updateData(friends);
+                        }
                     }
                 }
                 Log.i(TAG, "getFriends: " + body);

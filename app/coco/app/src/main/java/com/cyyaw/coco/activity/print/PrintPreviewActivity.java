@@ -79,11 +79,6 @@ public class PrintPreviewActivity extends BaseAppCompatActivity implements BlueT
     }
 
     @Override
-    public Activity getActivity() {
-        return this;
-    }
-
-    @Override
     public void statusCallBack(String address, BtStatus status) {
         blueToothStatus.setText(status.getNote());
     }

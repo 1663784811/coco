@@ -36,7 +36,7 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
             PermissionsCode permissionsCode = PermissionsCode.getPermissionsCode(otherPermissions);
             otherPermissions = null;
             if (permissionsCode != null) {
-                ActivityCompat.requestPermissions(getActivity(), new String[]{permissionsCode.getPermissions()}, permissionsCode.getCode());
+                ActivityCompat.requestPermissions(this, new String[]{permissionsCode.getPermissions()}, permissionsCode.getCode());
             }
         }
     });
@@ -48,7 +48,7 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
         if (permissions.length > 0) {
             PermissionsCode permissionsCode = PermissionsCode.getPermissionsCode(permissions[0]);
             if (null != permissionsCode) {
-                if (PermissionsCode.alreadyPermissions(getActivity(), permissionsCode)) {
+                if (PermissionsCode.alreadyPermissions(this, permissionsCode)) {
                     PermissionsCode.PermissionsSuccessCallback successCallback = permissionsCode.getSuccessCallback();
                     if (null != successCallback) {
                         successCallback.run();
@@ -75,7 +75,7 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
     public void requestPermissionsFn(PermissionsCode permissionsCode, PermissionsCode.PermissionsSuccessCallback successCallback, PermissionsCode.PermissionsErrorCallback errorCallback) {
         otherPermissions = null;
         // 检查是否已经有这个权限了
-        if (PermissionsCode.alreadyPermissions(getActivity(), permissionsCode)) {
+        if (PermissionsCode.alreadyPermissions(this, permissionsCode)) {
             successCallback.run();
         } else {
             String sysActivity = permissionsCode.getSysActivity();
@@ -99,13 +99,12 @@ public abstract class BaseAppCompatActivity extends AppCompatActivity {
             } else {
                 permissionsCode.setSuccessCallback(successCallback);
                 permissionsCode.setErrorCallback(errorCallback);
-                ActivityCompat.requestPermissions(getActivity(), new String[]{permissionsCode.getPermissions()}, permissionsCode.getCode());
+                ActivityCompat.requestPermissions(this, new String[]{permissionsCode.getPermissions()}, permissionsCode.getCode());
             }
         }
     }
 
 
-    public abstract Activity getActivity();
 
 
 }

@@ -45,7 +45,12 @@ public class BlueToothManager {
 
 
     public static BlueToothManager getInstance() {
-        blueToothManager.bluetoothAdapter.isEnabled();
+        if (!blueToothManager.bluetoothAdapter.isEnabled()) {
+            if (ActivityCompat.checkSelfPermission(blueToothManager.cxt, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                return null;
+            }
+            blueToothManager.bluetoothAdapter.enable();
+        }
         return blueToothManager;
     }
 
