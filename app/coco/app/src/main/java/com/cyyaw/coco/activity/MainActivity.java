@@ -54,7 +54,7 @@ public class MainActivity extends BaseAppCompatActivity {
             finish();
         }
         // =====================================   tabbar
-        tabBarData.add(new TabBarItemEntity("设备", R.mipmap.tab_home_unselect, R.mipmap.tab_home_select));
+//        tabBarData.add(new TabBarItemEntity("设备", R.mipmap.tab_more_unselect, R.mipmap.tab_more_select));
         tabBarData.add(new TabBarItemEntity("探索", R.mipmap.tab_home_unselect, R.mipmap.tab_home_select));
         tabBarData.add(new TabBarItemEntity("消息", R.mipmap.tab_speech_unselect, R.mipmap.tab_speech_select));
         tabBarData.add(new TabBarItemEntity("我的", R.mipmap.tab_contact_unselect, R.mipmap.tab_contact_select));
@@ -63,14 +63,14 @@ public class MainActivity extends BaseAppCompatActivity {
         // 初始化ViewPage
         List<Fragment> pageData = new ArrayList<>();
         pageData.add(new FindView(this));
-        pageData.add(new HomeView(this));
+//        pageData.add(new HomeView(this));
         pageData.add(new ChatListView(this));
         pageData.add(new MyView(this));
 
         ViewPager viewPager = findViewById(R.id.app_tabBar_ViewPager);
         MyPagerAdapter myPagerAdapter = new MyPagerAdapter(pageData, getSupportFragmentManager());
         viewPager.setAdapter(myPagerAdapter);
-        viewPager.setCurrentItem(tabBar.getCurrentTab());
+        viewPager.setCurrentItem(0);
         // ======= 事件设置
         tabBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override

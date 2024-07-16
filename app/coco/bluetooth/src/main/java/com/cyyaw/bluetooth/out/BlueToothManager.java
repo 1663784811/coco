@@ -45,6 +45,13 @@ public class BlueToothManager {
 
 
     public static BlueToothManager getInstance() {
+
+        blueToothManager.bluetoothAdapter.isEnabled();
+
+
+
+
+
         return blueToothManager;
     }
 

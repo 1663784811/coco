@@ -49,11 +49,11 @@ public class MyView extends Fragment {
 
 
         List<ContentEntity> dataList = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-            ContentEntity contentEntity = new ContentEntity();
-            contentEntity.setUserName("sss");
-            dataList.add(contentEntity);
-        }
+//        for (int i = 0; i < 100; i++) {
+//            ContentEntity contentEntity = new ContentEntity();
+//            contentEntity.setUserName("sss");
+//            dataList.add(contentEntity);
+//        }
         //  contentListAdapter.setDataList(dataList);
 
 

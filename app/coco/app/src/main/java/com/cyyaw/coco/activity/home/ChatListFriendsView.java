@@ -49,8 +49,7 @@ public class ChatListFriendsView extends Fragment implements FriendsListAdapter.
         FriendsListAdapter friendsListAdapter = new FriendsListAdapter(context, this);
         recyclerView.setAdapter(friendsListAdapter);
         // 同步好友
-        FriendsDao instance = FriendsDao.getInstance();
-        instance.getFriends(friendsListAdapter);
+        FriendsDao.getInstance().getFriends(friendsListAdapter);
 
         recyclerView.setOnTouchListener((View v, MotionEvent event) -> {
             v.getParent().requestDisallowInterceptTouchEvent(true);

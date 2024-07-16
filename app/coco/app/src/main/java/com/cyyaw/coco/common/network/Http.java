@@ -66,7 +66,10 @@ public class Http {
         Request.Builder builder = new Request.Builder();
         if (null != headers) {
             for (String key : headers.keySet()) {
-                builder.addHeader(key, headers.get(key).toString());
+                Object o = headers.get(key);
+                if (null != o) {
+                    builder.addHeader(key, headers.get(key).toString());
+                }
             }
         }
         return builder;

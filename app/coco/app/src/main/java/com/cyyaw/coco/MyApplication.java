@@ -30,22 +30,21 @@ public class MyApplication extends Application {
     // 线程池
     private static final Executor ThreadPool = Executors.newCachedThreadPool();
 
-    private static Context appContext;
+    private static Application appContext;
 
     @Override
     public void onCreate() {
         super.onCreate();
         appContext = this;
         sToast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
-        WebRtcConfig.init(this, "111111", "sssss", (StatusCallBack.NetStatus netStatus, String msg) -> {
-            // 回调
-        });
-
-        // 初始化蓝牙
-        BlueToothManager.init(this);
-
-
         ChatInfoDatabaseHelper.init(this);
+        run(()->{
+            WebRtcConfig.init(appContext, "111111", "sssss", (StatusCallBack.NetStatus netStatus, String msg) -> {
+                // 回调
+            });
+            // 初始化蓝牙
+            BlueToothManager.init(appContext);
+        });
 
     }
 
