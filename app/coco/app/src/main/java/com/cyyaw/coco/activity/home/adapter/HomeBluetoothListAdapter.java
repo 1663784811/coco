@@ -75,11 +75,9 @@ public class HomeBluetoothListAdapter extends RecyclerView.Adapter<HomeBluetooth
         }
 
         public void setData(BluetoothEntity bluetoothEntity) {
-            Button btn = view.findViewById(R.id.goPrintButton);
+            View btn = view.findViewById(R.id.equipmentItem);
             TextView blueToothName = view.findViewById(R.id.blueToothName);
             blueToothName.setText(bluetoothEntity.getName());
-            TextView blueToothAddress = view.findViewById(R.id.blueToothAddress);
-            blueToothAddress.setText(bluetoothEntity.getAddress());
             TextView blueToothRssi = view.findViewById(R.id.blueToothRssi);
             blueToothRssi.setText(bluetoothEntity.getRssi() + "");
             String address = bluetoothEntity.getAddress();

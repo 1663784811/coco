@@ -19,7 +19,7 @@ public class IndexActivity extends AppCompatActivity {
         MyApplication.post(() -> {
             MainActivity.openActivity(IndexActivity.this);
             finish();
-        }, 5000);
+        }, 1000);
 
 
     }
