@@ -42,8 +42,14 @@ public class ChatInfoDatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         // 创建表的 SQL 语句
         Log.e(TAG, "onCreate: 创建表的 SQL 语句");
-        String CREATE_TABLE = "CREATE TABLE mytable ( id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, age INTEGER)";
-        db.execSQL(CREATE_TABLE);
+        // 用户信息
+        db.execSQL("create table user_info( " +
+                "id INTEGER PRIMARY KEY, tid varch(32), nickName varchar(255), note varchar(255)," +
+                " account varchar(255), phone varchar(20), face text,  sex varchar(4))  ");
+
+//        db.execSQL(" ");
+
+
     }
 
     @Override
@@ -55,10 +61,11 @@ public class ChatInfoDatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public void openReadConnect() {
+    public SQLiteDatabase openReadConnect() {
         if (null == mRead || !mRead.isOpen()) {
-            mRead = chatInfoDatabaseHelper.getReadableDatabase();
+            mRead = getReadableDatabase();
         }
+        return mRead;
     }
 
     public void openWriteConnect() {

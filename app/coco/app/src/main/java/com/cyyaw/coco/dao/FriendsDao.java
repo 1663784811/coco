@@ -51,6 +51,9 @@ public class FriendsDao {
         adapter.setDataList(rest);
 
 
+//        ChatInfoDatabaseHelper.getInstance().openReadConnect().query();
+
+
         AppRequest.getRequest("http://192.168.0.103:8080/app/" + MyApplication.appId + "/friends/myFriends", (String body) -> {
             JSONObject json = JSONObject.parseObject(body);
             JSONArray data = json.getJSONArray("data");

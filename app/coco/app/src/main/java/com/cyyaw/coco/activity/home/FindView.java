@@ -1,11 +1,12 @@
 package com.cyyaw.coco.activity.home;
 
-import android.util.AttributeSet;
+import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.view.ViewGroup;
 
-import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -15,39 +16,26 @@ import com.cyyaw.bluetooth.out.BlueToothManager;
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.activity.home.adapter.HomeBluetoothListAdapter;
 import com.cyyaw.coco.activity.home.adapter.StaggeredGridLayoutManagerNonScrollable;
-import com.cyyaw.coco.common.BaseAppCompatActivity;
 
-public class FindView extends LinearLayout {
+public class FindView extends Fragment {
 
-    private BaseAppCompatActivity context;
+    private static final String TAG = FindView.class.getName();
 
     private HomeBluetoothListAdapter homeBluetoothListAdapter;
 
+    private Context context;
 
-    public FindView(BaseAppCompatActivity context) {
-        super(context);
+    public FindView(Context context) {
         this.context = context;
-        initView(null);
-    }
-
-    public FindView(BaseAppCompatActivity context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-        this.context = context;
-        initView(null);
-    }
-
-    public FindView(BaseAppCompatActivity context, @Nullable AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        this.context = context;
-        initView(null);
     }
 
 
-    private void initView(AttributeSet attrs) {
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // =============== 加载布局
-        View viewHome = LayoutInflater.from(context).inflate(R.layout.activity_main_find, this, true);
+        View view = inflater.inflate(R.layout.activity_main_find, container, false);
         // =============== 设置适配器
-        RecyclerView recyclerView = viewHome.findViewById(R.id.equipmentList);
+        RecyclerView recyclerView = view.findViewById(R.id.equipmentList);
         // 瀑布流
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManagerNonScrollable(2, StaggeredGridLayoutManager.VERTICAL);
 //        LinearLayoutManager layoutManager = new LinearLayoutManagerNonScrollable(context);
@@ -72,5 +60,7 @@ public class FindView extends LinearLayout {
             }
         });
         BlueToothManager.getInstance().discoveryBlueTooth();
+
+        return view;
     }
 }

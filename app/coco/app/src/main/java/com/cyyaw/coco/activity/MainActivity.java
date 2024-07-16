@@ -12,6 +12,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.cyyaw.coco.MyApplication;
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.activity.home.ChatListView;
+import com.cyyaw.coco.activity.home.FindView;
 import com.cyyaw.coco.activity.home.HomeView;
 import com.cyyaw.coco.activity.home.MyView;
 import com.cyyaw.coco.activity.home.adapter.MyPagerAdapter;
@@ -53,7 +54,7 @@ public class MainActivity extends BaseAppCompatActivity {
             finish();
         }
         // =====================================   tabbar
-//        tabBarData.add(new TabBarItemEntity("发现", R.mipmap.tab_home_unselect, R.mipmap.tab_home_select));
+        tabBarData.add(new TabBarItemEntity("设备", R.mipmap.tab_home_unselect, R.mipmap.tab_home_select));
         tabBarData.add(new TabBarItemEntity("探索", R.mipmap.tab_home_unselect, R.mipmap.tab_home_select));
         tabBarData.add(new TabBarItemEntity("消息", R.mipmap.tab_speech_unselect, R.mipmap.tab_speech_select));
         tabBarData.add(new TabBarItemEntity("我的", R.mipmap.tab_contact_unselect, R.mipmap.tab_contact_select));
@@ -61,6 +62,7 @@ public class MainActivity extends BaseAppCompatActivity {
         tabBar.setTabData(tabBarData);
         // 初始化ViewPage
         List<Fragment> pageData = new ArrayList<>();
+        pageData.add(new FindView(this));
         pageData.add(new HomeView(this));
         pageData.add(new ChatListView(this));
         pageData.add(new MyView(this));
