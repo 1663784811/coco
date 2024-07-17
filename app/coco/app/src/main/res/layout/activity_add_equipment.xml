@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.print.AddEquipmentActivity">
+    android:id="@+id/add_equipment"
+    >
 
     <LinearLayout
         android:id="@+id/header_title"
@@ -26,6 +27,8 @@
             android:layout_height="match_parent"
             android:text="sssssssssssssss" />
         <!-- 　搜索蓝牙， 添加蓝牙， 发送数据   -->
+
+
     </LinearLayout>
 
 

@@ -12,6 +12,7 @@ import com.cyyaw.coco.R;
 import com.cyyaw.coco.common.BaseAppCompatActivity;
 import com.cyyaw.coco.common.permission.PermissionsCode;
 import com.cyyaw.cui.fragment.CuiNavBarFragment;
+import com.cyyaw.cui.fragment.CuiPopupFragment;
 
 /**
  * 添加设备
@@ -37,6 +38,8 @@ public class AddEquipmentActivity extends BaseAppCompatActivity {
         CuiNavBarFragment nav = new CuiNavBarFragment("添加设备");
         getSupportFragmentManager().beginTransaction().add(R.id.header_title, nav).commit();
 
+        CuiPopupFragment popup = new CuiPopupFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.add_equipment, popup).commit();
 
 
         // 打开蓝牙、搜索
