@@ -43,6 +43,19 @@ public class ChatInfoDatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
+     * 查询一条数据
+     */
+    public static JSONObject queryDataOne(String sql, String[] strings) {
+        JSONArray arr = queryData(sql, strings);
+        if (null != arr && arr.size() > 0) {
+            return arr.getJSONObject(0);
+        } else {
+            return null;
+        }
+    }
+
+
+    /**
      * 查询数据
      */
     public static JSONArray queryData(String sql) {
@@ -79,6 +92,20 @@ public class ChatInfoDatabaseHelper extends SQLiteOpenHelper {
                 values.put(key, data.get(key) + "");
             }
             chatInfoDatabaseHelper.openWriteConnect().insert(table, null, values);
+        } else {
+            MyApplication.toast("数据库异常, 没被初始化...");
+        }
+    }
+
+    public static void updateByTid(String table, Map<String, Object> data) {
+        if (null != chatInfoDatabaseHelper) {
+            ContentValues values = new ContentValues();
+            for (String key : data.keySet()) {
+                values.put(key, data.get(key) + "");
+            }
+            String tid = data.get("tid") + "";
+            String id = data.get("id") + "";
+            chatInfoDatabaseHelper.openWriteConnect().update(table, values, "id =? and tid = ?", new String[]{id, tid});
         } else {
             MyApplication.toast("数据库异常, 没被初始化...");
         }

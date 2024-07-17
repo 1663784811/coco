@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cyyaw.coco.R;
-import com.cyyaw.coco.activity.PersonCenterActivity;
 import com.cyyaw.coco.activity.home.adapter.FriendsListAdapter;
 import com.cyyaw.coco.dao.FriendsDao;
 import com.cyyaw.coco.dao.table.FriendsEntity;
@@ -24,11 +23,14 @@ import java.util.List;
 /**
  * 好友列表
  */
-public class ChatListFriendsView extends Fragment implements FriendsListAdapter.ListenerFriends {
+public class ChatListFriendsView extends Fragment implements FriendsDao.UpdateDataCallBack {
 
     private static final String TAG = "ChatListFriendsView";
 
     private Context context;
+
+    private FriendsListAdapter friendsListAdapter;
+
 
     public ChatListFriendsView(Context context) {
         this.context = context;
@@ -42,23 +44,21 @@ public class ChatListFriendsView extends Fragment implements FriendsListAdapter.
         RecyclerView recyclerView = view.findViewById(R.id.friendsList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
-        FriendsListAdapter friendsListAdapter = new FriendsListAdapter(context, this);
+        friendsListAdapter = new FriendsListAdapter(context);
         recyclerView.setAdapter(friendsListAdapter);
         // 同步好友
-        List<FriendsEntity> friendsList = FriendsDao.getFriends();
-        friendsListAdapter.setDataList(friendsList);
-
+        updateData();
         recyclerView.setOnTouchListener((View v, MotionEvent event) -> {
             v.getParent().requestDisallowInterceptTouchEvent(true);
             return false;
         });
+        FriendsDao.setUpdateDataCallBack(this);
         return view;
     }
 
-
     @Override
-    public void click(View v, FriendsEntity friendsEntity) {
-        // 跳转个人中心页面
-        PersonCenterActivity.openActivity(context, friendsEntity.getTid(), friendsEntity.getNickName(), friendsEntity.getFace());
+    public void updateData() {
+        List<FriendsEntity> friendsList = FriendsDao.getFriends();
+        friendsListAdapter.setDataList(friendsList);
     }
 }

@@ -12,16 +12,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cyyaw.coco.R;
-import com.cyyaw.coco.activity.MessageActivity;
 import com.cyyaw.coco.activity.home.adapter.FriendsListAdapter;
 import com.cyyaw.coco.dao.FriendsDao;
-import com.cyyaw.coco.dao.table.FriendsEntity;
 
 
 /**
  * 聊天列表
  */
-public class ChatListMsgView extends Fragment implements FriendsListAdapter.ListenerFriends {
+public class ChatListMsgView extends Fragment {
 
     private Context context;
 
@@ -37,7 +35,7 @@ public class ChatListMsgView extends Fragment implements FriendsListAdapter.List
         RecyclerView recyclerView = view.findViewById(R.id.chatList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
-        FriendsListAdapter friendsListAdapter = new FriendsListAdapter(context, this);
+        FriendsListAdapter friendsListAdapter = new FriendsListAdapter(context);
         recyclerView.setAdapter(friendsListAdapter);
         // 请求网络
 
@@ -50,9 +48,4 @@ public class ChatListMsgView extends Fragment implements FriendsListAdapter.List
         return view;
     }
 
-
-    @Override
-    public void click(View v, FriendsEntity friendsEntity) {
-        MessageActivity.openActivity(context, friendsEntity.getTid(), friendsEntity.getNickName(), friendsEntity.getFace());
-    }
 }

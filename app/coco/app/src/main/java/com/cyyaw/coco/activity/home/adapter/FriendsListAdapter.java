@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.cyyaw.coco.R;
+import com.cyyaw.coco.activity.PersonCenterActivity;
 import com.cyyaw.coco.dao.table.FriendsEntity;
 
 import java.util.ArrayList;
@@ -20,19 +21,16 @@ import java.util.List;
 public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.ViewHolder> {
     private final List<FriendsEntity> dataList = new ArrayList<>();
 
-    private ListenerFriends listenerFriends;
-
     private Context context;
 
-    public FriendsListAdapter(Context context, ListenerFriends listener) {
+    public FriendsListAdapter(Context context) {
         this.context = context;
-        this.listenerFriends = listener;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_friends_item, parent, false), listenerFriends);
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_friends_item, parent, false));
     }
 
     @Override
@@ -55,6 +53,9 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
     }
 
 
+    /**
+     *
+     */
     public void setDataList(List<FriendsEntity> friendsList) {
         dataList.clear();
         for (int i = 0; i < friendsList.size(); i++) {
@@ -65,12 +66,10 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
 
     class ViewHolder extends RecyclerView.ViewHolder {
         private View view;
-        private ListenerFriends listenerFriends;
 
-        public ViewHolder(View view, ListenerFriends listenerFriends) {
+        public ViewHolder(View view) {
             super(view);
             this.view = view;
-            this.listenerFriends = listenerFriends;
         }
 
         public void setData(FriendsEntity friendsEntity) {
@@ -85,16 +84,10 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
              * 点击
              */
             friendsItem.setOnClickListener((View v) -> {
-                listenerFriends.click(v, friendsEntity);
+                PersonCenterActivity.openActivity(context, friendsEntity.getTid(), friendsEntity.getNickName(), friendsEntity.getFace());
             });
         }
     }
 
-
-    public interface ListenerFriends {
-
-        void click(View v, FriendsEntity friendsEntity);
-
-    }
 
 }
