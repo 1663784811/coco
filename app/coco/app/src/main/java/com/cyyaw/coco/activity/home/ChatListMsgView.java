@@ -14,6 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.activity.home.adapter.FriendsListAdapter;
 import com.cyyaw.coco.dao.FriendsDao;
+import com.cyyaw.coco.dao.table.FriendsEntity;
+
+import java.util.List;
 
 
 /**
@@ -40,7 +43,10 @@ public class ChatListMsgView extends Fragment {
         // 请求网络
 
         // 同步好友
-        FriendsDao.getFriends();
+        List<FriendsEntity> friends = FriendsDao.getFriends();
+        friendsListAdapter.setDataList(friends);
+
+
         recyclerView.setOnTouchListener((View v, MotionEvent event) -> {
             v.getParent().requestDisallowInterceptTouchEvent(true);
             return false;

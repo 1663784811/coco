@@ -37,7 +37,6 @@ public class ChatListFriendsView extends Fragment implements FriendsDao.UpdateDa
     }
 
 
-    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.chat_friends, container, false);
