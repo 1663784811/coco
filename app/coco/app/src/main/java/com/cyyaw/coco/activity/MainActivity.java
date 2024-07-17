@@ -5,14 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.cyyaw.coco.MyApplication;
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.activity.home.ChatListView;
 import com.cyyaw.coco.activity.home.FindView;
 import com.cyyaw.coco.activity.home.MyView;
-import com.cyyaw.coco.activity.home.adapter.MyPagerAdapter;
+import com.cyyaw.coco.activity.home.adapter.MyViewPage2Adapter;
 import com.cyyaw.coco.common.BaseAppCompatActivity;
 import com.cyyaw.tabbar.CommonTabLayout;
 import com.cyyaw.tabbar.listener.CustomTabEntity;
@@ -29,6 +29,7 @@ public class MainActivity extends BaseAppCompatActivity {
 
     // =====================================   tabbar
     private final List<CustomTabEntity> tabBarData = new ArrayList<>();
+    ViewPager2 viewPager;
     // =====================================
 
     public static void openActivity(Context context) {
@@ -52,6 +53,7 @@ public class MainActivity extends BaseAppCompatActivity {
         tabBarData.add(new TabBarItemEntity("探索", R.mipmap.tab_home_unselect, R.mipmap.tab_home_select));
         tabBarData.add(new TabBarItemEntity("消息", R.mipmap.tab_speech_unselect, R.mipmap.tab_speech_select));
         tabBarData.add(new TabBarItemEntity("我的", R.mipmap.tab_contact_unselect, R.mipmap.tab_contact_select));
+
         CommonTabLayout tabBar = findViewById(R.id.app_tabBar);
         tabBar.setTabData(tabBarData);
         // 初始化ViewPage
@@ -61,10 +63,13 @@ public class MainActivity extends BaseAppCompatActivity {
         pageData.add(new ChatListView(this));
         pageData.add(new MyView(this));
 
-        ViewPager viewPager = findViewById(R.id.app_tabBar_ViewPager);
-        MyPagerAdapter myPagerAdapter = new MyPagerAdapter(pageData, getSupportFragmentManager());
+        viewPager = findViewById(R.id.app_tabBar_ViewPager);
+        MyViewPage2Adapter myPagerAdapter = new MyViewPage2Adapter(this, pageData);
+
         viewPager.setAdapter(myPagerAdapter);
         viewPager.setCurrentItem(0);
+
+
         // ======= 事件设置
         tabBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
@@ -77,21 +82,14 @@ public class MainActivity extends BaseAppCompatActivity {
             }
         });
 
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-
+        viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
+                super.onPageSelected(position);
                 tabBar.setCurrentTab(position);
             }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-            }
         });
-
+        viewPager.setUserInputEnabled(false);
         // =====================================
     }
 
