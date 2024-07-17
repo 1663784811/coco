@@ -1,53 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <!--  网络:   -->
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <!-- 悬浮窗口:  用于允许应用创建悬浮窗口，即显示在其他应用之上的窗口 运行时向用户请求此权限  -->
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <!--  广播:  设备启动完成后接收到 BOOT_COMPLETED 广播  -->
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <!--  是一个用于在外部存储上进行读操作的 Android 权限。这个权限允许应用访问设备的外部存储（如 SD 卡）以进行文件读取操作。通常，这个权限用于读取用户数据、缓存、下载的文件等  -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
-    <!--  33中已取消了这个权限:  是一个用于在外部存储上进行写操作的 Android 权限。这个权限允许应用访问设备的外部存储（如 SD 卡）以进行文件写入操作。通常，这个权限用于保存和读取用户数据、缓存、下载的文件等  -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="32" />
-    <!--  音频  -->
+    <!-- 网络: -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 悬浮窗口:  用于允许应用创建悬浮窗口，即显示在其他应用之上的窗口 运行时向用户请求此权限 -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> <!-- 广播:  设备启动完成后接收到 BOOT_COMPLETED 广播 -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" /> <!-- 是一个用于在外部存储上进行读操作的 Android 权限。这个权限允许应用访问设备的外部存储（如 SD 卡）以进行文件读取操作。通常，这个权限用于读取用户数据、缓存、下载的文件等 -->
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" /> <!-- 33中已取消了这个权限:  是一个用于在外部存储上进行写操作的 Android 权限。这个权限允许应用访问设备的外部存储（如 SD 卡）以进行文件写入操作。通常，这个权限用于保存和读取用户数据、缓存、下载的文件等 -->
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" /> <!-- 音频 -->
     <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <!--  图片  -->
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-    <!--  视频  -->
-    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
-    <!--  是 Android 系统引入的一个新权限，用于控制应用是否能够直接访问外部存储（例如 SD 卡等）。这个权限通常用于限制应用对外部存储的直接访问，以提高用户数据的安全性和隐私保护  -->
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" tools:ignore="ScopedStorage" />
-    <!--    获取联系人权限  -->
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <!--  无障碍服务  -->
-    <uses-permission android:name="android.permission.ACCESSIBILITY_SERVICE" />
-    <!--  摄像头  -->
-    <uses-feature android:name="android.hardware.camera" android:required="false" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <!--   获取地理位置 -->
-    <!--   粗略定位的话请加上此权限  -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <!--   精确定位的话请加上此权限   -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <!--  定位权限，Android Q 新增后台定位权限  -->
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
-    <!--  蓝牙  -->
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
-    <!--Android12 的蓝牙权限 如果您的应用与已配对的蓝牙设备通信或者获取当前手机蓝牙是否打开-->
-    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
-    <!--Android12 的蓝牙权限 如果您的应用查找蓝牙设备（如蓝牙低功耗 (BLE) 外围设备）-->
-    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" android:usesPermissionFlags="neverForLocation" tools:targetApi="s" />
-    <!--Android12 的蓝牙权限 如果您的应用使当前设备可被其他蓝牙设备检测到-->
-    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED" tools:ignore="ProtectedPermissions" />
-    <uses-feature android:name="android.software.companion_device_setup"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" /> <!-- 图片 -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" /> <!-- 视频 -->
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" /> <!-- 是 Android 系统引入的一个新权限，用于控制应用是否能够直接访问外部存储（例如 SD 卡等）。这个权限通常用于限制应用对外部存储的直接访问，以提高用户数据的安全性和隐私保护 -->
+    <uses-permission
+        android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" /> <!-- 获取联系人权限 -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" /> <!-- 无障碍服务 -->
+    <uses-permission android:name="android.permission.ACCESSIBILITY_SERVICE" /> <!-- 摄像头 -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
 
+    <uses-permission android:name="android.permission.CAMERA" /> <!-- 获取地理位置 -->
+    <!-- 粗略定位的话请加上此权限 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 精确定位的话请加上此权限 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 定位权限，Android Q 新增后台定位权限 -->
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" /> <!-- 蓝牙 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /> <!-- Android12 的蓝牙权限 如果您的应用与已配对的蓝牙设备通信或者获取当前手机蓝牙是否打开 -->
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" /> <!-- Android12 的蓝牙权限 如果您的应用查找蓝牙设备（如蓝牙低功耗 (BLE) 外围设备） -->
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_SCAN"
+        android:usesPermissionFlags="neverForLocation"
+        tools:targetApi="s" /> <!-- Android12 的蓝牙权限 如果您的应用使当前设备可被其他蓝牙设备检测到 -->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_PRIVILEGED"
+        tools:ignore="ProtectedPermissions" />
+
+    <uses-feature android:name="android.software.companion_device_setup" />
 
     <application
         android:name=".MyApplication"
@@ -61,7 +57,9 @@
         android:theme="@style/Theme.Coco"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
+        <activity
+            android:name=".activity.print.PrintInputActivity"
+            android:exported="false" />
         <activity
             android:name=".IndexActivity"
             android:exported="true"
@@ -75,7 +73,6 @@
         <activity
             android:name=".activity.MainActivity"
             android:exported="false" />
-
         <activity
             android:name=".activity.AddContentActivity"
             android:exported="false" />

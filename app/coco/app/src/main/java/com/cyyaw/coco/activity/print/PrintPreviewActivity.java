@@ -24,6 +24,7 @@ public class PrintPreviewActivity extends BaseAppCompatActivity implements BlueT
 
 
     private static final String addressKey = "keyAddress";
+    private static final String printDataKey = "printDataKey";
 
     private View nowPrintBtn;
     private PrintBitMapImageView printPager;
@@ -31,11 +32,13 @@ public class PrintPreviewActivity extends BaseAppCompatActivity implements BlueT
     private TextView blueToothStatus;
 
     private String blueToothAddress;
+    private String printData;
 
 
-    public static void openActivity(Context context, String address) {
+    public static void openActivity(Context context, String address, String data) {
         Intent intent = new Intent(context, PrintPreviewActivity.class);
         intent.putExtra(addressKey, address);
+        intent.putExtra(printDataKey, data);
         context.startActivity(intent);
     }
 
@@ -46,6 +49,7 @@ public class PrintPreviewActivity extends BaseAppCompatActivity implements BlueT
         setContentView(R.layout.activity_print_preview);
         // 接收数据
         blueToothAddress = getIntent().getStringExtra(addressKey);
+        printData = getIntent().getStringExtra(printDataKey);
         // ========================
         nowPrintBtn = findViewById(R.id.nowPrintBtn);
         printPager = findViewById(R.id.printPager);
@@ -54,7 +58,7 @@ public class PrintPreviewActivity extends BaseAppCompatActivity implements BlueT
         // ========================
 
         blueToothName.setText("蓝牙: " + blueToothAddress);
-        printPager.setWordData("白云机场综保南区开园3周年，跨境电商进出口货值超300亿元");
+        printPager.setWordData(printData);
         nowPrintBtn.setOnClickListener((View v) -> {
             // 第一步: 获取打印像素数据
             List<byte[]> printImageData = printPager.getPrintImageData();

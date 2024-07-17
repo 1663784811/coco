@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cyyaw.coco.R;
+import com.cyyaw.coco.activity.print.PrintInputActivity;
 import com.cyyaw.coco.activity.print.PrintPreviewActivity;
 import com.cyyaw.coco.dao.table.EquipmentEntity;
 import com.cyyaw.coco.entity.BluetoothEntity;
@@ -98,7 +99,7 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.View
             blueToothName.setText(equipment.getName());
             String address = equipment.getAddress();
             btn.setOnClickListener((View v) -> {
-                PrintPreviewActivity.openActivity(context, address);
+                PrintInputActivity.openActivity(context, address);
             });
         }
     }
