@@ -1,4 +1,4 @@
-package com.cyyaw.coco.entity;
+package com.cyyaw.coco.dao.table;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

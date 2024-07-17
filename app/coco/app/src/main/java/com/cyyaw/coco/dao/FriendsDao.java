@@ -1,16 +1,13 @@
 package com.cyyaw.coco.dao;
 
-import android.content.Context;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.cyyaw.coco.MyApplication;
 import com.cyyaw.coco.activity.home.adapter.FriendsListAdapter;
-import com.cyyaw.coco.common.ChatInfoDatabaseHelper;
 import com.cyyaw.coco.common.network.AppRequest;
-import com.cyyaw.coco.common.network.BaseResult;
-import com.cyyaw.coco.entity.FriendsEntity;
+import com.cyyaw.coco.dao.table.FriendsEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,25 +18,12 @@ import java.util.List;
  */
 public class FriendsDao {
 
-    private static FriendsDao friendsDao;
-
-
     private static final String TAG = "FriendsDao";
 
     private FriendsDao() {
     }
 
-    public static FriendsDao getInstance() {
-        if (friendsDao == null) {
-            synchronized (FriendsDao.class) {
-                friendsDao = new FriendsDao();
-            }
-        }
-        return friendsDao;
-    }
-
-
-    public List<FriendsEntity> getFriends(FriendsListAdapter adapter) {
+    public static List<FriendsEntity> getFriends() {
         List<FriendsEntity> rest = new ArrayList<>();
         for (int i = 0; i < 1; i++) {
             FriendsEntity entity = new FriendsEntity();
@@ -47,7 +31,6 @@ public class FriendsDao {
             entity.setNickName("名称:" + i);
             rest.add(entity);
         }
-        adapter.setDataList(rest);
 
         MyApplication.run(()->{
             //        ChatInfoDatabaseHelper.getInstance().openReadConnect().query();
@@ -67,9 +50,9 @@ public class FriendsDao {
                             friends.setFace("https://m.360buyimg.com/babel/jfs/t1/60865/19/20309/4778/660157d4F65db1655/b869b66cd4a18079.png");
                         }
                         friends.setNickName(user.getString("trueName"));
-                        if(null != adapter){
-                            adapter.updateData(friends);
-                        }
+//                        if(null != adapter){
+//                            adapter.updateData(friends);
+//                        }
                     }
                 }
                 Log.i(TAG, "getFriends: " + body);

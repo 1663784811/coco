@@ -12,13 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.cyyaw.coco.R;
-import com.cyyaw.coco.entity.FriendsEntity;
+import com.cyyaw.coco.dao.table.FriendsEntity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.ViewHolder> {
-    private List<FriendsEntity> dataList = new ArrayList<>();
+    private final List<FriendsEntity> dataList = new ArrayList<>();
 
     private ListenerFriends listenerFriends;
 
@@ -55,8 +55,11 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
     }
 
 
-    public void setDataList(List<FriendsEntity> dataList) {
-        this.dataList = dataList;
+    public void setDataList(List<FriendsEntity> friendsList) {
+        dataList.clear();
+        for (int i = 0; i < friendsList.size(); i++) {
+            dataList.add(friendsList.get(i));
+        }
         notifyItemRangeInserted(0, dataList.size());
     }
 

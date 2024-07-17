@@ -2,29 +2,20 @@ package com.cyyaw.coco.activity.home;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.activity.MessageActivity;
-import com.cyyaw.coco.activity.PersonCenterActivity;
 import com.cyyaw.coco.activity.home.adapter.FriendsListAdapter;
 import com.cyyaw.coco.dao.FriendsDao;
-import com.cyyaw.coco.entity.FriendsEntity;
-import com.cyyaw.coco.utils.ActivityUtils;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.cyyaw.coco.dao.table.FriendsEntity;
 
 
 /**
@@ -51,7 +42,7 @@ public class ChatListMsgView extends Fragment implements FriendsListAdapter.List
         // 请求网络
 
         // 同步好友
-        FriendsDao.getInstance().getFriends(friendsListAdapter);
+        FriendsDao.getFriends();
         recyclerView.setOnTouchListener((View v, MotionEvent event) -> {
             v.getParent().requestDisallowInterceptTouchEvent(true);
             return false;
