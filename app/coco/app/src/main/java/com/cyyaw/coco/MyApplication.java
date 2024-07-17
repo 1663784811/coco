@@ -37,6 +37,7 @@ public class MyApplication extends Application {
         super.onCreate();
         appContext = this;
         sToast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
+        // 初始化数据库
         ChatInfoDatabaseHelper.init(this);
         WebRtcConfig.init(appContext, "111111", "sssss", (StatusCallBack.NetStatus netStatus, String msg) -> {
             // 回调

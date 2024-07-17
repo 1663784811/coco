@@ -17,14 +17,18 @@ import com.cyyaw.coco.entity.BluetoothEntity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeBluetoothListAdapter extends RecyclerView.Adapter<HomeBluetoothListAdapter.ViewHolder> {
+
+/**
+ * 设备适配器
+ */
+public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.ViewHolder> {
 
 
-    private final List<BluetoothEntity> dataList = new ArrayList<>();
+    private final List<EquipmentEntity> dataList = new ArrayList<>();
 
     private final Context context;
 
-    public HomeBluetoothListAdapter(Context context) {
+    public EquipmentAdapter(Context context) {
         this.context = context;
     }
 
@@ -48,21 +52,35 @@ public class HomeBluetoothListAdapter extends RecyclerView.Adapter<HomeBluetooth
     /**
      * 更新数据
      */
-    public void updateData(BluetoothEntity bluetooth) {
-        String address = bluetooth.getAddress();
+    public void updateData(EquipmentEntity equipment) {
+
+        String address = equipment.getAddress();
         boolean h = false;
         for (int i = 0; i < dataList.size(); i++) {
             String ad = dataList.get(i).getAddress();
             if (ad.equals(address)) {
                 h = true;
-                dataList.set(i, bluetooth);
+                dataList.set(i, equipment);
                 notifyDataSetChanged();
                 break;
             }
         }
         if (!h) {
-            dataList.add(bluetooth);
+            dataList.add(equipment);
             notifyItemRangeInserted(dataList.size() - 1, 1);
+        }
+    }
+
+    /**
+     * 设置数据
+     */
+    public void setData(List<EquipmentEntity> equipmentList) {
+        dataList.clear();
+        if (null != equipmentList) {
+            for (int i = 0; i < equipmentList.size(); i++) {
+                dataList.add(equipmentList.get(i));
+            }
+            notifyItemRangeInserted(0, dataList.size());
         }
     }
 
@@ -75,13 +93,11 @@ public class HomeBluetoothListAdapter extends RecyclerView.Adapter<HomeBluetooth
             this.view = view;
         }
 
-        public void setData(BluetoothEntity bluetoothEntity) {
+        public void setData(EquipmentEntity equipment) {
             View btn = view.findViewById(R.id.equipmentItem);
             TextView blueToothName = view.findViewById(R.id.blueToothName);
-            blueToothName.setText(bluetoothEntity.getName());
-            TextView blueToothRssi = view.findViewById(R.id.blueToothRssi);
-            blueToothRssi.setText(bluetoothEntity.getRssi() + "");
-            String address = bluetoothEntity.getAddress();
+            blueToothName.setText(equipment.getName());
+            String address = equipment.getAddress();
             btn.setOnClickListener((View v) -> {
                 PrintPreviewActivity.openActivity(context, address);
             });

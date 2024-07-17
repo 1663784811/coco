@@ -15,18 +15,25 @@ import com.cyyaw.bluetooth.entity.BluetoothEntity;
 import com.cyyaw.bluetooth.out.BlueToothCallBack;
 import com.cyyaw.bluetooth.out.BlueToothManager;
 import com.cyyaw.coco.R;
+import com.cyyaw.coco.activity.home.adapter.EquipmentAdapter;
 import com.cyyaw.coco.activity.home.adapter.HomeBluetoothListAdapter;
 import com.cyyaw.coco.activity.home.adapter.StaggeredGridLayoutManagerNonScrollable;
 import com.cyyaw.coco.activity.print.AddEquipmentActivity;
 import com.cyyaw.coco.common.BaseAppCompatActivity;
 import com.cyyaw.coco.common.permission.PermissionsCode;
+import com.cyyaw.coco.dao.EquipmentDao;
+import com.cyyaw.coco.dao.table.EquipmentEntity;
 import com.cyyaw.cui.fragment.CuiNavBarFragment;
+
+import java.util.List;
 
 public class FindView extends Fragment {
 
     private static final String TAG = FindView.class.getName();
 
     private HomeBluetoothListAdapter homeBluetoothListAdapter;
+
+    private EquipmentAdapter equipmentAdapter;
 
     private BaseAppCompatActivity context;
 
@@ -48,16 +55,27 @@ public class FindView extends Fragment {
         // 瀑布流
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManagerNonScrollable(2, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        homeBluetoothListAdapter = new HomeBluetoothListAdapter(context);
-        recyclerView.setAdapter(homeBluetoothListAdapter);
-        initBlueTooth();
-
+//        homeBluetoothListAdapter = new HomeBluetoothListAdapter(context);
+        equipmentAdapter = new EquipmentAdapter(context);
+        recyclerView.setAdapter(equipmentAdapter);
+//        initBlueTooth();
+        initEquipmentList();
 
         Button addEquipmentBtn = view.findViewById(R.id.addEquipmentBtn);
         addEquipmentBtn.setOnClickListener((View v) -> {
             AddEquipmentActivity.openActivity(context);
         });
         return view;
+    }
+
+    /**
+     * 初始化设备列表
+     */
+    public void initEquipmentList() {
+        // 获取数据库数据
+        List<EquipmentEntity> equipmentList = EquipmentDao.equipmentList();
+        // 更新列表
+        equipmentAdapter.setData(equipmentList);
     }
 
 
