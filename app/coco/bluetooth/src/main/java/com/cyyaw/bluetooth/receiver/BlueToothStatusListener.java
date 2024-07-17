@@ -12,8 +12,8 @@ public class BlueToothStatusListener implements BlueToothReceiver.BlueToothListe
     @Override
     public void foundBluetooth(BluetoothEntity bluetooth) {
         BluetoothDevice dev = bluetooth.getDev();
-        BlueToothManager.getInstance().getBluetoothMap().put(dev.getAddress(), bluetooth);
-        BlueToothCallBack toothCallBack = BlueToothManager.getInstance().getToothCallBack();
+        BlueToothManager.getBluetoothMap().put(dev.getAddress(), bluetooth);
+        BlueToothCallBack toothCallBack = BlueToothManager.getToothCallBack();
         if (null != toothCallBack) {
             toothCallBack.foundBluetooth(bluetooth);
         }

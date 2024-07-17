@@ -53,7 +53,6 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.View
      * 更新数据
      */
     public void updateData(EquipmentEntity equipment) {
-
         String address = equipment.getAddress();
         boolean h = false;
         for (int i = 0; i < dataList.size(); i++) {

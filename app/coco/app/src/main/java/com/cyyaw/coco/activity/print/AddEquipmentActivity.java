@@ -11,6 +11,7 @@ import com.cyyaw.bluetooth.out.BlueToothManager;
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.common.BaseAppCompatActivity;
 import com.cyyaw.coco.common.permission.PermissionsCode;
+import com.cyyaw.cui.fragment.CuiNavBarFragment;
 
 /**
  * 添加设备
@@ -33,6 +34,10 @@ public class AddEquipmentActivity extends BaseAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_equipment);
 
+        CuiNavBarFragment nav = new CuiNavBarFragment("添加设备");
+        getSupportFragmentManager().beginTransaction().add(R.id.header_title, nav).commit();
+
+
 
         // 打开蓝牙、搜索
         requestPermissionsFn(PermissionsCode.BLUETOOTH_CONNECT, () -> {
@@ -48,7 +53,7 @@ public class AddEquipmentActivity extends BaseAppCompatActivity {
 
     private void scanLeDevice() {
 
-        BlueToothManager.getInstance().setCallBack(new BlueToothCallBack() {
+        BlueToothManager.setCallBack(new BlueToothCallBack() {
             @Override
             public void error() {
 
@@ -60,7 +65,7 @@ public class AddEquipmentActivity extends BaseAppCompatActivity {
             }
         });
 
-        BlueToothManager.getInstance().discoveryBlueTooth();
+        BlueToothManager.discoveryBlueTooth();
     }
 
 }

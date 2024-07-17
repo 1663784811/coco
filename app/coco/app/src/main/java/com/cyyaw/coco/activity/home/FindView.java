@@ -31,7 +31,7 @@ public class FindView extends Fragment {
 
     private static final String TAG = FindView.class.getName();
 
-    private HomeBluetoothListAdapter homeBluetoothListAdapter;
+    private HomeBluetoothListAdapter bluetoothListAdapter;
 
     private EquipmentAdapter equipmentAdapter;
 
@@ -78,12 +78,14 @@ public class FindView extends Fragment {
         equipmentAdapter.setData(equipmentList);
     }
 
-
+    /**
+     * 初始化蓝牙
+     */
     public void initBlueTooth() {
         context.requestPermissionsFn(PermissionsCode.BLUETOOTH_CONNECT, () -> {
             context.requestPermissionsFn(PermissionsCode.BLUETOOTH_REQUEST_ENABLE, () -> {
                 context.requestPermissionsFn(PermissionsCode.BLUETOOTH_SCAN, () -> {
-                    BlueToothManager.getInstance().setCallBack(new BlueToothCallBack() {
+                    BlueToothManager.setCallBack(new BlueToothCallBack() {
                         @Override
                         public void error() {
 
@@ -97,10 +99,10 @@ public class FindView extends Fragment {
                             bt.setType(0);
                             bt.setRssi(0);
                             Log.e(TAG, "foundBluetooth: 发现蓝牙");
-                            homeBluetoothListAdapter.updateData(bt);
+                            bluetoothListAdapter.updateData(bt);
                         }
                     });
-                    BlueToothManager.getInstance().discoveryBlueTooth();
+                    BlueToothManager.discoveryBlueTooth();
                 });
             });
         });

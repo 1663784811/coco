@@ -1,6 +1,5 @@
 package com.cyyaw.coco.activity.print;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -46,14 +45,14 @@ public class PrintPreviewActivity extends BaseAppCompatActivity implements BlueT
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_print_preview);
         // 接收数据
-
+        blueToothAddress = getIntent().getStringExtra(addressKey);
         // ========================
         nowPrintBtn = findViewById(R.id.nowPrintBtn);
         printPager = findViewById(R.id.printPager);
         blueToothName = findViewById(R.id.blueToothName);
         blueToothStatus = findViewById(R.id.blueToothStatus);
         // ========================
-        blueToothAddress = getIntent().getStringExtra(addressKey);
+
         blueToothName.setText("蓝牙: " + blueToothAddress);
         printPager.setWordData("白云机场综保南区开园3周年，跨境电商进出口货值超300亿元");
         nowPrintBtn.setOnClickListener((View v) -> {
@@ -64,7 +63,7 @@ public class PrintPreviewActivity extends BaseAppCompatActivity implements BlueT
             int size = printImageData.size();
             MyApplication.run(() -> {
                 for (int i = 0; i < size; i++) {
-                    BlueToothManager.getInstance().sendData(blueToothAddress, printImageData.get(i));
+                    BlueToothManager.sendData(blueToothAddress, printImageData.get(i));
                 }
             });
         });
@@ -74,7 +73,7 @@ public class PrintPreviewActivity extends BaseAppCompatActivity implements BlueT
     // 连接蓝牙
     private void connectBlueTooth() {
         ActivityUtils.blueToothPermissions(this, () -> {
-            BlueToothManager.getInstance().connectBlueTooth(blueToothAddress, PrintPreviewActivity.this);
+            BlueToothManager.connectBlueTooth(blueToothAddress, PrintPreviewActivity.this);
         });
     }
 
