@@ -78,7 +78,10 @@ public class BlueToothManager {
         if (null != blueToothManager) {
             blueToothManager.bluetoothMap.clear();
             if (ActivityCompat.checkSelfPermission(blueToothManager.cxt, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
-                blueToothManager.toothCallBack.get().error();
+                BlueToothCallBack tb = getToothCallBack();
+                if (null != tb) {
+                    tb.error();
+                }
                 return;
             }
             blueToothManager.bluetoothAdapter.startDiscovery();
@@ -130,9 +133,9 @@ public class BlueToothManager {
                     bt.setCallBack(callBack);
                 }
             } else {
-                WeakReference<BlueToothCallBack> toothCallBack = blueToothManager.toothCallBack;
+                BlueToothCallBack toothCallBack = getToothCallBack();
                 if (null != toothCallBack) {
-                    toothCallBack.get().error();
+                    toothCallBack.error();
                 }
             }
         }
@@ -163,10 +166,16 @@ public class BlueToothManager {
                     // 写数据
                     blueTooth.getBlueTooth().writeData(data);
                 } else {
-                    blueToothManager.toothCallBack.get().error();
+                    BlueToothCallBack tb = getToothCallBack();
+                    if (null != tb) {
+                        tb.error();
+                    }
                 }
             } else {
-                blueToothManager.toothCallBack.get().error();
+                BlueToothCallBack tb = getToothCallBack();
+                if (null != tb) {
+                    tb.error();
+                }
             }
         }
     }
@@ -176,7 +185,10 @@ public class BlueToothManager {
      */
     public static BlueToothCallBack getToothCallBack() {
         if (null != blueToothManager) {
-            return blueToothManager.toothCallBack.get();
+            WeakReference<BlueToothCallBack> toothCallBack = blueToothManager.toothCallBack;
+            if (null != toothCallBack) {
+                return toothCallBack.get();
+            }
         }
         return null;
     }

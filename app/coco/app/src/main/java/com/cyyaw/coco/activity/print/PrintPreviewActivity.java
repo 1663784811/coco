@@ -14,6 +14,7 @@ import com.cyyaw.coco.R;
 import com.cyyaw.coco.common.BaseAppCompatActivity;
 import com.cyyaw.coco.common.view.PrintBitMapImageView;
 import com.cyyaw.coco.utils.ActivityUtils;
+import com.cyyaw.cui.fragment.CuiNavBarFragment;
 
 import java.util.List;
 
@@ -47,6 +48,10 @@ public class PrintPreviewActivity extends BaseAppCompatActivity implements BlueT
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_print_preview);
+        // ===
+        CuiNavBarFragment nav = new CuiNavBarFragment("打印预览");
+        getSupportFragmentManager().beginTransaction().add(R.id.header_title, nav).commit();
+
         // 接收数据
         blueToothAddress = getIntent().getStringExtra(addressKey);
         printData = getIntent().getStringExtra(printDataKey);
