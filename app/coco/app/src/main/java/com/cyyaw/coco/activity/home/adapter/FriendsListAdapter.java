@@ -66,7 +66,6 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
         dataList.clear();
         for (int i = 0; i < friendsList.size(); i++) {
             dataList.add(friendsList.get(i));
-            Log.e(TAG, "setDataList: " + i);
         }
         notifyDataSetChanged();
     }

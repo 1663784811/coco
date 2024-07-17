@@ -1,6 +1,5 @@
 package com.cyyaw.coco.activity.home;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
