@@ -13,8 +13,19 @@ import com.cyyaw.coco.R;
 public class CuiCellFragment extends Fragment {
 
 
+    /**
+     * 标题
+     */
     private String leftText;
 
+    /**
+     * 提示信息
+     */
+    private String message;
+
+    /**
+     * 点击回调
+     */
     private CuiClickCallBack callBack;
 
     public CuiCellFragment(String leftText) {
@@ -22,8 +33,13 @@ public class CuiCellFragment extends Fragment {
     }
 
     public CuiCellFragment(String leftText, CuiClickCallBack callBack) {
+        this(leftText, callBack, null);
+    }
+
+    public CuiCellFragment(String leftText, CuiClickCallBack callBack, String message) {
         this.leftText = leftText;
         this.callBack = callBack;
+        this.message = message;
     }
 
     @Override
@@ -32,6 +48,12 @@ public class CuiCellFragment extends Fragment {
         if (null != leftText) {
             TextView cuiCellText = view.findViewById(R.id.cuiCellText);
             cuiCellText.setText(leftText);
+        }
+        TextView cuiNoteText = view.findViewById(R.id.cuiNoteText);
+        if (null != message) {
+            cuiNoteText.setText(message);
+        } else {
+            cuiNoteText.setVisibility(View.GONE);
         }
         if (null != callBack) {
             View cuiCellContent = view.findViewById(R.id.cuiCellContent);

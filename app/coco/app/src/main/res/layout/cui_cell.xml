@@ -10,22 +10,12 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cuiCellContent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/cuiCellText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="内容"
-            tools:ignore="MissingConstraints"
-
-            />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="内容"
             tools:ignore="MissingConstraints" />
 
         <ImageView
@@ -42,7 +32,7 @@
         android:id="@+id/cuiNoteText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="提示信息" />
+        android:text="提示信息--------------------" />
 
 
 </LinearLayout>

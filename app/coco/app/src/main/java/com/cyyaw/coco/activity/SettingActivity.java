@@ -45,10 +45,7 @@ public class SettingActivity extends AppCompatActivity {
 
         CuiCellGroupFragment group2 = new CuiCellGroupFragment();
         group2.addCell(new CuiCellFragment("通知设置"));
-        group2.addCell(new CuiCellFragment("设置"));
-        group2.addCell(new CuiCellFragment("设置"));
-        group2.addCell(new CuiCellFragment("设置"));
-        group2.addCell(new CuiCellFragment("设置"));
+
         ft.add(R.id.settingContainer, group2);
 
         ft.commit();

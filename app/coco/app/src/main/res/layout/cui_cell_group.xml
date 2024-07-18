@@ -11,9 +11,10 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/cui_cell_group_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="基础用法" />
+        android:text="" />
 
 
     <androidx.cardview.widget.CardView
