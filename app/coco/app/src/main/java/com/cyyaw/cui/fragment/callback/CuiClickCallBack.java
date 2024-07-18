@@ -1,4 +1,4 @@
-package com.cyyaw.cui.fragment;
+package com.cyyaw.cui.fragment.callback;
 
 import android.view.View;
 

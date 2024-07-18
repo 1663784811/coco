@@ -31,8 +31,8 @@ public class SettingActivity extends AppCompatActivity {
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
-        ft.add(R.id.header_bar, new CuiNavBarFragment("设置"));
 
+        ft.add(R.id.header_bar, new CuiNavBarFragment("设置"));
 
         CuiCellGroupFragment group = new CuiCellGroupFragment();
         group.addCell(new CuiCellFragment("账号与安全", (View v) -> {

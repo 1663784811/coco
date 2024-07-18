@@ -23,7 +23,9 @@ public class CuiPopupFragment extends Fragment {
 
     private String title;
 
-    public CuiPopupFragment(String title){
+    private View view;
+
+    public CuiPopupFragment(String title) {
         this.title = title;
     }
 
@@ -31,7 +33,8 @@ public class CuiPopupFragment extends Fragment {
     @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.cui_popup, container, false);
+        view = inflater.inflate(R.layout.cui_popup, container, false);
+        view.setVisibility(View.GONE);
         View cuiPopupCover = view.findViewById(R.id.cui_popup_cover);
         CuiPopup cuiPopup = view.findViewById(R.id.cui_popup_content);
         View closeBtn = view.findViewById(R.id.cui_popup_close);
@@ -50,16 +53,20 @@ public class CuiPopupFragment extends Fragment {
             }
         });
         cuiPopupCover.setOnClickListener((View v) -> {
-            Log.e(TAG, "onCreateView: ssssssssssssssssssssssssssssssssssss");
-            cuiPopup.toBottom();
+            show(false);
         });
         closeBtn.setOnClickListener((View v) -> {
-            Log.e(TAG, "onCreateView: ");
-            cuiPopup.toBottom();
+            show(false);
         });
-
         return view;
     }
 
+    public void show(boolean isShow) {
+        if (isShow) {
+            view.setVisibility(View.VISIBLE);
+        } else {
+            view.setVisibility(View.GONE);
+        }
+    }
 
 }

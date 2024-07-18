@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.cyyaw.coco.R;
+import com.cyyaw.cui.fragment.callback.CuiClickCallBack;
 
 public class CuiCellFragment extends Fragment {
 
