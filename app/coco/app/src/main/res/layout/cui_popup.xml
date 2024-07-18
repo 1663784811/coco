@@ -6,12 +6,15 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/cui_popup_cover"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0.3"
-        android:background="#000000" />
+        android:background="#000000"
+        android:orientation="vertical" />
 
     <com.cyyaw.cui.view.CuiPopup
+        android:id="@+id/cui_popup_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"

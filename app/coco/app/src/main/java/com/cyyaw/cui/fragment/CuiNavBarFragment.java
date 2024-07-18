@@ -10,7 +10,9 @@ import androidx.fragment.app.Fragment;
 
 import com.cyyaw.coco.R;
 
-
+/**
+ * 头部导航
+ */
 public class CuiNavBarFragment extends Fragment {
 
     private String title;
