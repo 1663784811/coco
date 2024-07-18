@@ -21,25 +21,15 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@+id/header_title"
-        tools:ignore="MissingConstraints">
+        tools:ignore="MissingConstraints"></LinearLayout>
 
-
-        <EditText
-            android:id="@+id/editTextText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="请输入设备名"
-            android:inputType="text" />
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="sssssssssssssss" />
-        <!-- 　搜索蓝牙， 添加蓝牙， 发送数据   -->
-
-
-    </LinearLayout>
+    <Button
+        android:id="@+id/addEquipmentBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="添加设备"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:ignore="MissingConstraints" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

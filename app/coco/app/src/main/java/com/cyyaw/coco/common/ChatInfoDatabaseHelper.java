@@ -97,6 +97,19 @@ public class ChatInfoDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public static void updateById(String table, Map<String, Object> data) {
+        if (null != chatInfoDatabaseHelper) {
+            ContentValues values = new ContentValues();
+            for (String key : data.keySet()) {
+                values.put(key, data.get(key) + "");
+            }
+            String id = data.get("id") + "";
+            chatInfoDatabaseHelper.openWriteConnect().update(table, values, "id = ?", new String[]{id});
+        } else {
+            MyApplication.toast("数据库异常, 没被初始化...");
+        }
+    }
+
     public static void updateByTid(String table, Map<String, Object> data) {
         if (null != chatInfoDatabaseHelper) {
             ContentValues values = new ContentValues();
@@ -105,7 +118,7 @@ public class ChatInfoDatabaseHelper extends SQLiteOpenHelper {
             }
             String tid = data.get("tid") + "";
             String id = data.get("id") + "";
-            chatInfoDatabaseHelper.openWriteConnect().update(table, values, "id =? and tid = ?", new String[]{id, tid});
+            chatInfoDatabaseHelper.openWriteConnect().update(table, values, "id = ? and tid = ?", new String[]{id, tid});
         } else {
             MyApplication.toast("数据库异常, 没被初始化...");
         }
