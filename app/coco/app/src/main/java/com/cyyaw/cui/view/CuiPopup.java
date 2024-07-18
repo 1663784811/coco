@@ -146,6 +146,7 @@ public class CuiPopup extends LinearLayout {
 
 
     /**
+     * 返回false不拦截
      * 拦截子视图的触摸事件，
      * 使得父视图可以先处理触摸事件，
      * 而不是将其直接传递给子视图
@@ -153,61 +154,60 @@ public class CuiPopup extends LinearLayout {
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         switch (ev.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                Log.d(TAG, "onInterceptTouchEvent-按下:子view是否可以向上滚动" + canChildScrollUp());
-                currY = ev.getRawY();
-                startY = currY;
-                Log.d(TAG, "onInterceptTouchEvent-按下:startY:" + startY + "     totalOffsetY:" + totalOffsetY + "    realMarginTop:" + realMarginTop);
-                if (touchView != null && ev.getY() > touchView.getTop() && ev.getY() < touchView.getBottom()) {
-                    return false;
-                }
+            case MotionEvent.ACTION_DOWN: // 点下
+//                Log.d(TAG, "onInterceptTouchEvent-按下:子view是否可以向上滚动" + canChildScrollUp());
+//                currY = ev.getRawY();
+//                startY = currY;
+//                Log.d(TAG, "onInterceptTouchEvent-按下:startY:" + startY + "     totalOffsetY:" + totalOffsetY + "    realMarginTop:" + realMarginTop);
+//                if (touchView != null && ev.getY() > touchView.getTop() && ev.getY() < touchView.getBottom()) {
+//                    return false;
+//                }
+////                //如果偏移量已经到达拉伸目标值，则交给子view消费
+//                if (totalOffsetY <= realMarginTop) {
+//                    if (!noHaveScroll) {
+//                        return true;
+//                    }
+//                    return false;
+//                }
+//                break;
+            case MotionEvent.ACTION_MOVE:   // 划动
 //                //如果偏移量已经到达拉伸目标值，则交给子view消费
-                if (totalOffsetY <= realMarginTop) {
-                    if (!noHaveScroll) {
-                        return true;
-                    }
-                    return false;
-                }
-                break;
-            case MotionEvent.ACTION_MOVE:
-                //如果偏移量已经到达拉伸目标值，则交给子view消费
-                Log.d(TAG, "onInterceptTouchEvent-移动");
-                float moveY = ev.getRawY();
-                moveState = moveY - startY;
-                if (moveState > slipOffsetY) {
-                    //下滑
-                    Log.d(TAG, "分发-下滑");
-                    if (totalOffsetY <= realMarginTop && !canChildScrollUp()) {
-                        //外层的view到达顶点&&子view不在顶点，此处不拦截，交给子view
-                        Log.d(TAG, "分发-下滑-不拦截");
-                        return false;
-                    }
-                    Log.d(TAG, "分发-下滑-拦截");
-                    return true;
-                } else if (moveState < -slipOffsetY) {
-                    //上滑
-                    Log.d(TAG, "分发-上滑");
-                    if (totalOffsetY <= realMarginTop) {
-                        //只要偏移量到达预计值，就不拦截事件，直接分发到下级
-                        return false;
-                    }
-                } else if (moveState == 0) {
-                    Log.d(TAG, "分发-点击====00000000");
-                    return false;
-                } else {
-                    Log.d(TAG, "分发-else");
-                }
-                break;
-
-            case MotionEvent.ACTION_UP:
-                Log.d(TAG, "onInterceptTouchEvent-弹起");
-                //如果UP的Y跟currentY一样  则分发到下级，说明是点击
-                if (ev.getRawY() == currY) {
-                    return false;
-                }
-                break;
+//                Log.d(TAG, "onInterceptTouchEvent-移动");
+//                float moveY = ev.getRawY();
+//                moveState = moveY - startY;
+//                if (moveState > slipOffsetY) {
+//                    //下滑
+//                    Log.d(TAG, "分发-下滑");
+//                    if (totalOffsetY <= realMarginTop && !canChildScrollUp()) {
+//                        //外层的view到达顶点&&子view不在顶点，此处不拦截，交给子view
+//                        Log.d(TAG, "分发-下滑-不拦截");
+//                        return false;
+//                    }
+//                    Log.d(TAG, "分发-下滑-拦截");
+//                    return true;
+//                } else if (moveState < -slipOffsetY) {
+//                    //上滑
+//                    Log.d(TAG, "分发-上滑");
+//                    if (totalOffsetY <= realMarginTop) {
+//                        //只要偏移量到达预计值，就不拦截事件，直接分发到下级
+//                        return false;
+//                    }
+//                } else if (moveState == 0) {
+//                    Log.d(TAG, "分发-点击====00000000");
+//                    return false;
+//                } else {
+//                    Log.d(TAG, "分发-else");
+//                }
+//                break;
+            case MotionEvent.ACTION_UP: // 抬起
+//                Log.d(TAG, "onInterceptTouchEvent-弹起");
+//                //如果UP的Y跟currentY一样  则分发到下级，说明是点击
+//                if (ev.getRawY() == currY) {
+//                    return false;
+//                }
+//                break;
         }
-        return true;
+        return false;
     }
 
     /**
@@ -215,6 +215,7 @@ public class CuiPopup extends LinearLayout {
      */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        Log.d(TAG, "onTouchEvent-aaaaaaaaaaaaa:");
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 currY = event.getRawY();
@@ -233,15 +234,6 @@ public class CuiPopup extends LinearLayout {
                 //计算偏移量，得到正负值，-上 +下
                 moveState = moveY - startY;
                 totalOffsetY = moveY - currY + totalOffsetY;
-//                if (onScrollStateListener != null) {
-//                    if (totalOffsetY == realMarginTop) {
-//                        onScrollStateListener.onState(1);
-//                    }
-//                    if (totalOffsetY == defaultMarginTop) {
-//                        onScrollStateListener.onState(-1);
-//                    }
-//                    Log.d("上滑还是下滑","移动");
-//                }
                 if (totalOffsetY <= realMarginTop && moveState < 0) {
                     //偏移量到达预计值&&是上滑状态，直接breank
                     totalOffsetY = realMarginTop;
@@ -343,6 +335,7 @@ public class CuiPopup extends LinearLayout {
      * 动画
      */
     private void startAnim(float startHeight, final float endHeight) {
+        Log.d(TAG, " =================== 开始动画 =========================");
         //上滑
         ValueAnimator anim = ValueAnimator.ofFloat(startHeight, endHeight);
         anim.setDuration(200);
@@ -370,7 +363,6 @@ public class CuiPopup extends LinearLayout {
                     }
                 }
                 totalOffsetY = currentValue;
-                Log.d(TAG, "totalOffsetY:" + totalOffsetY + "   realMarginTop:" + realMarginTop + "    defaultMarginTop: " + defaultMarginTop);
                 if (onScrollStateListener != null) {
                     if (totalOffsetY == realMarginTop) {
                         onScrollStateListener.onState(1);

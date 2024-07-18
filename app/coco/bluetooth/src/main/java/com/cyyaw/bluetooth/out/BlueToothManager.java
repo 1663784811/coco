@@ -10,7 +10,7 @@ import androidx.core.app.ActivityCompat;
 import com.cyyaw.bluetooth.device.BlueTooth;
 import com.cyyaw.bluetooth.device.BlueToothConnect;
 import com.cyyaw.bluetooth.device.BluetoothClassic;
-import com.cyyaw.bluetooth.entity.BluetoothEntity;
+import com.cyyaw.bluetooth.entity.BtEntity;
 import com.cyyaw.bluetooth.receiver.BlueToothReceiver;
 import com.cyyaw.bluetooth.receiver.BlueToothStatusListener;
 
@@ -39,7 +39,7 @@ public class BlueToothManager {
     /**
      * 蓝牙列表
      */
-    private ConcurrentHashMap<String, BluetoothEntity> bluetoothMap = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<String, BtEntity> bluetoothMap = new ConcurrentHashMap<>();
     /**
      * 已连接蓝牙
      */
@@ -92,9 +92,21 @@ public class BlueToothManager {
     /**
      * 获取蓝牙
      */
-    public static Map<String, BluetoothEntity> getBluetoothMap() {
+    public static Map<String, BtEntity> getBluetoothMap() {
         if (null != blueToothManager) {
             return blueToothManager.bluetoothMap;
+        }
+        return null;
+    }
+
+
+    /**
+     * 获取蓝牙
+     */
+    public static BtEntity getBluetooth(String address) {
+        Map<String, BtEntity> map = getBluetoothMap();
+        if (null != map) {
+            return map.get(address);
         }
         return null;
     }
@@ -112,7 +124,7 @@ public class BlueToothManager {
      */
     public static void connectBlueTooth(String address, BlueToothConnectCallBack callBack) {
         if (null != blueToothManager) {
-            BluetoothEntity bte = blueToothManager.bluetoothMap.get(address);
+            BtEntity bte = blueToothManager.bluetoothMap.get(address);
             if (null != bte) {
                 BlueToothConnect blueTooth = blueToothManager.connectMap.get(address);
                 if (null == blueTooth) {

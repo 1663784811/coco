@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import com.cyyaw.bluetooth.entity.BluetoothEntity;
+import com.cyyaw.bluetooth.entity.BtEntity;
 import com.cyyaw.bluetooth.out.BlueToothCallBack;
 import com.cyyaw.bluetooth.out.BlueToothManager;
 import com.cyyaw.coco.R;
@@ -31,7 +31,6 @@ public class FindView extends Fragment {
 
     private static final String TAG = FindView.class.getName();
 
-    private HomeBluetoothListAdapter bluetoothListAdapter;
 
     private EquipmentAdapter equipmentAdapter;
 
@@ -92,14 +91,8 @@ public class FindView extends Fragment {
                         }
 
                         @Override
-                        public void foundBluetooth(BluetoothEntity bluetooth) {
-                            com.cyyaw.coco.entity.BluetoothEntity bt = new com.cyyaw.coco.entity.BluetoothEntity();
-                            bt.setName("sss:");
-                            bt.setAddress(bluetooth.getDev().getAddress());
-                            bt.setType(0);
-                            bt.setRssi(0);
-                            Log.e(TAG, "foundBluetooth: 发现蓝牙");
-                            bluetoothListAdapter.updateData(bt);
+                        public void foundBluetooth(BtEntity bluetooth) {
+                            equipmentAdapter.updateData(bluetooth);
                         }
                     });
                     BlueToothManager.discoveryBlueTooth();

@@ -1,6 +1,6 @@
 package com.cyyaw.bluetooth.out;
 
-import com.cyyaw.bluetooth.entity.BluetoothEntity;
+import com.cyyaw.bluetooth.entity.BtEntity;
 
 /**
  * 蓝牙回调
@@ -17,6 +17,6 @@ public interface BlueToothCallBack {
     /**
      * 发现蓝牙
      */
-    void foundBluetooth(BluetoothEntity bluetooth);
+    void foundBluetooth(BtEntity bluetooth);
 
 }

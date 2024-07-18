@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cyyaw.bluetooth.entity.BtEntity;
+import com.cyyaw.bluetooth.out.BlueToothManager;
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.activity.print.PrintInputActivity;
 import com.cyyaw.coco.activity.print.PrintPreviewActivity;
@@ -53,21 +55,17 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.View
     /**
      * 更新数据
      */
-    public void updateData(EquipmentEntity equipment) {
-        String address = equipment.getAddress();
-        boolean h = false;
+    public void updateData(BtEntity bt) {
+        String address = bt.getDev().getAddress();
         for (int i = 0; i < dataList.size(); i++) {
-            String ad = dataList.get(i).getAddress();
+            EquipmentEntity equipment = dataList.get(i);
+            String ad = equipment.getAddress();
             if (ad.equals(address)) {
-                h = true;
+                equipment.setStatus(1);
                 dataList.set(i, equipment);
                 notifyDataSetChanged();
                 break;
             }
-        }
-        if (!h) {
-            dataList.add(equipment);
-            notifyItemRangeInserted(dataList.size() - 1, 1);
         }
     }
 
@@ -78,7 +76,15 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.View
         dataList.clear();
         if (null != equipmentList) {
             for (int i = 0; i < equipmentList.size(); i++) {
-                dataList.add(equipmentList.get(i));
+                EquipmentEntity equipmentEntity = equipmentList.get(i);
+                String address = equipmentEntity.getAddress();
+                BtEntity bt = BlueToothManager.getBluetooth(address);
+                if (null != bt) {
+                    equipmentEntity.setStatus(1);
+                } else {
+                    equipmentEntity.setStatus(0);
+                }
+                dataList.add(equipmentEntity);
             }
             notifyItemRangeInserted(0, dataList.size());
         }
@@ -98,6 +104,13 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.View
             TextView blueToothName = view.findViewById(R.id.blueToothName);
             blueToothName.setText(equipment.getName());
             String address = equipment.getAddress();
+            TextView equipmentStatus = view.findViewById(R.id.equipmentStatus);
+            Integer status = equipment.getStatus();
+            if (status != null && status == 1) {
+                equipmentStatus.setText("在线");
+            } else {
+                equipmentStatus.setText("离线");
+            }
             btn.setOnClickListener((View v) -> {
                 PrintInputActivity.openActivity(context, address);
             });

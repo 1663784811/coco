@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * 蓝牙实体
  */
-public class BluetoothEntity implements Serializable {
+public class BtEntity implements Serializable {
 
     /**
      * 类型

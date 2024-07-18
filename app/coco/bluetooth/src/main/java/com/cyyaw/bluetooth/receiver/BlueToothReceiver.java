@@ -10,7 +10,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
 
-import com.cyyaw.bluetooth.entity.BluetoothEntity;
+import com.cyyaw.bluetooth.entity.BtEntity;
 
 /**
  * 监听蓝牙广播-各种状态
@@ -56,7 +56,7 @@ public class BlueToothReceiver extends BroadcastReceiver {
             case BluetoothDevice.ACTION_FOUND:
                 short rssi = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI, Short.MAX_VALUE);
                 Log.i(TAG, "EXTRA_RSSI:" + rssi);
-                BluetoothEntity bluetooth = new BluetoothEntity();
+                BtEntity bluetooth = new BtEntity();
                 bluetooth.setDev(dev);
                 bluetooth.setRssi(rssi);
                 bluetooth.setType(0);
@@ -94,6 +94,6 @@ public class BlueToothReceiver extends BroadcastReceiver {
         /**
          * 发现蓝牙
          */
-        void foundBluetooth(BluetoothEntity bluetooth);
+        void foundBluetooth(BtEntity bluetooth);
     }
 }

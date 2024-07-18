@@ -79,8 +79,7 @@ public class HomeBluetoothListAdapter extends RecyclerView.Adapter<HomeBluetooth
             View btn = view.findViewById(R.id.equipmentItem);
             TextView blueToothName = view.findViewById(R.id.blueToothName);
             blueToothName.setText(bluetoothEntity.getName());
-            TextView blueToothRssi = view.findViewById(R.id.blueToothRssi);
-            blueToothRssi.setText(bluetoothEntity.getRssi() + "");
+
             String address = bluetoothEntity.getAddress();
             btn.setOnClickListener((View v) -> {
                 PrintPreviewActivity.openActivity(context, address, "测试数据");

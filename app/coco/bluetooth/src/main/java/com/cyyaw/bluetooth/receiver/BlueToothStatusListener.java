@@ -2,7 +2,7 @@ package com.cyyaw.bluetooth.receiver;
 
 import android.bluetooth.BluetoothDevice;
 
-import com.cyyaw.bluetooth.entity.BluetoothEntity;
+import com.cyyaw.bluetooth.entity.BtEntity;
 import com.cyyaw.bluetooth.out.BlueToothCallBack;
 import com.cyyaw.bluetooth.out.BlueToothManager;
 
@@ -10,7 +10,7 @@ public class BlueToothStatusListener implements BlueToothReceiver.BlueToothListe
 
 
     @Override
-    public void foundBluetooth(BluetoothEntity bluetooth) {
+    public void foundBluetooth(BtEntity bluetooth) {
         BluetoothDevice dev = bluetooth.getDev();
         BlueToothManager.getBluetoothMap().put(dev.getAddress(), bluetooth);
         BlueToothCallBack toothCallBack = BlueToothManager.getToothCallBack();

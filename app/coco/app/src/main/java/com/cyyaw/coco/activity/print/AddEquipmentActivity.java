@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.cyyaw.bluetooth.entity.BluetoothEntity;
+import com.cyyaw.bluetooth.entity.BtEntity;
 import com.cyyaw.bluetooth.out.BlueToothCallBack;
 import com.cyyaw.bluetooth.out.BlueToothManager;
 import com.cyyaw.coco.R;
@@ -38,7 +38,7 @@ public class AddEquipmentActivity extends BaseAppCompatActivity {
         CuiNavBarFragment nav = new CuiNavBarFragment("添加设备");
         getSupportFragmentManager().beginTransaction().add(R.id.header_title, nav).commit();
 
-        CuiPopupFragment popup = new CuiPopupFragment();
+        CuiPopupFragment popup = new CuiPopupFragment("请选择蓝牙设备");
         getSupportFragmentManager().beginTransaction().add(R.id.add_equipment, popup).commit();
 
 
@@ -63,7 +63,7 @@ public class AddEquipmentActivity extends BaseAppCompatActivity {
             }
 
             @Override
-            public void foundBluetooth(BluetoothEntity bluetooth) {
+            public void foundBluetooth(BtEntity bluetooth) {
 
             }
         });
