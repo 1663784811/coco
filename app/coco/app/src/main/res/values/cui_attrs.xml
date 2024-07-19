@@ -4,5 +4,17 @@
         <attr name="defaultHeight" format="dimension"></attr>
         <attr name="realHeight" format="dimension"></attr>
     </declare-styleable>
+
+    <declare-styleable name="cui_button">
+        <attr name="background_color_normal" format="color" />
+        <attr name="background_color_pressed" format="color" />
+        <attr name="text" format="string" />
+        <attr name="text_color" format="color" />
+        <attr name="text_size" format="dimension" />
+        <attr name="loading_text" format="string" />
+        <attr name="corners" format="dimension" />
+    </declare-styleable>
+
+
 </resources>
 
