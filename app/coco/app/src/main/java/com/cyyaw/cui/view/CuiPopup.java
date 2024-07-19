@@ -129,7 +129,6 @@ public class CuiPopup extends LinearLayout {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        Log.d(TAG, "高度：" + h);
     }
 
     //设置默认露出的高度，参数单位px
@@ -341,38 +340,35 @@ public class CuiPopup extends LinearLayout {
         anim.setDuration(200);
         // 设置动画运行的时长
         anim.setRepeatCount(0);
-        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                float currentValue = (float) animation.getAnimatedValue();
-                if (totalOffsetY == endHeight) {
-                    return;
-                }
-                setTranslationY(currentValue);
-                if (headerView != null) {
-                    headerView.setTranslationY(currentValue - headerView.getMeasuredHeight());
-                }
-                if (titleViews != null) {
-                    for (View titleView : titleViews) {
-                        if (headerView != null) {
-                            //这里是currentValue
-                            titleView.setTranslationY(currentValue - titleView.getMeasuredHeight() - headerView.getMeasuredHeight());
-                        } else {
-                            titleView.setTranslationY(currentValue - titleView.getMeasuredHeight());
-                        }
-                    }
-                }
-                totalOffsetY = currentValue;
-                if (onScrollStateListener != null) {
-                    if (totalOffsetY == realMarginTop) {
-                        onScrollStateListener.onState(1);
-                    }
-                    if (totalOffsetY == defaultMarginTop) {
-                        onScrollStateListener.onState(-1);
+        // 监听动画
+        anim.addUpdateListener((ValueAnimator animation) -> {
+            float currentValue = (float) animation.getAnimatedValue();
+            if (totalOffsetY == endHeight) {
+                return;
+            }
+            setTranslationY(currentValue);
+            if (headerView != null) {
+                headerView.setTranslationY(currentValue - headerView.getMeasuredHeight());
+            }
+            if (titleViews != null) {
+                for (View titleView : titleViews) {
+                    if (headerView != null) {
+                        //这里是currentValue
+                        titleView.setTranslationY(currentValue - titleView.getMeasuredHeight() - headerView.getMeasuredHeight());
+                    } else {
+                        titleView.setTranslationY(currentValue - titleView.getMeasuredHeight());
                     }
                 }
             }
-
+            totalOffsetY = currentValue;
+            if (onScrollStateListener != null) {
+                if (totalOffsetY == realMarginTop) {
+                    onScrollStateListener.onState(1);
+                }
+                if (totalOffsetY == defaultMarginTop) {
+                    onScrollStateListener.onState(-1);
+                }
+            }
         });
         anim.start();
     }
