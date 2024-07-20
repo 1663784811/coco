@@ -124,6 +124,16 @@ public class ChatInfoDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * 删除
+     */
+    public static void deleteById(String table, String id) {
+        if (null != chatInfoDatabaseHelper) {
+            chatInfoDatabaseHelper.openWriteConnect().delete(table, "id = ?", new String[]{id});
+        } else {
+            MyApplication.toast("数据库异常, 没被初始化...");
+        }
+    }
 
     @Override
     public void onCreate(SQLiteDatabase db) {

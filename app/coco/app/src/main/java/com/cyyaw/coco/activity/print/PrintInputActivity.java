@@ -11,7 +11,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.cyyaw.coco.MyApplication;
 import com.cyyaw.coco.R;
+import com.cyyaw.coco.dao.EquipmentDao;
 import com.cyyaw.cui.fragment.CuiChatInputIconFragment;
 import com.cyyaw.cui.fragment.CuiIconListFragment;
 import com.cyyaw.cui.fragment.CuiIconListItemFragment;
@@ -58,7 +60,9 @@ public class PrintInputActivity extends AppCompatActivity {
         popup = new CuiPopupFragment();
         CuiIconListFragment iconList = new CuiIconListFragment();
         iconList.addItem(new CuiIconListItemFragment(R.drawable.cui_icon_delete_24, "删除", (View v) -> {
-
+            EquipmentDao.deleteEquipment(blueToothAddress);
+            MyApplication.toast("删除成功！");
+            finish();
         }));
         popup.addItem(iconList);
         ft.add(R.id.printInput, popup);

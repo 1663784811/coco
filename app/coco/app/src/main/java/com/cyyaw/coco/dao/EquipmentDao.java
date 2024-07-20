@@ -45,4 +45,14 @@ public class EquipmentDao {
     }
 
 
+    /**
+     * 删除
+     */
+    public static void deleteEquipment(String address) {
+        JSONObject json = ChatInfoDatabaseHelper.queryDataOne("select * from equipment where address = ?", new String[]{address});
+        if (null != json) {
+            String id = json.getString("id");
+            ChatInfoDatabaseHelper.deleteById("equipment", id);
+        }
+    }
 }
