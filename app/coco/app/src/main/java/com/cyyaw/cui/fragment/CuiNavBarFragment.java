@@ -1,5 +1,6 @@
 package com.cyyaw.cui.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,18 +19,25 @@ public class CuiNavBarFragment extends Fragment {
     private String title;
     private UiNavBarFragmentCallBack callBack;
 
+    // 显示返回按钮
+    private boolean showBackBtn;
+    // 显示更多按钮
+    private boolean showMoreBtn;
+
 
     public CuiNavBarFragment() {
     }
 
 
     public CuiNavBarFragment(String title) {
-        this(title, null);
+        this(title, null, false, false);
     }
 
-    public CuiNavBarFragment(String title, UiNavBarFragmentCallBack callBack) {
+    public CuiNavBarFragment(String title, UiNavBarFragmentCallBack callBack, boolean showBackBtn, boolean showMoreBtn) {
         this.title = title;
         this.callBack = callBack;
+        this.showBackBtn = showBackBtn;
+        this.showMoreBtn = showMoreBtn;
     }
 
 
@@ -40,11 +48,22 @@ public class CuiNavBarFragment extends Fragment {
         if (null != title) {
             navTitle.setText(title);
         }
+        View navBackBtn = view.findViewById(R.id.navBackBtn);
+        View navMoreBtn = view.findViewById(R.id.navMoreBtn);
+        if (!showBackBtn) {
+            navBackBtn.setVisibility(View.GONE);
+        }
+        if (!showMoreBtn) {
+            navMoreBtn.setVisibility(View.GONE);
+        }
         if (null != callBack) {
-            view.findViewById(R.id.navBackBtn).setOnClickListener((View v) -> {
-                callBack.clickBack();
+            navBackBtn.setOnClickListener((View v) -> {
+                boolean b = callBack.clickBack();
+                if (!b) {
+                    getActivity().finish();
+                }
             });
-            view.findViewById(R.id.navMoreBtn).setOnClickListener((View v) -> {
+            navMoreBtn.setOnClickListener((View v) -> {
                 callBack.clickMore();
             });
 
@@ -61,13 +80,15 @@ public class CuiNavBarFragment extends Fragment {
         /**
          * 点击返回
          */
-        default void clickBack() {
+        default boolean clickBack() {
+            return false;
         }
 
         /**
          * 点击返回
          */
-        default void clickMore() {
+        default boolean clickMore() {
+            return false;
         }
     }
 

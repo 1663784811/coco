@@ -65,7 +65,6 @@ public class RippleEffectView extends View {
 
     private void animateRipple() {
         final int maxRadius = Math.max(getWidth(), getHeight());
-        Log.e(TAG, "animateRipple: " + maxRadius + "  " + radius);
         post(() -> {
             radius += 60;
             postInvalidate();

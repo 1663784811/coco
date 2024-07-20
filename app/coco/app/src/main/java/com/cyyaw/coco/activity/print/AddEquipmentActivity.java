@@ -56,7 +56,14 @@ public class AddEquipmentActivity extends BaseAppCompatActivity implements CuiSe
         setContentView(R.layout.activity_add_equipment);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
-        CuiNavBarFragment nav = new CuiNavBarFragment("添加设备");
+        CuiNavBarFragment nav = new CuiNavBarFragment("添加设备", new CuiNavBarFragment.UiNavBarFragmentCallBack() {
+            @Override
+            public boolean clickMore() {
+
+
+                return true;
+            }
+        }, true, true);
         ft.add(R.id.header_title, nav);
 
 
