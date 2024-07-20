@@ -73,7 +73,11 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.View
      * 设置数据
      */
     public void setData(List<EquipmentEntity> equipmentList) {
-        dataList.clear();
+        // 先删除
+        while (dataList.size() > 0) {
+            removeItem(0);
+        }
+        //
         if (null != equipmentList) {
             for (int i = 0; i < equipmentList.size(); i++) {
                 EquipmentEntity equipmentEntity = equipmentList.get(i);
@@ -88,6 +92,12 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.View
             }
             notifyItemRangeInserted(0, dataList.size());
         }
+    }
+
+    public void removeItem(int position) {
+        dataList.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, dataList.size());
     }
 
 

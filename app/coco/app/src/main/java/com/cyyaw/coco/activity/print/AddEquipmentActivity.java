@@ -70,6 +70,11 @@ public class AddEquipmentActivity extends BaseAppCompatActivity implements CuiSe
         group.addCell(new CuiInputFragment("名称", (View v, String data) -> {
             name = data;
         }));
+
+        group.addCell(new CuiInputFragment("地址", (View v, String data) -> {
+            address = data;
+        }));
+
         group.addCell(new CuiCellFragment("选择设备", (View v) -> {
             popup.show(true);
         }));
