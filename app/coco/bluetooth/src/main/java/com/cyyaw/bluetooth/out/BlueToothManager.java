@@ -65,7 +65,7 @@ public class BlueToothManager {
      * 设置回调
      */
     public static void setCallBack(BlueToothCallBack callBack) {
-        if (blueToothManager == null) {
+        if (blueToothManager != null) {
             blueToothManager.toothCallBack = new WeakReference(callBack);
         }
     }

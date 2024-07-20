@@ -57,11 +57,11 @@
                 android:layout_marginRight="16dp"
                 app:background_color_normal="#3A96FF"
                 app:background_color_pressed="#1E90FF"
-                app:corners="8dp"
+                app:corners="30dp"
                 app:loading_text="登录中..."
                 app:text="登录"
                 app:text_color="#ffffff"
-                app:text_size="18sp"
+                android:padding="0dp"
                 tools:ignore="MissingConstraints" />
 
             <com.cyyaw.cui.view.RippleEffectView

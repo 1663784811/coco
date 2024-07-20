@@ -8,13 +8,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import androidx.activity.result.ActivityResultLauncher;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.cyyaw.bluetooth.entity.BtEntity;
 import com.cyyaw.bluetooth.out.BlueToothCallBack;
 import com.cyyaw.bluetooth.out.BlueToothManager;
-import com.cyyaw.coco.MyApplication;
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.common.BaseAppCompatActivity;
 import com.cyyaw.coco.common.permission.PermissionsCode;
@@ -25,9 +23,12 @@ import com.cyyaw.cui.fragment.CuiCellGroupFragment;
 import com.cyyaw.cui.fragment.CuiInputFragment;
 import com.cyyaw.cui.fragment.CuiNavBarFragment;
 import com.cyyaw.cui.fragment.CuiPopupFragment;
+import com.cyyaw.cui.fragment.CuiSelectItem;
 import com.cyyaw.cui.fragment.CuiSelectItemFragment;
+import com.cyyaw.cui.fragment.CuiSelectListFragment;
 import com.cyyaw.cui.fragment.callback.CuiSelectCallBack;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,6 +39,8 @@ public class AddEquipmentActivity extends BaseAppCompatActivity implements CuiSe
     private final String TAG = AddEquipmentActivity.class.getName();
 
     private BluetoothAdapter bluetoothAdapter;
+
+    private CuiSelectListFragment selectList;
 
     private CuiPopupFragment popup;
 
@@ -83,16 +86,17 @@ public class AddEquipmentActivity extends BaseAppCompatActivity implements CuiSe
         ft.add(R.id.inputContainer, group);
         popup = new CuiPopupFragment("请选择蓝牙设备");
 
-
+        selectList = new CuiSelectListFragment(this);
         Map<String, BtEntity> bluetoothMap = BlueToothManager.getBluetoothMap();
         if (null != bluetoothMap) {
             for (String key : bluetoothMap.keySet()) {
                 BtEntity btEntity = bluetoothMap.get(key);
                 BluetoothDevice dev = btEntity.getDev();
                 String address = dev.getAddress();
-                popup.addItem(new CuiSelectItemFragment(address, address, this));
+                selectList.addItem(new CuiSelectItemFragment(address, address, this, false));
             }
         }
+        popup.addItem(selectList);
 
         ft.add(R.id.add_equipment, popup);
         ft.commit();
@@ -117,6 +121,10 @@ public class AddEquipmentActivity extends BaseAppCompatActivity implements CuiSe
             });
         });
 
+        View searchBluetooth = findViewById(R.id.search_bluetooth);
+        searchBluetooth.setOnClickListener((View v) -> {
+            scanLeDevice();
+        });
 
     }
 
@@ -131,7 +139,9 @@ public class AddEquipmentActivity extends BaseAppCompatActivity implements CuiSe
 
             @Override
             public void foundBluetooth(BtEntity bluetooth) {
-                Log.e(TAG, "foundBluetooth: " + bluetooth.getDev().getAddress());
+                String ads = bluetooth.getDev().getAddress();
+                Log.e(TAG, "foundBluetooth : " + ads);
+                popup.addItem(new CuiSelectItemFragment(ads, ads, AddEquipmentActivity.this, false));
             }
         });
 
@@ -139,8 +149,7 @@ public class AddEquipmentActivity extends BaseAppCompatActivity implements CuiSe
     }
 
     @Override
-    public void select(View v, String data) {
-        Log.e(TAG, "select: " + data);
-        address = data;
+    public void select(View v, String label, String value) {
+        address = value;
     }
 }

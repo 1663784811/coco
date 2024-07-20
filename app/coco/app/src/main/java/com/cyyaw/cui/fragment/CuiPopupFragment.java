@@ -2,7 +2,6 @@ package com.cyyaw.cui.fragment;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +32,7 @@ public class CuiPopupFragment extends Fragment {
 
 
     public CuiPopupFragment() {
+
     }
 
     public CuiPopupFragment(String title) {
@@ -48,7 +48,7 @@ public class CuiPopupFragment extends Fragment {
         View cuiPopupCover = view.findViewById(R.id.cui_popup_cover);
         CuiPopup cuiPopup = view.findViewById(R.id.cui_popup_content);
         View closeBtn = view.findViewById(R.id.cui_popup_close);
-        if(null != title){
+        if (null != title) {
             TextView cuiPopupTitle = view.findViewById(R.id.cui_popup_title);
             cuiPopupTitle.setText(title);
         }
@@ -89,5 +89,15 @@ public class CuiPopupFragment extends Fragment {
 
     public void addItem(Fragment fragment) {
         itemList.add(fragment);
+        if (null != view) {
+            FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+            ft.add(R.id.cui_popup_item_container, fragment);
+            ft.commit();
+        }
+    }
+
+
+    public List<Fragment> getItemList() {
+        return itemList;
     }
 }

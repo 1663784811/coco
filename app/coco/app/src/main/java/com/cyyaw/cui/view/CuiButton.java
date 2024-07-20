@@ -188,7 +188,7 @@ public class CuiButton extends View {
             content = "";
         }
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.cui_icon_loadding_24);
-        default_padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 22, getResources().getDisplayMetrics());
+        default_padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
         paddingBottom = getPaddingBottom();
         paddingLeft = getPaddingLeft();
         paddingTop = getPaddingTop();
