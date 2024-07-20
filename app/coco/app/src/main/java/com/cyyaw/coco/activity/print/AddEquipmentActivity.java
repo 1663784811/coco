@@ -102,10 +102,11 @@ public class AddEquipmentActivity extends BaseAppCompatActivity implements CuiSe
                 } else {
                     btName = dev.getName();
                 }
-                selectList.addItem(btName == null ? address : name, address);
+                selectList.addItem(btName == null ? address : btName, address);
             }
         }
-        popup.addItem(selectList);
+        ft.add(R.id.inputContainer, selectList);
+//        popup.addItem(selectList);
 
         ft.add(R.id.add_equipment, popup);
         ft.commit();
@@ -152,12 +153,12 @@ public class AddEquipmentActivity extends BaseAppCompatActivity implements CuiSe
                 String ads = dev.getAddress();
                 String btName = null;
                 if (ActivityCompat.checkSelfPermission(AddEquipmentActivity.this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-                    btName = ads;
+                    btName = dev.getAddress();
                 } else {
                     btName = dev.getName();
                 }
                 Log.e(TAG, "foundBluetooth : " + ads);
-                selectList.addItem(btName == null ? address : name, address);
+                selectList.addItem(btName == null ? address : btName, address);
             }
         });
 
