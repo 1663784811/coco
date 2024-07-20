@@ -102,7 +102,7 @@ public class AddEquipmentActivity extends BaseAppCompatActivity implements CuiSe
                 } else {
                     btName = dev.getName();
                 }
-                selectList.addItem(btName, address);
+                selectList.addItem(btName == null ? address : name, address);
             }
         }
         popup.addItem(selectList);

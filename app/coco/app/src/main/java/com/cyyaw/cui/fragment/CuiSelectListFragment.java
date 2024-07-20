@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 /**
@@ -26,7 +27,7 @@ public class CuiSelectListFragment extends Fragment implements CuiSelectCallBack
 
     private static final String TAG = CuiSelectListFragment.class.getName();
 
-    private Map<String, CuiSelectItemEntity> itemMap = new HashMap<>();
+    private final Map<String, CuiSelectItemEntity> itemMap = new ConcurrentHashMap<>();
 
     protected CuiSelectCallBack callBack;
 
@@ -54,15 +55,17 @@ public class CuiSelectListFragment extends Fragment implements CuiSelectCallBack
     }
 
     public void addItem(String label, String value) {
-        CuiSelectItemEntity bean = new CuiSelectItemEntity();
-        bean.setLabel(label);
-        bean.setValue(value);
-        bean.setItem(new CuiSelectItemFragment(label, value, this, false));
-        itemMap.put(label, bean);
-        if (null != view) {
-            FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-            ft.add(R.id.cui_select_list_container, bean.getItem());
-            ft.commit();
+        if (null != label) {
+            CuiSelectItemEntity bean = new CuiSelectItemEntity();
+            bean.setLabel(label);
+            bean.setValue(value);
+            bean.setItem(new CuiSelectItemFragment(label, value, this, false));
+            itemMap.put(label, bean);
+            if (null != view) {
+                FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+                ft.add(R.id.cui_select_list_container, bean.getItem());
+                ft.commit();
+            }
         }
     }
 

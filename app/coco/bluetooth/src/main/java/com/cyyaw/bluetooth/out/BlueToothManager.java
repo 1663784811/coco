@@ -4,6 +4,8 @@ import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.os.Handler;
+import android.os.Looper;
 
 import androidx.core.app.ActivityCompat;
 
@@ -27,8 +29,7 @@ public class BlueToothManager {
 
     private static volatile BlueToothManager blueToothManager;
     // 线程池
-    private static final Executor threadPool = Executors.newCachedThreadPool();
-
+    private static final Handler sHandler = new Handler(Looper.getMainLooper());
     /**
      * 回调
      */
@@ -74,18 +75,20 @@ public class BlueToothManager {
      * 搜索蓝牙
      */
     public static void discoveryBlueTooth() {
-        // 清空蓝牙列表
-        if (null != blueToothManager) {
-            blueToothManager.bluetoothMap.clear();
-            if (ActivityCompat.checkSelfPermission(blueToothManager.cxt, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
-                BlueToothCallBack tb = getToothCallBack();
-                if (null != tb) {
-                    tb.error();
+        sHandler.post(()->{
+            // 清空蓝牙列表
+            if (null != blueToothManager) {
+                blueToothManager.bluetoothMap.clear();
+                if (ActivityCompat.checkSelfPermission(blueToothManager.cxt, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
+                    BlueToothCallBack tb = getToothCallBack();
+                    if (null != tb) {
+                        tb.error();
+                    }
+                    return;
                 }
-                return;
+                blueToothManager.bluetoothAdapter.startDiscovery();
             }
-            blueToothManager.bluetoothAdapter.startDiscovery();
-        }
+        });
     }
 
 
