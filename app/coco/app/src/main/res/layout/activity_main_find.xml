@@ -21,10 +21,10 @@
         tools:ignore="MissingConstraints">
 
         <LinearLayout
+            android:id="@+id/equipmentContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
             <!--    添加-删除-列表 连接 - 状态:在线、离线     -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/equipmentList"
@@ -34,6 +34,9 @@
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
                 android:scrollbars="vertical" />
+
+
+
 
             <RelativeLayout
                 android:layout_width="match_parent"
