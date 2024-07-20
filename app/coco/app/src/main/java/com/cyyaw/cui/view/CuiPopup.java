@@ -214,12 +214,10 @@ public class CuiPopup extends LinearLayout {
      */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        Log.d(TAG, "onTouchEvent-aaaaaaaaaaaaa:");
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 currY = event.getRawY();
                 startY = currY;
-                Log.d(TAG, "onTouchEvent-按下:" + currY + "     startY:" + startY);
                 if (totalOffsetY <= realMarginTop) {
                     //内部没有滚动条，事件自己消费，不往下传递
                     if (!noHaveScroll) {
@@ -252,10 +250,8 @@ public class CuiPopup extends LinearLayout {
                         }
                     }
                 }
-                Log.d(TAG, "onTouchEvent-移动:" + moveY + "    currY:" + currY + "   偏移量：" + totalOffsetY + "  滑动状态：" + moveState);
                 break;
             case MotionEvent.ACTION_UP:
-                Log.d(TAG, "onTouchEvent-弹起:getY:" + getY());
                 currY = event.getRawY();
                 Log.d(TAG, "currY:" + currY);
                 if (moveState > slipOffsetY) {
@@ -279,7 +275,6 @@ public class CuiPopup extends LinearLayout {
         noHaveScroll = false;
         for (int i = 0; i < getChildCount(); i++) {
             View childView = getChildAt(i);
-            Log.d(TAG, "子viewid：" + childView.getId() + "   是否可见：" + (childView.getVisibility() == View.VISIBLE));
             if (android.os.Build.VERSION.SDK_INT < 14) {
                 if (childView instanceof AbsListView) {
                     final AbsListView absListView = (AbsListView) childView;
@@ -334,7 +329,6 @@ public class CuiPopup extends LinearLayout {
      * 动画
      */
     private void startAnim(float startHeight, final float endHeight) {
-        Log.d(TAG, " =================== 开始动画 =========================");
         //上滑
         ValueAnimator anim = ValueAnimator.ofFloat(startHeight, endHeight);
         anim.setDuration(200);

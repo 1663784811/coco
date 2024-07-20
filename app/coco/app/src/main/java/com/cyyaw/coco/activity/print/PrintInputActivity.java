@@ -1,6 +1,7 @@
 package com.cyyaw.coco.activity.print;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +12,11 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.cyyaw.coco.R;
+import com.cyyaw.cui.fragment.CuiChatInputIconFragment;
+import com.cyyaw.cui.fragment.CuiIconListFragment;
+import com.cyyaw.cui.fragment.CuiIconListItemFragment;
 import com.cyyaw.cui.fragment.CuiNavBarFragment;
+import com.cyyaw.cui.fragment.CuiPopupFragment;
 
 
 /**
@@ -22,6 +27,9 @@ public class PrintInputActivity extends AppCompatActivity {
     private static final String addressKey = "keyAddress";
 
     private String blueToothAddress;
+
+    private CuiPopupFragment popup;
+
 
     public static void openActivity(Context context, String address) {
         Intent intent = new Intent(context, PrintInputActivity.class);
@@ -38,8 +46,23 @@ public class PrintInputActivity extends AppCompatActivity {
         // 接收数据
         blueToothAddress = getIntent().getStringExtra(addressKey);
         // ====
-        CuiNavBarFragment nav = new CuiNavBarFragment("输入打印内容");
-        getSupportFragmentManager().beginTransaction().add(R.id.header_title, nav).commit();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        CuiNavBarFragment nav = new CuiNavBarFragment("输入打印内容", new CuiNavBarFragment.UiNavBarFragmentCallBack() {
+            @Override
+            public void clickMore() {
+                popup.show(true);
+            }
+        }, true, true);
+        ft.add(R.id.header_title, nav);
+
+        popup = new CuiPopupFragment();
+        CuiIconListFragment iconList = new CuiIconListFragment();
+        iconList.addItem(new CuiIconListItemFragment(R.drawable.cui_icon_delete_24, "删除", (View v) -> {
+
+        }));
+        popup.addItem(iconList);
+        ft.add(R.id.printInput, popup);
+        ft.commit();
         // ====
         Button goToPrintBtn = findViewById(R.id.goToPrintBtn);
         EditText printEditText = findViewById(R.id.printEditText);
@@ -48,6 +71,7 @@ public class PrintInputActivity extends AppCompatActivity {
             Editable text = printEditText.getText();
             PrintPreviewActivity.openActivity(PrintInputActivity.this, blueToothAddress, text.toString());
         });
+
 
     }
 }

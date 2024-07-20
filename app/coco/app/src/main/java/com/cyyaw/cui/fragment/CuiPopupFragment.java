@@ -32,6 +32,9 @@ public class CuiPopupFragment extends Fragment {
     private View view;
 
 
+    public CuiPopupFragment() {
+    }
+
     public CuiPopupFragment(String title) {
         this.title = title;
     }
@@ -41,12 +44,14 @@ public class CuiPopupFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.cui_popup, container, false);
-//        view.setVisibility(View.GONE);
+        view.setVisibility(View.GONE);
         View cuiPopupCover = view.findViewById(R.id.cui_popup_cover);
         CuiPopup cuiPopup = view.findViewById(R.id.cui_popup_content);
         View closeBtn = view.findViewById(R.id.cui_popup_close);
-        TextView cuiPopupTitle = view.findViewById(R.id.cui_popup_title);
-        cuiPopupTitle.setText(title);
+        if(null != title){
+            TextView cuiPopupTitle = view.findViewById(R.id.cui_popup_title);
+            cuiPopupTitle.setText(title);
+        }
         // =================
         if (null != itemList && itemList.size() > 0) {
             FragmentTransaction ft = getChildFragmentManager().beginTransaction();

@@ -87,8 +87,7 @@ public class CuiNavBarFragment extends Fragment {
         /**
          * 点击返回
          */
-        default boolean clickMore() {
-            return false;
+        default void clickMore() {
         }
     }
 

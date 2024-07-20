@@ -18,7 +18,7 @@ public class CuiChatInputFragment extends Fragment {
 
     private CuiChatInputCallBack callBack;
 
-    private List<CuiChatInputIconFragment> iconList = new ArrayList<>();
+    private List<Fragment> iconList = new ArrayList<>();
 
 
     public CuiChatInputFragment() {
@@ -83,7 +83,7 @@ public class CuiChatInputFragment extends Fragment {
     }
 
 
-    public void addIcon(CuiChatInputIconFragment icon) {
+    public void addIcon(Fragment icon) {
         this.iconList.add(icon);
     }
 

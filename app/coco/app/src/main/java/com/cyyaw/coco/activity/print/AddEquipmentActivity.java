@@ -58,10 +58,8 @@ public class AddEquipmentActivity extends BaseAppCompatActivity implements CuiSe
 
         CuiNavBarFragment nav = new CuiNavBarFragment("添加设备", new CuiNavBarFragment.UiNavBarFragmentCallBack() {
             @Override
-            public boolean clickMore() {
+            public void clickMore() {
 
-
-                return true;
             }
         }, true, true);
         ft.add(R.id.header_title, nav);
