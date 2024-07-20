@@ -64,20 +64,26 @@ public class ChatInfoDatabaseHelper extends SQLiteOpenHelper {
 
     public static JSONArray queryData(String sql, String[] selectionArgs) {
         JSONArray rest = new JSONArray();
-        if (null != chatInfoDatabaseHelper) {
-            Cursor cursor = chatInfoDatabaseHelper.openReadConnect().rawQuery(sql, selectionArgs);
-            while (cursor.moveToNext()) {
-                String[] columnNames = cursor.getColumnNames();
-                JSONObject json = new JSONObject();
-                for (int i = 0; i < columnNames.length; i++) {
-                    String key = columnNames[i];
-                    @SuppressLint("Range") String value = cursor.getString(cursor.getColumnIndex(key));
-                    json.put(key, value);
+        try {
+            if (null != chatInfoDatabaseHelper) {
+                Cursor cursor = chatInfoDatabaseHelper.openReadConnect().rawQuery(sql, selectionArgs);
+                while (cursor.moveToNext()) {
+                    String[] columnNames = cursor.getColumnNames();
+                    JSONObject json = new JSONObject();
+                    for (int i = 0; i < columnNames.length; i++) {
+                        String key = columnNames[i];
+                        @SuppressLint("Range") String value = cursor.getString(cursor.getColumnIndex(key));
+                        json.put(key, value);
+                    }
+                    rest.add(json);
                 }
-                rest.add(json);
+            } else {
+                MyApplication.toast("数据库异常, 没被初始化...");
             }
-        } else {
-            MyApplication.toast("数据库异常, 没被初始化...");
+        } catch (Exception e) {
+            String message = e.getMessage();
+            e.printStackTrace();
+            Log.e(TAG, "queryData  错误 : " + message);
         }
         return rest;
     }

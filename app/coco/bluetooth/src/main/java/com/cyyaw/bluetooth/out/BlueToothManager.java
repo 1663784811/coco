@@ -4,8 +4,6 @@ import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.os.Handler;
-import android.os.Looper;
 
 import androidx.core.app.ActivityCompat;
 
@@ -16,7 +14,6 @@ import com.cyyaw.bluetooth.entity.BtEntity;
 import com.cyyaw.bluetooth.receiver.BlueToothReceiver;
 import com.cyyaw.bluetooth.receiver.BlueToothStatusListener;
 
-import java.lang.ref.WeakReference;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executor;
@@ -29,14 +26,13 @@ public class BlueToothManager {
 
     private static volatile BlueToothManager blueToothManager;
     // 线程池
-    private static final Handler sHandler = new Handler(Looper.getMainLooper());
+    private static final Executor threadPool = Executors.newCachedThreadPool();
+    protected final BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+    private Context cxt;
     /**
      * 回调
      */
-    private WeakReference<BlueToothCallBack> toothCallBack;
-
-    protected final BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-    private Context cxt;
+    private BlueToothCallBack toothCallBack;
     /**
      * 蓝牙列表
      */
@@ -67,7 +63,7 @@ public class BlueToothManager {
      */
     public static void setCallBack(BlueToothCallBack callBack) {
         if (blueToothManager != null) {
-            blueToothManager.toothCallBack = new WeakReference(callBack);
+            blueToothManager.toothCallBack = callBack;
         }
     }
 
@@ -75,7 +71,7 @@ public class BlueToothManager {
      * 搜索蓝牙
      */
     public static void discoveryBlueTooth() {
-        sHandler.post(()->{
+        threadPool.execute(() -> {
             // 清空蓝牙列表
             if (null != blueToothManager) {
                 blueToothManager.bluetoothMap.clear();
@@ -200,10 +196,7 @@ public class BlueToothManager {
      */
     public static BlueToothCallBack getToothCallBack() {
         if (null != blueToothManager) {
-            WeakReference<BlueToothCallBack> toothCallBack = blueToothManager.toothCallBack;
-            if (null != toothCallBack) {
-                return toothCallBack.get();
-            }
+            return blueToothManager.toothCallBack;
         }
         return null;
     }

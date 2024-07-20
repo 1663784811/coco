@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.cyyaw.bluetooth.entity.BtEntity;
 import com.cyyaw.bluetooth.out.BlueToothCallBack;
 import com.cyyaw.bluetooth.out.BlueToothManager;
+import com.cyyaw.coco.MyApplication;
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.common.BaseAppCompatActivity;
 import com.cyyaw.coco.common.permission.PermissionsCode;
@@ -26,12 +27,9 @@ import com.cyyaw.cui.fragment.CuiCellGroupFragment;
 import com.cyyaw.cui.fragment.CuiInputFragment;
 import com.cyyaw.cui.fragment.CuiNavBarFragment;
 import com.cyyaw.cui.fragment.CuiPopupFragment;
-import com.cyyaw.cui.fragment.CuiSelectItem;
-import com.cyyaw.cui.fragment.CuiSelectItemFragment;
 import com.cyyaw.cui.fragment.CuiSelectListFragment;
 import com.cyyaw.cui.fragment.callback.CuiSelectCallBack;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -149,16 +147,18 @@ public class AddEquipmentActivity extends BaseAppCompatActivity implements CuiSe
 
             @Override
             public void foundBluetooth(BtEntity bluetooth) {
-                BluetoothDevice dev = bluetooth.getDev();
-                String ads = dev.getAddress();
-                String btName = null;
-                if (ActivityCompat.checkSelfPermission(AddEquipmentActivity.this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-                    btName = dev.getAddress();
-                } else {
-                    btName = dev.getName();
-                }
-                Log.e(TAG, "foundBluetooth : " + ads);
-                selectList.addItem(btName == null ? address : btName, address);
+                MyApplication.post(()->{
+                    BluetoothDevice dev = bluetooth.getDev();
+                    String ads = dev.getAddress();
+                    String btName = null;
+                    if (ActivityCompat.checkSelfPermission(AddEquipmentActivity.this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                        btName = dev.getAddress();
+                    } else {
+                        btName = dev.getName();
+                    }
+                    Log.e(TAG, "foundBluetooth : " + ads);
+                    selectList.addItem(btName == null ? address : btName, address);
+                });
             }
         });
 
@@ -168,5 +168,11 @@ public class AddEquipmentActivity extends BaseAppCompatActivity implements CuiSe
     @Override
     public void select(View v, String label, String value) {
         address = value;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        BlueToothManager.setCallBack(null);
     }
 }
