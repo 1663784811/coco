@@ -1,12 +1,15 @@
 package com.cyyaw.coco.activity.home;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -16,7 +19,6 @@ import com.cyyaw.bluetooth.out.BlueToothCallBack;
 import com.cyyaw.bluetooth.out.BlueToothManager;
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.activity.home.adapter.EquipmentAdapter;
-import com.cyyaw.coco.activity.home.adapter.HomeBluetoothListAdapter;
 import com.cyyaw.coco.activity.home.adapter.StaggeredGridLayoutManagerNonScrollable;
 import com.cyyaw.coco.activity.print.AddEquipmentActivity;
 import com.cyyaw.coco.common.BaseAppCompatActivity;
@@ -31,9 +33,7 @@ public class FindView extends Fragment {
 
     private static final String TAG = FindView.class.getName();
 
-
     private EquipmentAdapter equipmentAdapter;
-
     private BaseAppCompatActivity context;
 
     public FindView(BaseAppCompatActivity context) {
@@ -54,17 +54,24 @@ public class FindView extends Fragment {
         // 瀑布流
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManagerNonScrollable(2, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-//        homeBluetoothListAdapter = new HomeBluetoothListAdapter(context);
         equipmentAdapter = new EquipmentAdapter(context);
         recyclerView.setAdapter(equipmentAdapter);
-//        initBlueTooth();
+        initBlueTooth();
         initEquipmentList();
 
         Button addEquipmentBtn = view.findViewById(R.id.addEquipmentBtn);
+        // 添加
         addEquipmentBtn.setOnClickListener((View v) -> {
             AddEquipmentActivity.openActivity(context);
         });
         return view;
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initEquipmentList();
     }
 
     /**

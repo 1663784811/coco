@@ -3,6 +3,7 @@ package com.cyyaw.coco.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
@@ -46,8 +47,6 @@ public class MainActivity extends BaseAppCompatActivity {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
         }
-
-
         // =====================================   tabbar
 //        tabBarData.add(new TabBarItemEntity("设备", R.mipmap.tab_more_unselect, R.mipmap.tab_more_select));
         tabBarData.add(new TabBarItemEntity("探索", R.mipmap.tab_home_unselect, R.mipmap.tab_home_select));

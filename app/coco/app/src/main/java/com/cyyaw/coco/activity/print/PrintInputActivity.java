@@ -62,6 +62,9 @@ public class PrintInputActivity extends AppCompatActivity {
         iconList.addItem(new CuiIconListItemFragment(R.drawable.cui_icon_delete_24, "删除", (View v) -> {
             EquipmentDao.deleteEquipment(blueToothAddress);
             MyApplication.toast("删除成功！");
+            Intent intent = new Intent();
+            intent.putExtra("delete", true);
+            setResult(RESULT_OK, intent);
             finish();
         }));
         popup.addItem(iconList);

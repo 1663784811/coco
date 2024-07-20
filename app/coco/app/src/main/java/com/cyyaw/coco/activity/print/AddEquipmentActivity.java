@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.cyyaw.bluetooth.entity.BtEntity;
@@ -100,6 +101,8 @@ public class AddEquipmentActivity extends BaseAppCompatActivity implements CuiSe
             data.setImgUrl("");
             data.setStatus(0);
             EquipmentDao.addEquipment(data);
+
+            finish();
         });
         // 打开蓝牙、搜索
         requestPermissionsFn(PermissionsCode.BLUETOOTH_CONNECT, () -> {
