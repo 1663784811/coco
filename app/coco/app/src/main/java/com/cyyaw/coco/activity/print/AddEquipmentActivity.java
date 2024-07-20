@@ -148,9 +148,16 @@ public class AddEquipmentActivity extends BaseAppCompatActivity implements CuiSe
 
             @Override
             public void foundBluetooth(BtEntity bluetooth) {
-                String ads = bluetooth.getDev().getAddress();
+                BluetoothDevice dev = bluetooth.getDev();
+                String ads = dev.getAddress();
+                String btName = null;
+                if (ActivityCompat.checkSelfPermission(AddEquipmentActivity.this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                    btName = ads;
+                } else {
+                    btName = dev.getName();
+                }
                 Log.e(TAG, "foundBluetooth : " + ads);
-                popup.addItem(new CuiSelectItemFragment(ads, ads, AddEquipmentActivity.this, false));
+                selectList.addItem(btName == null ? address : name, address);
             }
         });
 

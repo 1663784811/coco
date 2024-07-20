@@ -23,7 +23,7 @@ public abstract class CuiSelectItem extends Fragment {
     public abstract void select(boolean select);
 
 
-    public String getLabel(){
+    public String getLabel() {
         return label;
     }
 
