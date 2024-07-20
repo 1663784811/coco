@@ -1,13 +1,16 @@
 package com.cyyaw.coco.activity.print;
 
+import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.cyyaw.bluetooth.entity.BtEntity;
@@ -93,7 +96,13 @@ public class AddEquipmentActivity extends BaseAppCompatActivity implements CuiSe
                 BtEntity btEntity = bluetoothMap.get(key);
                 BluetoothDevice dev = btEntity.getDev();
                 String address = dev.getAddress();
-                selectList.addItem(new CuiSelectItemFragment(address, address, this, false));
+                String btName = null;
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                    btName = dev.getAddress();
+                } else {
+                    btName = dev.getName();
+                }
+                selectList.addItem(btName, address);
             }
         }
         popup.addItem(selectList);
