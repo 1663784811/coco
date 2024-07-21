@@ -10,6 +10,7 @@ import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
 
+import com.cyyaw.coco.MyApplication;
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.activity.SettingActivity;
 import com.cyyaw.coco.activity.home.adapter.ContentEntityArrayAdapter;
@@ -60,6 +61,16 @@ public class MyView extends Fragment {
         ListView listView = view.findViewById(R.id.contentListView);
         ListAdapter listAdapter = new ContentEntityArrayAdapter(context, dataList);
         listView.setAdapter(listAdapter);
+
+
+        View userBackImage = view.findViewById(R.id.userBackImage);
+        userBackImage.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                MyApplication.toast("长按修改背景");
+                return true;
+            }
+        });
 
 
         return view;
