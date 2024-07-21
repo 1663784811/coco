@@ -67,6 +67,8 @@ public class PrintInputActivity extends AppCompatActivity {
             setResult(RESULT_OK, intent);
             finish();
         }));
+
+
         popup.addItem(iconList);
         ft.add(R.id.printInput, popup);
         ft.commit();

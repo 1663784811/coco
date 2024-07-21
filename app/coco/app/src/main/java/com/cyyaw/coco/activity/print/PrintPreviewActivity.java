@@ -79,16 +79,28 @@ public class PrintPreviewActivity extends BaseAppCompatActivity implements BlueT
         connectBlueTooth();
     }
 
-    // 连接蓝牙
+    /**
+     * 连接蓝牙
+     */
     private void connectBlueTooth() {
         ActivityUtils.blueToothPermissions(this, () -> {
-            BlueToothManager.connectBlueTooth(blueToothAddress, PrintPreviewActivity.this);
+            BlueToothManager.connectBlueTooth(blueToothAddress);
+            BlueToothManager.connectCallBack(PrintPreviewActivity.this);
         });
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        BlueToothManager.connectCallBack(null);
     }
 
     @Override
     public void statusCallBack(String address, BtStatus status) {
-        blueToothStatus.setText(status.getNote());
+        MyApplication.post(() -> {
+            blueToothStatus.setText(status.getNote());
+        });
     }
 
     @Override

@@ -10,6 +10,7 @@ import androidx.core.app.ActivityCompat;
 import com.cyyaw.bluetooth.device.BlueTooth;
 import com.cyyaw.bluetooth.device.BlueToothConnect;
 import com.cyyaw.bluetooth.device.BluetoothClassic;
+import com.cyyaw.bluetooth.device.BtStatus;
 import com.cyyaw.bluetooth.entity.BtEntity;
 import com.cyyaw.bluetooth.receiver.BlueToothReceiver;
 import com.cyyaw.bluetooth.receiver.BlueToothStatusListener;
@@ -22,7 +23,7 @@ import java.util.concurrent.Executors;
 /**
  * 蓝牙管理器
  */
-public class BlueToothManager {
+public class BlueToothManager implements BlueToothConnectCallBack {
 
     private static volatile BlueToothManager blueToothManager;
     // 线程池
@@ -30,9 +31,10 @@ public class BlueToothManager {
     protected final BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     private Context cxt;
     /**
-     * 回调
+     * ==========================  回调
      */
-    private BlueToothCallBack toothCallBack;
+    private BlueToothFindCallBack findCallBack;
+    private static BlueToothConnectCallBack connectCallBack;
     /**
      * 蓝牙列表
      */
@@ -61,9 +63,15 @@ public class BlueToothManager {
     /**
      * 设置回调
      */
-    public static void setCallBack(BlueToothCallBack callBack) {
+    public static void setCallBack(BlueToothFindCallBack callBack) {
         if (blueToothManager != null) {
-            blueToothManager.toothCallBack = callBack;
+            blueToothManager.findCallBack = callBack;
+        }
+    }
+
+    public static void connectCallBack(BlueToothConnectCallBack callBack) {
+        if (blueToothManager != null) {
+            blueToothManager.connectCallBack = callBack;
         }
     }
 
@@ -76,7 +84,7 @@ public class BlueToothManager {
             if (null != blueToothManager) {
                 blueToothManager.bluetoothMap.clear();
                 if (ActivityCompat.checkSelfPermission(blueToothManager.cxt, Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED) {
-                    BlueToothCallBack tb = getToothCallBack();
+                    BlueToothFindCallBack tb = getToothCallBack();
                     if (null != tb) {
                         tb.error();
                     }
@@ -110,6 +118,7 @@ public class BlueToothManager {
         return null;
     }
 
+
     /**
      * 获取已连接蓝牙
      */
@@ -121,7 +130,7 @@ public class BlueToothManager {
     /**
      * 连接蓝牙
      */
-    public static void connectBlueTooth(String address, BlueToothConnectCallBack callBack) {
+    public static void connectBlueTooth(String address) {
         if (null != blueToothManager) {
             BtEntity bte = blueToothManager.bluetoothMap.get(address);
             if (null != bte) {
@@ -129,7 +138,7 @@ public class BlueToothManager {
                 if (null == blueTooth) {
                     // 根据类型判断
                     BluetoothClassic bt = new BluetoothClassic(blueToothManager.cxt);
-                    bt.setCallBack(callBack);
+                    bt.setCallBack(blueToothManager);
                     bt.connectBlueTooth(bte.getDev());
                     blueTooth = new BlueToothConnect();
                     blueTooth.setBlueTooth(bt);
@@ -137,14 +146,13 @@ public class BlueToothManager {
                     blueToothManager.connectMap.put(address, blueTooth);
                 } else if (!blueTooth.isConnect()) {
                     BlueTooth bt = blueTooth.getBlueTooth();
-                    bt.setCallBack(callBack);
+                    bt.setCallBack(blueToothManager);
                     bt.connectBlueTooth(bte.getDev());
                 } else {
-                    BlueTooth bt = blueTooth.getBlueTooth();
-                    bt.setCallBack(callBack);
+                    blueToothManager.statusCallBack(address, BtStatus.SUCCESS);
                 }
             } else {
-                BlueToothCallBack toothCallBack = getToothCallBack();
+                BlueToothFindCallBack toothCallBack = getToothCallBack();
                 if (null != toothCallBack) {
                     toothCallBack.error();
                 }
@@ -177,13 +185,13 @@ public class BlueToothManager {
                     // 写数据
                     blueTooth.getBlueTooth().writeData(data);
                 } else {
-                    BlueToothCallBack tb = getToothCallBack();
+                    BlueToothFindCallBack tb = getToothCallBack();
                     if (null != tb) {
                         tb.error();
                     }
                 }
             } else {
-                BlueToothCallBack tb = getToothCallBack();
+                BlueToothFindCallBack tb = getToothCallBack();
                 if (null != tb) {
                     tb.error();
                 }
@@ -194,11 +202,32 @@ public class BlueToothManager {
     /**
      * 获取回调
      */
-    public static BlueToothCallBack getToothCallBack() {
+    public static BlueToothFindCallBack getToothCallBack() {
         if (null != blueToothManager) {
-            return blueToothManager.toothCallBack;
+            return blueToothManager.findCallBack;
         }
         return null;
+    }
+
+    @Override
+    public void statusCallBack(String address, BtStatus status) {
+        if (status == BtStatus.SUCCESS) {
+            BlueToothConnect blueTooth = connectMap.get(address);
+            blueTooth.setConnect(true);
+        } else if (status == BtStatus.FAIL) {
+            BlueToothConnect blueTooth = connectMap.get(address);
+            blueTooth.setConnect(false);
+        }
+        if (null != connectCallBack) {
+            connectCallBack.statusCallBack(address, status);
+        }
+    }
+
+    @Override
+    public void readData(String address, byte[] data) {
+        if (null != connectCallBack) {
+            connectCallBack.readData(address, data);
+        }
     }
 }
 

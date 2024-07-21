@@ -116,7 +116,9 @@ public class BluetoothClassic implements BlueTooth {
                 }
             }
             try {
-                mmSocket.close();
+                if (null != mmSocket) {
+                    mmSocket.close();
+                }
             } catch (IOException ex) {
             }
             mmSocket = null;

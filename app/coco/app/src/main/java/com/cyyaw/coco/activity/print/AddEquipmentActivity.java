@@ -14,7 +14,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.cyyaw.bluetooth.entity.BtEntity;
-import com.cyyaw.bluetooth.out.BlueToothCallBack;
+import com.cyyaw.bluetooth.out.BlueToothFindCallBack;
 import com.cyyaw.bluetooth.out.BlueToothManager;
 import com.cyyaw.coco.MyApplication;
 import com.cyyaw.coco.R;
@@ -139,7 +139,7 @@ public class AddEquipmentActivity extends BaseAppCompatActivity implements CuiSe
 
     private void scanLeDevice() {
 
-        BlueToothManager.setCallBack(new BlueToothCallBack() {
+        BlueToothManager.setCallBack(new BlueToothFindCallBack() {
             @Override
             public void error() {
 

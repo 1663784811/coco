@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.cyyaw.bluetooth.entity.BtEntity;
-import com.cyyaw.bluetooth.out.BlueToothCallBack;
+import com.cyyaw.bluetooth.out.BlueToothFindCallBack;
 import com.cyyaw.bluetooth.out.BlueToothManager;
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.activity.home.adapter.EquipmentAdapter;
@@ -102,7 +102,7 @@ public class FindView extends Fragment {
         context.requestPermissionsFn(PermissionsCode.BLUETOOTH_CONNECT, () -> {
             context.requestPermissionsFn(PermissionsCode.BLUETOOTH_REQUEST_ENABLE, () -> {
                 context.requestPermissionsFn(PermissionsCode.BLUETOOTH_SCAN, () -> {
-                    BlueToothManager.setCallBack(new BlueToothCallBack() {
+                    BlueToothManager.setCallBack(new BlueToothFindCallBack() {
                         @Override
                         public void error() {
 
