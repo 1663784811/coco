@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.cyyaw.bluetooth.device.BtStatus;
+import com.cyyaw.bluetooth.entity.BtStatus;
 import com.cyyaw.bluetooth.out.BlueToothConnectCallBack;
 import com.cyyaw.bluetooth.out.BlueToothManager;
 import com.cyyaw.coco.MyApplication;
@@ -84,8 +84,8 @@ public class PrintPreviewActivity extends BaseAppCompatActivity implements BlueT
      */
     private void connectBlueTooth() {
         ActivityUtils.blueToothPermissions(this, () -> {
-            BlueToothManager.connectBlueTooth(blueToothAddress);
             BlueToothManager.connectCallBack(PrintPreviewActivity.this);
+            BlueToothManager.connectBlueTooth(blueToothAddress);
         });
     }
 

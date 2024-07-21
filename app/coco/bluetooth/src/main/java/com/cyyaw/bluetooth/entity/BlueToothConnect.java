@@ -1,6 +1,7 @@
-package com.cyyaw.bluetooth.device;
+package com.cyyaw.bluetooth.entity;
 
 
+import com.cyyaw.bluetooth.device.BlueTooth;
 
 /**
  *

@@ -1,7 +1,7 @@
 package com.cyyaw.bluetooth.out;
 
 
-import com.cyyaw.bluetooth.device.BtStatus;
+import com.cyyaw.bluetooth.entity.BtStatus;
 
 /**
  * 蓝牙连接状态回调

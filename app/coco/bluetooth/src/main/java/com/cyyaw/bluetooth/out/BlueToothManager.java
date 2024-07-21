@@ -8,9 +8,9 @@ import android.content.pm.PackageManager;
 import androidx.core.app.ActivityCompat;
 
 import com.cyyaw.bluetooth.device.BlueTooth;
-import com.cyyaw.bluetooth.device.BlueToothConnect;
+import com.cyyaw.bluetooth.entity.BlueToothConnect;
 import com.cyyaw.bluetooth.device.BluetoothClassic;
-import com.cyyaw.bluetooth.device.BtStatus;
+import com.cyyaw.bluetooth.entity.BtStatus;
 import com.cyyaw.bluetooth.entity.BtEntity;
 import com.cyyaw.bluetooth.receiver.BlueToothReceiver;
 import com.cyyaw.bluetooth.receiver.BlueToothStatusListener;

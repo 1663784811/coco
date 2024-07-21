@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 
 import androidx.core.app.ActivityCompat;
 
+import com.cyyaw.bluetooth.entity.BtStatus;
 import com.cyyaw.bluetooth.out.BlueToothConnectCallBack;
 
 import java.io.IOException;
@@ -29,6 +30,7 @@ public class BluetoothClassic implements BlueTooth {
     private volatile BluetoothSocket mmSocket;
     private volatile InputStream mmInStream;
     private volatile OutputStream mmOutputStream;
+    private volatile String address;
 
     // ========================================================
 
@@ -39,7 +41,7 @@ public class BluetoothClassic implements BlueTooth {
 
     @Override
     public void connectBlueTooth(BluetoothDevice bluetooth) {
-        String address = bluetooth.getAddress();
+        address = bluetooth.getAddress();
         if (callBack != null) {
             callBack.statusCallBack(address, BtStatus.CONNECTTING);
         }
@@ -91,11 +93,13 @@ public class BluetoothClassic implements BlueTooth {
     @Override
     public void writeData(byte[] bytes) {
         try {
+            callBack.statusCallBack(address, BtStatus.SENDDTAING);
             mmOutputStream.write(bytes);
             mmOutputStream.flush();
+            callBack.statusCallBack(address, BtStatus.SENDDTASUCCESS);
         } catch (IOException e) {
             if (callBack != null) {
-                // callBack.sendFail(address);
+                callBack.statusCallBack(address, BtStatus.SENDDTAFAIL);
             }
         }
     }
