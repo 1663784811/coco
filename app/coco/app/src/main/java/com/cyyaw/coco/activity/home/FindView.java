@@ -1,6 +1,9 @@
 package com.cyyaw.coco.activity.home;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +27,7 @@ import com.cyyaw.coco.dao.EquipmentDao;
 import com.cyyaw.coco.dao.table.EquipmentEntity;
 import com.cyyaw.cui.fragment.CuiEmptyFragment;
 import com.cyyaw.cui.fragment.CuiNavBarFragment;
+import com.cyyaw.cui.view.CuiButton;
 
 import java.util.List;
 
@@ -64,6 +68,11 @@ public class FindView extends Fragment {
         // 添加
         addEquipmentBtn.setOnClickListener((View v) -> {
             AddEquipmentActivity.openActivity(context);
+        });
+
+        CuiButton btn = view.findViewById(R.id.addEquipment);
+        btn.setLoadingListener((CuiButton v)->{
+
         });
         return view;
     }

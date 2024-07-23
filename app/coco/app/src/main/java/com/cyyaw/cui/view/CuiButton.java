@@ -6,20 +6,20 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
 import com.cyyaw.coco.R;
+import com.cyyaw.cui.CuiViewUtils;
+import com.cyyaw.cui.enums.CuiStatusEnum;
 
 public class CuiButton extends View {
 
@@ -43,14 +43,13 @@ public class CuiButton extends View {
     private ObjectAnimator animator;
     private int mViewWidth;
     private int mViewHeight;
-    private int STATE_NORMAL = 0;
-    private int STATE_LOADING = 1;
-    private int STATE_COMPLETED = 2;
-    private int state = STATE_NORMAL;
+    private CuiStatusEnum state = CuiStatusEnum.NORMALS;
     private String loadingTxt;
     private String contentNormal;
     private float corners;
     private int backgroundPressed;
+    private boolean disabled;
+    private Paint disabledPaintRect;
 
 
     public CuiButton(Context context) {
@@ -111,11 +110,11 @@ public class CuiButton extends View {
         super.onDraw(canvas);
         // 绘制带有圆角的矩形
         canvas.drawRoundRect(rect, corners, corners, paintRect);
-        if (state == STATE_NORMAL) {
+        if (state == CuiStatusEnum.NORMALS) {
             //  正常状态
             // 绘制文字
             canvas.drawText(content, paddingLeft + rect.width() / 2 - paddingRight, rect.height() / 2 + txtHeight / 3, paintTxt);
-        } else if (state == STATE_LOADING) {
+        } else if (state == CuiStatusEnum.LOADING) {
             // 加载状态
             // 旋转的位置
             canvas.translate(mViewWidth / 2, mViewHeight / 2);
@@ -123,10 +122,16 @@ public class CuiButton extends View {
             matrix.preTranslate(-bitmap.getWidth() / 2, -bitmap.getHeight() / 2);
             // 绘制图片
             canvas.drawBitmap(bitmap, matrix, null);
-        } else if (state == STATE_COMPLETED) {
-            // 加载完成
-            canvas.drawText(content, paddingLeft + rect.width() / 2 - paddingRight, rect.height() / 2 + txtHeight / 3, paintTxt);
         }
+        if (disabled) {
+            if (null == disabledPaintRect) {
+                disabledPaintRect = new Paint();
+                disabledPaintRect.setColor(Color.parseColor("#80808080"));
+                paintRect.setStyle(Paint.Style.FILL);
+            }
+            canvas.drawRoundRect(rect, corners, corners, disabledPaintRect);
+        }
+
     }
 
     /**
@@ -134,27 +139,29 @@ public class CuiButton extends View {
      */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (listener == null) {
-            return true;
-        }
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                if (loadingTxt == null) {
-                    content = "";
-                } else {
-                    content = loadingTxt;
-                }
-                paintRect.setColor(backgroundPressed);
-                state = STATE_NORMAL;
-                postInvalidate();
-                break;
-            case MotionEvent.ACTION_UP:
-                paintRect.setColor(backgroundNormal);
-                startAnim();
-                state = STATE_LOADING;
-                postInvalidate();
-                listener.onLoadingClick(this);
-                break;
+        if (disabled) {
+            return false;
+        } else if (state != CuiStatusEnum.LOADING) {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    if (loadingTxt == null) {
+                        content = "";
+                    } else {
+                        content = loadingTxt;
+                    }
+                    paintRect.setColor(backgroundPressed);
+                    postInvalidate();
+                    break;
+                case MotionEvent.ACTION_UP:
+                    paintRect.setColor(backgroundNormal);
+                    startAnim();
+                    state = CuiStatusEnum.LOADING;
+                    postInvalidate();
+                    if (null != listener) {
+                        listener.onLoadingClick(this);
+                    }
+                    break;
+            }
         }
         return true;
     }
@@ -174,7 +181,8 @@ public class CuiButton extends View {
         textSize = typeArray.getDimension(R.styleable.cui_button_text_size, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16, getResources().getDisplayMetrics()));
         contentNormal = typeArray.getString(R.styleable.cui_button_text);
         loadingTxt = typeArray.getString(R.styleable.cui_button_loading_text);
-        corners = typeArray.getDimension(R.styleable.cui_button_corners, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 6, getResources().getDisplayMetrics()));
+        corners = typeArray.getDimension(R.styleable.cui_button_corners, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, getResources().getDisplayMetrics()));
+        disabled = typeArray.getBoolean(R.styleable.cui_button_disabled, false);
         typeArray.recycle();
     }
 
@@ -187,7 +195,7 @@ public class CuiButton extends View {
         } else {
             content = "";
         }
-        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.cui_icon_loadding_24);
+        bitmap = CuiViewUtils.getBitmapFromVectorDrawable(context, R.drawable.cui_icon_loadding_24);
         default_padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
         paddingBottom = getPaddingBottom();
         paddingLeft = getPaddingLeft();
@@ -262,7 +270,7 @@ public class CuiButton extends View {
      */
     public void setCompleted() {
         content = contentNormal;
-        state = STATE_COMPLETED;
+        state = CuiStatusEnum.NORMALS;
         cancelAnim();
         postInvalidate();
     }

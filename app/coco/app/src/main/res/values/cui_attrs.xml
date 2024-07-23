@@ -6,13 +6,23 @@
     </declare-styleable>
 
     <declare-styleable name="cui_button">
+        <!--    静态背景    -->
         <attr name="background_color_normal" format="color" />
+
         <attr name="background_color_pressed" format="color" />
+        <!--    静态文字    -->
         <attr name="text" format="string" />
+        <!--     字体颜色   -->
         <attr name="text_color" format="color" />
+        <!--    字体大小    -->
         <attr name="text_size" format="dimension" />
+        <!--    加载时文字    -->
         <attr name="loading_text" format="string" />
+        <!--    圆角大小    -->
         <attr name="corners" format="dimension" />
+        <!--    是否禁用    -->
+        <attr name="disabled" format="boolean" />
+
     </declare-styleable>
 
 
