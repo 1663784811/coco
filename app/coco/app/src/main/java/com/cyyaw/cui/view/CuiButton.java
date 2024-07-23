@@ -122,6 +122,8 @@ public class CuiButton extends View {
             matrix.preTranslate(-bitmap.getWidth() / 2, -bitmap.getHeight() / 2);
             // 绘制图片
             canvas.drawBitmap(bitmap, matrix, null);
+
+            canvas.drawText(content, paddingLeft + rect.width() / 2 - paddingRight, rect.height() / 2 + txtHeight / 3, paintTxt);
         }
         if (disabled) {
             if (null == disabledPaintRect) {
