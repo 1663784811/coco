@@ -142,7 +142,7 @@ public class CuiButton extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (disabled) {
-            return false;
+            return true;
         } else if (state != CuiStatusEnum.LOADING) {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
@@ -179,10 +179,10 @@ public class CuiButton extends View {
         TypedArray typeArray = context.obtainStyledAttributes(attrs, R.styleable.cui_button);
         backgroundNormal = typeArray.getColor(R.styleable.cui_button_background_color_normal, Color.parseColor("#3A96FF"));
         backgroundPressed = typeArray.getColor(R.styleable.cui_button_background_color_pressed, Color.parseColor("#1E90FF"));
-        textColor = typeArray.getColor(R.styleable.cui_button_text_color, Color.WHITE);
-        textSize = typeArray.getDimension(R.styleable.cui_button_text_size, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16, getResources().getDisplayMetrics()));
+        textColor = typeArray.getColor(R.styleable.cui_button_textColor, Color.WHITE);
+        textSize = typeArray.getDimension(R.styleable.cui_button_textSize, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16, getResources().getDisplayMetrics()));
         contentNormal = typeArray.getString(R.styleable.cui_button_text);
-        loadingTxt = typeArray.getString(R.styleable.cui_button_loading_text);
+        loadingTxt = typeArray.getString(R.styleable.cui_button_loadingText);
         corners = typeArray.getDimension(R.styleable.cui_button_corners, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, getResources().getDisplayMetrics()));
         disabled = typeArray.getBoolean(R.styleable.cui_button_disabled, false);
         typeArray.recycle();
@@ -198,7 +198,7 @@ public class CuiButton extends View {
             content = "";
         }
         bitmap = CuiViewUtils.getBitmapFromVectorDrawable(context, R.drawable.cui_icon_loadding_24);
-        default_padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20, getResources().getDisplayMetrics());
+        default_padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 19, getResources().getDisplayMetrics());
         paddingBottom = getPaddingBottom();
         paddingLeft = getPaddingLeft();
         paddingTop = getPaddingTop();

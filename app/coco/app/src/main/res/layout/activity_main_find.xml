@@ -61,9 +61,9 @@
                 app:background_color_normal="#3A96FF"
                 app:background_color_pressed="#1E90FF"
                 app:corners="30dp"
-                app:loading_text="登录中..."
+                app:loadingText="登录中..."
                 app:text="登录"
-                app:text_color="#ffffff"
+                app:textColor="#ffffff"
                 tools:ignore="MissingConstraints" />
 
 

@@ -13,11 +13,11 @@
         <!--    静态文字    -->
         <attr name="text" format="string" />
         <!--     字体颜色   -->
-        <attr name="text_color" format="color" />
+        <attr name="textColor" format="color" />
         <!--    字体大小    -->
-        <attr name="text_size" format="dimension" />
+        <attr name="textSize" format="dimension" />
         <!--    加载时文字    -->
-        <attr name="loading_text" format="string" />
+        <attr name="loadingText" format="string" />
         <!--    圆角大小    -->
         <attr name="corners" format="dimension" />
         <!--    是否禁用    -->
