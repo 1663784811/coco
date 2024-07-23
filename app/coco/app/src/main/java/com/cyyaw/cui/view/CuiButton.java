@@ -180,7 +180,7 @@ public class CuiButton extends View {
         backgroundNormal = typeArray.getColor(R.styleable.cui_button_background_color_normal, Color.parseColor("#3A96FF"));
         backgroundPressed = typeArray.getColor(R.styleable.cui_button_background_color_pressed, Color.parseColor("#1E90FF"));
         textColor = typeArray.getColor(R.styleable.cui_button_textColor, Color.WHITE);
-        textSize = typeArray.getDimension(R.styleable.cui_button_textSize, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16, getResources().getDisplayMetrics()));
+        textSize = typeArray.getDimension(R.styleable.cui_button_textSize, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 14, getResources().getDisplayMetrics()));
         contentNormal = typeArray.getString(R.styleable.cui_button_text);
         loadingTxt = typeArray.getString(R.styleable.cui_button_loadingText);
         corners = typeArray.getDimension(R.styleable.cui_button_corners, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, getResources().getDisplayMetrics()));
