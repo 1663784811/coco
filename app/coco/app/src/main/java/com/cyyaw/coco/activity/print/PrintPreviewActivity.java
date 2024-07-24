@@ -3,7 +3,9 @@ package com.cyyaw.coco.activity.print;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.cyyaw.bluetooth.entity.BtStatus;
@@ -15,19 +17,22 @@ import com.cyyaw.coco.common.BaseAppCompatActivity;
 import com.cyyaw.coco.common.view.PrintBitMapImageView;
 import com.cyyaw.coco.utils.ActivityUtils;
 import com.cyyaw.cui.fragment.CuiNavBarFragment;
+import com.cyyaw.cui.view.CuiButton;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 打印机
  */
 public class PrintPreviewActivity extends BaseAppCompatActivity implements BlueToothConnectCallBack {
 
+    private static final String TAG = PrintPreviewActivity.class.getName();
 
     private static final String addressKey = "keyAddress";
     private static final String printDataKey = "printDataKey";
 
-    private View nowPrintBtn;
+    private CuiButton nowPrintBtn;
     private PrintBitMapImageView printPager;
     private TextView blueToothName;
     private TextView blueToothStatus;
@@ -64,7 +69,7 @@ public class PrintPreviewActivity extends BaseAppCompatActivity implements BlueT
 
         blueToothName.setText("蓝牙: " + blueToothAddress);
         printPager.setWordData(printData);
-        nowPrintBtn.setOnClickListener((View v) -> {
+        nowPrintBtn.setOnClick((View v) -> {
             // 第一步: 获取打印像素数据
             List<byte[]> printImageData = printPager.getPrintImageData();
             // 第二步: 发送数据
@@ -73,9 +78,24 @@ public class PrintPreviewActivity extends BaseAppCompatActivity implements BlueT
             MyApplication.run(() -> {
                 for (int i = 0; i < size; i++) {
                     BlueToothManager.sendData(blueToothAddress, printImageData.get(i));
+                    Log.e(TAG, "正在发送, 共" + size + " 发送:" + i);
                 }
+                nowPrintBtn.setDisabled(false);
+                Log.e(TAG, "statusCallBack: 结束 1111111111111111111");
             });
         });
+
+        AtomicInteger i = new AtomicInteger();
+        Button testBtn = findViewById(R.id.testBtn);
+        testBtn.setOnClickListener((View v) -> {
+            i.getAndIncrement();
+            if (i.get() % 2 == 0) {
+                nowPrintBtn.setDisabled(false);
+            } else {
+                nowPrintBtn.setDisabled(true);
+            }
+        });
+
         connectBlueTooth();
     }
 
@@ -100,6 +120,15 @@ public class PrintPreviewActivity extends BaseAppCompatActivity implements BlueT
     public void statusCallBack(String address, BtStatus status) {
         MyApplication.post(() -> {
             blueToothStatus.setText(status.getNote());
+            if (status.equals(BtStatus.SUCCESS)) {
+                nowPrintBtn.setDisabled(false);
+            } else if (status.equals(BtStatus.FAIL)) {
+                nowPrintBtn.setDisabled(true);
+            } else if (status.equals(BtStatus.SENDDTAING)) {
+                nowPrintBtn.setDisabled(true);
+            } else if (status.equals(BtStatus.SENDDTASUCCESS)) {
+                nowPrintBtn.setDisabled(false);
+            }
         });
     }
 

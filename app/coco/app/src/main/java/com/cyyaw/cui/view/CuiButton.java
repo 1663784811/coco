@@ -12,6 +12,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
@@ -333,12 +334,18 @@ public class CuiButton extends View {
 
     private LoadingListener listener;
 
-    public void setLoadingListener(LoadingListener loginClickListener) {
+
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
+        postInvalidate();
+    }
+
+    public void setOnClick(LoadingListener loginClickListener) {
         this.listener = loginClickListener;
     }
 
     public interface LoadingListener {
-        void onLoadingClick(CuiButton view);
+        void onLoadingClick(View v);
     }
 
 }

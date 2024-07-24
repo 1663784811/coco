@@ -8,16 +8,20 @@
     android:layout_marginLeft="4dp"
     android:layout_marginRight="4dp"
     android:layout_marginBottom="8dp"
-    android:background="@drawable/gradient_background"
+    android:background="@drawable/equipment_item_bg"
     android:orientation="vertical"
     android:padding="8dp">
 
     <ImageView
         android:id="@+id/equipmentImg"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/logo"
+        android:src="@drawable/img_print_128"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
 
@@ -25,8 +29,9 @@
         android:id="@+id/blueToothName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="设备名"
-        android:textColor="@color/white"
+        android:textColor="@color/titleColor"
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@+id/equipmentImg" />
@@ -43,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="打印机"
-            android:textColor="@color/white"
+            android:textColor="@color/subColor"
             android:textSize="12sp"
             tools:ignore="MissingConstraints" />
 
@@ -52,7 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:textColor="@color/white"
+            android:textColor="@color/subColor"
             android:textSize="12sp"
             tools:ignore="MissingConstraints" />
 

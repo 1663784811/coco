@@ -8,5 +8,11 @@
     <color name="gradientEnd">#4AABF8</color>
     <color name="defaultBackground">#FAFAFA</color>
 
+    <color name="titleColor">#17233d</color>
+
+    <color name="fontColor">#515a6e</color>
+
+    <color name="subColor">#808695</color>
+
 
 </resources>

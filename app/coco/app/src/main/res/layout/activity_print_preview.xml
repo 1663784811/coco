@@ -50,14 +50,29 @@
     </ScrollView>
 
 
+    <Button
+        android:id="@+id/testBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="测试"
+        tools:ignore="MissingConstraints" />
+
+
     <com.cyyaw.cui.view.CuiButton
         android:id="@+id/nowPrintBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:text="立即打印aaa"
+        app:text="立即打印"
         app:textSize="14sp"
+        app:disabled="true"
         tools:ignore="MissingConstraints" />
 
 
