@@ -138,8 +138,7 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
 
         mIndicatorStyle = ta.getInt(R.styleable.SlidingTabLayout_tl_indicator_style, STYLE_NORMAL);
         mIndicatorColor = ta.getColor(R.styleable.SlidingTabLayout_tl_indicator_color, Color.parseColor(mIndicatorStyle == STYLE_BLOCK ? "#4B6A87" : "#ffffff"));
-        mIndicatorHeight = ta.getDimension(R.styleable.SlidingTabLayout_tl_indicator_height,
-                dp2px(mIndicatorStyle == STYLE_TRIANGLE ? 4 : (mIndicatorStyle == STYLE_BLOCK ? -1 : 2)));
+        mIndicatorHeight = ta.getDimension(R.styleable.SlidingTabLayout_tl_indicator_height, dp2px(mIndicatorStyle == STYLE_TRIANGLE ? 4 : (mIndicatorStyle == STYLE_BLOCK ? -1 : 2)));
         mIndicatorWidth = ta.getDimension(R.styleable.SlidingTabLayout_tl_indicator_width, dp2px(mIndicatorStyle == STYLE_TRIANGLE ? 10 : -1));
         mIndicatorCornerRadius = ta.getDimension(R.styleable.SlidingTabLayout_tl_indicator_corner_radius, dp2px(mIndicatorStyle == STYLE_BLOCK ? -1 : 0));
         mIndicatorMarginLeft = ta.getDimension(R.styleable.SlidingTabLayout_tl_indicator_margin_left, dp2px(0));
@@ -175,9 +174,7 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
         if (vp == null || vp.getAdapter() == null) {
             throw new IllegalStateException("ViewPager or ViewPager adapter can not be NULL !");
         }
-
         this.mViewPager = vp;
-
         this.mViewPager.removeOnPageChangeListener(this);
         this.mViewPager.addOnPageChangeListener(this);
         notifyDataSetChanged();
@@ -211,14 +208,11 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
         if (vp == null) {
             throw new IllegalStateException("ViewPager can not be NULL !");
         }
-
         if (titles == null || titles.length == 0) {
             throw new IllegalStateException("Titles can not be EMPTY !");
         }
-
         this.mViewPager = vp;
         this.mViewPager.setAdapter(new InnerPagerAdapter(fa.getSupportFragmentManager(), fragments, titles));
-
         this.mViewPager.removeOnPageChangeListener(this);
         this.mViewPager.addOnPageChangeListener(this);
         notifyDataSetChanged();
@@ -234,7 +228,6 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
             CharSequence pageTitle = mTitles == null ? mViewPager.getAdapter().getPageTitle(i) : mTitles.get(i);
             addTab(i, pageTitle.toString(), tabView);
         }
-
         updateTabStyles();
     }
 
@@ -243,11 +236,9 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
         if (mTitles != null) {
             mTitles.add(title);
         }
-
         CharSequence pageTitle = mTitles == null ? mViewPager.getAdapter().getPageTitle(mTabCount) : mTitles.get(mTabCount);
         addTab(mTabCount, pageTitle.toString(), tabView);
         this.mTabCount = mTitles == null ? mViewPager.getAdapter().getCount() : mTitles.size();
-
         updateTabStyles();
     }
 
@@ -257,7 +248,6 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
         if (tv_tab_title != null) {
             if (title != null) tv_tab_title.setText(title);
         }
-
         tabView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -269,7 +259,6 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
                         } else {
                             mViewPager.setCurrentItem(position);
                         }
-
                         if (mListener != null) {
                             mListener.onTabSelect(position);
                         }
@@ -440,11 +429,9 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
         if (isInEditMode() || mTabCount <= 0) {
             return;
         }
-
         int height = getHeight();
         int paddingLeft = getPaddingLeft();
         // draw divider
@@ -456,7 +443,6 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
                 canvas.drawLine(paddingLeft + tab.getRight(), mDividerPadding, paddingLeft + tab.getRight(), height - mDividerPadding, mDividerPaint);
             }
         }
-
         // draw underline
         if (mUnderlineHeight > 0) {
             mRectPaint.setColor(mUnderlineColor);
@@ -466,9 +452,7 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
                 canvas.drawRect(paddingLeft, 0, mTabsContainer.getWidth() + paddingLeft, mUnderlineHeight, mRectPaint);
             }
         }
-
         //draw indicator line
-
         calcIndicatorRect();
         if (mIndicatorStyle == STYLE_TRIANGLE) {
             if (mIndicatorHeight > 0) {
@@ -486,7 +470,6 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
             } else {
 
             }
-
             if (mIndicatorHeight > 0) {
                 if (mIndicatorCornerRadius < 0 || mIndicatorCornerRadius > mIndicatorHeight / 2) {
                     mIndicatorCornerRadius = mIndicatorHeight / 2;
@@ -504,7 +487,6 @@ public class SlidingTabLayout extends HorizontalScrollView implements ViewPager.
                 calcIndicatorRect();
                 canvas.drawRect(getPaddingLeft() + mIndicatorRect.left, getHeight() - mIndicatorHeight,
                         mIndicatorRect.right + getPaddingLeft(), getHeight(), mRectPaint);*/
-
             if (mIndicatorHeight > 0) {
                 mIndicatorDrawable.setColor(mIndicatorColor);
 
