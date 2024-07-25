@@ -34,16 +34,12 @@ public class ChatListView extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_main_chat, container, false);
-
         CuiNavBarFragment nav = new CuiNavBarFragment("关注");
         getChildFragmentManager().beginTransaction().add(R.id.header_title, nav).commit();
-
         ViewPager2 vp = view.findViewById(R.id.char_ViewPager);
         List<Fragment> pageData = new ArrayList<>();
-
         pageData.add(new ChatListFriendsView(context));
         pageData.add(new ChatListMsgView(context));
-
         MyViewPage2Adapter adapter = new MyViewPage2Adapter(context,pageData);
         vp.setAdapter(adapter);
         vp.setCurrentItem(0);

@@ -64,16 +64,12 @@ public class FindView extends Fragment {
         initBlueTooth();
         initEquipmentList();
 
-//        Button addEquipmentBtn = view.findViewById(R.id.addEquipmentBtn);
-//        // 添加
-//        addEquipmentBtn.setOnClickListener((View v) -> {
-//            AddEquipmentActivity.openActivity(context);
-//        });
+        Button addEquipmentBtn = view.findViewById(R.id.addEquipmentBtn);
+        // 添加
+        addEquipmentBtn.setOnClickListener((View v) -> {
+            AddEquipmentActivity.openActivity(context);
+        });
 
-//        CuiButton btn = view.findViewById(R.id.addEquipment);
-//        btn.setOnClick((View v) -> {
-//
-//        });
         return view;
     }
 
