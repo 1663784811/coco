@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cyyaw.coco.R;
-import com.cyyaw.coco.activity.home.adapter.FriendsListAdapter;
-import com.cyyaw.coco.dao.FriendsDao;
-import com.cyyaw.coco.dao.table.FriendsEntity;
+import com.cyyaw.coco.activity.home.adapter.MsgListAdapter;
+import com.cyyaw.coco.dao.MsgDao;
+import com.cyyaw.coco.dao.table.MsgEntity;
 
 import java.util.List;
 
@@ -38,13 +38,13 @@ public class ChatListMsgView extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.chatList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
-        FriendsListAdapter friendsListAdapter = new FriendsListAdapter(context);
-        recyclerView.setAdapter(friendsListAdapter);
+        MsgListAdapter msgListAdapter = new MsgListAdapter(context);
+        recyclerView.setAdapter(msgListAdapter);
         // 请求网络
 
         // 同步好友
-        List<FriendsEntity> friends = FriendsDao.getFriends();
-        friendsListAdapter.setDataList(friends);
+        List<MsgEntity> msgList = MsgDao.getMsg();
+        msgListAdapter.setDataList(msgList);
 
 
         recyclerView.setOnTouchListener((View v, MotionEvent event) -> {
