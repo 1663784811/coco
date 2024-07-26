@@ -1,14 +1,13 @@
 package com.cyyaw.coco.activity.home;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,7 +26,7 @@ import com.cyyaw.coco.dao.EquipmentDao;
 import com.cyyaw.coco.dao.table.EquipmentEntity;
 import com.cyyaw.cui.fragment.CuiEmptyFragment;
 import com.cyyaw.cui.fragment.CuiNavBarFragment;
-import com.cyyaw.cui.view.CuiButton;
+import com.cyyaw.cui.window.CuiPopWindow;
 
 import java.util.List;
 
@@ -39,6 +38,7 @@ public class FindView extends Fragment {
     private BaseAppCompatActivity context;
     private LinearLayout equipmentContainer;
     private Fragment cuiEmpty;
+    private CuiPopWindow window;
 
     public FindView(BaseAppCompatActivity context) {
         this.context = context;
@@ -49,8 +49,17 @@ public class FindView extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // =============== 加载布局
         View view = inflater.inflate(R.layout.activity_main_find, container, false);
-
-        CuiNavBarFragment nav = new CuiNavBarFragment("我的设备");
+        window = CuiPopWindow.getWindow(context, R.layout.activity_main_find_menu);
+        View windowView = window.getView();
+        windowView.findViewById(R.id.add_equipment).setOnClickListener((View v) -> {
+            AddEquipmentActivity.openActivity(context);
+        });
+        CuiNavBarFragment nav = new CuiNavBarFragment("我的设备", new CuiNavBarFragment.UiNavBarFragmentCallBack() {
+            @Override
+            public void clickMore(View v) {
+                window.show(v, 0, 0);
+            }
+        }, false, true);
         getChildFragmentManager().beginTransaction().add(R.id.header_title, nav).commit();
 
         // =============== 设置适配器
@@ -64,11 +73,11 @@ public class FindView extends Fragment {
         initBlueTooth();
         initEquipmentList();
 
-        Button addEquipmentBtn = view.findViewById(R.id.addEquipmentBtn);
-        // 添加
-        addEquipmentBtn.setOnClickListener((View v) -> {
-            AddEquipmentActivity.openActivity(context);
-        });
+//        Button addEquipmentBtn = view.findViewById(R.id.addEquipmentBtn);
+//        // 添加
+//        addEquipmentBtn.setOnClickListener((View v) -> {
+//            AddEquipmentActivity.openActivity(context);
+//        });
 
         return view;
     }

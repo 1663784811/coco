@@ -51,7 +51,7 @@ public class PrintInputActivity extends AppCompatActivity {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         CuiNavBarFragment nav = new CuiNavBarFragment("输入打印内容", new CuiNavBarFragment.UiNavBarFragmentCallBack() {
             @Override
-            public void clickMore() {
+            public void clickMore(View v) {
                 popup.show(true);
             }
         }, true, true);

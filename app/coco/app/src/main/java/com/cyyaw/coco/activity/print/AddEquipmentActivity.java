@@ -29,6 +29,7 @@ import com.cyyaw.cui.fragment.CuiNavBarFragment;
 import com.cyyaw.cui.fragment.CuiPopupFragment;
 import com.cyyaw.cui.fragment.CuiSelectListFragment;
 import com.cyyaw.cui.fragment.callback.CuiSelectCallBack;
+import com.cyyaw.cui.window.CuiPopWindow;
 
 import java.util.Map;
 
@@ -63,7 +64,10 @@ public class AddEquipmentActivity extends BaseAppCompatActivity implements CuiSe
 
         CuiNavBarFragment nav = new CuiNavBarFragment("添加设备", new CuiNavBarFragment.UiNavBarFragmentCallBack() {
             @Override
-            public void clickMore() {
+            public void clickMore(View v) {
+
+
+
 
             }
         }, true, true);

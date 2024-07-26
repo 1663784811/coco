@@ -58,13 +58,13 @@ public class CuiNavBarFragment extends Fragment {
         }
         if (null != callBack) {
             navBackBtn.setOnClickListener((View v) -> {
-                boolean b = callBack.clickBack();
+                boolean b = callBack.clickBack(v);
                 if (!b) {
                     getActivity().finish();
                 }
             });
             navMoreBtn.setOnClickListener((View v) -> {
-                callBack.clickMore();
+                callBack.clickMore(v);
             });
 
         }
@@ -80,14 +80,14 @@ public class CuiNavBarFragment extends Fragment {
         /**
          * 点击返回
          */
-        default boolean clickBack() {
+        default boolean clickBack(View v) {
             return false;
         }
 
         /**
          * 点击返回
          */
-        default void clickMore() {
+        default void clickMore(View v) {
         }
     }
 
