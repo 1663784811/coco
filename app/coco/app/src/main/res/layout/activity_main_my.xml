@@ -40,6 +40,14 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/cui_icon_scan_24"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        tools:ignore="MissingConstraints" />
+
+
+                    <ImageView
                         android:id="@+id/settingImgView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
