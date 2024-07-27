@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.cyyaw.coco.MyApplication;
 import com.cyyaw.coco.R;
+import com.cyyaw.coco.dao.FriendsDao;
 import com.cyyaw.coco.utils.ActivityUtils;
 import com.cyyaw.cui.fragment.CuiCellFragment;
 import com.cyyaw.cui.fragment.CuiCellGroupFragment;
@@ -55,6 +56,11 @@ public class PersonCenterActivity extends AppCompatActivity {
         });
 
 
+        findViewById(R.id.delMyFriendsBtn).setOnClickListener((View v) -> {
+            FriendsDao.delFriendsBtn(userId, () -> {
+                finish();
+            });
+        });
     }
 
 

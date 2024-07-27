@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.cyyaw.coco.R;
+import com.cyyaw.coco.activity.MessageActivity;
 import com.cyyaw.coco.activity.PersonCenterActivity;
 import com.cyyaw.coco.dao.table.MsgEntity;
 import com.cyyaw.coco.dao.table.MsgEntity;
@@ -35,7 +36,7 @@ public class MsgListAdapter extends RecyclerView.Adapter<MsgListAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_friends_item, parent, false));
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_msg_item, parent, false));
     }
 
     @Override
@@ -90,7 +91,7 @@ public class MsgListAdapter extends RecyclerView.Adapter<MsgListAdapter.ViewHold
              * 点击
              */
             friendsItem.setOnClickListener((View v) -> {
-                PersonCenterActivity.openActivity(context, friendsEntity.getTid(), friendsEntity.getNickName(), friendsEntity.getFace());
+                MessageActivity.openActivity(context, friendsEntity.getTid(), friendsEntity.getNickName(), friendsEntity.getFace());
             });
         }
     }

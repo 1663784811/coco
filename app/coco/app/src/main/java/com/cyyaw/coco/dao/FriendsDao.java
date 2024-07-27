@@ -1,5 +1,7 @@
 package com.cyyaw.coco.dao;
 
+import android.util.Log;
+
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.cyyaw.coco.MyApplication;
@@ -24,6 +26,22 @@ public class FriendsDao {
     private FriendsDao() {
     }
 
+
+    public static void delFriendsBtn(String tid, UpdateDataCallBack updateDataCallBack) {
+        // 删除远程
+        JSONObject json = new JSONObject();
+        json.put("tid", tid);
+        AppRequest.postRequest(MyApplication.baseUrl + "/app/" + MyApplication.appId + "/friends/delFriends", json, (String body) -> {
+            // 删除本地
+            JSONObject userJson = ChatInfoDatabaseHelper.queryDataOne("select * from user_info where tid = ? ", new String[]{tid});
+            if (null != userJson) {
+                String id = userJson.getString("id");
+                ChatInfoDatabaseHelper.deleteById("user_info", id);
+            }
+            updateDataCallBack.updateData();
+        });
+    }
+
     /**
      * 获取好友数据
      */
@@ -41,7 +59,7 @@ public class FriendsDao {
     public static void setUpdateDataCallBack(UpdateDataCallBack updateDataCallBack) {
         FriendsDao.updateDataCallBack = new WeakReference(updateDataCallBack);
         MyApplication.post(() -> {
-            AppRequest.getRequest("http://192.168.0.103:8080/app/" + MyApplication.appId + "/friends/myFriends", (String body) -> {
+            AppRequest.getRequest(MyApplication.baseUrl + "/app/" + MyApplication.appId + "/friends/myFriends", (String body) -> {
                 JSONObject json = JSONObject.parseObject(body);
                 JSONArray data = json.getJSONArray("data");
                 if (null != data) {

@@ -21,6 +21,9 @@ import java.util.concurrent.Executors;
 public class MyApplication extends Application {
 
 
+    public static final String baseUrl = "http://192.168.0.103:8080";
+
+
     public static final String appId = "sss";
     private static final Handler sHandler = new Handler(Looper.getMainLooper());
     // 单例Toast,避免重复创建，显示时间过长
