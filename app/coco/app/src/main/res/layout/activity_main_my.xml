@@ -1,18 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/find_view_bg"
-    android:orientation="vertical">
+    android:background="@android:color/background_light">
 
-    <ScrollView
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/ioexample.appbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints">
+        android:layout_height="300dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/ioexample.collapsing"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleMarginEnd="64dp"
+            app:expandedTitleMarginStart="48dp"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <ImageView
+                android:id="@+id/userBackImage"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:background="@drawable/my_center_user_info_bg"
+                tools:ignore="MissingConstraints" />
+
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/mainToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                app:layout_collapseMode="pin">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/settingImgView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/icon_setting_24"
+                        app:layout_constraintRight_toRightOf="parent"
+                        tools:ignore="MissingConstraints" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/ioexample.toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@id/ioexample.appbar"
+        app:layout_anchorGravity="bottom"
+        app:layout_collapseMode="pin">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,32 +69,8 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:id="@+id/userBackImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:background="@drawable/my_center_user_info_bg"
-                    tools:ignore="MissingConstraints" />
-
-                <ImageView
-                    android:id="@+id/settingImgView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="26dp"
-                    android:layout_marginEnd="26dp"
-                    android:background="@drawable/icon_setting_24"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="MissingConstraints" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="-55dp"
+                android:layout_marginTop="0dp"
                 android:paddingStart="20dp"
                 tools:ignore="MissingConstraints,RtlSymmetry">
 
@@ -56,13 +80,12 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     app:cardCornerRadius="10dp"
-                    app:cardElevation="2dp">
+                    app:cardElevation="4dp">
 
                     <ImageView
                         android:id="@+id/faceImage"
                         android:layout_width="70dp"
                         android:layout_height="70dp"
-                        android:background="#ccc"
                         android:scaleType="fitXY"
                         android:src="@drawable/logo"
                         tools:ignore="MissingConstraints" />
@@ -81,6 +104,7 @@
                     app:layout_constraintLeft_toRightOf="@+id/faceCardView" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -89,6 +113,7 @@
                 android:paddingTop="20dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="10dp">
+
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -145,32 +170,26 @@
                         android:text="收藏" />
                 </LinearLayout>
             </LinearLayout>
-
-
-
-
-
-            <ListView
-                android:id="@+id/contentListView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/contentList"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-
-
-
-            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="11111111111"/>
-            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="11111111111"/>
-            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="11111111111"/>
-            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="11111111111"/>
-
         </LinearLayout>
-    </ScrollView>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="56dp"
+            android:lineSpacingExtra="8dp"
+            android:padding="@dimen/activity_horizontal_margin"
+            android:text="ssssssssssssssssssssssssssssssssssssssssssssssssssssss"
+            android:textSize="20sp" />
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+

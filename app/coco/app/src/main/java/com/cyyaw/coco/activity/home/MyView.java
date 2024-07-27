@@ -58,9 +58,9 @@ public class MyView extends Fragment {
         //  contentListAdapter.setDataList(dataList);
 
 
-        ListView listView = view.findViewById(R.id.contentListView);
-        ListAdapter listAdapter = new ContentEntityArrayAdapter(context, dataList);
-        listView.setAdapter(listAdapter);
+//        ListView listView = view.findViewById(R.id.contentListView);
+//        ListAdapter listAdapter = new ContentEntityArrayAdapter(context, dataList);
+//        listView.setAdapter(listAdapter);
 
 
         View userBackImage = view.findViewById(R.id.userBackImage);
