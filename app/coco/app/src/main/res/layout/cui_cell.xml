@@ -4,27 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#ccc"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingTop="14dp"
+    android:paddingRight="10dp"
+    android:paddingBottom="14dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cuiCellContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <ImageView
+            android:id="@+id/cui_item_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/cui_icon_voice_24"
+            tools:ignore="MissingConstraints" />
+
+
         <TextView
             android:id="@+id/cuiCellText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:text="ssssssssss"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toRightOf="@+id/cui_item_icon"
             tools:ignore="MissingConstraints" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/cui_icon_voice_24"
+            android:src="@drawable/cui_icon_next_24"
             app:layout_constraintRight_toRightOf="parent"
             tools:ignore="MissingConstraints" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -32,7 +47,7 @@
         android:id="@+id/cuiNoteText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="提示信息--------------------" />
+        android:text="提示信息" />
 
 
 </LinearLayout>

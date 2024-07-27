@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/defaultBackground"
-    tools:context=".activity.SettingActivity">
+    android:background="@drawable/find_view_bg">
 
     <LinearLayout
         android:id="@+id/header_bar"
@@ -17,6 +16,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -24,16 +24,24 @@
         tools:ignore="MissingConstraints">
 
         <LinearLayout
-            android:id="@+id/settingContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/logOutBtn"
+            <LinearLayout
+                android:id="@+id/settingContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="退出登录" />
+                android:orientation="vertical" />
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="退出登录"
+                />
+
+
 
         </LinearLayout>
     </ScrollView>
