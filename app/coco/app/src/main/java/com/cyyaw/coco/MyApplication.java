@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import com.cyyaw.bluetooth.out.BlueToothManager;
 import com.cyyaw.coco.common.ChatInfoDatabaseHelper;
-import com.cyyaw.webrtc.net.StatusCallBack;
 import com.cyyaw.webrtc.WebRtcConfig;
 
 import java.util.Map;
@@ -40,12 +39,11 @@ public class MyApplication extends Application {
         super.onCreate();
         appContext = this;
         sToast = Toast.makeText(this, "", Toast.LENGTH_SHORT);
-        run(()->{
+        run(() -> {
             // 初始化数据库
             ChatInfoDatabaseHelper.init(this);
-            WebRtcConfig.init(appContext, "111111", "sssss", (StatusCallBack.NetStatus netStatus, String msg) -> {
-                // 回调
-            });
+            // 初始化即时聊天
+            WebRtcConfig.init(appContext, "chat_application", "sssss");
             // 初始化蓝牙
             BlueToothManager.init(appContext);
         });

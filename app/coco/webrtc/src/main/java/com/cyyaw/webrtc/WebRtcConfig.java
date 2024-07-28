@@ -39,22 +39,25 @@ public class WebRtcConfig {
     private static MediaPlayer mediaPlayer;
     private static List<Activity> activityList = new CopyOnWriteArrayList<>();
 
-
     private static final Executor threadPool = Executors.newCachedThreadPool();
+
+    private static String appId;
+    private static String token;
+
+    private static StatusCallBack statusCallBack;
+    private static MsgCallBack applicationCallBack;
+    private static String fromId;
+    private static MsgCallBack msgCallBack;
 
 
     /**
      * 初始化
      */
-    public static void init(Application context, String appId, String token, StatusCallBack statusCallBack) {
+    public static void init(Application context, String appId, String token) {
         appContext = context;
-
         CallEngineKit.init(new CallEventImpl());
-        // WebSockt网络连接
-        SocketConnect socketConnect = MyWebSocket.init(appId, token, SocketManager.getInstance(), statusCallBack);
-//        SocketConnect socketConnect = MqttSocket.init(appId, token, SocketManager.getInstance());
-        // 设置连接
-        SocketManager.getInstance().connect(socketConnect);
+        WebRtcConfig.appId = appId;
+        WebRtcConfig.token = token;
 
         context.registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
             @Override
@@ -105,12 +108,37 @@ public class WebRtcConfig {
     }
 
     /**
+     * 设置状态回调
+     */
+    public static void setStatusCallBack(StatusCallBack statusCallBack) {
+        WebRtcConfig.statusCallBack = statusCallBack;
+    }
+
+    /**
+     * 设置应用聊天回调
+     */
+    public static void setApplicationChatCallBack(MsgCallBack msgCallBack) {
+        WebRtcConfig.applicationCallBack = msgCallBack;
+    }
+
+    /**
+     * 设置框聊天回调
+     */
+    public static void setMsgChatCallBack(String fromId, MsgCallBack msgCallBack) {
+        WebRtcConfig.fromId = fromId;
+        WebRtcConfig.msgCallBack = msgCallBack;
+    }
+
+    /**
      * 用户登录
      */
-    public static void loginUser(String userId) {
+    public static void userLogin(String userId) {
+        SocketConnect socketConnect = MqttSocket.init(appId, token, userId, SocketManager.getInstance());
+        SocketManager.getInstance().connect(socketConnect);
         SocketManager.getInstance().setUserId(userId);
     }
 
+    // =========================================================================================
 
     public static Context getContext() {
         return appContext;

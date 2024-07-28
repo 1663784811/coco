@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.PopupWindow;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -61,6 +60,9 @@ public class ChatListView extends Fragment {
         MyViewPage2Adapter adapter = new MyViewPage2Adapter(context, pageData);
         vp.setAdapter(adapter);
         vp.setCurrentItem(0);
+
+
+
         return view;
     }
 

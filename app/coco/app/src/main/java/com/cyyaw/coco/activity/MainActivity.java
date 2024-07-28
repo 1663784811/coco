@@ -19,11 +19,14 @@ import com.cyyaw.tabbar.CommonTabLayout;
 import com.cyyaw.tabbar.listener.CustomTabEntity;
 import com.cyyaw.tabbar.listener.OnTabSelectListener;
 import com.cyyaw.tabbar.listener.TabBarItemEntity;
+import com.cyyaw.webrtc.MsgCallBack;
+import com.cyyaw.webrtc.WebRtcConfig;
+import com.cyyaw.webrtc.net.StatusCallBack;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends BaseAppCompatActivity {
+public class MainActivity extends BaseAppCompatActivity implements StatusCallBack, MsgCallBack {
 
     private final String TAG = MainActivity.class.getName();
 
@@ -90,7 +93,25 @@ public class MainActivity extends BaseAppCompatActivity {
         });
         viewPager.setUserInputEnabled(false);
         // =====================================
+        WebRtcConfig.setStatusCallBack(this);
+        WebRtcConfig.setApplicationChatCallBack(this);
+        WebRtcConfig.userLogin("ssddddddddddd");
     }
 
 
+    /**
+     *
+     */
+    @Override
+    public void netWorkStatus(NetStatus netStatus, String msg) {
+
+    }
+
+    /**
+     * 接收消息
+     */
+    @Override
+    public void receiveMsg(String fromId, String msg) {
+
+    }
 }

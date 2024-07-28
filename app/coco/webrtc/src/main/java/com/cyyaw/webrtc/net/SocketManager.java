@@ -15,7 +15,7 @@ import com.cyyaw.webrtc.rtc.session.CallSession;
 import java.util.List;
 
 /**
- * 网线管理
+ * 网络管理
  */
 public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent {
     private final static String TAG = SocketManager.class.getName();

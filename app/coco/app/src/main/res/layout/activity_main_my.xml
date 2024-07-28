@@ -37,8 +37,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    >
+                    android:layout_height="wrap_content">
 
                     <ImageView
                         android:id="@+id/scanBtn"
@@ -68,8 +67,8 @@
         android:id="@+id/ioexample.toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_anchor="@id/ioexample.appbar"
-        app:layout_anchorGravity="bottom"
+        app:layout_anchor="@id/container"
+        app:layout_anchorGravity="top"
         app:layout_collapseMode="pin">
 
         <LinearLayout
@@ -186,6 +185,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
