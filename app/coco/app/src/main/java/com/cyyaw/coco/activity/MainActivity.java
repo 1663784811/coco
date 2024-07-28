@@ -60,7 +60,7 @@ public class MainActivity extends BaseAppCompatActivity {
         pageData.add(new FindView(this));
 //        pageData.add(new HomeView(this));
         pageData.add(new ChatListView(this));
-        pageData.add(new MyView(this));
+        pageData.add(new MyView());
 
         viewPager = findViewById(R.id.app_tabBar_ViewPager);
         MyViewPage2Adapter myPagerAdapter = new MyViewPage2Adapter(this, pageData);

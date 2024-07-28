@@ -41,6 +41,7 @@
                     >
 
                     <ImageView
+                        android:id="@+id/scanBtn"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:src="@drawable/cui_icon_scan_24"
