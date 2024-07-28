@@ -8,6 +8,7 @@ import com.cyyaw.webrtc.net.StatusCallBack;
 import com.cyyaw.webrtc.WebRtcConfig;
 import com.cyyaw.webrtc.net.SocketManager;
 import com.cyyaw.webrtc.net.SocketReceiveDataEvent;
+import com.cyyaw.webrtc.utils.StringUtils;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
@@ -371,7 +372,7 @@ public class MyWebSocket extends WebSocketClient implements SocketConnect {
         childMap.put("room", room);
         childMap.put("audioOnly", audioOnly);
         childMap.put("inviteID", myId);
-        String join = listToString(users);
+        String join = StringUtils.listToString(users);
         childMap.put("userList", join);
         map.put("data", childMap);
         JSONObject object = new JSONObject(map);
@@ -386,7 +387,7 @@ public class MyWebSocket extends WebSocketClient implements SocketConnect {
         Map<String, Object> childMap = new HashMap<>();
         childMap.put("inviteID", useId);
         childMap.put("room", mRoomId);
-        String join = listToString(users);
+        String join = StringUtils.listToString(users);
         childMap.put("userList", join);
         map.put("data", childMap);
         JSONObject object = new JSONObject(map);
@@ -395,12 +396,12 @@ public class MyWebSocket extends WebSocketClient implements SocketConnect {
     }
 
     // 发送响铃通知
-    public void sendRing(String myId, String toId, String room) {
+    public void sendRing(String myId, String targetId, String room) {
         Map<String, Object> map = new HashMap<>();
         map.put("eventName", "__ring");
         Map<String, Object> childMap = new HashMap<>();
         childMap.put("fromID", myId);
-        childMap.put("toID", toId);
+        childMap.put("toID", targetId);
         childMap.put("room", room);
         map.put("data", childMap);
         JSONObject object = new JSONObject(map);
@@ -422,13 +423,13 @@ public class MyWebSocket extends WebSocketClient implements SocketConnect {
     }
 
     // 拒接接听
-    public void sendRefuse(String room, String inviteID, String myId, int refuseType) {
+    public void sendRefuse(String room, String targetId, String myId, int refuseType) {
         Map<String, Object> map = new HashMap<>();
         map.put("eventName", "__reject");
 
         Map<String, Object> childMap = new HashMap<>();
         childMap.put("room", room);
-        childMap.put("toID", inviteID);
+        childMap.put("toID", targetId);
         childMap.put("fromID", myId);
         childMap.put("refuseType", String.valueOf(refuseType));
 
@@ -545,18 +546,4 @@ public class MyWebSocket extends WebSocketClient implements SocketConnect {
         }
     }
 
-    public static String listToString(List<String> mList) {
-        final String SEPARATOR = ",";
-        StringBuilder sb = new StringBuilder();
-        String convertedListStr;
-        if (null != mList && mList.size() > 0) {
-            for (String item : mList) {
-                sb.append(item);
-                sb.append(SEPARATOR);
-            }
-            convertedListStr = sb.toString();
-            convertedListStr = convertedListStr.substring(0, convertedListStr.length() - SEPARATOR.length());
-            return convertedListStr;
-        } else return "";
-    }
 }
