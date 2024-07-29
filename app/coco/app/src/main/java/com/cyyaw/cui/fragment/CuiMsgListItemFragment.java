@@ -39,6 +39,7 @@ public class CuiMsgListItemFragment extends Fragment {
      * 更新数据
      */
     public void updateData(CuiMsgEntity data) {
+        this.data = data;
         String face = data.getFace();
         ImageView cuiFace = view.findViewById(R.id.cuiFace);
         Glide.with(view.getContext()).load(face).into(cuiFace);
@@ -48,7 +49,6 @@ public class CuiMsgListItemFragment extends Fragment {
         //
         TextView cuiMessage = view.findViewById(R.id.cuiMessage);
         cuiMessage.setText(cuiMessage.getText());
-        
     }
 
 }
