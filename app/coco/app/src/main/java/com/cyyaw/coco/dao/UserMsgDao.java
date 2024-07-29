@@ -25,16 +25,6 @@ public class UserMsgDao {
             UserMsgEntity obj = json.toJavaObject(UserMsgEntity.class);
             rest.add(obj);
         }
-
-        for (int i = 0; i < 100; i++) {
-            UserMsgEntity obj = new UserMsgEntity();
-            obj.setId(i);
-            obj.setTid("" + i);
-            obj.setName("" + i);
-            obj.setFace("" + i);
-            obj.setUpdateTime(new Date());
-            rest.add(obj);
-        }
         return rest;
     }
 

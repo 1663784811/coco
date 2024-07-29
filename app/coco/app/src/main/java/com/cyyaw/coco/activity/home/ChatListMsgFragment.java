@@ -53,10 +53,7 @@ public class ChatListMsgFragment extends Fragment {
                 String tid = msg.getTid();
                 showToPage(tid, cuiMsgEntity);
             }
-
-        }, 500);
-
-
+        });
         return view;
     }
 
