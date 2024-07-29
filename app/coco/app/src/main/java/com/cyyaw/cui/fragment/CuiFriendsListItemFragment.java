@@ -36,7 +36,6 @@ public class CuiFriendsListItemFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.cui_friends_item, container, false);
-        view.findViewById(R.id.cui_face);
         ImageView cuiFace = view.findViewById(R.id.cuiFace);
         Glide.with(view.getContext()).load(face).into(cuiFace);
         if (null != name) {

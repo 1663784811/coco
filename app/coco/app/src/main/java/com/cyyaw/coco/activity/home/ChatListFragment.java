@@ -23,13 +23,13 @@ import java.util.List;
 /**
  * 消息页面
  */
-public class ChatListView extends Fragment {
+public class ChatListFragment extends Fragment {
 
     private FragmentActivity context;
 
     private CuiPopWindow window;
 
-    public ChatListView(FragmentActivity context) {
+    public ChatListFragment(FragmentActivity context) {
         this.context = context;
     }
 
@@ -56,8 +56,8 @@ public class ChatListView extends Fragment {
 
         ViewPager2 vp = view.findViewById(R.id.char_ViewPager);
         List<Fragment> pageData = new ArrayList<>();
-        pageData.add(new ChatListFriendsView());
-        pageData.add(new ChatListMsgView());
+        pageData.add(new ChatListFriendsFragment());
+        pageData.add(new ChatListMsgFragment());
         MyViewPage2Adapter adapter = new MyViewPage2Adapter(context, pageData);
         vp.setAdapter(adapter);
         vp.setCurrentItem(0);

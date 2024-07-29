@@ -22,7 +22,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /**
  * 聊天列表
  */
-public class ChatListMsgView extends Fragment {
+public class ChatListMsgFragment extends Fragment {
 
     private Fragment cuiEmpty = new CuiEmptyFragment();
 

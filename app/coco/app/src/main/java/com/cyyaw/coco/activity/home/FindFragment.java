@@ -1,13 +1,10 @@
 package com.cyyaw.coco.activity.home;
 
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,9 +27,9 @@ import com.cyyaw.cui.window.CuiPopWindow;
 
 import java.util.List;
 
-public class FindView extends Fragment {
+public class FindFragment extends Fragment {
 
-    private static final String TAG = FindView.class.getName();
+    private static final String TAG = FindFragment.class.getName();
 
     private EquipmentAdapter equipmentAdapter;
     private BaseAppCompatActivity context;
@@ -40,7 +37,7 @@ public class FindView extends Fragment {
     private Fragment cuiEmpty;
     private CuiPopWindow window;
 
-    public FindView(BaseAppCompatActivity context) {
+    public FindFragment(BaseAppCompatActivity context) {
         this.context = context;
     }
 

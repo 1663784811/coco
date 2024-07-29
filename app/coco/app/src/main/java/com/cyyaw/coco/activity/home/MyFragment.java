@@ -16,9 +16,9 @@ import com.cyyaw.coco.entity.ContentEntity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyView extends Fragment {
+public class MyFragment extends Fragment {
 
-    private static final String TAG = MyView.class.getName();
+    private static final String TAG = MyFragment.class.getName();
 
 
     @Override

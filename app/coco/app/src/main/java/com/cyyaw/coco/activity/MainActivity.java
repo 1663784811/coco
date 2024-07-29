@@ -4,16 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.cyyaw.coco.MyApplication;
 import com.cyyaw.coco.R;
-import com.cyyaw.coco.activity.home.ChatListView;
-import com.cyyaw.coco.activity.home.FindView;
-import com.cyyaw.coco.activity.home.MyView;
+import com.cyyaw.coco.activity.home.ChatListFragment;
+import com.cyyaw.coco.activity.home.FindFragment;
+import com.cyyaw.coco.activity.home.MyFragment;
 import com.cyyaw.coco.activity.home.adapter.MyViewPage2Adapter;
 import com.cyyaw.coco.common.BaseAppCompatActivity;
 import com.cyyaw.coco.entity.UserInfo;
@@ -62,10 +61,10 @@ public class MainActivity extends BaseAppCompatActivity implements StatusCallBac
         tabBar.setTabData(tabBarData);
         // 初始化ViewPage
         List<Fragment> pageData = new ArrayList<>();
-        pageData.add(new FindView(this));
+        pageData.add(new FindFragment(this));
 //        pageData.add(new HomeView(this));
-        pageData.add(new ChatListView(this));
-        pageData.add(new MyView());
+        pageData.add(new ChatListFragment(this));
+        pageData.add(new MyFragment());
 
         viewPager = findViewById(R.id.app_tabBar_ViewPager);
         MyViewPage2Adapter myPagerAdapter = new MyViewPage2Adapter(this, pageData);

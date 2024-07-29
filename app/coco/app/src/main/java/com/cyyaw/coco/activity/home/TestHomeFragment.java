@@ -8,9 +8,9 @@ import androidx.annotation.Nullable;
 import com.cyyaw.coco.activity.home.adapter.HomeBluetoothListAdapter;
 import com.cyyaw.coco.common.BaseAppCompatActivity;
 
-public class TestHomeView extends LinearLayout {
+public class TestHomeFragment extends LinearLayout {
 
-    private static final String TAG = TestHomeView.class.getName();
+    private static final String TAG = TestHomeFragment.class.getName();
 
     private BaseAppCompatActivity context;
 
@@ -19,19 +19,19 @@ public class TestHomeView extends LinearLayout {
 //    BlueToothReceiver br;
 
 
-    public TestHomeView(BaseAppCompatActivity context) {
+    public TestHomeFragment(BaseAppCompatActivity context) {
         super(context);
         this.context = context;
         initView(null);
     }
 
-    public TestHomeView(BaseAppCompatActivity context, @Nullable AttributeSet attrs) {
+    public TestHomeFragment(BaseAppCompatActivity context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
         initView(null);
     }
 
-    public TestHomeView(BaseAppCompatActivity context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public TestHomeFragment(BaseAppCompatActivity context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.context = context;
         initView(null);

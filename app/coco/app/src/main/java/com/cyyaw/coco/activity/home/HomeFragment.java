@@ -21,16 +21,16 @@ import com.cyyaw.coco.entity.ContentEntity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeView extends Fragment {
+public class HomeFragment extends Fragment {
 
-    private static final String TAG = HomeView.class.getName();
+    private static final String TAG = HomeFragment.class.getName();
 
     private Context context;
 
     private ContentListAdapter contentListAdapter;
 
 
-    public HomeView(Context context) {
+    public HomeFragment(Context context) {
         this.context = context;
     }
 

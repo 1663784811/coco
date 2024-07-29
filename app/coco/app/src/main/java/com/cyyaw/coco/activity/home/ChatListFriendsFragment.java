@@ -14,7 +14,6 @@ import com.cyyaw.coco.dao.FriendsDao;
 import com.cyyaw.coco.dao.table.FriendsEntity;
 import com.cyyaw.cui.fragment.CuiEmptyFragment;
 import com.cyyaw.cui.fragment.CuiFriendsListItemFragment;
-import com.cyyaw.cui.fragment.callback.CuiClickCallBack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +24,7 @@ import java.util.Map;
 /**
  * 好友列表
  */
-public class ChatListFriendsView extends Fragment implements FriendsDao.UpdateDataCallBack {
+public class ChatListFriendsFragment extends Fragment implements FriendsDao.UpdateDataCallBack {
 
     private static final String TAG = "ChatListFriendsView";
 

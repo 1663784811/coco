@@ -22,7 +22,7 @@
         tools:ignore="MissingConstraints">
 
         <ImageView
-            android:id="@+id/cui_face"
+            android:id="@+id/cuiFace"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="#E8E8E8"
