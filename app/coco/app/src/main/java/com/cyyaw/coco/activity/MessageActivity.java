@@ -70,6 +70,11 @@ public class MessageActivity extends AppCompatActivity implements CuiChatInputFr
         cuiChatInputFragment.addIcon(new CuiChatInputIconFragment(R.drawable.cui_icon_video_24, "视频通话", (View v) -> {
             PhoneCallActivity.openActivity(MessageActivity.this, userId, true, "22", false, false);
         }));
+        // 点击发送数据
+        cuiChatInputFragment.setSendDataCallBack((String data) -> {
+
+        });
+
         trs.add(R.id.chat_input, cuiChatInputFragment);
 
         trs.add(R.id.messageContent, new CuiChatMsgFromFragment(userId, userName, face));
@@ -89,6 +94,8 @@ public class MessageActivity extends AppCompatActivity implements CuiChatInputFr
         trs.add(R.id.messageContent, new CuiChatMsgFromFragment(userId, userName, face));
         trs.add(R.id.messageContent, new CuiChatMsgFromFragment(userId, userName, face));
         trs.add(R.id.messageContent, new CuiChatMsgFromFragment(userId, userName, face));
+
+
         trs.commit();
     }
 

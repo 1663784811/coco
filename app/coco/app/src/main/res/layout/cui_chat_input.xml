@@ -96,6 +96,7 @@
                 android:paddingBottom="6dp"
                 android:text="发送"
                 android:textColor="@color/white" />
+
         </androidx.cardview.widget.CardView>
 
 

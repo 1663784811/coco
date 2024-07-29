@@ -1,9 +1,13 @@
 package com.cyyaw.cui.fragment;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -16,7 +20,11 @@ import java.util.List;
 
 public class CuiChatInputFragment extends Fragment {
 
+    private static final String TAG = CuiChatInputFragment.class.getName();
+
     private CuiChatInputCallBack callBack;
+
+    private SendDataCallBack sendDataCallBack;
 
     private List<Fragment> iconList = new ArrayList<>();
 
@@ -46,6 +54,7 @@ public class CuiChatInputFragment extends Fragment {
         View cuiSpeechIcon = view.findViewById(R.id.cuiSpeechIcon);
         View cuiExpressionContainer = view.findViewById(R.id.cuiExpressionContainer);
         View expressionIcon = view.findViewById(R.id.expressionIcon);
+        EditText editText = view.findViewById(R.id.edit_text);
 
 
         cuiChatIconBox.setVisibility(View.GONE);
@@ -53,6 +62,38 @@ public class CuiChatInputFragment extends Fragment {
         cuiChatAudioText.setVisibility(View.GONE);
         cuiExpressionContainer.setVisibility(View.GONE);
 
+
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String str = s.toString();
+                if (null != str && str.length() > 0) {
+                    cuiChatSendBtn.setVisibility(View.VISIBLE);
+                    cuiMoreUse.setVisibility(View.GONE);
+                } else {
+                    cuiChatSendBtn.setVisibility(View.GONE);
+                    cuiMoreUse.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        cuiChatSendBtn.setOnClickListener((View v) -> {
+            String str = editText.getText().toString();
+            if (sendDataCallBack != null) {
+                sendDataCallBack.sendData(str);
+            }
+            editText.getText().clear();
+        });
 
         cuiSpeechIcon.setOnClickListener((View v) -> {
             if (cuiChatAudioText.getVisibility() == View.VISIBLE) {
@@ -87,6 +128,11 @@ public class CuiChatInputFragment extends Fragment {
         this.iconList.add(icon);
     }
 
+
+    public void setSendDataCallBack(SendDataCallBack sendDataCallBack) {
+        this.sendDataCallBack = sendDataCallBack;
+    }
+
     /**
      * 方法回调
      */
@@ -97,6 +143,11 @@ public class CuiChatInputFragment extends Fragment {
          */
         default void clickIcon(View v) {
         }
+    }
+
+
+    public interface SendDataCallBack {
+        void sendData(String data);
     }
 
 
