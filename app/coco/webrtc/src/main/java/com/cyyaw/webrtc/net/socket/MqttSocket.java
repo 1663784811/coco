@@ -100,7 +100,7 @@ public class MqttSocket implements MqttCallback, SocketConnect {
     @Override
     public void messageArrived(String topic, MqttMessage message) throws Exception {
         Log.e(TAG, "messageArrived: ");
-        String msg = message.getPayload().toString();
+        String msg = new String(message.getPayload());
         MsgData msgData = JSON.parseObject(msg).toJavaObject(MsgData.class);
         String data = msgData.getData();
         String type = msgData.getType();
