@@ -16,6 +16,7 @@ import com.cyyaw.coco.activity.home.FindView;
 import com.cyyaw.coco.activity.home.MyView;
 import com.cyyaw.coco.activity.home.adapter.MyViewPage2Adapter;
 import com.cyyaw.coco.common.BaseAppCompatActivity;
+import com.cyyaw.coco.entity.UserInfo;
 import com.cyyaw.tabbar.CommonTabLayout;
 import com.cyyaw.tabbar.listener.CustomTabEntity;
 import com.cyyaw.tabbar.listener.OnTabSelectListener;
@@ -96,7 +97,11 @@ public class MainActivity extends BaseAppCompatActivity implements StatusCallBac
         // =====================================
         WebRtcConfig.setStatusCallBack(this);
         WebRtcConfig.setApplicationChatCallBack(this);
-        WebRtcConfig.userLogin("11");
+
+        UserInfo userInfo = MyApplication.getUserInfo();
+        if (null != userInfo) {
+            WebRtcConfig.userLogin(userInfo.getTid());
+        }
     }
 
 
@@ -107,7 +112,7 @@ public class MainActivity extends BaseAppCompatActivity implements StatusCallBac
     public void netWorkStatus(NetStatus netStatus, String msg) {
 
 
-        Log.e(TAG, "netWorkStatus: " );
+        Log.e(TAG, "netWorkStatus: ");
     }
 
     /**
@@ -117,6 +122,6 @@ public class MainActivity extends BaseAppCompatActivity implements StatusCallBac
     public void receiveMsg(String fromId, String msg) {
 
 
-        Log.e(TAG, "receiveMsg: " );
+        Log.e(TAG, "receiveMsg: ");
     }
 }

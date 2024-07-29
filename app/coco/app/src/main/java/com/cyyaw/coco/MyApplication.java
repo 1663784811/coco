@@ -8,8 +8,11 @@ import android.os.Handler;
 import android.os.Looper;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.cyyaw.bluetooth.out.BlueToothManager;
 import com.cyyaw.coco.common.ChatInfoDatabaseHelper;
+import com.cyyaw.coco.entity.UserInfo;
 import com.cyyaw.webrtc.WebRtcConfig;
 
 import java.util.Map;
@@ -72,6 +75,23 @@ public class MyApplication extends Application {
         ThreadPool.execute(runnable);
     }
 
+
+    public static void saveLoginInfo(UserInfo userInfo) {
+        SharedPreferences sharedPreferences = appContext.getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        String userJson = JSON.toJSONString(userInfo);
+        editor.putString("user_info", userJson);
+        editor.apply();
+    }
+
+    public static UserInfo getUserInfo() {
+        SharedPreferences sharedPreferences = appContext.getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
+        String userJson = sharedPreferences.getString("user_info", null);
+        if (null != userJson && userJson.length() > 0) {
+            return JSONObject.parseObject(userJson, UserInfo.class);
+        }
+        return null;
+    }
 
     // 保存Token的方法
     public static void saveToken(String token) {

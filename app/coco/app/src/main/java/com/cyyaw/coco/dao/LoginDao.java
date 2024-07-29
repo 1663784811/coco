@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.cyyaw.coco.MyApplication;
 import com.cyyaw.coco.activity.MainActivity;
 import com.cyyaw.coco.common.network.AppRequest;
+import com.cyyaw.coco.entity.UserInfo;
 
 public class LoginDao {
 
@@ -26,9 +27,8 @@ public class LoginDao {
             JSONObject js = JSONObject.parseObject(body);
             JSONObject data = js.getJSONObject("data");
             MyApplication.saveToken(data.getString("jwtToken"));
-            //
-            data.getJSONObject("uuser");
-            Log.d(TAG, "userLogin: " + body);
+            UserInfo userInfo = data.getObject("uuser", UserInfo.class);
+            MyApplication.saveLoginInfo(userInfo);
             MainActivity.openActivity(context);
             context.finish();
         });
