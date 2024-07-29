@@ -8,22 +8,16 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 
 import com.cyyaw.coco.R;
+import com.cyyaw.cui.fragment.entity.CuiMsgEntity;
 
 public class CuiMsgListItemFragment extends Fragment {
 
     private View view;
-    // 头像
-    private String face;
-    // 名称
-    private String userName;
-    // 消息
-    private String msg;
 
-    public CuiMsgListItemFragment(View view, String face, String userName, String msg) {
-        this.view = view;
-        this.face = face;
-        this.userName = userName;
-        this.msg = msg;
+    private CuiMsgEntity data;
+
+    public CuiMsgListItemFragment(CuiMsgEntity data) {
+        this.data = data;
     }
 
     @Override
@@ -36,7 +30,16 @@ public class CuiMsgListItemFragment extends Fragment {
         return view;
     }
 
+    public CuiMsgEntity getData() {
+        return this.data;
+    }
+
+    /**
+     * 更新数据
+     */
+    public void updateData(CuiMsgEntity data) {
 
 
+    }
 
 }
