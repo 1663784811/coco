@@ -63,7 +63,7 @@ public class MainActivity extends BaseAppCompatActivity implements StatusCallBac
         List<Fragment> pageData = new ArrayList<>();
         pageData.add(new FindFragment(this));
 //        pageData.add(new HomeView(this));
-        pageData.add(new ChatListFragment(this));
+        pageData.add(new ChatListFragment());
         pageData.add(new MyFragment());
 
         viewPager = findViewById(R.id.app_tabBar_ViewPager);

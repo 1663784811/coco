@@ -25,19 +25,15 @@ import java.util.List;
  */
 public class ChatListFragment extends Fragment {
 
-    private FragmentActivity context;
 
     private CuiPopWindow window;
 
-    public ChatListFragment(FragmentActivity context) {
-        this.context = context;
-    }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_main_chat, container, false);
-        window = CuiPopWindow.getWindow(context, R.layout.activity_main_chat_menu);
+        window = CuiPopWindow.getWindow(getContext(), R.layout.activity_main_chat_menu);
         CuiNavBarFragment nav = new CuiNavBarFragment(null, new CuiNavBarFragment.UiNavBarFragmentCallBack() {
             @Override
             public void clickMore(View v) {
@@ -58,7 +54,7 @@ public class ChatListFragment extends Fragment {
         List<Fragment> pageData = new ArrayList<>();
         pageData.add(new ChatListFriendsFragment());
         pageData.add(new ChatListMsgFragment());
-        MyViewPage2Adapter adapter = new MyViewPage2Adapter(context, pageData);
+        MyViewPage2Adapter adapter = new MyViewPage2Adapter(getActivity(), pageData);
         vp.setAdapter(adapter);
         vp.setCurrentItem(0);
 
