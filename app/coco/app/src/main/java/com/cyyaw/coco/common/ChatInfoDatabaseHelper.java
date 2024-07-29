@@ -21,7 +21,7 @@ public class ChatInfoDatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = ChatInfoDatabaseHelper.class.getName();
 
     private static final String DATABASE_NAME = "chat_info.db";
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 7;
     private static ChatInfoDatabaseHelper chatInfoDatabaseHelper = null;
 
     private SQLiteDatabase mRead;
@@ -146,11 +146,11 @@ public class ChatInfoDatabaseHelper extends SQLiteOpenHelper {
         // 创建表的 SQL 语句
         Log.e(TAG, "onCreate: 创建表的 SQL 语句");
         // 用户信息
-        db.execSQL("create table user_info( id INTEGER PRIMARY KEY AUTOINCREMENT, tid varch(32), nickName varchar(255), note varchar(255), account varchar(255), phone varchar(20), face text,  sex varchar(4))  ");
+        db.execSQL("create table user_info( id INTEGER PRIMARY KEY AUTOINCREMENT, tid varch(32), nickName varchar(255), note varchar(255), account varchar(255), phone varchar(20), face text,  sex varchar(4))");
         // 消息列表
-        db.execSQL("create table user_msg_list( id INTEGER PRIMARY KEY AUTOINCREMENT, tid varch(32), name varchar(255), account varchar(255), phone varchar(20), face text,  sex varchar(4))  ");
+        db.execSQL("create table user_msg_list( id INTEGER PRIMARY KEY AUTOINCREMENT, tid varch(32), name varchar(255), face text,updateTime datetime)");
         // 消息记录
-        db.execSQL("create table user_msg_log( id INTEGER PRIMARY KEY AUTOINCREMENT, tid varch(32), sendUserId varchar(32), receiveUserId varchar(32), msg text, sendTime datetime,status int )  ");
+        db.execSQL("create table user_msg_log( id INTEGER PRIMARY KEY AUTOINCREMENT, tid varch(32), sendUserId varchar(32), receiveUserId varchar(32), msg text, sendTime datetime,status int )");
         // 设备数据
         db.execSQL("create table equipment(id INTEGER PRIMARY KEY AUTOINCREMENT, type int, name varchar(255),address varchar(255),imgUrl varchar(255) )");
 

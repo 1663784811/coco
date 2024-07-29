@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.dao.UserMsgDao;
+import com.cyyaw.coco.dao.table.UserMsgEntity;
 import com.cyyaw.coco.entity.MsgUserEntity;
 import com.cyyaw.cui.fragment.CuiEmptyFragment;
 import com.cyyaw.cui.fragment.CuiMsgListItemFragment;
@@ -38,9 +39,11 @@ public class ChatListMsgFragment extends Fragment {
         ft.add(R.id.chatList, cuiEmpty);
 
         // 查数据库
-        UserMsgDao.getList();
+        List<UserMsgEntity> list = UserMsgDao.getList();
 
         ft.commit();
+
+
 
 
         return view;
