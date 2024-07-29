@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ScrollView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
@@ -42,6 +43,7 @@ public class MessageActivity extends AppCompatActivity implements CuiChatInputFr
         String userName = intent.getStringExtra(USERNAME);
         String face = intent.getStringExtra(FACE);
 
+        ScrollView chatScrollView = findViewById(R.id.chatScrollView);
 
         FragmentTransaction trs = getSupportFragmentManager().beginTransaction();
         // fragment
@@ -72,7 +74,10 @@ public class MessageActivity extends AppCompatActivity implements CuiChatInputFr
         }));
         // 点击发送数据
         cuiChatInputFragment.setSendDataCallBack((String data) -> {
-
+            getSupportFragmentManager().beginTransaction().add(R.id.messageContent, new CuiChatMsgSendFragment(userId, userName, face, data)).commit();
+            chatScrollView.postDelayed(() -> {
+                chatScrollView.fullScroll(View.FOCUS_DOWN);
+            }, 200);
         });
 
         trs.add(R.id.chat_input, cuiChatInputFragment);
@@ -85,11 +90,11 @@ public class MessageActivity extends AppCompatActivity implements CuiChatInputFr
         trs.add(R.id.messageContent, new CuiChatMsgFromFragment(userId, userName, face));
         trs.add(R.id.messageContent, new CuiChatMsgFromFragment(userId, userName, face));
         trs.add(R.id.messageContent, new CuiChatMsgFromFragment(userId, userName, face));
-        trs.add(R.id.messageContent, new CuiChatMsgSendFragment(userId, userName, face));
-        trs.add(R.id.messageContent, new CuiChatMsgSendFragment(userId, userName, face));
-        trs.add(R.id.messageContent, new CuiChatMsgSendFragment(userId, userName, face));
-        trs.add(R.id.messageContent, new CuiChatMsgSendFragment(userId, userName, face));
-        trs.add(R.id.messageContent, new CuiChatMsgSendFragment(userId, userName, face));
+        trs.add(R.id.messageContent, new CuiChatMsgSendFragment(userId, userName, face, "sss"));
+        trs.add(R.id.messageContent, new CuiChatMsgSendFragment(userId, userName, face, "sss"));
+        trs.add(R.id.messageContent, new CuiChatMsgSendFragment(userId, userName, face, "sss"));
+        trs.add(R.id.messageContent, new CuiChatMsgSendFragment(userId, userName, face, "sss"));
+        trs.add(R.id.messageContent, new CuiChatMsgSendFragment(userId, userName, face, "sss"));
         trs.add(R.id.messageContent, new CuiChatMsgFromFragment(userId, userName, face));
         trs.add(R.id.messageContent, new CuiChatMsgFromFragment(userId, userName, face));
         trs.add(R.id.messageContent, new CuiChatMsgFromFragment(userId, userName, face));

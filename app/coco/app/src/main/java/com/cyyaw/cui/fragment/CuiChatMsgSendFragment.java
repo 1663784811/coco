@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
@@ -19,12 +20,14 @@ public class CuiChatMsgSendFragment extends Fragment {
     private String userId;
     private String userName;
     private String face;
+    private String content;
 
 
-    public CuiChatMsgSendFragment(String userId, String userName, String face) {
+    public CuiChatMsgSendFragment(String userId, String userName, String face, String content) {
         this.userId = userId;
         this.userName = userName;
         this.face = face;
+        this.content = content;
     }
 
     public CuiChatMsgSendFragment(CuiChatMsgFromCallBack callBack) {
@@ -38,6 +41,10 @@ public class CuiChatMsgSendFragment extends Fragment {
         ImageView imageView = view.findViewById(R.id.faceImageView);
         if (null != face) {
             Glide.with(view.getContext()).load(face).into(imageView);
+        }
+        if (null != content) {
+            TextView contentText = view.findViewById(R.id.contentText);
+            contentText.setText(content);
         }
         return view;
     }

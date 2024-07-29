@@ -27,26 +27,33 @@
     </androidx.cardview.widget.CardView>
 
 
-    <androidx.cardview.widget.CardView
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
         android:layout_marginEnd="10dp"
-        android:background="#aaa"
-        android:padding="8dp"
+        android:gravity="right"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/faceImage"
-        tools:ignore="MissingConstraints">
+        tools:ignore="MissingConstraints,RtlHardcoded">
 
-        <TextView
+        <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#aaa"
-            android:text="更多;再;而且;另外;(程度上)更强;进一步地;更大程度地;更大范围内;(与两个或两个以上音节的形容词或副词连用，构成比较级)"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/faceImage"
-            tools:ignore="MissingConstraints" />
-    </androidx.cardview.widget.CardView>
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/contentText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#aaa"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/faceImage"
+                tools:ignore="MissingConstraints" />
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
