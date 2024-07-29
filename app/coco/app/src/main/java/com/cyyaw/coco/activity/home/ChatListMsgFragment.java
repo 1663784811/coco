@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.cyyaw.coco.MyApplication;
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.dao.UserMsgDao;
 import com.cyyaw.coco.dao.table.UserMsgEntity;
@@ -37,13 +38,23 @@ public class ChatListMsgFragment extends Fragment {
 
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
         ft.add(R.id.chatList, cuiEmpty);
-
-        // 查数据库
-        List<UserMsgEntity> list = UserMsgDao.getList();
-
         ft.commit();
 
+        MyApplication.post(() -> {
+            // 查数据库
+            List<UserMsgEntity> list = UserMsgDao.getList();
+            for (int i = (list.size() - 1); i > 0; i--) {
+                UserMsgEntity msg = list.get(i);
+                CuiMsgEntity cuiMsgEntity = new CuiMsgEntity();
+                cuiMsgEntity.setFace(msg.getFace());
+                cuiMsgEntity.setUserName(msg.getName());
+                cuiMsgEntity.setMsg("");
+                cuiMsgEntity.setNumber(0);
+                String tid = msg.getTid();
+                showToPage(tid, cuiMsgEntity);
+            }
 
+        }, 500);
 
 
         return view;
@@ -53,7 +64,7 @@ public class ChatListMsgFragment extends Fragment {
     /**
      * 消息显示到页面
      */
-    public synchronized void showToPage(String tid, CuiMsgEntity nowData) {
+    public void showToPage(String tid, CuiMsgEntity nowData) {
         // 查当前位置
         int index = -1;
         for (int i = 0; i < msgUserList.size(); i++) {
@@ -92,6 +103,9 @@ public class ChatListMsgFragment extends Fragment {
                 first.setTid(tid);
                 first.getFragment().updateData(nowData);
             }
+        }
+        if (cuiEmpty != null) {
+            getChildFragmentManager().beginTransaction().remove(cuiEmpty).commit();
         }
     }
 

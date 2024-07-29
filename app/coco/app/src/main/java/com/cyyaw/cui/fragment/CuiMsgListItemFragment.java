@@ -27,7 +27,6 @@ public class CuiMsgListItemFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.cui_msg_list_item, container, false);
         updateData(data);
-
         return view;
     }
 
@@ -40,15 +39,17 @@ public class CuiMsgListItemFragment extends Fragment {
      */
     public void updateData(CuiMsgEntity data) {
         this.data = data;
-        String face = data.getFace();
-        ImageView cuiFace = view.findViewById(R.id.cuiFace);
-        Glide.with(view.getContext()).load(face).into(cuiFace);
-        //
-        TextView cuiUserName = view.findViewById(R.id.cuiUserName);
-        cuiUserName.setText(data.getUserName());
-        //
-        TextView cuiMessage = view.findViewById(R.id.cuiMessage);
-        cuiMessage.setText(cuiMessage.getText());
+        if (null != view) {
+            String face = data.getFace();
+            ImageView cuiFace = view.findViewById(R.id.cuiFace);
+            Glide.with(view.getContext()).load(face).into(cuiFace);
+            //
+            TextView cuiUserName = view.findViewById(R.id.cuiUserName);
+            cuiUserName.setText(data.getUserName());
+            //
+            TextView cuiMessage = view.findViewById(R.id.cuiMessage);
+            cuiMessage.setText(cuiMessage.getText());
+        }
     }
 
 }

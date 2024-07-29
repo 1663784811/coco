@@ -1,5 +1,7 @@
 package com.cyyaw.coco.dao;
 
+import java.util.Date;
+
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.cyyaw.coco.common.ChatInfoDatabaseHelper;
@@ -21,6 +23,16 @@ public class UserMsgDao {
         for (int i = 0; i < arr.size(); i++) {
             JSONObject json = arr.getJSONObject(i);
             UserMsgEntity obj = json.toJavaObject(UserMsgEntity.class);
+            rest.add(obj);
+        }
+
+        for (int i = 0; i < 100; i++) {
+            UserMsgEntity obj = new UserMsgEntity();
+            obj.setId(i);
+            obj.setTid("" + i);
+            obj.setName("" + i);
+            obj.setFace("" + i);
+            obj.setUpdateTime(new Date());
             rest.add(obj);
         }
         return rest;
