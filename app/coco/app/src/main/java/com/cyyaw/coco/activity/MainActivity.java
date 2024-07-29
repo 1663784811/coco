@@ -96,7 +96,7 @@ public class MainActivity extends BaseAppCompatActivity implements StatusCallBac
         // =====================================
         WebRtcConfig.setStatusCallBack(this);
         WebRtcConfig.setApplicationChatCallBack(this);
-        WebRtcConfig.userLogin("ssddddddddddd");
+        WebRtcConfig.userLogin("11");
     }
 
 
