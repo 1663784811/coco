@@ -4,6 +4,7 @@ package com.cyyaw.coco.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ScrollView;
 
@@ -77,31 +78,22 @@ public class MessageActivity extends AppCompatActivity implements CuiChatInputFr
             getSupportFragmentManager().beginTransaction().add(R.id.messageContent, new CuiChatMsgSendFragment(userId, userName, face, data)).commit();
             chatScrollView.postDelayed(() -> {
                 chatScrollView.fullScroll(View.FOCUS_DOWN);
-            }, 200);
+            }, 100);
         });
-
+        // 获取焦点
+        cuiChatInputFragment.setFocusChangeListenerCallBack((View v, boolean hasFocus) -> {
+            if (hasFocus) {
+                chatScrollView.postDelayed(() -> {
+                    chatScrollView.fullScroll(View.FOCUS_DOWN);
+                }, 100);
+            }
+        });
         trs.add(R.id.chat_input, cuiChatInputFragment);
-
-        trs.add(R.id.messageContent, new CuiChatMsgFromFragment(userId, userName, face));
-        trs.add(R.id.messageContent, new CuiChatMsgFromFragment(userId, userName, face));
-        trs.add(R.id.messageContent, new CuiChatMsgFromFragment(userId, userName, face));
-        trs.add(R.id.messageContent, new CuiChatMsgFromFragment(userId, userName, face));
-        trs.add(R.id.messageContent, new CuiChatMsgFromFragment(userId, userName, face));
-        trs.add(R.id.messageContent, new CuiChatMsgFromFragment(userId, userName, face));
-        trs.add(R.id.messageContent, new CuiChatMsgFromFragment(userId, userName, face));
-        trs.add(R.id.messageContent, new CuiChatMsgFromFragment(userId, userName, face));
-        trs.add(R.id.messageContent, new CuiChatMsgSendFragment(userId, userName, face, "sss"));
-        trs.add(R.id.messageContent, new CuiChatMsgSendFragment(userId, userName, face, "sss"));
-        trs.add(R.id.messageContent, new CuiChatMsgSendFragment(userId, userName, face, "sss"));
-        trs.add(R.id.messageContent, new CuiChatMsgSendFragment(userId, userName, face, "sss"));
-        trs.add(R.id.messageContent, new CuiChatMsgSendFragment(userId, userName, face, "sss"));
-        trs.add(R.id.messageContent, new CuiChatMsgFromFragment(userId, userName, face));
-        trs.add(R.id.messageContent, new CuiChatMsgFromFragment(userId, userName, face));
-        trs.add(R.id.messageContent, new CuiChatMsgFromFragment(userId, userName, face));
-        trs.add(R.id.messageContent, new CuiChatMsgFromFragment(userId, userName, face));
-
-
         trs.commit();
+        chatScrollView.postDelayed(() -> {
+            chatScrollView.fullScroll(View.FOCUS_DOWN);
+        }, 50);
+
     }
 
 }

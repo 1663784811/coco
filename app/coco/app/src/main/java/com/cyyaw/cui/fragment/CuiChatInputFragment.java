@@ -26,6 +26,8 @@ public class CuiChatInputFragment extends Fragment {
 
     private SendDataCallBack sendDataCallBack;
 
+    private View.OnFocusChangeListener focusChangeListener;
+
     private List<Fragment> iconList = new ArrayList<>();
 
 
@@ -95,6 +97,14 @@ public class CuiChatInputFragment extends Fragment {
             editText.getText().clear();
         });
 
+
+        editText.setOnFocusChangeListener((View v, boolean hasFocus) -> {
+            Log.e(TAG, "onCreateView: " );
+            if (null != focusChangeListener) {
+                focusChangeListener.onFocusChange(v, hasFocus);
+            }
+        });
+
         cuiSpeechIcon.setOnClickListener((View v) -> {
             if (cuiChatAudioText.getVisibility() == View.VISIBLE) {
                 cuiChatAudioText.setVisibility(View.GONE);
@@ -131,6 +141,10 @@ public class CuiChatInputFragment extends Fragment {
 
     public void setSendDataCallBack(SendDataCallBack sendDataCallBack) {
         this.sendDataCallBack = sendDataCallBack;
+    }
+
+    public void setFocusChangeListenerCallBack(View.OnFocusChangeListener focusChangeListener) {
+        this.focusChangeListener = focusChangeListener;
     }
 
     /**
