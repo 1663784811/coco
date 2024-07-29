@@ -8,8 +8,12 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.cyyaw.coco.R;
+import com.cyyaw.cui.fragment.CuiEmptyFragment;
+
+import java.util.List;
 
 
 /**
@@ -17,8 +21,9 @@ import com.cyyaw.coco.R;
  */
 public class ChatListMsgView extends Fragment {
 
+    private Fragment cuiEmpty = new CuiEmptyFragment();
 
-
+    private List<Object> ll;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -27,10 +32,12 @@ public class ChatListMsgView extends Fragment {
         LinearLayout linearLayout = view.findViewById(R.id.chatList);
 
 
+        FragmentTransaction ft = getChildFragmentManager().beginTransaction();
 
 
+        ft.add(R.id.chatList, cuiEmpty);
 
-
+        ft.commit();
 
 
         return view;
