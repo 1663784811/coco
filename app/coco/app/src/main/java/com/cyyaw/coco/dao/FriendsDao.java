@@ -112,6 +112,42 @@ public class FriendsDao {
         }
     }
 
+    /**
+     * 查询好友
+     */
+    public static void searchFriends(UpdateDataCallBack updateDataCallBack) {
+        MyApplication.post(() -> {
+            AppRequest.getRequest(MyApplication.baseUrl + "/app/" + MyApplication.appId + "/friends/searchFriends", (String body) -> {
+                JSONObject json = JSONObject.parseObject(body);
+                JSONArray data = json.getJSONArray("data");
+                if (null != data) {
+                    for (int i = 0; i < data.size(); i++) {
+                        JSONObject js = data.getJSONObject(i);
+                        JSONObject user = js.getJSONObject("toUser");
+                        FriendsEntity friends = new FriendsEntity();
+                        // ===
+                        friends.setTid(js.getString("toUserId"));
+                        friends.setNickName(user.getString("nickName"));
+                        friends.setNote(js.getString("note"));
+                        friends.setAccount(user.getString("account"));
+                        friends.setPhone(user.getString("phone"));
+                        friends.setSex(user.getString("sex"));
+                        String face = user.getString("face");
+                        if (null != face && face.length() > 0) {
+                            friends.setFace(face);
+                        } else {
+                            friends.setFace("https://m.360buyimg.com/babel/jfs/t1/60865/19/20309/4778/660157d4F65db1655/b869b66cd4a18079.png");
+                        }
+                        updateFriends(friends);
+                    }
+                    if (null != updateDataCallBack) {
+                        updateDataCallBack.updateData();
+                    }
+                }
+            });
+        });
+    }
+
 
     /**
      * 更新数据回调

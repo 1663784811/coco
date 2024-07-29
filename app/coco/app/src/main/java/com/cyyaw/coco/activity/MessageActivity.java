@@ -45,7 +45,14 @@ public class MessageActivity extends AppCompatActivity implements CuiChatInputFr
 
         FragmentTransaction trs = getSupportFragmentManager().beginTransaction();
         // fragment
-        trs.add(R.id.header_bar, new CuiNavBarFragment(userName));
+        CuiNavBarFragment navBar = new CuiNavBarFragment(userName, new CuiNavBarFragment.UiNavBarFragmentCallBack() {
+            @Override
+            public boolean clickBack(View v) {
+                return false;
+            }
+        }, true, false);
+
+        trs.add(R.id.header_bar, navBar);
 
         CuiChatInputFragment cuiChatInputFragment = new CuiChatInputFragment();
         cuiChatInputFragment.addIcon(new CuiChatInputIconFragment(R.drawable.cui_icon_video_24, "图片", (View v) -> {
@@ -61,7 +68,7 @@ public class MessageActivity extends AppCompatActivity implements CuiChatInputFr
 
         }));
         cuiChatInputFragment.addIcon(new CuiChatInputIconFragment(R.drawable.cui_icon_video_24, "视频通话", (View v) -> {
-            PhoneCallActivity.openActivity(MessageActivity.this, "11", true, "22", false, false);
+            PhoneCallActivity.openActivity(MessageActivity.this, userId, true, "22", false, false);
         }));
         trs.add(R.id.chat_input, cuiChatInputFragment);
 

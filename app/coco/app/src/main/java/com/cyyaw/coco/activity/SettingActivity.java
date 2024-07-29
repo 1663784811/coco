@@ -57,13 +57,13 @@ public class SettingActivity extends AppCompatActivity {
 
         ft.commit();
 
-//        findViewById(R.id.logOutBtn).setOnClickListener((View v) -> {
-//            // 清除token
-//            MyApplication.saveToken("");
-//            // 跳转登录页面
-//            LoginActivity.openActivity(SettingActivity.this);
-//            finish();
-//        });
+        findViewById(R.id.logOutBtn).setOnClickListener((View v) -> {
+            // 清除token
+            MyApplication.saveToken("");
+            // 跳转登录页面
+            LoginActivity.openActivity(SettingActivity.this);
+            finish();
+        });
 
 
     }

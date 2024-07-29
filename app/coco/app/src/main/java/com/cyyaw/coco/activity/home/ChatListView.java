@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.cyyaw.coco.R;
+import com.cyyaw.coco.activity.SearchActivity;
 import com.cyyaw.coco.activity.home.adapter.MyViewPage2Adapter;
 import com.cyyaw.cui.fragment.CuiNavBarFragment;
 import com.cyyaw.cui.fragment.CuiTextFragment;
@@ -61,6 +62,9 @@ public class ChatListView extends Fragment {
         vp.setAdapter(adapter);
         vp.setCurrentItem(0);
 
+        window.getView().findViewById(R.id.addFriends).setOnClickListener((View v) -> {
+            SearchActivity.openActivity(getContext());
+        });
 
 
         return view;

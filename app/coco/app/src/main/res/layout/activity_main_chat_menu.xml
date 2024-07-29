@@ -26,7 +26,7 @@
         tools:ignore="MissingConstraints">
 
         <TextView
-            android:id="@+id/add_equipment"
+            android:id="@+id/addFriends"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
