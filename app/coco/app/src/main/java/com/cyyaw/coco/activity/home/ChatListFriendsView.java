@@ -26,23 +26,18 @@ public class ChatListFriendsView extends Fragment implements FriendsDao.UpdateDa
 
     private static final String TAG = "ChatListFriendsView";
 
-    private Context context;
 
     private FriendsListAdapter friendsListAdapter;
 
-
-    public ChatListFriendsView(Context context) {
-        this.context = context;
-    }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.chat_friends, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.friendsList);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        friendsListAdapter = new FriendsListAdapter(context);
+        friendsListAdapter = new FriendsListAdapter(getContext());
         recyclerView.setAdapter(friendsListAdapter);
         // 同步好友
         updateData();

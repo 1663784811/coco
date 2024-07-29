@@ -56,8 +56,8 @@ public class ChatListView extends Fragment {
 
         ViewPager2 vp = view.findViewById(R.id.char_ViewPager);
         List<Fragment> pageData = new ArrayList<>();
-        pageData.add(new ChatListFriendsView(context));
-        pageData.add(new ChatListMsgView(context));
+        pageData.add(new ChatListFriendsView());
+        pageData.add(new ChatListMsgView());
         MyViewPage2Adapter adapter = new MyViewPage2Adapter(context, pageData);
         vp.setAdapter(adapter);
         vp.setCurrentItem(0);
