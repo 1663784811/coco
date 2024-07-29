@@ -2,7 +2,7 @@ package com.cyyaw.coco.dao.table;
 
 import java.io.Serializable;
 
-public class MsgEntity implements Serializable {
+public class UserInfoEntity implements Serializable {
 
     // id
     private Integer id;

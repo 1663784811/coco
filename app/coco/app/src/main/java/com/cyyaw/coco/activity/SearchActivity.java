@@ -8,13 +8,13 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.cyyaw.coco.R;
-import com.cyyaw.coco.dao.FriendsDao;
+import com.cyyaw.coco.dao.UserInfoDao;
 
 
 /**
  * 搜索页面
  */
-public class SearchActivity extends AppCompatActivity implements FriendsDao.UpdateDataCallBack {
+public class SearchActivity extends AppCompatActivity implements UserInfoDao.UpdateDataCallBack {
 
 
     public static void openActivity(Context context) {
@@ -31,7 +31,7 @@ public class SearchActivity extends AppCompatActivity implements FriendsDao.Upda
 
         findViewById(R.id.searchBtn).setOnClickListener((View v) -> {
 
-            FriendsDao.searchFriends(SearchActivity.this);
+            UserInfoDao.searchFriends(SearchActivity.this);
 
         });
 

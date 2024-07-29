@@ -1,13 +1,11 @@
 package com.cyyaw.coco.dao;
 
-import android.util.Log;
-
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.cyyaw.coco.MyApplication;
 import com.cyyaw.coco.common.ChatInfoDatabaseHelper;
 import com.cyyaw.coco.common.network.AppRequest;
-import com.cyyaw.coco.dao.table.FriendsEntity;
+import com.cyyaw.coco.dao.table.UserInfoEntity;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -17,13 +15,13 @@ import java.util.List;
 /**
  * 好友Dao
  */
-public class FriendsDao {
+public class UserInfoDao {
 
     private static final String TAG = "FriendsDao";
 
     private static WeakReference<UpdateDataCallBack> updateDataCallBack;
 
-    private FriendsDao() {
+    private UserInfoDao() {
     }
 
 
@@ -45,19 +43,19 @@ public class FriendsDao {
     /**
      * 获取好友数据
      */
-    public static List<FriendsEntity> getFriends() {
-        List<FriendsEntity> rest = new ArrayList<>();
+    public static List<UserInfoEntity> getFriends() {
+        List<UserInfoEntity> rest = new ArrayList<>();
         JSONArray arr = ChatInfoDatabaseHelper.queryData("select * from user_info");
         if (null != arr && arr.size() > 0) {
             for (int i = 0; i < arr.size(); i++) {
-                rest.add(arr.getObject(i, FriendsEntity.class));
+                rest.add(arr.getObject(i, UserInfoEntity.class));
             }
         }
         return rest;
     }
 
     public static void setUpdateDataCallBack(UpdateDataCallBack updateDataCallBack) {
-        FriendsDao.updateDataCallBack = new WeakReference(updateDataCallBack);
+        UserInfoDao.updateDataCallBack = new WeakReference(updateDataCallBack);
         MyApplication.post(() -> {
             AppRequest.getRequest(MyApplication.baseUrl + "/app/" + MyApplication.appId + "/friends/myFriends", (String body) -> {
                 JSONObject json = JSONObject.parseObject(body);
@@ -66,7 +64,7 @@ public class FriendsDao {
                     for (int i = 0; i < data.size(); i++) {
                         JSONObject js = data.getJSONObject(i);
                         JSONObject user = js.getJSONObject("toUser");
-                        FriendsEntity friends = new FriendsEntity();
+                        UserInfoEntity friends = new UserInfoEntity();
                         // ===
                         friends.setTid(js.getString("toUserId"));
                         friends.setNickName(user.getString("nickName"));
@@ -93,7 +91,7 @@ public class FriendsDao {
     /**
      * 更新数据库数据
      */
-    public static void updateFriends(FriendsEntity friends) {
+    public static void updateFriends(UserInfoEntity friends) {
         String tid = friends.getTid();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("tid", tid);
@@ -124,7 +122,7 @@ public class FriendsDao {
                     for (int i = 0; i < data.size(); i++) {
                         JSONObject js = data.getJSONObject(i);
                         JSONObject user = js.getJSONObject("toUser");
-                        FriendsEntity friends = new FriendsEntity();
+                        UserInfoEntity friends = new UserInfoEntity();
                         // ===
                         friends.setTid(js.getString("toUserId"));
                         friends.setNickName(user.getString("nickName"));

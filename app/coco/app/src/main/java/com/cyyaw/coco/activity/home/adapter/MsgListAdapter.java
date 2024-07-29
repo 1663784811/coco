@@ -14,9 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.activity.MessageActivity;
-import com.cyyaw.coco.activity.PersonCenterActivity;
-import com.cyyaw.coco.dao.table.MsgEntity;
-import com.cyyaw.coco.dao.table.MsgEntity;
+import com.cyyaw.coco.dao.table.UserMsgLogEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +23,7 @@ public class MsgListAdapter extends RecyclerView.Adapter<MsgListAdapter.ViewHold
 
     private static final String TAG = MsgListAdapter.class.getName();
 
-    private final List<MsgEntity> dataList = new ArrayList<>();
+    private final List<UserMsgLogEntity> dataList = new ArrayList<>();
 
     private Context context;
 
@@ -53,7 +51,7 @@ public class MsgListAdapter extends RecyclerView.Adapter<MsgListAdapter.ViewHold
     /**
      * 更新数据
      */
-    public void updateData(MsgEntity friendsEntity) {
+    public void updateData(UserMsgLogEntity friendsEntity) {
         dataList.add(friendsEntity);
         notifyItemRangeInserted(dataList.size() - 1, 1);
     }
@@ -63,7 +61,7 @@ public class MsgListAdapter extends RecyclerView.Adapter<MsgListAdapter.ViewHold
      *
      */
     @SuppressLint("NotifyDataSetChanged")
-    public void setDataList(List<MsgEntity> friendsList) {
+    public void setDataList(List<UserMsgLogEntity> friendsList) {
         dataList.clear();
         for (int i = 0; i < friendsList.size(); i++) {
             dataList.add(friendsList.get(i));
@@ -79,7 +77,7 @@ public class MsgListAdapter extends RecyclerView.Adapter<MsgListAdapter.ViewHold
             this.view = view;
         }
 
-        public void setData(MsgEntity friendsEntity) {
+        public void setData(UserMsgLogEntity friendsEntity) {
             View friendsItem = view.findViewById(R.id.friendsItem);
             ImageView face = view.findViewById(R.id.face);
             Glide.with(view.getContext()).load(friendsEntity.getFace()).into(face);

@@ -4,12 +4,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.cyyaw.coco.R;
+import com.cyyaw.coco.dao.UserMsgDao;
 import com.cyyaw.coco.entity.MsgUserEntity;
 import com.cyyaw.cui.fragment.CuiEmptyFragment;
 import com.cyyaw.cui.fragment.CuiMsgListItemFragment;
@@ -33,14 +33,12 @@ public class ChatListMsgFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.chat_list, container, false);
         //加载布局
-        LinearLayout linearLayout = view.findViewById(R.id.chatList);
-
 
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
         ft.add(R.id.chatList, cuiEmpty);
 
         // 查数据库
-
+        UserMsgDao.getList();
 
         ft.commit();
 
@@ -49,14 +47,10 @@ public class ChatListMsgFragment extends Fragment {
     }
 
 
-    public synchronized void aaa(MsgUserEntity obj) {
-        String tid = obj.getTid();
-        CuiMsgEntity nowData = new CuiMsgEntity();
-        nowData.setFace("ssss");
-        nowData.setUserName("ddd");
-        nowData.setMsg("ddddd");
-        nowData.setNumber(0);
-
+    /**
+     * 消息显示到页面
+     */
+    public synchronized void showToPage(String tid, CuiMsgEntity nowData) {
         // 查当前位置
         int index = -1;
         for (int i = 0; i < msgUserList.size(); i++) {
@@ -73,6 +67,7 @@ public class ChatListMsgFragment extends Fragment {
             CuiMsgListItemFragment fragment = new CuiMsgListItemFragment(nowData);
             ft.add(R.id.chatList, fragment);
             ft.commit();
+            MsgUserEntity obj = new MsgUserEntity();
             obj.setFragment(fragment);
             obj.setTid(tid);
             msgUserList.add(obj);

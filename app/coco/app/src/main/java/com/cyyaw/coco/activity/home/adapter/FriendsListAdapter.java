@@ -2,7 +2,6 @@ package com.cyyaw.coco.activity.home.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.cyyaw.coco.R;
 import com.cyyaw.coco.activity.PersonCenterActivity;
-import com.cyyaw.coco.dao.table.FriendsEntity;
+import com.cyyaw.coco.dao.table.UserInfoEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +23,7 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
 
     private static final String TAG = FriendsListAdapter.class.getName();
 
-    private final List<FriendsEntity> dataList = new ArrayList<>();
+    private final List<UserInfoEntity> dataList = new ArrayList<>();
 
     private Context context;
 
@@ -52,8 +51,8 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
     /**
      * 更新数据
      */
-    public void updateData(FriendsEntity friendsEntity) {
-        dataList.add(friendsEntity);
+    public void updateData(UserInfoEntity userInfoEntity) {
+        dataList.add(userInfoEntity);
         notifyItemRangeInserted(dataList.size() - 1, 1);
     }
 
@@ -62,7 +61,7 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
      *
      */
     @SuppressLint("NotifyDataSetChanged")
-    public void setDataList(List<FriendsEntity> friendsList) {
+    public void setDataList(List<UserInfoEntity> friendsList) {
         dataList.clear();
         for (int i = 0; i < friendsList.size(); i++) {
             dataList.add(friendsList.get(i));
@@ -78,19 +77,19 @@ public class FriendsListAdapter extends RecyclerView.Adapter<FriendsListAdapter.
             this.view = view;
         }
 
-        public void setData(FriendsEntity friendsEntity) {
+        public void setData(UserInfoEntity userInfoEntity) {
             View friendsItem = view.findViewById(R.id.friendsItem);
             ImageView face = view.findViewById(R.id.face);
-            Glide.with(view.getContext()).load(friendsEntity.getFace()).into(face);
+            Glide.with(view.getContext()).load(userInfoEntity.getFace()).into(face);
             TextView userName = view.findViewById(R.id.userName);
-            userName.setText(friendsEntity.getNickName());
+            userName.setText(userInfoEntity.getNickName());
             TextView message = view.findViewById(R.id.message);
             message.setText("...");
             /**
              * 点击
              */
             friendsItem.setOnClickListener((View v) -> {
-                PersonCenterActivity.openActivity(context, friendsEntity.getTid(), friendsEntity.getNickName(), friendsEntity.getFace());
+                PersonCenterActivity.openActivity(context, userInfoEntity.getTid(), userInfoEntity.getNickName(), userInfoEntity.getFace());
             });
         }
     }
