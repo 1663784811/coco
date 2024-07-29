@@ -3,6 +3,7 @@ package com.cyyaw.coco.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -105,6 +106,8 @@ public class MainActivity extends BaseAppCompatActivity implements StatusCallBac
     @Override
     public void netWorkStatus(NetStatus netStatus, String msg) {
 
+
+        Log.e(TAG, "netWorkStatus: " );
     }
 
     /**
@@ -113,5 +116,7 @@ public class MainActivity extends BaseAppCompatActivity implements StatusCallBac
     @Override
     public void receiveMsg(String fromId, String msg) {
 
+
+        Log.e(TAG, "receiveMsg: " );
     }
 }

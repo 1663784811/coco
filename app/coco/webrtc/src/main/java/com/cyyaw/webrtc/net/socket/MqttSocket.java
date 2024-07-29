@@ -2,6 +2,7 @@ package com.cyyaw.webrtc.net.socket;
 
 import android.util.Log;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.cyyaw.webrtc.net.SocketReceiveDataEvent;
 import com.cyyaw.webrtc.utils.StringUtils;
@@ -98,7 +99,16 @@ public class MqttSocket implements MqttCallback, SocketConnect {
      */
     @Override
     public void messageArrived(String topic, MqttMessage message) throws Exception {
-
+        Log.e(TAG, "messageArrived: ");
+        String msg = message.getPayload().toString();
+        MsgData msgData = JSON.parseObject(msg).toJavaObject(MsgData.class);
+        String data = msgData.getData();
+        String type = msgData.getType();
+        if ("webrtc".equals(type)) {
+            receiveEvent.onReceiveWebRtc(data);
+        } else if ("chat".equals(type)) {
+            receiveEvent.onReceiveChat(data);
+        }
     }
 
     /**
@@ -106,7 +116,7 @@ public class MqttSocket implements MqttCallback, SocketConnect {
      */
     @Override
     public void deliveryComplete(IMqttDeliveryToken token) {
-
+        Log.e(TAG, "deliveryComplete: ");
     }
 
     // =============================================================
