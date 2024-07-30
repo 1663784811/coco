@@ -210,11 +210,11 @@ public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent
     public void onReceiveChat(String fromId, String toId, String data) {
 
         if (null != fromId && msgCallBack != null) {
-
+            msgCallBack.receiveMsg(fromId, data);
         }
 
         if (null != applicationCallBack) {
-
+            applicationCallBack.receiveMsg(fromId, data);
         }
 
     }

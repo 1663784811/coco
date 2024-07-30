@@ -12,6 +12,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.cyyaw.coco.MyApplication;
 import com.cyyaw.coco.R;
+import com.cyyaw.coco.dao.UserMsgLogDao;
+import com.cyyaw.coco.dao.table.UserMsgLogEntity;
 import com.cyyaw.cui.fragment.CuiChatInputFragment;
 import com.cyyaw.cui.fragment.CuiChatInputIconFragment;
 import com.cyyaw.cui.fragment.CuiChatMsgFromFragment;
@@ -21,6 +23,9 @@ import com.cyyaw.webrtc.MsgCallBack;
 import com.cyyaw.webrtc.WebRtcConfig;
 import com.cyyaw.webrtc.activity.PhoneCallActivity;
 import com.cyyaw.webrtc.net.SocketManager;
+
+import java.util.Date;
+import java.util.List;
 
 public class MessageActivity extends AppCompatActivity implements CuiChatInputFragment.CuiChatInputCallBack, MsgCallBack {
 
@@ -81,7 +86,7 @@ public class MessageActivity extends AppCompatActivity implements CuiChatInputFr
         }));
         // 点击发送数据
         cuiChatInputFragment.setSendDataCallBack((String data) -> {
-            MyApplication.post(()->{
+            MyApplication.post(() -> {
                 getSupportFragmentManager().beginTransaction().add(R.id.messageContent, new CuiChatMsgSendFragment(userId, userName, face, data)).commit();
             });
             // 发送
@@ -104,8 +109,10 @@ public class MessageActivity extends AppCompatActivity implements CuiChatInputFr
             chatScrollView.fullScroll(View.FOCUS_DOWN);
         }, 50);
 
-
         SocketManager.getInstance().setMsgChatCallBack(userId, this);
+
+        UserMsgLogDao.getMsgLog(userId, "xxx", new Date());
+
     }
 
     @Override
