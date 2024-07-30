@@ -107,7 +107,9 @@ public class MqttSocket implements MqttCallback, SocketConnect {
         if ("webrtc".equals(type)) {
             receiveEvent.onReceiveWebRtc(data);
         } else if ("chat".equals(type)) {
-            receiveEvent.onReceiveChat(data);
+            String to = msgData.getTo();
+            String from = msgData.getFrom();
+            receiveEvent.onReceiveChat(from, to, data);
         }
     }
 
@@ -377,6 +379,16 @@ public class MqttSocket implements MqttCallback, SocketConnect {
         msgData.setData(jsonString);
         msgData.setFrom(myId);
         msgData.setTo(targetId);
+        sendData(JSONObject.toJSONString(msgData));
+    }
+
+    @Override
+    public void sendChatMsg(String sendUserId, String toUserid, String data) {
+        MsgData msgData = new MsgData();
+        msgData.setType("chat");
+        msgData.setData(data);
+        msgData.setFrom(sendUserId);
+        msgData.setTo(toUserid);
         sendData(JSONObject.toJSONString(msgData));
     }
 

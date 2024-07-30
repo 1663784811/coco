@@ -13,7 +13,7 @@ public interface SocketReceiveDataEvent {
     /**
      * 接收聊天数据
      */
-    void onReceiveChat(String message);
+    void onReceiveChat(String fromId, String toId,String message);
 
     /**
      * 网络连接成功回调

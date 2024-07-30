@@ -145,6 +145,16 @@ public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent
         }
     }
 
+    /**
+     * 发送聊天消息
+     */
+    public void sendChatMsg(String toUserid, String data) {
+        handler.post(() -> {
+            if (socketConnect != null) {
+                socketConnect.sendChatMsg(myId, toUserid, data);
+            }
+        });
+    }
 
     // ========================================================================================    接收数据
 
@@ -197,8 +207,15 @@ public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent
     }
 
     @Override
-    public void onReceiveChat(String data) {
+    public void onReceiveChat(String fromId, String toId, String data) {
 
+        if (null != fromId && msgCallBack != null) {
+
+        }
+
+        if (null != applicationCallBack) {
+
+        }
 
     }
 
@@ -412,15 +429,6 @@ public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent
         });
     }
 
-    /**
-     * 发送聊天消息
-     */
-    public void sendChatMsg(String userId, String data) {
-//        handler.post(() -> {
-//
-//
-//        });
-    }
 
     // ========================  接收webRtc 数据
 

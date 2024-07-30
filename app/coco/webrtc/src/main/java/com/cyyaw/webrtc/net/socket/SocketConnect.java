@@ -44,4 +44,5 @@ public interface SocketConnect {
 
     void sendDisconnect(String room, String myId, String targetId);
 
+    void sendChatMsg(String sendUserId, String toUserid, String data);
 }

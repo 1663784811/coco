@@ -338,6 +338,11 @@ public class MyWebSocket extends WebSocketClient implements SocketConnect {
         sendData(jsonString);
     }
 
+    @Override
+    public void sendChatMsg(String myId, String toUserid, String data) {
+
+    }
+
 
     // 忽略证书
     public static class TrustManagerTest implements X509TrustManager {
