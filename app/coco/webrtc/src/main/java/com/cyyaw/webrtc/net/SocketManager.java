@@ -416,10 +416,10 @@ public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent
      * 发送聊天消息
      */
     public void sendChatMsg(String userId, String data) {
-        handler.post(() -> {
-
-
-        });
+//        handler.post(() -> {
+//
+//
+//        });
     }
 
     // ========================  接收webRtc 数据

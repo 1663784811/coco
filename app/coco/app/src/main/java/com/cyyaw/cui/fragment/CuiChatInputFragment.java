@@ -91,10 +91,10 @@ public class CuiChatInputFragment extends Fragment {
 
         cuiChatSendBtn.setOnClickListener((View v) -> {
             String str = editText.getText().toString();
+            editText.getText().clear();
             if (sendDataCallBack != null) {
                 sendDataCallBack.sendData(str);
             }
-            editText.getText().clear();
         });
 
 

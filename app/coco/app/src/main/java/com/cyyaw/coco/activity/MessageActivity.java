@@ -10,6 +10,7 @@ import android.widget.ScrollView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.cyyaw.coco.MyApplication;
 import com.cyyaw.coco.R;
 import com.cyyaw.cui.fragment.CuiChatInputFragment;
 import com.cyyaw.cui.fragment.CuiChatInputIconFragment;
@@ -80,7 +81,9 @@ public class MessageActivity extends AppCompatActivity implements CuiChatInputFr
         }));
         // 点击发送数据
         cuiChatInputFragment.setSendDataCallBack((String data) -> {
-            getSupportFragmentManager().beginTransaction().add(R.id.messageContent, new CuiChatMsgSendFragment(userId, userName, face, data)).commit();
+            MyApplication.post(()->{
+                getSupportFragmentManager().beginTransaction().add(R.id.messageContent, new CuiChatMsgSendFragment(userId, userName, face, data)).commit();
+            });
             // 发送
             SocketManager.getInstance().sendChatMsg(userId, data);
             chatScrollView.postDelayed(() -> {
