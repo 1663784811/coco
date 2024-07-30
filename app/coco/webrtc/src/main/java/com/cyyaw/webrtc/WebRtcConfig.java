@@ -44,10 +44,7 @@ public class WebRtcConfig {
     private static String appId;
     private static String token;
 
-    private static StatusCallBack statusCallBack;
-    private static MsgCallBack applicationCallBack;
-    private static String fromId;
-    private static MsgCallBack msgCallBack;
+
 
 
     /**
@@ -105,28 +102,6 @@ public class WebRtcConfig {
             }
         });
 
-    }
-
-    /**
-     * 设置状态回调
-     */
-    public static void setStatusCallBack(StatusCallBack statusCallBack) {
-        WebRtcConfig.statusCallBack = statusCallBack;
-    }
-
-    /**
-     * 设置应用聊天回调
-     */
-    public static void setApplicationChatCallBack(MsgCallBack msgCallBack) {
-        WebRtcConfig.applicationCallBack = msgCallBack;
-    }
-
-    /**
-     * 设置框聊天回调
-     */
-    public static void setMsgChatCallBack(String fromId, MsgCallBack msgCallBack) {
-        WebRtcConfig.fromId = fromId;
-        WebRtcConfig.msgCallBack = msgCallBack;
     }
 
     /**

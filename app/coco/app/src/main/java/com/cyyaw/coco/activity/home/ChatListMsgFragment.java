@@ -1,6 +1,7 @@
 package com.cyyaw.coco.activity.home;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class ChatListMsgFragment extends Fragment {
 
+    private static final String TAG = ChatListMsgFragment.class.getName();
+
     private Fragment cuiEmpty = new CuiEmptyFragment();
 
     private List<MsgUserEntity> msgUserList = new CopyOnWriteArrayList();
@@ -37,26 +40,21 @@ public class ChatListMsgFragment extends Fragment {
         //加载布局
 
         FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-        ft.add(R.id.chatList, cuiEmpty);
+//        ft.add(R.id.chatList, cuiEmpty);
         ft.commit();
 
         MyApplication.post(() -> {
             // 查数据库
             List<UserMsgEntity> list = UserMsgDao.getList();
-            for (int i = (list.size() - 1); i > 0; i--) {
-                UserMsgEntity msg = list.get(i);
-                CuiMsgEntity cuiMsgEntity = new CuiMsgEntity();
-                cuiMsgEntity.setFace(msg.getFace());
-                cuiMsgEntity.setUserName(msg.getName());
-                cuiMsgEntity.setMsg("");
-                cuiMsgEntity.setNumber(0);
-                String tid = msg.getTid();
-                showToPage(tid, cuiMsgEntity);
-            }
+            aaa(list, 0);
         });
         return view;
     }
 
+
+    public void aaa(List<UserMsgEntity> list, int xx) {
+
+    }
 
     /**
      * 消息显示到页面

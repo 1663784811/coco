@@ -22,6 +22,7 @@ import com.cyyaw.tabbar.listener.OnTabSelectListener;
 import com.cyyaw.tabbar.listener.TabBarItemEntity;
 import com.cyyaw.webrtc.MsgCallBack;
 import com.cyyaw.webrtc.WebRtcConfig;
+import com.cyyaw.webrtc.net.SocketManager;
 import com.cyyaw.webrtc.net.StatusCallBack;
 
 import java.util.ArrayList;
@@ -94,8 +95,8 @@ public class MainActivity extends BaseAppCompatActivity implements StatusCallBac
         });
         viewPager.setUserInputEnabled(false);
         // =====================================
-        WebRtcConfig.setStatusCallBack(this);
-        WebRtcConfig.setApplicationChatCallBack(this);
+        SocketManager.getInstance().setStatusCallBack(this);
+        SocketManager.getInstance().setApplicationChatCallBack(this);
 
         UserInfo userInfo = MyApplication.getUserInfo();
         if (null != userInfo) {

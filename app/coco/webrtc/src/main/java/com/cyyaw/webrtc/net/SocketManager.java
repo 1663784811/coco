@@ -6,6 +6,7 @@ import android.os.Looper;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
+import com.cyyaw.webrtc.MsgCallBack;
 import com.cyyaw.webrtc.WebRtcConfig;
 import com.cyyaw.webrtc.activity.PhoneCallActivity;
 import com.cyyaw.webrtc.net.socket.SocketConnect;
@@ -21,13 +22,16 @@ import java.util.Map;
  */
 public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent {
     private final static String TAG = SocketManager.class.getName();
+    private final Handler handler = new Handler(Looper.getMainLooper());
+    private static final SocketManager socketManager = new SocketManager();
 
     private SocketConnect socketConnect;
     private String myId;
 
-    private final Handler handler = new Handler(Looper.getMainLooper());
-
-    private static final SocketManager socketManager = new SocketManager();
+    private StatusCallBack statusCallBack;
+    private MsgCallBack applicationCallBack;
+    private String fromId;
+    private MsgCallBack msgCallBack;
 
     public static SocketManager getInstance() {
         return socketManager;
@@ -40,6 +44,28 @@ public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent
 
     public void setUserId(String userId) {
         myId = userId;
+    }
+
+    /**
+     * 设置状态回调
+     */
+    public void setStatusCallBack(StatusCallBack statusCallBack) {
+        this.statusCallBack = statusCallBack;
+    }
+
+    /**
+     * 设置应用聊天回调
+     */
+    public void setApplicationChatCallBack(MsgCallBack msgCallBack) {
+        this.msgCallBack = msgCallBack;
+    }
+
+    /**
+     * 设置框聊天回调
+     */
+    public void setMsgChatCallBack(String fromId, MsgCallBack msgCallBack) {
+        this.fromId = fromId;
+        this.msgCallBack = msgCallBack;
     }
 
     // ======================================================================================     发送数据
@@ -383,6 +409,16 @@ public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent
             if (currentSession != null) {
                 currentSession.onDisConnect(EnumType.CallEndReason.SignalError);
             }
+        });
+    }
+
+    /**
+     * 发送聊天消息
+     */
+    public void sendChatMsg(String userId, String data) {
+        handler.post(() -> {
+
+
         });
     }
 

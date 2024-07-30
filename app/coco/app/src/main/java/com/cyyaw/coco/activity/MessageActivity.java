@@ -4,7 +4,6 @@ package com.cyyaw.coco.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ScrollView;
 
@@ -12,19 +11,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.cyyaw.coco.R;
-import com.cyyaw.cui.fragment.CuiNavBarFragment;
 import com.cyyaw.cui.fragment.CuiChatInputFragment;
 import com.cyyaw.cui.fragment.CuiChatInputIconFragment;
 import com.cyyaw.cui.fragment.CuiChatMsgFromFragment;
 import com.cyyaw.cui.fragment.CuiChatMsgSendFragment;
+import com.cyyaw.cui.fragment.CuiNavBarFragment;
+import com.cyyaw.webrtc.MsgCallBack;
+import com.cyyaw.webrtc.WebRtcConfig;
 import com.cyyaw.webrtc.activity.PhoneCallActivity;
+import com.cyyaw.webrtc.net.SocketManager;
 
-public class MessageActivity extends AppCompatActivity implements CuiChatInputFragment.CuiChatInputCallBack {
+public class MessageActivity extends AppCompatActivity implements CuiChatInputFragment.CuiChatInputCallBack, MsgCallBack {
 
     private static final String USERID = "userId";
     private static final String USERNAME = "userName";
     private static final String FACE = "face";
 
+    private String userName;
+    private String userId;
+    private String face;
 
     public static void openActivity(Context context, String userId, String userName, String face) {
         Intent intent = new Intent(context, MessageActivity.class);
@@ -40,9 +45,9 @@ public class MessageActivity extends AppCompatActivity implements CuiChatInputFr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
         Intent intent = getIntent();
-        String userId = intent.getStringExtra(USERID);
-        String userName = intent.getStringExtra(USERNAME);
-        String face = intent.getStringExtra(FACE);
+        userId = intent.getStringExtra(USERID);
+        userName = intent.getStringExtra(USERNAME);
+        face = intent.getStringExtra(FACE);
 
         ScrollView chatScrollView = findViewById(R.id.chatScrollView);
 
@@ -76,6 +81,8 @@ public class MessageActivity extends AppCompatActivity implements CuiChatInputFr
         // 点击发送数据
         cuiChatInputFragment.setSendDataCallBack((String data) -> {
             getSupportFragmentManager().beginTransaction().add(R.id.messageContent, new CuiChatMsgSendFragment(userId, userName, face, data)).commit();
+            // 发送
+            SocketManager.getInstance().sendChatMsg(userId, data);
             chatScrollView.postDelayed(() -> {
                 chatScrollView.fullScroll(View.FOCUS_DOWN);
             }, 100);
@@ -94,6 +101,20 @@ public class MessageActivity extends AppCompatActivity implements CuiChatInputFr
             chatScrollView.fullScroll(View.FOCUS_DOWN);
         }, 50);
 
+
+        SocketManager.getInstance().setMsgChatCallBack(userId, this);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SocketManager.getInstance().setMsgChatCallBack(null, null);
+    }
+
+    @Override
+    public void receiveMsg(String fromId, String msg) {
+        getSupportFragmentManager().beginTransaction().add(R.id.messageContent, new CuiChatMsgFromFragment(fromId, userName, face, msg)).commit();
+    }
+
 
 }
