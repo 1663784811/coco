@@ -1,6 +1,7 @@
 package com.cyyaw.coco.activity.home;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,10 +61,10 @@ public class FindFragment extends Fragment {
         getChildFragmentManager().beginTransaction().add(R.id.header_title, nav).commit();
 
         // =============== 设置适配器
-        equipmentContainer = view.findViewById(R.id.equipmentContainer);
+//        equipmentContainer = view.findViewById(R.id.equipmentContainer);
         RecyclerView recyclerView = view.findViewById(R.id.equipmentList);
         // 瀑布流
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManagerNonScrollable(2, StaggeredGridLayoutManager.VERTICAL);
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         equipmentAdapter = new EquipmentAdapter(context);
         recyclerView.setAdapter(equipmentAdapter);
@@ -94,14 +95,14 @@ public class FindFragment extends Fragment {
         List<EquipmentEntity> equipmentList = EquipmentDao.equipmentList();
         // 更新列表
         equipmentAdapter.setData(equipmentList);
-
+        Log.e(TAG, "initEquipmentListsssssssssssssssssssss: " + equipmentList.size());
         if (equipmentList.size() > 0 && null != cuiEmpty) {
             getChildFragmentManager().beginTransaction().remove(cuiEmpty).commit();
             cuiEmpty = null;
         } else if (equipmentList == null || equipmentList.size() == 0) {
             if (cuiEmpty == null) {
                 cuiEmpty = new CuiEmptyFragment();
-                getChildFragmentManager().beginTransaction().add(R.id.equipmentContainer, cuiEmpty).commit();
+//                getChildFragmentManager().beginTransaction().add(R.id.equipmentContainer, cuiEmpty).commit();
             }
         }
     }
