@@ -44,8 +44,6 @@ public class AddEquipmentActivity extends BaseAppCompatActivity implements CuiSe
 
     private CuiSelectListFragment selectList;
 
-    private CuiPopupFragment popup;
-
     private String name;
     private String address;
 
@@ -65,30 +63,17 @@ public class AddEquipmentActivity extends BaseAppCompatActivity implements CuiSe
         CuiNavBarFragment nav = new CuiNavBarFragment("添加设备", new CuiNavBarFragment.UiNavBarFragmentCallBack() {
             @Override
             public void clickMore(View v) {
-
-
             }
-        }, true, true);
+        }, true, false);
+
         ft.add(R.id.header_title, nav);
-
-
-        CuiCellGroupFragment group = new CuiCellGroupFragment();
+        CuiCellGroupFragment group = new CuiCellGroupFragment("基本信息");
         group.addCell(new CuiInputFragment("名称", (View v, String data) -> {
             name = data;
         }));
 
-        group.addCell(new CuiInputFragment("类型", (View v, String data) -> {
-            address = data;
-        }));
-
-        group.addCell(new CuiCellFragment("选择设备", (View v) -> {
-            popup.show(true);
-        }));
-
-
         ft.add(R.id.inputContainer, group);
-        popup = new CuiPopupFragment("请选择蓝牙设备");
-
+        CuiCellGroupFragment group2 = new CuiCellGroupFragment("选择设备");
         selectList = new CuiSelectListFragment(this);
         Map<String, BtEntity> bluetoothMap = BlueToothManager.getBluetoothMap();
         if (null != bluetoothMap) {
@@ -105,10 +90,8 @@ public class AddEquipmentActivity extends BaseAppCompatActivity implements CuiSe
                 selectList.addItem(btName == null ? address : btName, address);
             }
         }
-        ft.add(R.id.inputContainer, selectList);
-//        popup.addItem(selectList);
-
-        ft.add(R.id.add_equipment, popup);
+        group2.addCell(selectList);
+        ft.add(R.id.inputContainer, group2);
         ft.commit();
 
         View addEquipmentBtn = findViewById(R.id.addEquipmentBtn);
@@ -123,19 +106,9 @@ public class AddEquipmentActivity extends BaseAppCompatActivity implements CuiSe
 
             finish();
         });
+
         // 打开蓝牙、搜索
-        requestPermissionsFn(PermissionsCode.BLUETOOTH_CONNECT, () -> {
-            requestPermissionsFn(PermissionsCode.BLUETOOTH_REQUEST_ENABLE, () -> {
-                // 搜索蓝牙
-                scanLeDevice();
-            });
-        });
-
-
-//        View searchBluetooth = findViewById(R.id.search_bluetooth);
-//        searchBluetooth.setOnClickListener((View v) -> {
-//            scanLeDevice();
-//        });
+        scanLeDevice();
     }
 
 
@@ -148,31 +121,34 @@ public class AddEquipmentActivity extends BaseAppCompatActivity implements CuiSe
 
 
     private void scanLeDevice() {
+        requestPermissionsFn(PermissionsCode.BLUETOOTH_CONNECT, () -> {
+            requestPermissionsFn(PermissionsCode.BLUETOOTH_REQUEST_ENABLE, () -> {
+                // 搜索蓝牙
+                BlueToothManager.setCallBack(new BlueToothFindCallBack() {
+                    @Override
+                    public void error() {
 
-        BlueToothManager.setCallBack(new BlueToothFindCallBack() {
-            @Override
-            public void error() {
-
-            }
-
-            @Override
-            public void foundBluetooth(BtEntity bluetooth) {
-                MyApplication.post(() -> {
-                    BluetoothDevice dev = bluetooth.getDev();
-                    String ads = dev.getAddress();
-                    String btName = null;
-                    if (ActivityCompat.checkSelfPermission(AddEquipmentActivity.this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-                        btName = dev.getAddress();
-                    } else {
-                        btName = dev.getName();
                     }
-                    Log.e(TAG, "foundBluetooth : " + ads);
-                    selectList.addItem(btName == null ? address : btName, address);
-                });
-            }
-        });
 
-        BlueToothManager.discoveryBlueTooth();
+                    @Override
+                    public void foundBluetooth(BtEntity bluetooth) {
+                        MyApplication.post(() -> {
+                            BluetoothDevice dev = bluetooth.getDev();
+                            String ads = dev.getAddress();
+                            String btName = null;
+                            if (ActivityCompat.checkSelfPermission(AddEquipmentActivity.this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                                btName = dev.getAddress();
+                            } else {
+                                btName = dev.getName();
+                            }
+                            Log.e(TAG, "foundBluetooth : " + ads);
+                            selectList.addItem(btName == null ? address : btName, address);
+                        });
+                    }
+                });
+                BlueToothManager.discoveryBlueTooth();
+            });
+        });
     }
 
     @Override

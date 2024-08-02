@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment;
 
 import com.cyyaw.coco.R;
 import com.cyyaw.cui.fragment.callback.CuiChangeCallBack;
-import com.cyyaw.cui.fragment.callback.CuiClickCallBack;
 
 public class CuiInputFragment extends Fragment {
 
@@ -51,12 +50,10 @@ public class CuiInputFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.cui_input, container, false);
         EditText cuiInputText = view.findViewById(R.id.cui_input_text);
-
         TextView cuiInputName = view.findViewById(R.id.cui_input_name);
         if (null != name) {
             cuiInputName.setText(name);
         }
-
         if (null != callBack) {
             cuiInputText.addTextChangedListener(new TextWatcher() {
                 @Override
