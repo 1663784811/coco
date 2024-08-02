@@ -27,7 +27,7 @@ public class ChatListFragment extends Fragment {
 
 
     private CuiPopWindow window;
-
+    private ChatListMsgFragment chatListMsgFragment;
 
 
     @Override
@@ -53,7 +53,8 @@ public class ChatListFragment extends Fragment {
         ViewPager2 vp = view.findViewById(R.id.char_ViewPager);
         List<Fragment> pageData = new ArrayList<>();
         pageData.add(new ChatListFriendsFragment());
-        pageData.add(new ChatListMsgFragment());
+        chatListMsgFragment = new ChatListMsgFragment();
+        pageData.add(chatListMsgFragment);
         MyViewPage2Adapter adapter = new MyViewPage2Adapter(getActivity(), pageData);
         vp.setAdapter(adapter);
         vp.setCurrentItem(0);
@@ -67,4 +68,10 @@ public class ChatListFragment extends Fragment {
     }
 
 
+    /**
+     * 接收到消息
+     */
+    public void receiveMsg(String fromId, String msg) {
+        chatListMsgFragment.receiveMsg(fromId, msg);
+    }
 }

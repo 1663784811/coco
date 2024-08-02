@@ -32,6 +32,7 @@ public class MainActivity extends BaseAppCompatActivity implements StatusCallBac
 
     private final String TAG = MainActivity.class.getName();
 
+    private ChatListFragment chatListFragment;
 
     // =====================================   tabbar
     private final List<CustomTabEntity> tabBarData = new ArrayList<>();
@@ -61,10 +62,12 @@ public class MainActivity extends BaseAppCompatActivity implements StatusCallBac
         CommonTabLayout tabBar = findViewById(R.id.app_tabBar);
         tabBar.setTabData(tabBarData);
         // 初始化ViewPage
+        chatListFragment = new ChatListFragment();
+
         List<Fragment> pageData = new ArrayList<>();
         pageData.add(new FindFragment(this));
 //        pageData.add(new HomeView(this));
-        pageData.add(new ChatListFragment());
+        pageData.add(chatListFragment);
         pageData.add(new MyFragment());
 
         viewPager = findViewById(R.id.app_tabBar_ViewPager);
@@ -120,8 +123,8 @@ public class MainActivity extends BaseAppCompatActivity implements StatusCallBac
      */
     @Override
     public void receiveMsg(String fromId, String msg) {
+        Log.e(TAG, "receiveMsg: " + msg);
+        chatListFragment.receiveMsg(fromId, msg);
 
-
-        Log.e(TAG, "receiveMsg: ");
     }
 }
