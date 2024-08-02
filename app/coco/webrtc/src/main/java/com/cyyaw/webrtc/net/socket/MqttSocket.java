@@ -122,275 +122,32 @@ public class MqttSocket implements MqttCallback, SocketConnect {
     }
 
     // =============================================================
-    private void sendData(String msg) {
+    @Override
+    public void sendWebrtcData(String to, String msg) {
         if (null != client) {
             MqttMessage mqtt = new MqttMessage();
             mqtt.setQos(qos);
             mqtt.setPayload(msg.getBytes());
             try {
-                client.publish(topic, mqtt);
+                client.publish(topic + ".webrtc." + to, mqtt);
+            } catch (MqttException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    @Override
+    public void sendChatData(String to, String msg) {
+        if (null != client) {
+            MqttMessage mqtt = new MqttMessage();
+            mqtt.setQos(qos);
+            mqtt.setPayload(msg.getBytes());
+            try {
+                client.publish(topic + ".chat." + to, mqtt);
             } catch (MqttException e) {
                 throw new RuntimeException(e);
             }
         }
     }
     // =============================================================
-
-    /**
-     * ------------------------------发送消息----------------------------------------
-     */
-    @Override
-    public void sendAskRoom(int roomSize, String myId) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("eventName", "__create");
-        Map<String, Object> childMap = new HashMap<>();
-        childMap.put("roomSize", roomSize);
-        childMap.put("userID", myId);
-        map.put("data", childMap);
-        org.json.JSONObject object = new org.json.JSONObject(map);
-        String jsonString = object.toString();
-
-        MsgData msgData = new MsgData();
-        msgData.setType("webrtc");
-        msgData.setData(jsonString);
-        msgData.setFrom(myId);
-        msgData.setTo("");
-        sendData(JSONObject.toJSONString(msgData));
-    }
-
-    @Override
-    public void sendInvite(String room, String myId, List<String> users, boolean audioOnly) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("eventName", "__invite");
-        Map<String, Object> childMap = new HashMap<>();
-        childMap.put("room", room);
-        childMap.put("audioOnly", audioOnly);
-        childMap.put("inviteID", myId);
-        String join = StringUtils.listToString(users);
-        childMap.put("userList", join);
-        map.put("data", childMap);
-        org.json.JSONObject object = new org.json.JSONObject(map);
-        String jsonString = object.toString();
-
-        MsgData msgData = new MsgData();
-        msgData.setType("webrtc");
-        msgData.setData(jsonString);
-        msgData.setFrom(myId);
-        msgData.setTo("");
-        sendData(JSONObject.toJSONString(msgData));
-    }
-
-    @Override
-    public void sendLeave(String myId, String room, String targetId) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("eventName", "__leave");
-        Map<String, Object> childMap = new HashMap<>();
-        childMap.put("room", room);
-        childMap.put("fromID", myId);
-        childMap.put("userID", targetId);
-        map.put("data", childMap);
-        org.json.JSONObject object = new org.json.JSONObject(map);
-        String jsonString = object.toString();
-
-        MsgData msgData = new MsgData();
-        msgData.setType("webrtc");
-        msgData.setData(jsonString);
-        msgData.setFrom(myId);
-        msgData.setTo(targetId);
-        sendData(JSONObject.toJSONString(msgData));
-    }
-
-    @Override
-    public void sendRing(String myId, String targetId, String room) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("eventName", "__ring");
-        Map<String, Object> childMap = new HashMap<>();
-        childMap.put("fromID", myId);
-        childMap.put("toID", targetId);
-        childMap.put("room", room);
-        map.put("data", childMap);
-        org.json.JSONObject object = new org.json.JSONObject(map);
-        final String jsonString = object.toString();
-
-        MsgData msgData = new MsgData();
-        msgData.setType("webrtc");
-        msgData.setData(jsonString);
-        msgData.setFrom(myId);
-        msgData.setTo(targetId);
-        sendData(JSONObject.toJSONString(msgData));
-    }
-
-    @Override
-    public void sendRefuse(String room, String targetId, String myId, int refuseType) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("eventName", "__reject");
-        Map<String, Object> childMap = new HashMap<>();
-        childMap.put("room", room);
-        childMap.put("toID", targetId);
-        childMap.put("fromID", myId);
-        childMap.put("refuseType", String.valueOf(refuseType));
-        map.put("data", childMap);
-        org.json.JSONObject object = new org.json.JSONObject(map);
-        final String jsonString = object.toString();
-
-        MsgData msgData = new MsgData();
-        msgData.setType("webrtc");
-        msgData.setData(jsonString);
-        msgData.setFrom(myId);
-        msgData.setTo(targetId);
-        sendData(JSONObject.toJSONString(msgData));
-    }
-
-    @Override
-    public void sendCancel(String mRoomId, String myId, List<String> userIds) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("eventName", "__cancel");
-        Map<String, Object> childMap = new HashMap<>();
-        childMap.put("inviteID", myId);
-        childMap.put("room", mRoomId);
-        String join = StringUtils.listToString(userIds);
-        childMap.put("userList", join);
-        map.put("data", childMap);
-        org.json.JSONObject object = new org.json.JSONObject(map);
-        String jsonString = object.toString();
-
-        MsgData msgData = new MsgData();
-        msgData.setType("webrtc");
-        msgData.setData(jsonString);
-        msgData.setFrom(myId);
-        msgData.setTo("");
-        sendData(JSONObject.toJSONString(msgData));
-    }
-
-    @Override
-    public void sendJoin(String room, String myId) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("eventName", "__join");
-        Map<String, String> childMap = new HashMap<>();
-        childMap.put("room", room);
-        childMap.put("userID", myId);
-        map.put("data", childMap);
-        org.json.JSONObject object = new org.json.JSONObject(map);
-        String jsonString = object.toString();
-
-        MsgData msgData = new MsgData();
-        msgData.setType("webrtc");
-        msgData.setData(jsonString);
-        msgData.setFrom(myId);
-        msgData.setTo("");
-        sendData(JSONObject.toJSONString(msgData));
-    }
-
-    @Override
-    public void sendOffer(String myId, String targetId, String sdp) {
-        Map<String, Object> map = new HashMap<>();
-        Map<String, Object> childMap = new HashMap<>();
-        childMap.put("sdp", sdp);
-        childMap.put("userID", targetId);
-        childMap.put("fromID", myId);
-        map.put("data", childMap);
-        map.put("eventName", "__offer");
-        org.json.JSONObject object = new org.json.JSONObject(map);
-        String jsonString = object.toString();
-
-        MsgData msgData = new MsgData();
-        msgData.setType("webrtc");
-        msgData.setData(jsonString);
-        msgData.setFrom(myId);
-        msgData.setTo(targetId);
-        sendData(JSONObject.toJSONString(msgData));
-    }
-
-    @Override
-    public void sendAnswer(String myId, String targetId, String sdp) {
-        Map<String, Object> map = new HashMap<>();
-        Map<String, Object> childMap = new HashMap<>();
-        childMap.put("sdp", sdp);
-        childMap.put("fromID", myId);
-        childMap.put("userID", targetId);
-        map.put("data", childMap);
-        map.put("eventName", "__answer");
-        org.json.JSONObject object = new org.json.JSONObject(map);
-        String jsonString = object.toString();
-
-        MsgData msgData = new MsgData();
-        msgData.setType("webrtc");
-        msgData.setData(jsonString);
-        msgData.setFrom(myId);
-        msgData.setTo(targetId);
-        sendData(JSONObject.toJSONString(msgData));
-    }
-
-    @Override
-    public void sendIceCandidate(String myId, String targetId, String id, int label, String candidate) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("eventName", "__ice_candidate");
-        Map<String, Object> childMap = new HashMap<>();
-        childMap.put("userID", targetId);
-        childMap.put("fromID", myId);
-        childMap.put("id", id);
-        childMap.put("label", label);
-        childMap.put("candidate", candidate);
-        map.put("data", childMap);
-        org.json.JSONObject object = new org.json.JSONObject(map);
-        String jsonString = object.toString();
-
-        MsgData msgData = new MsgData();
-        msgData.setType("webrtc");
-        msgData.setData(jsonString);
-        msgData.setFrom(myId);
-        msgData.setTo(targetId);
-        sendData(JSONObject.toJSONString(msgData));
-    }
-
-    @Override
-    public void sendTransAudio(String myId, String targetId) {
-        Map<String, Object> map = new HashMap<>();
-        Map<String, Object> childMap = new HashMap<>();
-        childMap.put("fromID", myId);
-        childMap.put("userID", targetId);
-        map.put("data", childMap);
-        map.put("eventName", "__audio");
-        org.json.JSONObject object = new org.json.JSONObject(map);
-        final String jsonString = object.toString();
-
-        MsgData msgData = new MsgData();
-        msgData.setType("webrtc");
-        msgData.setData(jsonString);
-        msgData.setFrom(myId);
-        msgData.setTo(targetId);
-        sendData(JSONObject.toJSONString(msgData));
-    }
-
-    @Override
-    public void sendDisconnect(String room, String myId, String targetId) {
-        Map<String, Object> map = new HashMap<>();
-        Map<String, Object> childMap = new HashMap<>();
-        childMap.put("fromID", myId);
-        childMap.put("userID", targetId);
-        childMap.put("room", room);
-        map.put("data", childMap);
-        map.put("eventName", "__disconnect");
-        org.json.JSONObject object = new org.json.JSONObject(map);
-        String jsonString = object.toString();
-
-        MsgData msgData = new MsgData();
-        msgData.setType("webrtc");
-        msgData.setData(jsonString);
-        msgData.setFrom(myId);
-        msgData.setTo(targetId);
-        sendData(JSONObject.toJSONString(msgData));
-    }
-
-    @Override
-    public void sendChatMsg(String sendUserId, String toUserid, String data) {
-        MsgData msgData = new MsgData();
-        msgData.setType("chat");
-        msgData.setData(data);
-        msgData.setFrom(sendUserId);
-        msgData.setTo(toUserid);
-        sendData(JSONObject.toJSONString(msgData));
-    }
-
-
 }

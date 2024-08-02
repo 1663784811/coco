@@ -20,7 +20,7 @@ public class UserMsgLogDao {
      */
     public static List<UserMsgLogEntity> getMsgLog(String sendId, String receiveId, Date time) {
         String timeStr = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(time);
-        JSONArray arr = ChatInfoDatabaseHelper.queryData("select * from user_msg where sendUserId in (?,?) and receiveUserId in (?,?) and sendTime < ? limit 10", new String[]{sendId, receiveId, sendId, receiveId, timeStr});
+        JSONArray arr = ChatInfoDatabaseHelper.queryData("select * from user_msg_log where sendUserId in (?,?) and receiveUserId in (?,?) and sendTime < ? limit 10", new String[]{sendId, receiveId, sendId, receiveId, timeStr});
         List<UserMsgLogEntity> rest = new ArrayList<>();
         for (int i = 0; i < arr.size(); i++) {
             rest.add(arr.getObject(i, UserMsgLogEntity.class));

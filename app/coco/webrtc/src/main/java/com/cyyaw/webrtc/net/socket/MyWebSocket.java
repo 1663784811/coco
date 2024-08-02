@@ -3,24 +3,18 @@ package com.cyyaw.webrtc.net.socket;
 import android.annotation.SuppressLint;
 import android.util.Log;
 
-import com.alibaba.fastjson.JSON;
-import com.cyyaw.webrtc.net.StatusCallBack;
 import com.cyyaw.webrtc.WebRtcConfig;
 import com.cyyaw.webrtc.net.SocketManager;
 import com.cyyaw.webrtc.net.SocketReceiveDataEvent;
-import com.cyyaw.webrtc.utils.StringUtils;
+import com.cyyaw.webrtc.net.StatusCallBack;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
-import org.json.JSONObject;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.net.ssl.X509TrustManager;
 
@@ -157,189 +151,19 @@ public class MyWebSocket extends WebSocketClient implements SocketConnect {
             this.receiveEvent.onConnectError();
         }
     }
-    // ---------------------------------------处理接收消息-------------------------------------
 
+    // ---------------------------------------处理接收消息-------------------------------------
     private void handleMessage(String message) {
         receiveEvent.onReceiveWebRtc(message);
     }
 
-    /**
-     * ------------------------------发送消息----------------------------------------
-     */
-    public void sendAskRoom(int roomSize, String myId) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("eventName", "__create");
-        Map<String, Object> childMap = new HashMap<>();
-        childMap.put("roomSize", roomSize);
-        childMap.put("userID", myId);
-        map.put("data", childMap);
-        JSONObject object = new JSONObject(map);
-        final String jsonString = object.toString();
-        sendData(jsonString);
-    }
+    @Override
+    public void sendWebrtcData(String to, String msg) {
 
-    // 发送邀请
-    public void sendInvite(String room, String myId, List<String> users, boolean audioOnly) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("eventName", "__invite");
-        Map<String, Object> childMap = new HashMap<>();
-        childMap.put("room", room);
-        childMap.put("audioOnly", audioOnly);
-        childMap.put("inviteID", myId);
-        String join = StringUtils.listToString(users);
-        childMap.put("userList", join);
-        map.put("data", childMap);
-        JSONObject object = new JSONObject(map);
-        final String jsonString = object.toString();
-        sendData(jsonString);
-    }
-
-    // 取消邀请
-    public void sendCancel(String mRoomId, String useId, List<String> users) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("eventName", "__cancel");
-        Map<String, Object> childMap = new HashMap<>();
-        childMap.put("inviteID", useId);
-        childMap.put("room", mRoomId);
-        String join = StringUtils.listToString(users);
-        childMap.put("userList", join);
-        map.put("data", childMap);
-        JSONObject object = new JSONObject(map);
-        final String jsonString = object.toString();
-        sendData(jsonString);
-    }
-
-    // 发送响铃通知
-    public void sendRing(String myId, String targetId, String room) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("eventName", "__ring");
-        Map<String, Object> childMap = new HashMap<>();
-        childMap.put("fromID", myId);
-        childMap.put("toID", targetId);
-        childMap.put("room", room);
-        map.put("data", childMap);
-        JSONObject object = new JSONObject(map);
-        final String jsonString = object.toString();
-        sendData(jsonString);
-    }
-
-    //加入房间
-    public void sendJoin(String room, String myId) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("eventName", "__join");
-        Map<String, String> childMap = new HashMap<>();
-        childMap.put("room", room);
-        childMap.put("userID", myId);
-        map.put("data", childMap);
-        JSONObject object = new JSONObject(map);
-        final String jsonString = object.toString();
-        sendData(jsonString);
-    }
-
-    // 拒接接听
-    public void sendRefuse(String room, String targetId, String myId, int refuseType) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("eventName", "__reject");
-
-        Map<String, Object> childMap = new HashMap<>();
-        childMap.put("room", room);
-        childMap.put("toID", targetId);
-        childMap.put("fromID", myId);
-        childMap.put("refuseType", String.valueOf(refuseType));
-
-        map.put("data", childMap);
-        JSONObject object = new JSONObject(map);
-        final String jsonString = object.toString();
-        sendData(jsonString);
-    }
-
-    // 离开房间
-    public void sendLeave(String myId, String room, String userId) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("eventName", "__leave");
-        Map<String, Object> childMap = new HashMap<>();
-        childMap.put("room", room);
-        childMap.put("fromID", myId);
-        childMap.put("userID", userId);
-        map.put("data", childMap);
-        JSONObject object = new JSONObject(map);
-        final String jsonString = object.toString();
-        sendData(jsonString);
-    }
-
-    // send offer
-    public void sendOffer(String myId, String userId, String sdp) {
-        Map<String, Object> map = new HashMap<>();
-        Map<String, Object> childMap = new HashMap<>();
-        childMap.put("sdp", sdp);
-        childMap.put("userID", userId);
-        childMap.put("fromID", myId);
-        map.put("data", childMap);
-        map.put("eventName", "__offer");
-        JSONObject object = new JSONObject(map);
-        final String jsonString = object.toString();
-        sendData(jsonString);
-    }
-
-    // send answer
-    public void sendAnswer(String myId, String userId, String sdp) {
-        Map<String, Object> map = new HashMap<>();
-        Map<String, Object> childMap = new HashMap<>();
-        childMap.put("sdp", sdp);
-        childMap.put("fromID", myId);
-        childMap.put("userID", userId);
-        map.put("data", childMap);
-        map.put("eventName", "__answer");
-        JSONObject object = new JSONObject(map);
-        final String jsonString = object.toString();
-        sendData(jsonString);
-    }
-
-    // send ice-candidate
-    public void sendIceCandidate(String myId, String userId, String id, int label, String candidate) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("eventName", "__ice_candidate");
-        Map<String, Object> childMap = new HashMap<>();
-        childMap.put("userID", userId);
-        childMap.put("fromID", myId);
-        childMap.put("id", id);
-        childMap.put("label", label);
-        childMap.put("candidate", candidate);
-        map.put("data", childMap);
-        JSONObject object = new JSONObject(map);
-        final String jsonString = object.toString();
-        sendData(jsonString);
-    }
-
-    // 切换到语音
-    public void sendTransAudio(String myId, String userId) {
-        Map<String, Object> map = new HashMap<>();
-        Map<String, Object> childMap = new HashMap<>();
-        childMap.put("fromID", myId);
-        childMap.put("userID", userId);
-        map.put("data", childMap);
-        map.put("eventName", "__audio");
-        JSONObject object = new JSONObject(map);
-        final String jsonString = object.toString();
-        sendData(jsonString);
-    }
-
-    // 断开重连
-    public void sendDisconnect(String room, String myId, String userId) {
-        Map<String, Object> map = new HashMap<>();
-        Map<String, Object> childMap = new HashMap<>();
-        childMap.put("fromID", myId);
-        childMap.put("userID", userId);
-        childMap.put("room", room);
-        map.put("data", childMap);
-        map.put("eventName", "__disconnect");
-        JSONObject object = new JSONObject(map);
-        final String jsonString = object.toString();
-        sendData(jsonString);
     }
 
     @Override
-    public void sendChatMsg(String myId, String toUserid, String data) {
+    public void sendChatData(String to, String msg) {
 
     }
 

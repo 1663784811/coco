@@ -6,12 +6,24 @@ package com.cyyaw.webrtc.net.socket;
  */
 public class MsgData {
 
+    /**
+     * 消息类型
+     */
     private String type;
 
+    /**
+     * 内容
+     */
     private String data;
 
+    /**
+     * 发送消息者
+     */
     private String from;
 
+    /**
+     * 接收消息者
+     */
     private String to;
 
     public String getType() {

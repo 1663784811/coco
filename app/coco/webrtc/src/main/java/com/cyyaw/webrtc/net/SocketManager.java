@@ -6,14 +6,18 @@ import android.os.Looper;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.cyyaw.webrtc.MsgCallBack;
 import com.cyyaw.webrtc.WebRtcConfig;
 import com.cyyaw.webrtc.activity.PhoneCallActivity;
+import com.cyyaw.webrtc.net.socket.MsgData;
 import com.cyyaw.webrtc.net.socket.SocketConnect;
 import com.cyyaw.webrtc.rtc.CallEngineKit;
 import com.cyyaw.webrtc.rtc.session.CallSession;
 import com.cyyaw.webrtc.rtc.session.EnumType;
+import com.cyyaw.webrtc.utils.StringUtils;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -71,77 +75,184 @@ public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent
     // ======================================================================================     发送数据
     public void sendAskRoom(int roomSize) {
         if (socketConnect != null) {
-            socketConnect.sendAskRoom(roomSize, myId);
+            Map<String, Object> map = new HashMap<>();
+            map.put("eventName", "__create");
+            Map<String, Object> childMap = new HashMap<>();
+            childMap.put("roomSize", roomSize);
+            childMap.put("userID", myId);
+            map.put("data", childMap);
+            JSONObject object = new JSONObject(map);
+            String data = object.toString();
+            socketConnect.sendWebrtcData("", data);
         }
     }
 
     public void sendInvite(String room, List<String> users, boolean audioOnly) {
         if (socketConnect != null) {
-            socketConnect.sendInvite(room, myId, users, audioOnly);
+            Map<String, Object> map = new HashMap<>();
+            map.put("eventName", "__invite");
+            Map<String, Object> childMap = new HashMap<>();
+            childMap.put("room", room);
+            childMap.put("audioOnly", audioOnly);
+            childMap.put("inviteID", myId);
+            String join = StringUtils.listToString(users);
+            childMap.put("userList", join);
+            map.put("data", childMap);
+            org.json.JSONObject object = new org.json.JSONObject(map);
+            String data = object.toString();
+            socketConnect.sendWebrtcData("", data);
         }
     }
 
-    public void sendLeave(String room, String userId) {
+    public void sendLeave(String room, String targetId) {
         if (socketConnect != null) {
-            socketConnect.sendLeave(myId, room, userId);
+            Map<String, Object> map = new HashMap<>();
+            map.put("eventName", "__leave");
+            Map<String, Object> childMap = new HashMap<>();
+            childMap.put("room", room);
+            childMap.put("fromID", myId);
+            childMap.put("userID", targetId);
+            map.put("data", childMap);
+            org.json.JSONObject object = new org.json.JSONObject(map);
+            String data = object.toString();
+            socketConnect.sendWebrtcData(targetId, data);
         }
     }
 
     public void sendRingBack(String targetId, String room) {
         if (socketConnect != null) {
-            socketConnect.sendRing(myId, targetId, room);
+            Map<String, Object> map = new HashMap<>();
+            map.put("eventName", "__ring");
+            Map<String, Object> childMap = new HashMap<>();
+            childMap.put("fromID", myId);
+            childMap.put("toID", targetId);
+            childMap.put("room", room);
+            map.put("data", childMap);
+            org.json.JSONObject object = new org.json.JSONObject(map);
+            String data = object.toString();
+            socketConnect.sendWebrtcData(targetId, data);
         }
     }
 
-    public void sendRefuse(String room, String inviteId, int refuseType) {
+    public void sendRefuse(String room, String targetId, int refuseType) {
         if (socketConnect != null) {
-            socketConnect.sendRefuse(room, inviteId, myId, refuseType);
+            Map<String, Object> map = new HashMap<>();
+            map.put("eventName", "__reject");
+            Map<String, Object> childMap = new HashMap<>();
+            childMap.put("room", room);
+            childMap.put("toID", targetId);
+            childMap.put("fromID", myId);
+            childMap.put("refuseType", String.valueOf(refuseType));
+            map.put("data", childMap);
+            org.json.JSONObject object = new org.json.JSONObject(map);
+            String data = object.toString();
+            socketConnect.sendWebrtcData(targetId, data);
         }
     }
 
     public void sendCancel(String mRoomId, List<String> userIds) {
         if (socketConnect != null) {
-            socketConnect.sendCancel(mRoomId, myId, userIds);
+            Map<String, Object> map = new HashMap<>();
+            map.put("eventName", "__cancel");
+            Map<String, Object> childMap = new HashMap<>();
+            childMap.put("inviteID", myId);
+            childMap.put("room", mRoomId);
+            String join = StringUtils.listToString(userIds);
+            childMap.put("userList", join);
+            map.put("data", childMap);
+            org.json.JSONObject object = new org.json.JSONObject(map);
+            String data = object.toString();
+            socketConnect.sendWebrtcData("", data);
         }
     }
 
     public void sendJoin(String room) {
         if (socketConnect != null) {
-            socketConnect.sendJoin(room, myId);
+            Map<String, Object> map = new HashMap<>();
+            map.put("eventName", "__join");
+            Map<String, String> childMap = new HashMap<>();
+            childMap.put("room", room);
+            childMap.put("userID", myId);
+            map.put("data", childMap);
+            org.json.JSONObject object = new org.json.JSONObject(map);
+            String data = object.toString();
+            socketConnect.sendWebrtcData("", data);
         }
     }
 
-    public void sendMeetingInvite(String userList) {
-
-    }
-
-    public void sendOffer(String userId, String sdp) {
+    public void sendOffer(String targetId, String sdp) {
         if (socketConnect != null) {
-            socketConnect.sendOffer(myId, userId, sdp);
+            Map<String, Object> map = new HashMap<>();
+            Map<String, Object> childMap = new HashMap<>();
+            childMap.put("sdp", sdp);
+            childMap.put("userID", targetId);
+            childMap.put("fromID", myId);
+            map.put("data", childMap);
+            map.put("eventName", "__offer");
+            org.json.JSONObject object = new org.json.JSONObject(map);
+            String data = object.toString();
+            socketConnect.sendWebrtcData(targetId, data);
         }
     }
 
-    public void sendAnswer(String userId, String sdp) {
+    public void sendAnswer(String targetId, String sdp) {
         if (socketConnect != null) {
-            socketConnect.sendAnswer(myId, userId, sdp);
+            Map<String, Object> map = new HashMap<>();
+            Map<String, Object> childMap = new HashMap<>();
+            childMap.put("sdp", sdp);
+            childMap.put("fromID", myId);
+            childMap.put("userID", targetId);
+            map.put("data", childMap);
+            map.put("eventName", "__answer");
+            org.json.JSONObject object = new org.json.JSONObject(map);
+            String data = object.toString();
+            socketConnect.sendWebrtcData(targetId, data);
         }
     }
 
-    public void sendIceCandidate(String userId, String id, int label, String candidate) {
+    public void sendIceCandidate(String targetId, String id, int label, String candidate) {
         if (socketConnect != null) {
-            socketConnect.sendIceCandidate(myId, userId, id, label, candidate);
+            Map<String, Object> map = new HashMap<>();
+            map.put("eventName", "__ice_candidate");
+            Map<String, Object> childMap = new HashMap<>();
+            childMap.put("userID", targetId);
+            childMap.put("fromID", myId);
+            childMap.put("id", id);
+            childMap.put("label", label);
+            childMap.put("candidate", candidate);
+            map.put("data", childMap);
+            org.json.JSONObject object = new org.json.JSONObject(map);
+            String data = object.toString();
+            socketConnect.sendWebrtcData(targetId, data);
         }
     }
 
-    public void sendTransAudio(String userId) {
+    public void sendTransAudio(String targetId) {
         if (socketConnect != null) {
-            socketConnect.sendTransAudio(myId, userId);
+            Map<String, Object> map = new HashMap<>();
+            Map<String, Object> childMap = new HashMap<>();
+            childMap.put("fromID", myId);
+            childMap.put("userID", targetId);
+            map.put("data", childMap);
+            map.put("eventName", "__audio");
+            org.json.JSONObject object = new org.json.JSONObject(map);
+            String data = object.toString();
+            socketConnect.sendWebrtcData(targetId, data);
         }
     }
 
-    public void sendDisconnect(String room, String userId) {
+    public void sendDisconnect(String room, String targetId) {
         if (socketConnect != null) {
-            socketConnect.sendDisconnect(room, myId, userId);
+            Map<String, Object> map = new HashMap<>();
+            Map<String, Object> childMap = new HashMap<>();
+            childMap.put("fromID", myId);
+            childMap.put("userID", targetId);
+            childMap.put("room", room);
+            map.put("data", childMap);
+            map.put("eventName", "__disconnect");
+            org.json.JSONObject object = new org.json.JSONObject(map);
+            String data = object.toString();
+            socketConnect.sendWebrtcData(targetId, data);
         }
     }
 
@@ -151,7 +262,13 @@ public class SocketManager implements SocketReceiveDataEvent, SocketSenDataEvent
     public void sendChatMsg(String toUserid, String data) {
         handler.post(() -> {
             if (socketConnect != null) {
-                socketConnect.sendChatMsg(myId, toUserid, data);
+                MsgData msgData = new MsgData();
+                msgData.setType("chat");
+                msgData.setData(data);
+                msgData.setFrom(myId);
+                msgData.setTo(toUserid);
+                String dataMsg = JSONObject.toJSONString(msgData);
+                socketConnect.sendChatData(toUserid, dataMsg);
             }
         });
     }
