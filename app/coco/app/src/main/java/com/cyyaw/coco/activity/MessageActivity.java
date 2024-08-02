@@ -95,6 +95,7 @@ public class MessageActivity extends AppCompatActivity implements CuiChatInputFr
                 chatScrollView.fullScroll(View.FOCUS_DOWN);
             }, 100);
         });
+
         // 获取焦点
         cuiChatInputFragment.setFocusChangeListenerCallBack((View v, boolean hasFocus) -> {
             if (hasFocus) {
@@ -103,6 +104,8 @@ public class MessageActivity extends AppCompatActivity implements CuiChatInputFr
                 }, 100);
             }
         });
+
+
         trs.add(R.id.chat_input, cuiChatInputFragment);
         trs.commit();
         chatScrollView.postDelayed(() -> {
