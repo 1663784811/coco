@@ -67,8 +67,8 @@ public class MqttSocket implements MqttCallback, SocketConnect {
                         // 建立连接
                         client.connect(connOpts);
                         // 订阅
-                        client.subscribe("webrtc." + clientId);
-                        client.subscribe("chat." + clientId);
+                        client.subscribe("webrtc." + userId);
+                        client.subscribe("chat." + userId);
                     } catch (MqttException e) {
                         e.printStackTrace();
                         Log.e(TAG, "init: 错误....." + e.getMessage());
@@ -102,9 +102,9 @@ public class MqttSocket implements MqttCallback, SocketConnect {
     public void messageArrived(String topic, MqttMessage message) throws Exception {
         Log.e(TAG, "messageArrived: ");
         String msg = new String(message.getPayload());
-        if (topic.indexOf("webrtc.") != -1) {
+        if (topic.indexOf("webrtc") != -1) {
             receiveEvent.onReceiveWebRtc(msg);
-        } else if (topic.indexOf("chat.") != -1) {
+        } else if (topic.indexOf("chat") != -1) {
             MsgData msgData = JSON.parseObject(msg).toJavaObject(MsgData.class);
             String to = msgData.getTo();
             String from = msgData.getFrom();
