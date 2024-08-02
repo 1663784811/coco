@@ -67,8 +67,6 @@ public class AddEquipmentActivity extends BaseAppCompatActivity implements CuiSe
             public void clickMore(View v) {
 
 
-
-
             }
         }, true, true);
         ft.add(R.id.header_title, nav);
@@ -79,7 +77,7 @@ public class AddEquipmentActivity extends BaseAppCompatActivity implements CuiSe
             name = data;
         }));
 
-        group.addCell(new CuiInputFragment("地址", (View v, String data) -> {
+        group.addCell(new CuiInputFragment("类型", (View v, String data) -> {
             address = data;
         }));
 
@@ -133,10 +131,18 @@ public class AddEquipmentActivity extends BaseAppCompatActivity implements CuiSe
             });
         });
 
-        View searchBluetooth = findViewById(R.id.search_bluetooth);
-        searchBluetooth.setOnClickListener((View v) -> {
-            scanLeDevice();
-        });
+
+//        View searchBluetooth = findViewById(R.id.search_bluetooth);
+//        searchBluetooth.setOnClickListener((View v) -> {
+//            scanLeDevice();
+//        });
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
 
     }
 
@@ -151,7 +157,7 @@ public class AddEquipmentActivity extends BaseAppCompatActivity implements CuiSe
 
             @Override
             public void foundBluetooth(BtEntity bluetooth) {
-                MyApplication.post(()->{
+                MyApplication.post(() -> {
                     BluetoothDevice dev = bluetooth.getDev();
                     String ads = dev.getAddress();
                     String btName = null;

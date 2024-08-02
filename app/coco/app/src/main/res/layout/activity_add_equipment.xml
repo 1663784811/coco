@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/add_equipment"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/find_view_bg"
+    >
 
     <LinearLayout
         android:id="@+id/header_title"
@@ -24,16 +26,8 @@
         tools:ignore="MissingConstraints"></LinearLayout>
 
 
-    <Button
-        android:id="@+id/search_bluetooth"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="搜索蓝牙设备"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:ignore="MissingConstraints"
-        android:layout_marginBottom="200dp"
 
-        />
+
 
 
     <Button

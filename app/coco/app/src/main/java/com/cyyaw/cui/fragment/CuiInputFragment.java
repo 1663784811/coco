@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
@@ -50,6 +51,11 @@ public class CuiInputFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.cui_input, container, false);
         EditText cuiInputText = view.findViewById(R.id.cui_input_text);
+
+        TextView cuiInputName = view.findViewById(R.id.cui_input_name);
+        if (null != name) {
+            cuiInputName.setText(name);
+        }
 
         if (null != callBack) {
             cuiInputText.addTextChangedListener(new TextWatcher() {
