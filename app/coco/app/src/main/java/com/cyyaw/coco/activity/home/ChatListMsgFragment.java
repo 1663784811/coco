@@ -43,7 +43,10 @@ public class ChatListMsgFragment extends Fragment {
         MyApplication.post(() -> {
             // 查数据库
             List<UserMsgEntity> list = UserMsgDao.getList();
-
+            for (int i = 0; i < list.size(); i++) {
+                UserMsgEntity bean = list.get(i);
+                msgListAdapter.updateData(bean);
+            }
 
         });
         return view;

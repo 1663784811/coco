@@ -21,7 +21,7 @@ public class ChatInfoDatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = ChatInfoDatabaseHelper.class.getName();
 
     private static final String DATABASE_NAME = "chat_info.db";
-    private static final int DATABASE_VERSION = 7;
+    private static final int DATABASE_VERSION = 8;
     private static ChatInfoDatabaseHelper chatInfoDatabaseHelper = null;
 
     private SQLiteDatabase mRead;
