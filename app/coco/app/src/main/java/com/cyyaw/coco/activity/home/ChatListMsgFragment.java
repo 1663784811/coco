@@ -16,6 +16,7 @@ import com.cyyaw.coco.dao.UserMsgDao;
 import com.cyyaw.coco.dao.table.UserMsgEntity;
 import com.cyyaw.cui.fragment.CuiEmptyFragment;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -50,7 +51,11 @@ public class ChatListMsgFragment extends Fragment {
 
 
     public void receiveMsg(String fromId, String msg) {
-
-
+        UserMsgEntity bean = new UserMsgEntity();
+        bean.setTid(fromId);
+        bean.setName("");
+        bean.setFace("");
+        bean.setUpdateTime(new Date());
+        msgListAdapter.updateData(bean);
     }
 }
